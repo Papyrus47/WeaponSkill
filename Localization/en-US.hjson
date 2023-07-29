@@ -1,0 +1,115 @@
+Mods: {
+	WeaponSkill: {
+		ModKey: {
+			RangeChange: Reload Ammo
+			BowSlidingStep: Bow Sliding Step
+		}
+
+		Items: {
+			BroadSwordBook: {
+				DisplayName: Broad Sword Book
+				Tooltip:
+					'''
+					Broadsword, a type of weapon with powerful power, can increase its damage by charge, but the punishment for exceeding the maximum charge level is also significant.
+					Left Click：Charge Attack    Right Click：Slash Attack
+
+					Left-Left-Left：Three Charge Attack
+						When second attack,the damage add to original 125%. When third attack,the damage add to original 150%.
+						When the charge level up,damage will be increased by 95% based on "Now damage".
+						Third attack will shoot the weapon shoot,then player move forward(This is invincible),attack again.
+					Left-Right：Block
+						The Block use player defensive，can defense damage to player defense * 10.But damage is more then you defense damage,you will suffer the original damage.
+						Defense Success,third attack damage will be increased by 25% based on "original damage".
+					After Block,Left:Third Charge Attack
+
+					Right-Right:Two Slash Attack
+						Second attack will shoot the weapon shoot.
+					Left-Left-Right：Slash,But it powerful(don't ask me why call this name)
+						Damage add to original 300%,will shoot the weapon shoot.
+
+					Charge Attack Time：
+					One：0.5s
+					Two：1.5s
+					Three：2.5s
+					Exceeding charging ：After third attack 1/6s
+					'''
+			}
+
+			ShortSwordBook: {
+				DisplayName: Short Sword Book
+				Tooltip:
+					'''
+					短剑，一种攻击速度较快，但是距离较短的武器，其最大的特点是带有无敌的冲刺,利用好冲刺可以应对许多情况
+					左键类型：刺击    右键类型：斩击
+
+						左键-左键-左键：三连刺
+						右键-右键-右键：三段斩
+						右键-右键-左键：突刺
+						左键-左键-右键-右键-右键-右键-右键-左键：高速五连斩后突刺
+						右键-左键：衔接第一次刺击的招式
+						左键-右键：衔接第二次斩击的招式
+						左键-左键-左键-右键：三连刺结束后衔接三段斩开头的招式
+						右键-右键-右键-左键：三段斩结束后衔接三连刺开头的招式
+						冲刺-右键：高范围横扫
+
+					所有的斩击攻击将提升下一次攻击的威力，在第五次达到最大值，为原伤害的3倍，刺击将重置伤害
+					冲刺将提升自己3倍的伤害
+
+
+
+					'''
+			}
+
+			SpearsBook: {
+				DisplayName: Spears Book
+				Tooltip:
+					'''
+					长矛，一种攻击距离偏长的武器，具有高速连刺的技能
+					左键类型：刺击    右键类型：斩击
+						左键-左键-左键：三段蓄力刺
+							其中第一段蓄力伤害为原伤害的6倍，第二段蓄力为4倍，第三段蓄力为2倍
+							蓄力时间随着段数增加而减少
+						右键-右键-右键：三段斩
+							其中第一段上挑可以挑飞不免疫击退的敌人
+						横斩（三段斩最后一斩）-左键：连续刺击
+							根据攻速决定刺击刺数，攻速越快，刺击数量越多
+						左键-左键-右键：衔接三段斩最后一击的攻击
+						左键-右键：快速上挑，此技能与上挑无异
+						快速上挑/上挑-左键：第二段蓄力刺
+					'''
+			}
+
+			BowBook: {
+				DisplayName: Bow Book
+				Tooltip:
+					'''
+					 弓，一种灵活且具有强大输出能力的武器
+					 左键类型：蓄力射击    右键类型：特殊射击（刚射）（吊射）
+					 蓄力级别最多到达三级，每有一级蓄力，玩家周围发光范围增大，玩家伤害提升
+					 如果弓背在背上，则第一次使用将掏出武器，不进行攻击
+					 按下{0}键选择箭类使用      按键{1}键进行滑步
+					 -------------------------------------------------------
+					 每次攻击将提升一级蓄力级别
+					 蓄力射击在蓄力级别为1/2/3时，射出1/2/3发箭
+					 刚射在蓄力级别为1/2/3时,射出3/4/5发箭
+					 吊射将插入两端刚射之中，也可在蓄力射击时按住特殊射击键单独使用
+					 滑步只能在攻击后使用，滑步一次提升一次蓄力级别
+					 蓄力射击可以衔接刚射，刚射也可以衔接蓄力射击
+					 三级蓄力射击可以接三级刚射，但三级刚射不能接三级蓄力射击
+					 如果是三级蓄力刚射，则无法进行滑步
+					    -------------------------------------------------------
+					 耐力槽：
+					 弓的行为将消耗耐力，耐力上限无法增加，恒定为600
+					 蓄力射击消耗15耐力
+					 吊射消耗10耐力
+					 刚射消耗60耐力
+					 滑步消耗40耐力
+					 耐力在不消耗耐力后1.5秒自动恢复
+					 如移动速度极慢甚至不移动，那么耐力将加速恢复
+					 如果耐力不足，则无法进行攻击
+						第一级蓄力刚射不消耗耐力(又称迅雷射击)
+					'''
+			}
+		}
+	}
+}

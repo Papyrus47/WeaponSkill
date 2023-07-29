@@ -1,0 +1,15 @@
+Projectiles: {
+	BroadSwordProj.DisplayName: Broad Sword Proj
+	ShortswordProj.DisplayName: Shortsword Proj
+	SpurtsProj.DisplayName: Spurts Proj
+	SpearsProj.DisplayName: Spears Proj
+	BowsProj.DisplayName: Bows Proj
+	HangingShootProj.DisplayName: Hanging Shoot Proj
+	StoneProj.DisplayName: Stone Proj
+}
+
+Keybinds: {
+	Mods.WeaponSkill.ModKey.RangeChange.DisplayName: Mods. Weapon Skill. Mod Key. Range Change
+	"远程 装填弹药切换.DisplayName": 远程 装填弹药切换
+	弓的滑步.DisplayName: 弓的滑步
+}

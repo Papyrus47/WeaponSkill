@@ -1,0 +1,436 @@
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.GameContent;
+
+namespace WeaponSkill.Helper
+{
+    /// <summary>
+    /// 挥舞用的类
+    /// <para>注意 projectile.rotation 依然发挥作用</para>
+    /// </summary>
+    public class SwingHelper
+    {
+        public Projectile projectile;
+        /// <summary>
+        /// 起点向量
+        /// </summary>
+        public Vector2 StartVel;
+        public Vector2 VelScale;
+        public Vector2[] oldVels;
+        public float VisualRotation;
+        public int[] oldFrames;
+        /// <summary>
+        /// 挥舞的启用
+        /// </summary>
+        protected bool _acitveSwing;
+        protected bool _changeLerpInvoke;
+        protected bool _canDrawTrailing;
+        protected bool _drawCorrections;
+        protected bool _oldVelsSave;
+        protected float _halfSizeLength;
+        protected float _velLerp;
+        protected float _changeHeldLength;
+        protected float _velRotBy;
+        protected Asset<Texture2D> _SwingItemTex;
+
+        public SwingHelper(Projectile proj, int oldVelLength, Asset<Texture2D> swingItemTex = null)
+        {
+            projectile = proj;
+            _halfSizeLength = 0;
+            oldVels = new Vector2[oldVelLength];
+            _oldVelsSave = true;
+            _SwingItemTex = swingItemTex;
+        }
+        public virtual void SetRotVel(float rotVel)
+        {
+            _velRotBy = rotVel;
+        }
+        public virtual void Change(Vector2 startVel, Vector2 velScale, float visualRotation = 0f)
+        {
+            StartVel = startVel;
+            StartVel.Normalize();
+            VisualRotation = visualRotation;
+            VelScale = velScale;
+            _halfSizeLength = projectile.Size.Length() * 0.5f;
+        }
+        public virtual void Change_Lerp(Vector2 startVel, float velLerp, Vector2 velScale, float scaleAmount, float visualRotation = 0f, float visualRotAmount = 0.1f)
+        {
+            startVel.Normalize();
+            StartVel = startVel;
+            _velLerp = velLerp;
+            VelScale = Vector2.Lerp(VelScale, velScale, scaleAmount);
+            _halfSizeLength = MathHelper.Lerp(_halfSizeLength, projectile.Size.Length() * 0.5f, scaleAmount);
+            VisualRotation = MathHelper.Lerp(VisualRotation, visualRotation, visualRotAmount);
+            _changeLerpInvoke = true;
+        }
+        public virtual void VelRotBy(float rot) => _velRotBy = rot;
+        /// <summary>
+        /// 挥舞函数
+        /// </summary>
+        /// <param name="velLength">弹幕长度</param>
+        /// <param name="dir">朝向</param>
+        /// <param name="Rot">旋转弧度</param>
+        public virtual void SwingAI(float velLength, int dir, float Rot)
+        {
+            if (_acitveSwing)
+            {
+                _canDrawTrailing = true;
+                Vector2 start = StartVel;
+                start.X *= dir;
+
+                Vector2 vel = start;
+
+                if (_changeLerpInvoke)
+                {
+                    //projectile.velocity = Vector2.Lerp(projectile.velocity, vel * velLength, _velLerp);
+                    vel *= VelScale;
+                    if (projectile.velocity == default) projectile.velocity = Vector2.One;
+                    projectile.velocity = projectile.velocity.
+                        RotatedBy(MathHelper.WrapAngle(vel.ToRotation() - projectile.velocity.ToRotation()) * _velLerp).
+                        SafeNormalize(default) * MathHelper.Lerp(projectile.velocity.Length(), velLength, _velLerp);
+                }
+                else
+                {
+                    vel = vel.RotatedBy(Rot * dir);
+                    vel *= VelScale;
+                    vel = vel.RotatedBy(_velRotBy * dir);
+                    projectile.velocity = vel * velLength;
+                }
+            }
+            oldFrames ??= new int[oldVels.Length];
+
+            #region 保存oldXXX
+            for (int i = oldVels.Length - 1; i >= 0; i--)
+            {
+                if (_acitveSwing && !_changeLerpInvoke)
+                {
+                    if (i == 0)
+                    {
+                        oldVels[0] = _oldVelsSave ? projectile.velocity : default;
+                        oldFrames[0] = projectile.frame;
+                    }
+                    else
+                    {
+                        oldVels[i] = oldVels[i - 1];
+                        oldFrames[i] = oldFrames[i - 1];
+                    }
+                }
+                else
+                {
+                    oldVels[i] = default;
+                    oldFrames[i] = 0;
+                }
+            }
+            #endregion
+
+            projectile.timeLeft = 2;
+            _oldVelsSave = true;
+            _acitveSwing = _changeLerpInvoke = false;
+        }
+        /// <summary>
+        /// 将弹幕锁定位置在玩家身上   <para>当<paramref name="isUseSwing"/>为ture的时候,
+        /// 则会根据<code> MathF.Atan2(projectile.velocity.Y * player.direction, projectile.velocity.X * player.direction)</code>
+        /// 决定玩家手臂方向,同时设置使用时间和挥舞时间为2</para>
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="length">根据弹幕速度,决定最终位置  就是位置加上速度的单位向量乘以的这个<paramref name="length"/></param>
+        /// <param name="isUseSwing">如果开始挥舞,请设置这个为true,当这个为true的时候,调用挥舞函数才能使挥舞继续</param>
+        /// <param name="drawCorrections">绘制修正</param>
+        public virtual void ProjFixedPlayerCenter(Player player, float length = 0f, bool isUseSwing = false, bool drawCorrections = false)
+        {
+            projectile.Center = player.RotatedRelativePoint(player.MountedCenter);
+            _drawCorrections = drawCorrections;
+            if (!_drawCorrections) projectile.position += projectile.velocity.SafeNormalize(default) * length;
+            _changeHeldLength = length;
+            if (isUseSwing)
+            {
+                SetSwingActive();
+                player.itemAnimation = player.itemTime = 2;
+                player.itemRotation = MathF.Atan2(projectile.velocity.Y * player.direction, projectile.velocity.X * player.direction);
+            }
+        }
+        /// <summary>
+        /// 将弹幕锁定位置在对应位置上
+        /// </summary>
+        /// <param name="pos">位置</param>
+        /// <param name="length">根据弹幕速度,决定最终位置  就是位置加上速度的单位向量乘以的这个<paramref name="length"/></param>
+        public virtual void ProjFixedPos(Vector2 pos, float length = 0f, bool drawCorrections = false)
+        {
+            projectile.Center = pos;
+            _drawCorrections = drawCorrections;
+            if (!_drawCorrections) projectile.position += projectile.velocity.SafeNormalize(default) * length;
+            _changeHeldLength = length;
+        }
+        public virtual void SetSwingActive() => _acitveSwing = true;
+        /// <summary>
+        /// 使用这个函数会使拖尾不保存现有的速度
+        /// </summary>
+        public virtual void SetNotSaveOldVel() => _oldVelsSave = false;
+        #region 绘制 
+        /// <summary>
+        /// 绘制剑与拖尾
+        /// </summary>
+        /// <param name="drawColor"></param>
+        /// <param name="tex"></param>
+        /// <param name="colorFunc"></param>
+        /// <param name="effect"></param>
+        public virtual void Swing_Draw_ItemAndTrailling(Color drawColor, Texture2D tex, Func<float, Color> colorFunc, Effect effect = null, Func<float, float> SetZ = null)
+        {
+            SpriteBatch sb = Main.spriteBatch;
+            sb.End();
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicWrap, DepthStencilState.Default, RasterizerState.CullNone);
+
+            DrawSwingItem(drawColor);
+            DrawTrailing(tex, colorFunc, effect, SetZ);
+
+            sb.End();
+            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None,
+                Main.Rasterizer, null, Main.Transform);
+        }
+        /// <summary>
+        /// 绘制剑与残影
+        /// </summary>
+        /// <param name="drawColor"></param>
+        /// <param name="colorFunc"></param>
+        /// <param name="drawCount"></param>
+        public virtual void Swing_Draw_ItemAndAfterimage(Color drawColor, Func<float, Color> colorFunc, int drawCount = -1)
+        {
+            SpriteBatch sb = Main.spriteBatch;
+            sb.End();
+            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicWrap, DepthStencilState.Default, RasterizerState.CullNone);
+
+            Swing_Draw_Afterimage(colorFunc, drawCount);
+            DrawSwingItem(drawColor);
+
+            sb.End();
+            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None,
+                Main.Rasterizer, null, Main.Transform);
+        }
+        /// <summary>
+        /// 绘制拖尾 残影 剑
+        /// </summary>
+        /// <param name="drawColor"></param>
+        /// <param name="tex"></param>
+        /// <param name="AfterimageColorFunc"></param>
+        /// <param name="TrailingColorFunc"></param>
+        /// <param name="drawAfterimageCount"></param>
+        /// <param name="effect"></param>
+        public virtual void Swing_Draw_All(Color drawColor, Texture2D tex, Func<float, Color> AfterimageColorFunc, Func<float, Color> TrailingColorFunc, int drawAfterimageCount = -1, Effect effect = null, Func<float, float> SetZ = null)
+        {
+            SpriteBatch sb = Main.spriteBatch;
+            sb.End();
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicWrap, DepthStencilState.Default, RasterizerState.CullNone);
+
+            DrawTrailing(tex, TrailingColorFunc, effect, SetZ);
+
+            sb.End();
+            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicWrap, DepthStencilState.Default, RasterizerState.CullNone);
+
+            Swing_Draw_Afterimage(AfterimageColorFunc, drawAfterimageCount);
+            DrawSwingItem(drawColor);
+
+            sb.End();
+            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None,
+                Main.Rasterizer, null, Main.Transform);
+        }
+        /// <summary>
+        /// 绘制残影
+        /// </summary>
+        /// <param name="drawColorFunc"></param>
+        /// <param name="drawCount"></param>
+        public virtual void Swing_Draw_Afterimage(Func<float, Color> drawColorFunc, int drawCount = -1)
+        {
+            if (!_canDrawTrailing) return;
+
+            GraphicsDevice gd = Main.graphics.GraphicsDevice;
+
+            CustomVertexInfo[] customVertices = new CustomVertexInfo[6];
+            int velLength = oldVels.Length;
+            for (int i = 0; i < velLength; i++)
+            {
+                if (i > drawCount && drawCount != -1) break;
+
+                float factor = (oldFrames[i] + 1f) / Main.projFrames[projectile.type];
+                Vector2 velocity = GetOldVel(i);
+                Vector2 halfLength = new Vector2(-velocity.Y, velocity.X).RotatedBy(VisualRotation * projectile.spriteDirection).SafeNormalize(default)
+                    * _halfSizeLength * projectile.spriteDirection;
+                Vector2 center = GetDrawCenter(i);
+                if (_drawCorrections)
+                {
+                    center = projectile.Center + (center - projectile.Center);
+                }
+                Vector2 halfVelPos = center + velocity * 0.5f;
+                Vector2[] pos = new Vector2[4]
+                {
+                    center - Main.screenPosition,
+                    halfVelPos - halfLength - Main.screenPosition,
+                    center + velocity - Main.screenPosition,
+                    halfVelPos + halfLength  - Main.screenPosition
+                };
+                Color drawColor = drawColorFunc.Invoke((float)i / velLength);
+                customVertices[0] = customVertices[5] = new(pos[0], drawColor, new Vector3(0f, factor, 0)); // 柄
+                customVertices[1] = new(pos[1], drawColor, new Vector3(0f, 0, 0)); // 左上角
+                customVertices[2] = customVertices[3] = new(pos[2], drawColor, new Vector3(1f, 0f, 0)); // 头
+                customVertices[4] = new(pos[3], drawColor, new Vector3(1f, factor, 0)); // 右下角
+
+                gd.Textures[0] = TextureAssets.Projectile[projectile.type].Value;
+                gd.DrawUserPrimitives(PrimitiveType.TriangleList, customVertices, 0, 2);
+            }
+        }
+        public virtual void DrawSwingItem(Color drawColor)
+        {
+            GraphicsDevice gd = Main.graphics.GraphicsDevice;
+            _SwingItemTex ??= TextureAssets.Projectile[projectile.type];
+            //var origin = gd.RasterizerState;
+            //RasterizerState rasterizerState = new()
+            //{
+            //    CullMode = CullMode.None,
+            //    FillMode = FillMode.Solid
+            //};
+            //gd.RasterizerState = rasterizerState;
+
+            Vector2 velocity = GetOldVel(-1, true);
+            Vector2 halfLength = new Vector2(-velocity.Y, velocity.X).RotatedBy(VisualRotation * projectile.spriteDirection).SafeNormalize(default)
+                * _halfSizeLength * projectile.spriteDirection;
+
+            Vector2 center = GetDrawCenter();
+            if (_drawCorrections)
+            {
+                center = projectile.Center + (center - projectile.Center);
+            }
+            Vector2 halfVelPos = center + velocity * 0.5f;
+            Vector2[] pos = new Vector2[4]
+            {
+                 center - Main.screenPosition,
+                 halfVelPos - halfLength - Main.screenPosition,
+                 center + velocity - Main.screenPosition,
+                 halfVelPos + halfLength  - Main.screenPosition
+            };
+
+            float factor = (projectile.frame + 1f) / Main.projFrames[projectile.type];
+            CustomVertexInfo[] customVertices = new CustomVertexInfo[6];
+            customVertices[0] = customVertices[5] = new(pos[0], drawColor, new Vector3(0, factor, 0)); // 柄
+            customVertices[1] = new(pos[1], drawColor, new Vector3(0, factor - 1f, 0)); // 左上角
+            customVertices[2] = customVertices[3] = new(pos[2], drawColor, new Vector3(1, factor - 1f, 0)); // 头
+            customVertices[4] = new(pos[3], drawColor, new Vector3(1, factor, 0)); // 右下角
+
+            gd.Textures[0] = _SwingItemTex.Value;
+            //gd.Textures[0] = TextureAssets.MagicPixel.Value;
+            gd.DrawUserPrimitives(PrimitiveType.TriangleList, customVertices, 0, 2);
+            //gd.RasterizerState = origin;
+        }
+
+        /// <summary>
+        /// 绘制拖尾
+        /// </summary>
+        /// <param name="tex">拖尾贴图</param>
+        /// <param name="colorFunc">拖尾颜色</param>
+        /// <param name="effect">调用的shader 默认不选择调用,如果调用,则需要让shader处理顶点信息转换到屏幕上</param>
+        public virtual void Swing_TrailingDraw(Texture2D tex, Func<float, Color> colorFunc, Effect effect = null)
+        {
+            if (tex == null || colorFunc == null || !_canDrawTrailing)
+            {
+                return;
+            }
+            SpriteBatch sb = Main.spriteBatch;
+            sb.End();
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone);
+
+            DrawTrailing(tex, colorFunc, effect);
+
+            sb.End();
+            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None,
+                Main.Rasterizer, null, Main.Transform);
+        }
+
+        public void DrawTrailing(Texture2D tex, Func<float, Color> colorFunc, Effect effect, Func<float, float> SetZ = null)
+        {
+            List<CustomVertexInfo> customVertices = new();
+            int length = oldVels.Length;
+            for (int i = length - 1; i >= 0; i--)
+            {
+                Vector2 vel = GetOldVel(i, true);
+                if (vel == default)
+                {
+                    break;
+                }
+
+                float factor = (float)i / length;
+                Color drawColor = colorFunc.Invoke(factor); // 获取绘制颜色
+
+                Vector2 pos = GetDrawCenter(i);
+                if (_drawCorrections)
+                {
+                    pos = projectile.Center + (pos - projectile.Center);
+                }
+                if (effect == null)
+                {
+                    pos -= Main.screenPosition;
+                }
+                float z = 0;
+                if (SetZ != null) z = SetZ(factor);
+                customVertices.Add(new(pos, drawColor, new Vector3(factor, 0, z)));
+                customVertices.Add(new(pos + vel, drawColor, new Vector3(factor, 1, z)));
+            }
+            if (customVertices.Count > 4)
+            {
+                List<CustomVertexInfo> vertices = TheUtility.GenerateTriangle(customVertices);
+                GraphicsDevice gd = Main.graphics.GraphicsDevice;
+                //var origin = gd.RasterizerState;
+                //RasterizerState rasterizerState = new()
+                //{
+                //    CullMode = CullMode.None,
+                //    FillMode = FillMode.WireFrame
+                //};
+                //gd.RasterizerState = rasterizerState;
+                //gd.Textures[0] = tex;
+
+                gd.Textures[0] = tex;
+                //gd.Textures[0] = TextureAssets.MagicPixel.Value;
+                effect?.CurrentTechnique.Passes[0].Apply();
+                gd.DrawUserPrimitives(PrimitiveType.TriangleList, vertices.ToArray(), 0, vertices.Count / 3);
+                //gd.RasterizerState = origin;
+            }
+        }
+
+        #endregion
+        public virtual Vector2 GetDrawCenter(int index = 0)
+        {
+            Vector2 pos = projectile.Center;
+            if (_drawCorrections)
+            {
+                pos += oldVels[index].SafeNormalize(default) * _changeHeldLength;
+            }
+            return pos;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="notFilp">将旋转角度反方向修正</param>
+        /// <returns></returns>
+        public virtual Vector2 GetOldVel(int i, bool notFilp = true)
+        {
+            if (i < 0)
+            {
+                return projectile.velocity.RotatedBy(notFilp.ToDirectionInt() * projectile.rotation * projectile.spriteDirection);
+            }
+            return oldVels[i].RotatedBy(notFilp.ToDirectionInt() * projectile.rotation * projectile.spriteDirection);
+        }
+        public virtual bool GetColliding(Rectangle targetHitBox)
+        {
+            float r = 0;
+            if (_drawCorrections)
+            {
+                return Collision.CheckAABBvLineCollision(targetHitBox.TopLeft(), targetHitBox.Size(), projectile.Center, projectile.Center + projectile.velocity.RotatedBy(projectile.rotation * projectile.spriteDirection),
+                projectile.width / 2, ref r);
+            }
+            return Collision.CheckAABBvLineCollision(targetHitBox.TopLeft(), targetHitBox.Size(), projectile.Center, projectile.Center + projectile.velocity.RotatedBy(projectile.rotation * projectile.spriteDirection),
+                projectile.width / 2, ref r);
+        }
+        
+    }
+}
