@@ -22,6 +22,7 @@ namespace WeaponSkill.Weapons.Shortsword.Skills
         /// 为true默认正方向 false则为反
         /// </summary>
         public bool SwingDirectionChange = true;
+        public SoundStyle Sound;
         public override void AI()
         {
             Projectile.extraUpdates = 2;
@@ -77,6 +78,7 @@ namespace WeaponSkill.Weapons.Shortsword.Skills
             Projectile.rotation = 0;
             Projectile.ai[1] = Projectile.ai[2] = Projectile.ai[0] = 0;
             SkillTimeOut = false;
+            SoundEngine.PlaySound(Sound, Projectile.Center);
             TheUtility.ResetProjHit(Projectile);
         }
         public override void OnSkillDeactivate()

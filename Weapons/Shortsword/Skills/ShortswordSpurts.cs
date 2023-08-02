@@ -10,10 +10,12 @@ namespace WeaponSkill.Weapons.Shortsword.Skills
     {
         public ShortswordSpurts(ShortswordProj broadSwordProj) : base(broadSwordProj)
         {
+            Sound = new SoundStyle("WeaponSkill/Sounds/Shortsword/Shortsword_Spurts");
         }
         public Func<Vector2> GetSpurtDir;
         public Func<float> SpurtTimeMax;
         public Action SpurtAction;
+        public SoundStyle Sound;
         public override void AI()
         {
             float Length = Projectile.width;
@@ -27,6 +29,7 @@ namespace WeaponSkill.Weapons.Shortsword.Skills
             player.heldProj = Projectile.whoAmI;
             if ((int)Projectile.ai[0] == 1)
             {
+                SoundEngine.PlaySound(Sound, Projectile.Center);
                 Projectile.velocity = GetSpurtDir.Invoke();
                 SpurtsProj.NewSpurtsProj(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity, Projectile.originalDamage / 2, Projectile.knockBack, Projectile.owner, Projectile.width * 3, Projectile.height * 2,Shortsword.DrawColorTex);
             }

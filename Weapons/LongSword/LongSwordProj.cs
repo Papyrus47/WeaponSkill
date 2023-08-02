@@ -47,7 +47,12 @@ namespace WeaponSkill.Weapons.LongSword
                 Projectile.scale = Player.GetAdjustedItemScale(SpawnItem);
                 Projectile.Size = TextureAssets.Item[SpawnItem.type].Size() * Projectile.scale;
                 SwingLength = Projectile.Size.Length();
-                swordScabbard = new(null);
+                LongSwordGlobalItem longSwordGlobalItem = SpawnItem.GetGlobalItem<LongSwordGlobalItem>();
+                swordScabbard = new(longSwordGlobalItem.ScabbardTex);
+                if(longSwordGlobalItem.ScabbardAction != null)
+                {
+                    swordScabbard.DrawAction = longSwordGlobalItem.ScabbardAction;
+                }
                 Init();
             }
         }

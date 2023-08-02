@@ -15,6 +15,8 @@ namespace WeaponSkill.Weapons.LongSword
         public int Spirit;
         public byte SpiritLevel,OldSpiritLevel;
         public byte Time;
+        public Asset<Texture2D> ScabbardTex;
+        public Action<LongSwordScabbard> ScabbardAction;
         public override void SetStaticDefaults()
         {
             WeaponID ??= new();

@@ -59,7 +59,7 @@ namespace WeaponSkill.Weapons.LongSword
                 {
                     if (longSwordProj.InSpiritAttack)
                     {
-                        return new Color(100,170,255,0);
+                        return new Color(255,0,0,0);
                     }
                     return new Color(100,100,100,0);
                 }, null);

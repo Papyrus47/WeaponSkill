@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeaponSkill.Weapons.LongSword;
 
 namespace WeaponSkill.Items.LongSword
 {
@@ -16,6 +17,13 @@ namespace WeaponSkill.Items.LongSword
             Item.useTime = Item.useAnimation = 30;
             Item.DamageType = DamageClass.MeleeNoSpeed;
             Item.crit = 4;
+        }
+        public override void HoldItem(Player player)
+        {
+            if (Item.TryGetGlobalItem(out LongSwordGlobalItem longSwordGlobalItem))
+            {
+                longSwordGlobalItem.ScabbardTex = ModContent.Request<Texture2D>("WeaponSkill/Items/LongSword/DefaultLongSwordScabbard");
+            }
         }
         public override void AddRecipes()
         {

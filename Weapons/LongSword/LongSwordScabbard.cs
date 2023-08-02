@@ -13,8 +13,8 @@ namespace WeaponSkill.Weapons.LongSword
         public LongSwordScabbard(Asset<Texture2D> scabbardTex)
         {
             ScabbardTex = scabbardTex;
-            ScabbardTex ??= ModContent.Request<Texture2D>("WeaponSkill/Items/LongSword/DefaultLongSwordScabbard");
-            Lenght = ScabbardTex.Size().Length();
+            //ScabbardTex ??= ModContent.Request<Texture2D>("WeaponSkill/Items/LongSword/DefaultLongSwordScabbard");
+            if(ScabbardTex != null) Lenght = ScabbardTex.Size().Length();
             DrawAction = (da) =>
             {
                 da.DrawOrigin = new Vector2(da.ScabbardTex.Width() * (da.Dir == -1 ? 0.7f : 0.3f), da.ScabbardTex.Height() * 0.7f);

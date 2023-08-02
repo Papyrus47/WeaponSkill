@@ -94,7 +94,8 @@ namespace WeaponSkill.Weapons.Shortsword
                 TimeChange = swingSpeed,
                 SwingRot = MathHelper.Pi + MathHelper.PiOver4,
                 VisualRotation = 0.4f,
-            };
+                Sound = new SoundStyle("WeaponSkill/Sounds/Shortsword/Shortsword_Slash1")
+        };
             ShortswordSwing shortswordSwing2 = new(this)
             {
                 VelScale = new Vector2(1, 0.3f),
@@ -103,7 +104,8 @@ namespace WeaponSkill.Weapons.Shortsword
                 TimeChange = swingSpeed,
                 SwingRot = MathHelper.Pi + MathHelper.PiOver4,
                 VisualRotation = 0.6f,
-                SwingDirectionChange = false
+                SwingDirectionChange = false,
+                Sound = new SoundStyle("WeaponSkill/Sounds/Shortsword/Shortsword_Slash2")
             };
             ShortswordSwing shortswordSwing3 = new(this)
             {
@@ -113,6 +115,7 @@ namespace WeaponSkill.Weapons.Shortsword
                 TimeChange = swingSpeed,
                 SwingRot = MathHelper.Pi + MathHelper.PiOver4,
                 VisualRotation = 0.2f,
+                Sound = new SoundStyle("WeaponSkill/Sounds/Shortsword/Shortsword_Slash1")
             };
 
             ShortswordSpurts shortswordSpurts = new(this)
@@ -147,7 +150,8 @@ namespace WeaponSkill.Weapons.Shortsword
                     {
                         Player.velocity *= 0.03f;
                     }
-                }
+                },
+                Sound = new SoundStyle("WeaponSkill/Sounds/Shortsword/Shortsword_MoveSpurts")
             };
 
             ShortswordSwing BehindSpurt2_Slash1 = new(this)
@@ -158,6 +162,7 @@ namespace WeaponSkill.Weapons.Shortsword
                 TimeChange = fastSwingSpeed,
                 SwingRot = MathHelper.Pi + MathHelper.PiOver4,
                 VisualRotation = 0.7f,
+                Sound = new SoundStyle("WeaponSkill/Sounds/Shortsword/Shortsword_Slash1")
             };
             ShortswordSwing BehindSpurt2_Slash2 = new(this)
             {
@@ -167,7 +172,8 @@ namespace WeaponSkill.Weapons.Shortsword
                 TimeChange = fastSwingSpeed,
                 SwingRot = MathHelper.Pi + MathHelper.PiOver4,
                 VisualRotation = 0.2f,
-                SwingDirectionChange = false
+                SwingDirectionChange = false,
+                Sound = new SoundStyle("WeaponSkill/Sounds/Shortsword/Shortsword_Slash2")
             };
             ShortswordSwing BehindSpurt2_Slash3 = new(this)
             {
@@ -177,6 +183,7 @@ namespace WeaponSkill.Weapons.Shortsword
                 TimeChange = fastSwingSpeed,
                 SwingRot = MathHelper.Pi + MathHelper.PiOver4,
                 VisualRotation = 0f,
+                Sound = new SoundStyle("WeaponSkill/Sounds/Shortsword/Shortsword_Slash1")
             };
             ShortswordSwing BehindSpurt2_Slash4 = new(this)
             {
@@ -186,7 +193,8 @@ namespace WeaponSkill.Weapons.Shortsword
                 TimeChange = fastSwingSpeed,
                 SwingRot = MathHelper.Pi + MathHelper.PiOver4,
                 VisualRotation = 0.7f,
-                SwingDirectionChange = false
+                SwingDirectionChange = false,
+                Sound = new SoundStyle("WeaponSkill/Sounds/Shortsword/Shortsword_Slash2")
             };
             ShortswordSwing BehindSpurt2_Slash5 = new(this)
             {
@@ -196,6 +204,7 @@ namespace WeaponSkill.Weapons.Shortsword
                 TimeChange = fastSwingSpeed,
                 SwingRot = MathHelper.Pi + MathHelper.PiOver4,
                 VisualRotation = 0.7f,
+                Sound = new SoundStyle("WeaponSkill/Sounds/Shortsword/Shortsword_Slash1")
             };
 
             ShortswordSwing BehindDash_Slash = new(this)
@@ -206,6 +215,7 @@ namespace WeaponSkill.Weapons.Shortsword
                 TimeChange = swingSpeed,
                 SwingRot = MathHelper.Pi + MathHelper.PiOver4,
                 VisualRotation = 0.7f,
+                Sound = new SoundStyle("WeaponSkill/Sounds/Shortsword/Shortsword_Slash1")
             };
 
 
