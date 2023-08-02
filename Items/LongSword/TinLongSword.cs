@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Terraria.ID;
 
 namespace WeaponSkill.Items.LongSword
 {
-    public class CopperLongSword : BasicLongSwordItem
+    public class TinLongSword : BasicLongSwordItem
     {
         public override void SetDefaults()
         {
@@ -20,7 +19,7 @@ namespace WeaponSkill.Items.LongSword
         }
         public override void AddRecipes()
         {
-            CreateRecipe().AddIngredient(ItemID.CopperBar, 8).AddTile(TileID.WorkBenches).Register();
+            CreateRecipe().AddIngredient(ItemID.TinBar, 8).AddTile(TileID.WorkBenches).Register();
         }
     }
 }

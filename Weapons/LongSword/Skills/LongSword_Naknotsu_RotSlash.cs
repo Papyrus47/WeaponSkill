@@ -33,6 +33,8 @@ namespace WeaponSkill.Weapons.LongSword.Skills
                 {
                     IsLevelUp = true;
                     if(LongSword.SpawnItem.GetGlobalItem<LongSwordGlobalItem>().SpiritLevel > 0) LongSword.SpawnItem.GetGlobalItem<LongSwordGlobalItem>().SpiritLevel--;
+                    var proj = SpurtsProj.NewSpurtsProj(Projectile.GetSource_FromAI(), player.Center - player.velocity.SafeNormalize(default) * LongSword.SwingLength * 5f, player.velocity.SafeNormalize(default), Projectile.damage, Projectile.knockBack, Projectile.owner, LongSword.SwingLength * 9f, 80, TextureAssets.Heart.Value);
+                    proj.FixedPos = false;
                 }
             }
             LongSword.CanChangeScabbardRot = true;
@@ -45,8 +47,6 @@ namespace WeaponSkill.Weapons.LongSword.Skills
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
-            var proj = SpurtsProj.NewSpurtsProj(Projectile.GetSource_FromAI(), target.Center - player.velocity.SafeNormalize(default) * LongSword.SwingLength * 1.3f, player.velocity.SafeNormalize(default), Projectile.damage, Projectile.knockBack, Projectile.owner, LongSword.SwingLength * 2.3f, 80, TextureAssets.Heart.Value);
-            proj.FixedPos = false;
         }
     }
 }

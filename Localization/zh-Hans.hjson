@@ -115,7 +115,42 @@ Mods: {
 
 			CopperLongSword: {
 				DisplayName: 铜太刀
-				// Tooltip: ""
+				 Tooltip: ""
+			}
+
+			GoldLongSword: {
+				 DisplayName: 金太刀
+				 Tooltip: ""
+			}
+
+			IronLongSword: {
+				 DisplayName: 铁太刀
+				 Tooltip: ""
+			}
+
+			LeadLongSword: {
+				 DisplayName: 铅太刀
+				 Tooltip: ""
+			}
+
+			PlatinumLongSword: {
+				 DisplayName: 铂金太刀
+				 Tooltip: ""
+			}
+
+			SilverLongSword: {
+				 DisplayName: 银太刀
+				 Tooltip: ""
+			}
+
+			TinLongSword: {
+				 DisplayName: 锡太刀
+				 Tooltip: ""
+			}
+
+			TungstenLongSword: {
+				 DisplayName: 钨太刀
+				 Tooltip: ""
 			}
 		}
 	}

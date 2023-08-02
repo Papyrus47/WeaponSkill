@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeaponSkill.Particles;
 
 namespace WeaponSkill.Weapons.LongSword.Skills
 {
@@ -27,6 +28,15 @@ namespace WeaponSkill.Weapons.LongSword.Skills
                 if (Projectile.ai[1]++ > 180)
                 {
                     SkillTimeOut = true;
+                }
+                else if ((int)Projectile.ai[1] == 5)
+                {
+                    SpearsStar spearsStar = new(player, new Vector2(0.2f, 0.8f) * 3f)
+                    {
+                        ScaleVelocity = new Vector2(0.3f, 1) * -0.1f,
+                        TimeLeft = 12
+                    };
+                    Main.ParticleSystem_World_OverPlayers.Add(spearsStar);
                 }
             }
             else // 渐变收刀

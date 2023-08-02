@@ -303,7 +303,12 @@ namespace WeaponSkill.Weapons.LongSword
                     }
                 }
             };
-
+            LongSword_SakuraSlashed longSword_SakuraSlashed = new(this, () => WeaponSkill.BowSlidingStep.Current && Player.controlUseItem)
+            {
+                StartVel = -Vector2.UnitX.RotatedBy(-0.3f),
+                VelScale = new Vector2(1, 0.3f),
+                VisualRotation = 0.7f
+            };
             #endregion
             #region 纳刀系
             LongSword_Naknotsu longSword_Naknotsu = new(this);
@@ -377,6 +382,7 @@ namespace WeaponSkill.Weapons.LongSword
 
             longSwordSwing_Spirit.AddSkill(SlashDown);
             longSwordSwing_Spirit2.AddSkill(Spurt);
+            longSword_SakuraSlashed.AddBySkill(SlashDown, Spurt, SlashUp, longSwordSwing_Spirit, longSwordSwing_Spirit2, longSwordSwing_Spirit3_3);
             #endregion
             #region 袈裟判定
             backSlash.AddBySkill(SlashDown, SlashUp, SlashUp, longSwordSwing_Spirit, longSwordSwing_Spirit2, longSwordSwing_Spirit3_3);

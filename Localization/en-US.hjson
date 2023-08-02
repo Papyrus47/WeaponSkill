@@ -117,6 +117,41 @@ Mods: {
 				DisplayName: Copper Long Sword
 				Tooltip: ""
 			}
+
+			GoldLongSword: {
+				DisplayName: Gold Long Sword
+				Tooltip: ""
+			}
+
+			IronLongSword: {
+				DisplayName: Iron Long Sword
+				Tooltip: ""
+			}
+
+			LeadLongSword: {
+				DisplayName: Lead Long Sword
+				Tooltip: ""
+			}
+
+			PlatinumLongSword: {
+				DisplayName: Platinum Long Sword
+				Tooltip: ""
+			}
+
+			SilverLongSword: {
+				DisplayName: Silver Long Sword
+				Tooltip: ""
+			}
+
+			TinLongSword: {
+				DisplayName: Tin Long Sword
+				Tooltip: ""
+			}
+
+			TungstenLongSword: {
+				DisplayName: Tungsten Long Sword
+				Tooltip: ""
+			}
 		}
 	}
 }
