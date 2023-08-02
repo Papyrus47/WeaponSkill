@@ -69,6 +69,7 @@ namespace WeaponSkill.Weapons.Shortsword.Skills
             if(Projectile.damage < Projectile.originalDamage * 3) Projectile.damage += Projectile.originalDamage * 3 / 5;
             ItemLoader.OnHitNPC(Shortsword.SpawnItem, player, target, hit, damageDone);
             TheUtility.VillagesItemOnHit(Shortsword.SpawnItem, player, new Rectangle((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height), Projectile.damage, Projectile.knockBack, target.whoAmI, Projectile.damage, damageDone);
+            TheUtility.SetPlayerImmune(player,8);
         }
         public override void OnSkillActive()
         {

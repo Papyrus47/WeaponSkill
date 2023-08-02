@@ -92,6 +92,7 @@ namespace WeaponSkill.Weapons.LongSword.Skills
         {
             base.OnHitNPC(target, hit, damageDone);
             OnHit?.Invoke(target,hit,damageDone);
+            TheUtility.SetPlayerImmune(player);
         }
         public override bool PreDraw(SpriteBatch sb, ref Color lightColor)
         {

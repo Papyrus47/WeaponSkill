@@ -11,6 +11,7 @@ namespace WeaponSkill.Weapons.LongSword.Skills
     {
         public LongSword_Naknotsu_RotSlash(LongSwordProj longSword, Func<bool> activationConditionFunc) : base(longSword, activationConditionFunc)
         {
+            SP_Spirit = true;
         }
         public override void AI()
         {

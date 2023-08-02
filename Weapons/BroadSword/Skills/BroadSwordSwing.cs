@@ -159,6 +159,7 @@ namespace WeaponSkill.Weapons.BroadSword.Skills
         {
             ItemLoader.OnHitNPC(broadSword.SpawnItem, player, target, hit, damageDone);
             TheUtility.VillagesItemOnHit(broadSword.SpawnItem, player, new Rectangle((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height),Projectile.damage,Projectile.knockBack,target.whoAmI,Projectile.damage,damageDone);
+            TheUtility.SetPlayerImmune(player);
         }
         public override void OnSkillActive()
         {

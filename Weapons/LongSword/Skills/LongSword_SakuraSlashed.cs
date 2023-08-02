@@ -32,7 +32,7 @@ namespace WeaponSkill.Weapons.LongSword.Skills
             }
             else if ((int)Projectile.ai[0] == 2)
             {
-                Time = 1500;
+                Time = 600;
                 player.velocity.X *= 0.3f;
                 if (SlashOnHit)
                 {
