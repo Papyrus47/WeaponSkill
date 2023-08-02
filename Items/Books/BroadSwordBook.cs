@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WeaponSkill.Items
+namespace WeaponSkill.Items.Books
 {
-    public class ShortSwordBook : BasicInstructions
+    public class BroadSwordBook : BasicInstructions
     {
+
     }
 }

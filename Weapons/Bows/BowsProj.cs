@@ -82,17 +82,17 @@ namespace WeaponSkill.Weapons.Bows
             BowHeld held = new(this);
             BowChannelShoot bowChannelShoot = new(this)
             {
-                ChannelTime = () => Player.itemAnimationMax * 3,
-                ShootTime = () => Player.itemTimeMax
+                ChannelTime = () => (int)MathF.Log(800 / Player.itemAnimationMax) * 13,
+                ShootTime = () => 12
             };
             BowJustShoot bowJustShoot = new(this)
             {
-                ShootTime = () => Player.itemTimeMax * 2
+                ShootTime = () => 30
             };
             BowSlidingStep bowSlidingStep = new(this);
             BowHangingShoot bowHangingShoot = new(this)
             {
-                ShootTime = () => (int)(Player.itemTimeMax * 1.5f)
+                ShootTime = () => 23
             };
 
             bowNotUse.AddSkill(held);

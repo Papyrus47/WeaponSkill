@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria.ID;
 
-namespace WeaponSkill.Items
+namespace WeaponSkill.Items.Books
 {
     public abstract class BasicInstructions : ModItem
     {

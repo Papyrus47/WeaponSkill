@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria;
 using Terraria.GameInput;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ModLoader.IO;
@@ -15,6 +16,22 @@ namespace WeaponSkill
         public bool IsBlockAttack;
         public bool Player_BowSidingStep;
         public byte BowChannelLeave;
+        /// <summary>
+        /// 太刀 见切
+        /// </summary>
+        public bool InForesightSlash;
+        /// <summary>
+        /// 见切成功
+        /// </summary>
+        public bool ForesightSlash_OnHit;
+        /// <summary>
+        /// 居合无敌
+        /// </summary>
+        public bool Naknotsu_Slash;
+        /// <summary>
+        /// 居合被命中
+        /// </summary>
+        public bool Naknotsu_Slash_OnHit;
         /// <summary>
         /// 拥有的弹药,用于切换
         /// </summary>
@@ -104,6 +121,7 @@ namespace WeaponSkill
                 modifiers.ModifyHurtInfo += BlockingDamage;
                 IsBlockAttack = true;
             }
+            //modifiers.FinalDamage *= 0;
         }
         public override bool? CanMeleeAttackCollideWithNPC(Item item, Rectangle meleeAttackHitbox, NPC target)
         {
@@ -154,6 +172,37 @@ namespace WeaponSkill
                 SoundEngine.PlaySound(sound.WithVolumeScale(5).WithPitchOffset(-0.8f), Player.position);
                 SoundEngine.PlaySound(sound.WithVolumeScale(0.5f).WithPitchOffset(0.9f), Player.position);
                 Player.SetImmuneTimeForAllTypes(20);
+                return true;
+            }
+            if (InForesightSlash)
+            {
+                ForesightSlash_OnHit = true;
+                Player.SetImmuneTimeForAllTypes(180);
+                for (int i = 0; i < 9; i++)
+                {
+                    var dust = Dust.NewDustDirect(Player.Center, 1, 1, DustID.Clentaminator_Red);
+                    dust.scale = 1.5f;
+                    dust.color = Color.Gold;
+                    dust.fadeIn = 0.1f;
+                    dust.velocity = Vector2.One.RotatedBy(i / 6f * MathHelper.TwoPi) * 3;
+                    dust.noGravity = true;
+                }
+                return true;
+            }
+
+            if (Naknotsu_Slash)
+            {
+                Naknotsu_Slash_OnHit = true;
+                Player.SetImmuneTimeForAllTypes(180);
+                for (int i = 0; i < 9; i++)
+                {
+                    var dust = Dust.NewDustDirect(Player.Center, 1, 1, DustID.Clentaminator_Red);
+                    dust.scale = 1.5f;
+                    dust.color = Color.Gold;
+                    dust.fadeIn = 0.1f;
+                    dust.velocity = Vector2.One.RotatedBy(i / 6f * MathHelper.TwoPi) * 3;
+                    dust.noGravity = true;
+                }
                 return true;
             }
             return base.FreeDodge(info);

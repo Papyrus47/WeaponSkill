@@ -1,9 +1,11 @@
 Mods: {
 	WeaponSkill: {
 		ModKey: {
-			RangeChange: 远程 装填弹药切换
-			BowSlidingStep: 弓的滑步
+			RangeChange: 特殊按键1
+			BowSlidingStep: 特殊按键2
 		}
+
+		// Spears.SP_Text: 当按下特殊按键{0}的时候,切换为形态
 
 		Items: {
 			BroadSwordBook: {
@@ -109,6 +111,11 @@ Mods: {
 					 如果耐力不足，则无法进行攻击
 						第一级蓄力刚射不消耗耐力(又称迅雷射击)
 					'''
+			}
+
+			CopperLongSword: {
+				DisplayName: 铜太刀
+				// Tooltip: ""
 			}
 		}
 	}

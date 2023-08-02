@@ -272,8 +272,8 @@ namespace WeaponSkill.Helper
                 };
                 Color drawColor = drawColorFunc.Invoke((float)i / velLength);
                 customVertices[0] = customVertices[5] = new(pos[0], drawColor, new Vector3(0f, factor, 0)); // 柄
-                customVertices[1] = new(pos[1], drawColor, new Vector3(0f, 0, 0)); // 左上角
-                customVertices[2] = customVertices[3] = new(pos[2], drawColor, new Vector3(1f, 0f, 0)); // 头
+                customVertices[1] = new(pos[1], drawColor, new Vector3(0f, factor - 1f, 0)); // 左上角
+                customVertices[2] = customVertices[3] = new(pos[2], drawColor, new Vector3(1f, factor - 1f, 0)); // 头
                 customVertices[4] = new(pos[3], drawColor, new Vector3(1f, factor, 0)); // 右下角
 
                 gd.Textures[0] = TextureAssets.Projectile[projectile.type].Value;

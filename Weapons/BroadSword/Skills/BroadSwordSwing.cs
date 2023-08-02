@@ -98,7 +98,7 @@ namespace WeaponSkill.Weapons.BroadSword.Skills
                     {
                         SwingAction?.Invoke(this);
                         Projectile.spriteDirection = player.direction * SwingDirectionChange.ToDirectionInt();
-                        if(Projectile.numHits > 0)
+                        if(Projectile.numHits > 0 && Projectile.ai[2] <= -6)
                         {
                             Projectile.numHits = 0;
                             Projectile.ai[2] = TimeChange.Invoke() * 1.5f;

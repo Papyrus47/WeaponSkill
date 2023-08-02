@@ -11,6 +11,8 @@ namespace WeaponSkill.Weapons.Shortsword
     {
         public Player player;
         public Texture2D DrawColorTex;
+        public bool FixedPos;
+        public Action<NPC,NPC.HitInfo,int> OnHit;
         public override string Texture => "Terraria/Images/Item_0";
         public override void SetDefaults()
         {
@@ -20,6 +22,7 @@ namespace WeaponSkill.Weapons.Shortsword
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
+            FixedPos = true;
         }
         public override void AI()
         {
@@ -27,7 +30,7 @@ namespace WeaponSkill.Weapons.Shortsword
             if(Projectile.ai[2] < 8) Projectile.ai[2]++;
             Projectile.ai[1] *= 0.85f;
             if (Projectile.ai[1] <= 0) Projectile.Kill();
-            Projectile.Center = player.Center;
+            if(FixedPos) Projectile.Center = player.Center;
         }
         public override bool? CanDamage()
         {
@@ -38,6 +41,10 @@ namespace WeaponSkill.Weapons.Shortsword
         {
             float r = 0;
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(),targetHitbox.Size(),projHitbox.Center(),projHitbox.Center() + Projectile.velocity * Projectile.ai[0], Projectile.ai[1],ref r);
+        }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            OnHit?.Invoke(target,hit,damageDone);
         }
         public override bool PreDraw(ref Color lightColor)
         {
@@ -55,11 +62,11 @@ namespace WeaponSkill.Weapons.Shortsword
             spurtsDraw.Draw(Main.spriteBatch, WeaponSkill.SpurtsShader.Value);
             return false;
         }
-        public static int NewSpurtsProj(IEntitySource source, Vector2 pos, Vector2 vel, int damage, float kn, int onwer, float width, float height, Texture2D DrawColorTex = null)
+        public static SpurtsProj NewSpurtsProj(IEntitySource source, Vector2 pos, Vector2 vel, int damage, float kn, int onwer, float width, float height, Texture2D DrawColorTex = null)
         {
             int v = Projectile.NewProjectile(source, pos, vel, ModContent.ProjectileType<SpurtsProj>(), damage, kn, onwer, width, height);
             (Main.projectile[v].ModProjectile as SpurtsProj).DrawColorTex = DrawColorTex;
-            return v;
+            return Main.projectile[v].ModProjectile as SpurtsProj;
         }
     }
 }

@@ -15,5 +15,9 @@ namespace WeaponSkill.Weapons
             if (WeaponID == null) return false;
             return lateInstantiation && WeaponID.Contains(entity.type);
         }
+        public override void Unload()
+        {
+            WeaponID = null;
+        }
     }
 }

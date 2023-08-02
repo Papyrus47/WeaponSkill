@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria.UI;
 using WeaponSkill.UI.ChangeAmmoUI;
+using WeaponSkill.UI.SpiritUI;
 using WeaponSkill.UI.StaminaUI;
 
 namespace WeaponSkill
@@ -13,8 +14,10 @@ namespace WeaponSkill
     {
         public UserInterface userInterface0;
         public UserInterface userInterface1;
+        public UserInterface userInterface2;
         public ChangeAmmoUI changeAmmo;
         public StaminaUI stamina;
+        public SpiritUI spiritUI;
         public override void Load()
         {
             changeAmmo = new ChangeAmmoUI();
@@ -26,6 +29,11 @@ namespace WeaponSkill
             userInterface1 = new UserInterface();
             stamina.Initialize();
             userInterface1.SetState(stamina);
+
+            spiritUI = new();
+            userInterface2 = new();
+            spiritUI.Initialize();
+            userInterface2.SetState(spiritUI);
         }
         public override void Unload()
         {
@@ -34,10 +42,14 @@ namespace WeaponSkill
 
             userInterface1 = null;
             stamina = null;
+
+            spiritUI = null;
+            userInterface2 = null;
         }
         public override void UpdateUI(GameTime gameTime)
         {
             userInterface0.Update(gameTime);
+            userInterface2.Update(gameTime);
         }
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
@@ -55,6 +67,12 @@ namespace WeaponSkill
                     userInterface1.Draw(Main.spriteBatch, new());
                     return true;
                 },InterfaceScaleType.UI));
+
+                layers.Insert(index, new LegacyGameInterfaceLayer("spiritUI", () =>
+                {
+                    userInterface2.Draw(Main.spriteBatch, new());
+                    return true;
+                }, InterfaceScaleType.UI));
             }
         }
     }

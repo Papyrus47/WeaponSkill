@@ -7,6 +7,7 @@ using WeaponSkill.Helper;
 using WeaponSkill.Weapons.Spears.Skills;
 using Terraria.ID;
 using WeaponSkill.Weapons.Shortsword;
+using Terraria.Enums;
 
 namespace WeaponSkill.Weapons.Spears
 {
@@ -17,6 +18,7 @@ namespace WeaponSkill.Weapons.Spears
         public int SpawnItem_OriginShootProj;
         public float WeaponLength;
         public SwingHelper SwingHelper;
+        public float RotCorrect;
         public Texture2D DrawColorTex => SpawnItem.GetGlobalItem<SpearsGlobalItem>().DrawColorTex;
         public override string Texture => "Terraria/Images/Item_0";
         public List<ProjSkill_Instantiation> OldSkills { get; set; }
@@ -51,7 +53,7 @@ namespace WeaponSkill.Weapons.Spears
         }
         public override void AI()
         {
-            if (Player.HeldItem != SpawnItem || Player.dead) // 玩家手上物品不是生成物品,则清除
+            if (Player.HeldItem != SpawnItem || Player.dead || SpawnItem.GetGlobalItem<SpearsGlobalItem>().SPItem) // 玩家手上物品不是生成物品,则清除
             {
                 Projectile.Kill();
                 return;
@@ -66,7 +68,15 @@ namespace WeaponSkill.Weapons.Spears
         public override bool? CanDamage() => CurrentSkill.CanDamage();
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => CurrentSkill.Colliding(projHitbox, targetHitbox);
         public virtual float TimeChange(float time) => MathF.Pow(time, 2.5f);
-        public override bool PreDraw(ref Color lightColor) => CurrentSkill.PreDraw(Main.spriteBatch, ref lightColor);
+        public override bool PreDraw(ref Color lightColor)
+        {
+            float rot = Projectile.rotation;
+            Projectile.rotation += RotCorrect * Projectile.spriteDirection;
+            bool flag = CurrentSkill.PreDraw(Main.spriteBatch, ref lightColor);
+            Projectile.rotation = rot;
+            return flag;
+        }
+
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             CurrentSkill.OnHitNPC(target, hit, damageDone);

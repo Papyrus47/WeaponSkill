@@ -6,10 +6,29 @@ Projectiles: {
 	BowsProj.DisplayName: Bows Proj
 	HangingShootProj.DisplayName: Hanging Shoot Proj
 	StoneProj.DisplayName: Stone Proj
+	LongSwordProj.DisplayName: Long Sword Proj
 }
 
 Keybinds: {
 	Mods.WeaponSkill.ModKey.RangeChange.DisplayName: Mods. Weapon Skill. Mod Key. Range Change
-	"远程 装填弹药切换.DisplayName": 远程 装填弹药切换
-	弓的滑步.DisplayName: 弓的滑步
+	"远程 装填弹药切换.DisplayName": 特殊按键1
+	弓的滑步.DisplayName: 特殊按键2
+	特殊按键1.DisplayName: 特殊按键1
+	特殊按键2.DisplayName: 特殊按键2
+}
+
+Configs: {
+	WS_Configs_UI: {
+		DisplayName: Weapon Skill : UI Sets
+
+		StaminaUI_Pos: {
+			Label: Stamina UI Location
+			Tooltip: Change Stamina UI Location
+		}
+
+		SpiritUI_Pos: {
+			Label: Spirit U I_ Pos
+			Tooltip: ""
+		}
+	}
 }
