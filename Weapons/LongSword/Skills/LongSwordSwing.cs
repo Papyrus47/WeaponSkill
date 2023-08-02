@@ -95,10 +95,7 @@ namespace WeaponSkill.Weapons.LongSword.Skills
         }
         public override bool PreDraw(SpriteBatch sb, ref Color lightColor)
         {
-            if (!Main.drawToScreen)
-            {
-                swingHelper.Swing_Draw_ItemAndTrailling(lightColor, WeaponSkill.SwingTex.Value, (_) => new Color(1f, 1f, 1f, 0f));
-            }
+            swingHelper.Swing_Draw_ItemAndTrailling(lightColor, TextureAssets.Extra[209].Value, (_) => !LongSword.InSpiritAttack ? new Color(0.2f, 0.2f, 0.2f, 0f) : new Color(2f,2f,2f, 0f));
             return false;
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)

@@ -20,7 +20,7 @@ namespace WeaponSkill.Items.LongSword
         }
         public override void AddRecipes()
         {
-            CreateRecipe().AddIngredient(ItemID.CopperBar, 8).AddTile(TileID.WorkBenches).Register();
+            CreateRecipe().AddIngredient(ItemID.CopperBar, 8).AddTile(TileID.Anvils).Register();
         }
     }
 }

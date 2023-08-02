@@ -59,9 +59,9 @@ namespace WeaponSkill.Weapons.LongSword
                 {
                     if (longSwordProj.InSpiritAttack)
                     {
-                        return new(1f, 0.2f, 0.2f, 0f);
+                        return new Color(100,170,255,0);
                     }
-                    return new(1, 1, 1, 0f);
+                    return new Color(100,100,100,0);
                 }, null);
             }
             //sb.Draw(WeaponSkill.MyRender, Vector2.Zero, Color.White);
