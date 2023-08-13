@@ -19,6 +19,11 @@ namespace WeaponSkill.UI.ChangeAmmoUI
             Width = new(32, 0);
             Height = new(32, 0);
         }
+        public override void MouseOver(UIMouseEvent evt)
+        {
+            base.MouseOver(evt);
+
+        }
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             if (AmmoItem == null) return;
@@ -40,6 +45,11 @@ namespace WeaponSkill.UI.ChangeAmmoUI
             else
             {
                 itemRect = itemTex.Frame(1, 1, 0, 0);
+            }
+            if (ContainsPoint(Main.MouseScreen))
+            {
+                //ItemSlot.MouseHover(ref AmmoItem);
+                Main.hoverItemName = AmmoItem.Name;
             }
             spriteBatch.Draw(itemTex, DrawRect.Center(), itemRect, Color.White,0,itemRect.Size() * 0.5f,1f,SpriteEffects.None,0f);
         }

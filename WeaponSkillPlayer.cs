@@ -7,6 +7,8 @@ using Terraria;
 using Terraria.GameInput;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ModLoader.IO;
+using WeaponSkill.Weapons.LongSword;
+using WeaponSkill.Weapons.LongSword.Skills;
 
 namespace WeaponSkill
 {
@@ -64,6 +66,14 @@ namespace WeaponSkill
         /// 旧的耐力槽
         /// </summary>
         public int OldStatStamina;
+        /// <summary>
+        /// 太刀水月架势
+        /// </summary>
+        public bool SerenePose;
+        /// <summary>
+        /// 水月架势被命中
+        /// </summary>
+        public bool SerenePoseOnHit;
         public override void ResetEffects()
         {
             ShowTheRangeChangeUI = false; 
@@ -203,6 +213,12 @@ namespace WeaponSkill
                     dust.velocity = Vector2.One.RotatedBy(i / 6f * MathHelper.TwoPi) * 3;
                     dust.noGravity = true;
                 }
+                return true;
+            }
+            if (SerenePose)
+            {
+                SerenePoseOnHit = true;
+                Player.SetImmuneTimeForAllTypes(180);
                 return true;
             }
             return base.FreeDodge(info);

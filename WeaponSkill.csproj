@@ -10,7 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Images\VanillaImages\Projectile_699.png" />
-    <None Remove="Items\LongSword\CopperLongSword.png" />
+    <None Remove="Items\LongSword\CopperLongSwordScabbard.png" />
     <None Remove="Items\LongSword\DefaultLongSwordScabbard.png" />
     <None Remove="Localization\en-US.hjson" />
     <None Remove="Localization\zh-Hans.hjson" />

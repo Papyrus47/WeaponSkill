@@ -46,7 +46,7 @@ namespace WeaponSkill.Weapons.LongSword.Skills
                     if (!IsLevelUp)
                     {
                         IsLevelUp = true;
-                        if (LongSword.SpawnItem.GetGlobalItem<LongSwordGlobalItem>().SpiritLevel > 0) LongSword.SpawnItem.GetGlobalItem<LongSwordGlobalItem>().SpiritLevel--;
+                        if (LongSword.SpawnItem.GetGlobalItem<LongSwordGlobalItem>().SpiritLevel < 3) LongSword.SpawnItem.GetGlobalItem<LongSwordGlobalItem>().SpiritLevel++;
                         LongSword.SpawnItem.GetGlobalItem<LongSwordGlobalItem>().Spirit = 0;
                     }
                 }

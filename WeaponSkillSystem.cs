@@ -12,67 +12,62 @@ namespace WeaponSkill
 {
     public class WeaponSkillSystem : ModSystem
     {
-        public UserInterface userInterface0;
-        public UserInterface userInterface1;
-        public UserInterface userInterface2;
+        public List<UserInterface> userInterfaces;
         public ChangeAmmoUI changeAmmo;
         public StaminaUI stamina;
         public SpiritUI spiritUI;
         public override void Load()
         {
+            userInterfaces = new();
             changeAmmo = new ChangeAmmoUI();
-            userInterface0 = new UserInterface();
+            UserInterface userInterface0 = new UserInterface();
+            userInterfaces.Add(userInterface0);
             changeAmmo.Initialize();
             userInterface0.SetState(changeAmmo);
 
             stamina = new StaminaUI();
-            userInterface1 = new UserInterface();
+            UserInterface userInterface1 = new UserInterface();
+            userInterfaces.Add(userInterface1);
             stamina.Initialize();
             userInterface1.SetState(stamina);
 
             spiritUI = new();
-            userInterface2 = new();
+            UserInterface userInterface2 = new UserInterface();
+            userInterfaces.Add(userInterface2);
             spiritUI.Initialize();
             userInterface2.SetState(spiritUI);
+
+            //crossbow_AddPartUIState = new Crossbow_AddPartUIState();
+            //UserInterface userInterface3 = new UserInterface();
+            //userInterfaces.Add(userInterface3);
+            //crossbow_AddPartUIState.Initialize();
+            //userInterface3.SetState(crossbow_AddPartUIState);
         }
         public override void Unload()
         {
+            userInterfaces.Clear();
             changeAmmo = null;
-            userInterface0 = null;
-
-            userInterface1 = null;
             stamina = null;
-
             spiritUI = null;
-            userInterface2 = null;
         }
         public override void UpdateUI(GameTime gameTime)
         {
-            userInterface0.Update(gameTime);
-            userInterface2.Update(gameTime);
+            userInterfaces.ForEach(x => x.Update(gameTime));
         }
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
             int index = layers.FindIndex(x => x.Name.Equals("Vanilla: Mouse Text"));
-            if(index != -1)
+            if (index != -1)
             {
-                layers.Insert(index, new LegacyGameInterfaceLayer("WSS_ChangeAmmo",() =>
+                layers.Insert(index, new LegacyGameInterfaceLayer("WeaponSkillUI", () =>
                 {
-                    userInterface0.Draw(Main.spriteBatch, new());
+                    for (int i = 0; i < userInterfaces.Count; i++)
+                    {
+                        userInterfaces[i].Draw(Main.spriteBatch, new());
+                    }
                     return true;
                 }, InterfaceScaleType.UI));
 
-                layers.Insert(index, new LegacyGameInterfaceLayer("Stamina",() =>
-                {
-                    userInterface1.Draw(Main.spriteBatch, new());
-                    return true;
-                },InterfaceScaleType.UI));
-
-                layers.Insert(index, new LegacyGameInterfaceLayer("spiritUI", () =>
-                {
-                    userInterface2.Draw(Main.spriteBatch, new());
-                    return true;
-                }, InterfaceScaleType.UI));
             }
         }
     }

@@ -23,6 +23,10 @@ namespace WeaponSkill.Weapons.LongSword.Skills
         public override void AI()
         {
             base.AI();
+            if ((int)Projectile.ai[0] == 0 && player.velocity.X != 0)
+            {
+                player.ChangeDir((player.velocity.X > 0).ToDirectionInt());
+            }
             LongSword.InSpiritAttack = true;
             if ((int)Projectile.ai[0] == 0 && (!SP_Spirit || (SP_Spirit && UseSpirit))) LongSword.SpawnItem.GetGlobalItem<LongSwordGlobalItem>().Spirit -= 2;
         }

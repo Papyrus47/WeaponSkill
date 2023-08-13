@@ -18,6 +18,7 @@ namespace WeaponSkill
         public static Asset<Texture2D> SpiritUITex;
         public static ModKeybind RangeChange;
         public static ModKeybind BowSlidingStep;
+        public static ModKeybind SpKeyBind;
         public static RenderTargetShaderSystem RenderTargetShaderSystem;
         public static RenderTarget2D MyRender;
         public override void Load()
@@ -86,6 +87,7 @@ namespace WeaponSkill
         {
             RangeChange = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.WeaponSkill.ModKey.RangeChange"), Microsoft.Xna.Framework.Input.Keys.G);
             BowSlidingStep = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.WeaponSkill.ModKey.BowSlidingStep"), Microsoft.Xna.Framework.Input.Keys.F);
+            SpKeyBind = KeybindLoader.RegisterKeybind(this, Language.GetTextValue("Mods.WeaponSkill.ModKey.SpKeyBind"), Microsoft.Xna.Framework.Input.Keys.X);
         }
         public override object Call(params object[] args)
         {
@@ -98,6 +100,8 @@ namespace WeaponSkill
                  * 0 表示大剑 
                  * 1 表示短剑
                  * 2 表示长矛
+                 * 3 表示弓
+                 * 4 表示太刀
             * 第二个是物品ID,一般情况下禁止手持弹幕
             * 第三个是额外,一般用于特殊物品
             *
@@ -130,6 +134,11 @@ namespace WeaponSkill
                     case 3: // 弓
                         {
                             Weapons.Bows.BowsGlobalItem.WeaponID.Add(ItemType);
+                            break;
+                        }
+                    case 4: // 太刀
+                        {
+                            Weapons.LongSword.LongSwordGlobalItem.WeaponID.Add(ItemType);
                             break;
                         }
                     default:CallSucceed = false;break;

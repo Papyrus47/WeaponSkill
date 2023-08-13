@@ -44,7 +44,7 @@ namespace WeaponSkill.Weapons.LongSword
                 Player = itemUse.Player;
                 Projectile.Name = SpawnItem.Name;
                 SwingHelper = new(Projectile, 18, TextureAssets.Item[SpawnItem.type]);
-                Projectile.scale = Player.GetAdjustedItemScale(SpawnItem);
+                Projectile.scale = Player.GetAdjustedItemScale(SpawnItem) + 0.15f;
                 Projectile.Size = TextureAssets.Item[SpawnItem.type].Size() * Projectile.scale;
                 SwingLength = Projectile.Size.Length();
                 LongSwordGlobalItem longSwordGlobalItem = SpawnItem.GetGlobalItem<LongSwordGlobalItem>();
@@ -77,7 +77,8 @@ namespace WeaponSkill.Weapons.LongSword
             InSpiritAttack = false;
             swordScabbard.projectile = Projectile;
             CurrentSkill.AI();
-            if(AddSpiritTime > 0)
+            Player.itemLocation = Projectile.Center;
+            if (AddSpiritTime > 0)
             {
                 AddSpiritTime--;
                 if (AddSpiritTime % 5 == 0)
@@ -88,7 +89,7 @@ namespace WeaponSkill.Weapons.LongSword
             }
             if (!CanChangeScabbardRot)
             {
-                swordScabbard.Rot = (MathHelper.PiOver2 * 1.82f) * Player.direction;
+                swordScabbard.Rot = (MathHelper.PiOver2 * 1.86f) * Player.direction;
             }
             CanChangeScabbardRot = false;
             OldSkills.TrimExcess();
@@ -102,6 +103,14 @@ namespace WeaponSkill.Weapons.LongSword
         public virtual float TimeChange(float time) => MathF.Pow(time,2.5f);
         public override bool PreDraw(ref Color lightColor)
         {
+            Color color = SpawnItem.GetGlobalItem<LongSwordGlobalItem>().SpiritLevel switch
+            {
+                1 => Color.White,
+                2 => Color.Gold,
+                3 => Color.Red,
+                _ => default
+            };
+            lightColor = Color.Lerp(lightColor, color, 0.2f);
             //Main.spriteBatch.Draw(DrawColorTex, new Vector2(500), null, Color.White, 0f, default, 4, SpriteEffects.None, 0f);
             return CurrentSkill.PreDraw(Main.spriteBatch, ref lightColor);
         }
@@ -269,11 +278,7 @@ namespace WeaponSkill.Weapons.LongSword
                 LevelUp = true,
                 SwingAI = () =>
                 {
-                    if ((int)Projectile.ai[0] == 0)
-                    {
-                        Player.ChangeDir((Player.velocity.X > 0).ToDirectionInt());
-                    }
-                    else if ((int)Projectile.ai[0] == 1)
+                    if ((int)Projectile.ai[0] == 1)
                     {
                         Projectile.extraUpdates = 2;
                         Player.velocity.X = Player.direction * 20;
@@ -362,6 +367,13 @@ namespace WeaponSkill.Weapons.LongSword
                 VisualRotation = 0.7f,
                 SwingRot = MathHelper.TwoPi,
             };
+            LongSword_SerenePose longSword_SerenePose = new(this, () => WeaponSkill.SpKeyBind.Current) // 水月架势
+            {
+                StartVel = Vector2.UnitY.RotatedBy(0.225f),
+                VelScale = new Vector2(1.5f, 0.9f),
+                VisualRotation = 0.4f,
+                SwingRot = MathHelper.Pi + MathHelper.PiOver2
+            };
             #endregion
             #region 普通攻击判定
             notUse.AddSkill(useSlash1).AddSkill(useSlash2);
@@ -381,7 +393,7 @@ namespace WeaponSkill.Weapons.LongSword
             foresightSlash.AddSkill(longSwordSwing_Spirit_RotSlash);
             #endregion
             #region 气刃攻击判定
-            longSwordSwing_Spirit.AddBySkill(SlashDown, Spurt, SlashUp);
+            longSwordSwing_Spirit.AddBySkill(SlashDown, Spurt, SlashUp,notUse);
             longSwordSwing_Spirit2.AddBySkill(useSlash2);
             longSwordSwing_Spirit.AddSkill(longSwordSwing_Spirit2).AddSkill(longSwordSwing_Spirit3_1).AddSkill(longSwordSwing_Spirit3_2).AddSkill(longSwordSwing_Spirit3_3).AddSkill(longSwordSwing_Spirit_RotSlash);
 
@@ -392,6 +404,9 @@ namespace WeaponSkill.Weapons.LongSword
             #region 袈裟判定
             backSlash.AddBySkill(SlashDown, SlashUp, SlashUp, longSwordSwing_Spirit, longSwordSwing_Spirit2, longSwordSwing_Spirit3_3);
             backSlash.AddSkill(longSwordSwing_AfterBackSlash).AddSkill(longSwordSwing_Spirit3_1);
+            #endregion
+            #region 水月架势判定
+            longSword_SerenePose.AddBySkill(useSlash2, SlashDown, Spurt, SlashUp, longSwordSwing_Spirit, longSwordSwing_Spirit2, longSwordSwing_Spirit3_3, longSwordSwing_AfterBackSlash, longSwordSwing_Spirit_RotSlash, NaknotsuSwing2, longSwordSwing_Spirit_RotSlash, longSword_SakuraSlashed);
             #endregion
             CurrentSkill = notUse;
         }

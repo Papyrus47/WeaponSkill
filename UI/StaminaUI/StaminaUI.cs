@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria.UI;
 using WeaponSkill.Configs;
+using WeaponSkill.Weapons.LongSword;
 
 namespace WeaponSkill.UI.StaminaUI
 {
@@ -13,7 +14,7 @@ namespace WeaponSkill.UI.StaminaUI
         public override void OnInitialize()
         {
             Width = new(200, 0);
-            Height = new(12, 0);
+            Height = new(30, 0);
             Left = new(0, 0.3f);
             Top = new(0, 0.02f);
         }
@@ -29,6 +30,7 @@ namespace WeaponSkill.UI.StaminaUI
             var tex = WeaponSkill.StaminaUITex.Value;
             Rectangle drawRect = GetDimensions().ToRectangle();
             Vector2 center = drawRect.Center();
+            center.Y -= Height.Pixels / 2;
             WeaponSkillPlayer skillPlayer = Main.LocalPlayer.GetModPlayer<WeaponSkillPlayer>();
             float factor = (float)skillPlayer.StatStamina / skillPlayer.StatStaminaMax;
 
@@ -43,6 +45,11 @@ namespace WeaponSkill.UI.StaminaUI
 
             spriteBatch.Draw(tex, center - new Vector2(100, 0), edgeRect, Color.White);
             spriteBatch.Draw(tex, center + new Vector2(100, 0), edgeRect1, Color.White);
+
+            if (ContainsPoint(Main.MouseScreen))
+            {
+                Main.hoverItemName = skillPlayer.StatStamina.ToString() + "/" + skillPlayer.StatStaminaMax.ToString();
+            }
         }
     }
 }

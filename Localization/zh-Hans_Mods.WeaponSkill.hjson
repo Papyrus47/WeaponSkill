@@ -11,10 +11,9 @@ Projectiles: {
 
 Keybinds: {
 	// Mods.WeaponSkill.ModKey.RangeChange.DisplayName: Mods. Weapon Skill. Mod Key. Range Change
-	// "远程 装填弹药切换.DisplayName": 特殊按键1
-	// 弓的滑步.DisplayName: 特殊按键2
 	// 特殊按键1.DisplayName: 特殊按键1
 	// 特殊按键2.DisplayName: 特殊按键2
+	// 特殊按键3.DisplayName: 特殊按键3
 }
 
 Configs: {

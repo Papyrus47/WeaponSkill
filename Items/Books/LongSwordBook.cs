@@ -13,7 +13,7 @@ namespace WeaponSkill.Items.Books
         {
             tooltips.ForEach((x) =>
             {
-                x.Text = string.Format(x.Text, WeaponSkill.BowSlidingStep.GetAssignedKeys(InputMode.Keyboard).FirstOrDefault(), WeaponSkill.RangeChange.GetAssignedKeys(InputMode.Keyboard).FirstOrDefault());
+                x.Text = string.Format(x.Text, WeaponSkill.BowSlidingStep.GetAssignedKeys(InputMode.Keyboard).FirstOrDefault(), WeaponSkill.RangeChange.GetAssignedKeys(InputMode.Keyboard).FirstOrDefault(),WeaponSkill.SpKeyBind.GetAssignedKeys(InputMode.Keyboard).FirstOrDefault());
             });
         }
     }

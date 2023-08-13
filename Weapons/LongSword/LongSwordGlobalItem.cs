@@ -20,6 +20,9 @@ namespace WeaponSkill.Weapons.LongSword
         public override void SetStaticDefaults()
         {
             WeaponID ??= new();
+            WeaponID.Add(ItemID.Katana);
+            WeaponID.Add(ItemID.Muramasa);
+            WeaponID.Add(ItemID.CobaltSword);
         }
         public override void SetDefaults(Item entity)
         {

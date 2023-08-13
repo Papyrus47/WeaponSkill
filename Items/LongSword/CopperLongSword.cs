@@ -12,7 +12,7 @@ namespace WeaponSkill.Items.LongSword
     {
         public override void SetDefaults()
         {
-            Item.Size = new(52, 100);
+            Item.Size = new(30,70);
             Item.damage = 7;
             Item.knockBack = 2;
             Item.useTime = Item.useAnimation = 30;
@@ -23,7 +23,7 @@ namespace WeaponSkill.Items.LongSword
         {
             if (Item.TryGetGlobalItem(out LongSwordGlobalItem longSwordGlobalItem))
             {
-                longSwordGlobalItem.ScabbardTex = ModContent.Request<Texture2D>("WeaponSkill/Items/LongSword/DefaultLongSwordScabbard");
+                longSwordGlobalItem.ScabbardTex = ModContent.Request<Texture2D>("WeaponSkill/Items/LongSword/CopperLongSwordScabbard");
             }
         }
         public override void AddRecipes()

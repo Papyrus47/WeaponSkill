@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria.UI;
 using WeaponSkill.Configs;
+using WeaponSkill.UI.ChangeAmmoUI;
 using WeaponSkill.Weapons.LongSword;
 
 namespace WeaponSkill.UI.SpiritUI
@@ -13,8 +14,8 @@ namespace WeaponSkill.UI.SpiritUI
     {
         public override void OnInitialize()
         {
-            Width = new(58, 0);
-            Height = new(13, 0);
+            Width = new(116, 0);
+            Height = new(26, 0);
         }
         public override void Update(GameTime gameTime)
         {
@@ -24,7 +25,7 @@ namespace WeaponSkill.UI.SpiritUI
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (LongSwordGlobalItem.ShowTheSpirit && Main.LocalPlayer.HeldItem != null && Main.LocalPlayer.HeldItem.active && !Main.playerInventory)
+            if (LongSwordGlobalItem.ShowTheSpirit && Main.LocalPlayer.HeldItem != null && Main.LocalPlayer.HeldItem.active && !Main.playerInventory && Main.LocalPlayer.HeldItem.TryGetGlobalItem<LongSwordGlobalItem>(out _))
             {
                 LongSwordGlobalItem.ShowTheSpirit = false;
                 base.Draw(spriteBatch);
@@ -36,8 +37,8 @@ namespace WeaponSkill.UI.SpiritUI
             //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.UIScaleMatrix);
             var tex = WeaponSkill.SpiritUITex.Value;
             Rectangle rect = GetDimensions().ToRectangle();
-            rect.Width *= 2;
-            rect.Height *= 2;
+            //rect.Width *= 2;
+            //rect.Height *= 2;
 
             LongSwordGlobalItem longSwordGlobalItem = Main.LocalPlayer.HeldItem.GetGlobalItem<LongSwordGlobalItem>();
             int SpiritLevel = longSwordGlobalItem.SpiritLevel;
@@ -60,6 +61,12 @@ namespace WeaponSkill.UI.SpiritUI
             }
             spriteBatch.Draw(tex,rect,drawRect, Color.White,0,Vector2.Zero,SpriteEffects.None,0f); // 绘制气刃外框
             spriteBatch.Draw(ModContent.Request<Texture2D>("WeaponSkill/UI/SpiritUI/SpiritUITex_DrawSpiritLine").Value, rect.Center(), lineRect, new Color(200,30,30,20), 0, new Vector2(15f, 1.5f),2f, SpriteEffects.None, 0f); ; // 绘制气刃条
+
+            if (ContainsPoint(Main.MouseScreen))
+            {
+                //ItemSlot.MouseHover(ref AmmoItem);
+                Main.hoverItemName = longSwordGlobalItem.Spirit + "/" +longSwordGlobalItem.SpiritMax.ToString();
+            }
 
             //spriteBatch.End();
             //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.SamplerStateForCursor, DepthStencilState.None, Main.Rasterizer,null,Main.UIScaleMatrix);

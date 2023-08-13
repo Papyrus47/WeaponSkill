@@ -56,7 +56,7 @@ namespace WeaponSkill.Weapons.LongSword
             if (ScabbardTex == null) return;
             DrawAction?.Invoke(this);
             if (FrameMax == 0) FrameMax = 1;
-            spriteBatch.Draw(ScabbardTex.Value, DrawPos - Main.screenPosition, ScabbardTex.Frame(1,FrameMax,0,Frame), Color.White, Rot, DrawOrigin, projectile.scale + 0.2f, Dir == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            spriteBatch.Draw(ScabbardTex.Value, DrawPos - Main.screenPosition, ScabbardTex.Frame(1,FrameMax,0,Frame), Lighting.GetColor((DrawPos / 16).ToPoint()), Rot, DrawOrigin, projectile.scale + 0.2f, Dir == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
         }
     }
 }
