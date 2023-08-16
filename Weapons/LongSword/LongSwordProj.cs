@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using WeaponSkill.Helper;
+using WeaponSkill.Weapons.General;
 using WeaponSkill.Weapons.LongSword.Skills;
-using WeaponSkill.Weapons.Shortsword;
 
 namespace WeaponSkill.Weapons.LongSword
 {

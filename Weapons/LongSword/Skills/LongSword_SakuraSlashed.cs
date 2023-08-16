@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WeaponSkill.Helper;
 using WeaponSkill.Particles;
-using WeaponSkill.Weapons.Shortsword;
+using WeaponSkill.Weapons.General;
 
 namespace WeaponSkill.Weapons.LongSword.Skills
 {

@@ -8,6 +8,7 @@ namespace WeaponSkill.Helper
 {
     public interface IRenderTargetShaderDraw
     {
+        public bool Remove { get; set; }
         public void Draw();
         public void ResetDrawData();
     }

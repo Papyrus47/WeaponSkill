@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WeaponSkill.Weapons.Shortsword;
+using WeaponSkill.Weapons.General;
 
 namespace WeaponSkill.Weapons.LongSword.Skills
 {
@@ -32,10 +32,10 @@ namespace WeaponSkill.Weapons.LongSword.Skills
             {
                 player.velocity.X *= 0.3f;
                 Projectile.ai[2] += 2;
-                if (!IsLevelUp && !player.GetModPlayer<WeaponSkillPlayer>().Naknotsu_Slash_OnHit)
+                if (!IsLevelUp)
                 {
                     IsLevelUp = true;
-                    if(LongSword.SpawnItem.GetGlobalItem<LongSwordGlobalItem>().SpiritLevel > 0) LongSword.SpawnItem.GetGlobalItem<LongSwordGlobalItem>().SpiritLevel--;
+                    if(LongSword.SpawnItem.GetGlobalItem<LongSwordGlobalItem>().SpiritLevel > 0 && !player.GetModPlayer<WeaponSkillPlayer>().Naknotsu_Slash_OnHit) LongSword.SpawnItem.GetGlobalItem<LongSwordGlobalItem>().SpiritLevel--;
                     var proj = SpurtsProj.NewSpurtsProj(Projectile.GetSource_FromAI(), player.Center - player.velocity.SafeNormalize(default) * LongSword.SwingLength * 5f, player.velocity.SafeNormalize(default), Projectile.damage, Projectile.knockBack, Projectile.owner, LongSword.SwingLength * 9f, 80, TextureAssets.Heart.Value);
                     proj.FixedPos = false;
                 }

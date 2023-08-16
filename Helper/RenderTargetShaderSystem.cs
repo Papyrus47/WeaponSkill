@@ -15,7 +15,8 @@ namespace WeaponSkill.Helper
         }
         public void Draw()
         {
-            foreach(var i in RenderDraw)
+            RenderDraw.RemoveAll(x => x.Remove);
+            foreach (var i in RenderDraw)
             {
                 i.Draw();
             }

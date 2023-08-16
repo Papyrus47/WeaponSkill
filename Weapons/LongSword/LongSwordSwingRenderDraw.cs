@@ -9,6 +9,8 @@ namespace WeaponSkill.Weapons.LongSword
 {
     public class LongSwordSwingRenderDraw : IRenderTargetShaderDraw
     {
+        public bool Remove { get; set; }
+
         public void Draw()
         {
             SpriteBatch sb = Main.spriteBatch;
@@ -71,6 +73,10 @@ namespace WeaponSkill.Weapons.LongSword
         public void ResetDrawData()
         {
             LongSwordProj.DrawLongSwordSwingShader_Index.Clear();
+            if (!Main.LocalPlayer.HeldItem.TryGetGlobalItem<LongSwordGlobalItem>(out _))
+            {
+                Remove = true;
+            }
         }
         public Color GetDrawOffsetColor(SwingHelper swingHelper,float factor)
         {
