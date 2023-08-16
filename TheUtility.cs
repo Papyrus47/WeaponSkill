@@ -68,7 +68,7 @@ namespace WeaponSkill
                 DrawColorTex.SetData(colors);
             });
         }
-        public static void SetPlayerImmune(Player player,int immuneTime = 5)
+        public static void SetPlayerImmune(Player player,int immuneTime = 12)
         {
             if (player.immuneTime < immuneTime) player.SetImmuneTimeForAllTypes(immuneTime);
         }

@@ -16,13 +16,14 @@ namespace WeaponSkill.Weapons.LongSword
         public byte SpiritLevel,OldSpiritLevel;
         public byte Time;
         public Asset<Texture2D> ScabbardTex;
-        public Action<LongSwordScabbard> ScabbardAction;
+        public List<Action<LongSwordScabbard>> ScabbardAction = new();
         public override void SetStaticDefaults()
         {
             WeaponID ??= new();
             WeaponID.Add(ItemID.Katana);
             WeaponID.Add(ItemID.Muramasa);
             WeaponID.Add(ItemID.CobaltSword);
+            WeaponID.Add(ItemID.OrichalcumSword);
         }
         public override void SetDefaults(Item entity)
         {
@@ -33,6 +34,21 @@ namespace WeaponSkill.Weapons.LongSword
             entity.UseSound = null;
             entity.useTurn = false;
             SpiritMax = 150;
+            switch (entity.type)
+            {
+                case ItemID.Katana:
+                case ItemID.Muramasa:
+                    {
+                        entity.scale = 1.8f;
+                        break;
+                    }
+                case ItemID.CobaltSword:
+                case ItemID.OrichalcumSword:
+                    {
+                        entity.scale = 1.95f;
+                        break;
+                    }
+            }
         }
         public override void HoldItem(Item item, Player player)
         {

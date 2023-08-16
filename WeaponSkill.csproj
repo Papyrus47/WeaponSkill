@@ -11,7 +11,15 @@
   <ItemGroup>
     <None Remove="Images\VanillaImages\Projectile_699.png" />
     <None Remove="Items\LongSword\CopperLongSwordScabbard.png" />
+    <None Remove="Items\LongSword\CutTheFire.png" />
+    <None Remove="Items\LongSword\CutTheFireScabbard.png" />
     <None Remove="Items\LongSword\DefaultLongSwordScabbard.png" />
+    <None Remove="Items\LongSword\HarnessingWindLongSword.png" />
+    <None Remove="Items\LongSword\HarnessingWindLongSwordScabbard.png" />
+    <None Remove="Items\LongSword\LightsLongSword.png" />
+    <None Remove="Items\LongSword\LightsLongSwordScabbard.png" />
+    <None Remove="Items\LongSword\TarantulaLongSword.png" />
+    <None Remove="Items\LongSword\TarantulaLongSwordScabbard.png" />
     <None Remove="Localization\en-US.hjson" />
     <None Remove="Localization\zh-Hans.hjson" />
   </ItemGroup>

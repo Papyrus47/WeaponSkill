@@ -34,6 +34,10 @@ namespace WeaponSkill.Weapons.LongSword.Skills
             else
             {
                 player.velocity.X *= 0.8f;
+                if ((int)Projectile.ai[0] == 2)
+                {
+                    Projectile.ai[2] += 2;
+                }
             }
         }
         public override bool SwitchCondition() => base.SwitchCondition() && player.GetModPlayer<WeaponSkillPlayer>().ForesightSlash_OnHit;

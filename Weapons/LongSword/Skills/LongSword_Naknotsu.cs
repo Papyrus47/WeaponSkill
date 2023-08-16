@@ -47,18 +47,18 @@ namespace WeaponSkill.Weapons.LongSword.Skills
             player.velocity.X *= 0;
             player.ChangeDir(-Projectile.direction);
             player.GetModPlayer<WeaponSkillPlayer>().Naknotsu_Slash_OnHit = false;
-            Projectile.spriteDirection = player.direction;
+            Projectile.spriteDirection = -player.direction;
             swingHelper.SetSwingActive();
             swingHelper.ProjFixedPos(player.RotatedRelativePoint(player.MountedCenter) + new Vector2(player.direction * -10, Projectile.height * 0.1f), -LongSword.SwingLength * 0.45f, true);
             swingHelper.SwingAI(LongSword.SwingLength, player.direction, 0);
             LongSword.swordScabbard.DrawPos = Projectile.Center;
-            LongSword.swordScabbard.Dir = player.direction;
+            LongSword.swordScabbard.Dir = -player.direction;
             if (flag)
             {
                 Projectile.Center -= Projectile.velocity * (0.45f + LongSword.TimeChange((1 - (Projectile.ai[0] / 16)) * 0.95f));
             }
             Projectile.numHits = 0;
-            LongSword.swordScabbard.Rot += MathHelper.WrapAngle((rotVector.ToRotation() - 0.47f) * -player.direction - LongSword.swordScabbard.Rot) * 0.4f;
+            LongSword.swordScabbard.Rot += MathHelper.WrapAngle((rotVector.ToRotation() - 1.5f) * -player.direction - LongSword.swordScabbard.Rot) * 0.4f;
         }
         public override bool PreDraw(SpriteBatch sb, ref Color lightColor)
         {

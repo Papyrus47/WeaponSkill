@@ -8,6 +8,7 @@ namespace WeaponSkill.Weapons.Crossbow.Parts
 {
     public class BasicPartsItem : GlobalItem
     {
+        public override bool InstancePerEntity => true;
         public delegate void UpdateParts(Player player);
         public UpdateParts updateParts;
         public bool IsPartsItem;

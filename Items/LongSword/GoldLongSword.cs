@@ -16,7 +16,8 @@ namespace WeaponSkill.Items.LongSword
             Item.knockBack = 2;
             Item.useTime = Item.useAnimation = 30;
             Item.DamageType = DamageClass.MeleeNoSpeed;
-            Item.crit = 7; 
+            Item.crit = 7;
+            Item.scale = 0.7f;
         }
         public override void HoldItem(Player player)
         {

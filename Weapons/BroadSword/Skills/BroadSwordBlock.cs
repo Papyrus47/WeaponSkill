@@ -14,6 +14,7 @@ namespace WeaponSkill.Weapons.BroadSword.Skills
         public override void AI()
         {
             player.GetModPlayer<WeaponSkillPlayer>().InBlocking = true;
+            player.itemTime = player.itemAnimation = 2;
             Projectile.Center = Vector2.Lerp(player.Center + new Vector2(player.direction * 20, 0), Projectile.Center,0.3f);
             Projectile.rotation = MathHelper.Pi * 1.25f * player.direction;
             Projectile.velocity = Vector2.UnitY.RotatedBy(0.2f * player.direction);

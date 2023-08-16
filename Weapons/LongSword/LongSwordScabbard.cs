@@ -15,9 +15,12 @@ namespace WeaponSkill.Weapons.LongSword
             ScabbardTex = scabbardTex;
             //ScabbardTex ??= ModContent.Request<Texture2D>("WeaponSkill/Items/LongSword/DefaultLongSwordScabbard");
             if(ScabbardTex != null) Lenght = ScabbardTex.Size().Length();
-            DrawAction = (da) =>
+            DrawAction = new()
             {
-                da.DrawOrigin = new Vector2(da.ScabbardTex.Width() * (da.Dir == -1 ? 0.7f : 0.3f), da.ScabbardTex.Height() * 0.7f);
+                (da) =>
+                {
+                    da.DrawOrigin = new Vector2(da.ScabbardTex.Width() * (da.Dir == -1 ? 0.7f : 0.3f), da.ScabbardTex.Height() * 0.7f);
+                }
             };
         }
 
@@ -29,7 +32,7 @@ namespace WeaponSkill.Weapons.LongSword
         public Vector2 DrawOrigin;
         public int Dir;
         public int FrameMax, Frame;
-        public Action<LongSwordScabbard> DrawAction;
+        public List<Action<LongSwordScabbard>> DrawAction;
         public virtual void Draw(SpriteBatch spriteBatch,Color drawColor)
         {
             //GraphicsDevice gd = Main.graphics.GraphicsDevice;
@@ -54,9 +57,9 @@ namespace WeaponSkill.Weapons.LongSword
             //gd.Textures[0] = ScabbardTex.Value;
             //gd.DrawUserPrimitives(PrimitiveType.TriangleList, customVertices, 0, 2);
             if (ScabbardTex == null) return;
-            DrawAction?.Invoke(this);
+            DrawAction.ForEach(action => action.Invoke(this));
             if (FrameMax == 0) FrameMax = 1;
-            spriteBatch.Draw(ScabbardTex.Value, DrawPos - Main.screenPosition, ScabbardTex.Frame(1,FrameMax,0,Frame), Lighting.GetColor((DrawPos / 16).ToPoint()), Rot, DrawOrigin, projectile.scale + 0.2f, Dir == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            spriteBatch.Draw(ScabbardTex.Value, DrawPos - Main.screenPosition, ScabbardTex.Frame(1,FrameMax,0,Frame), Lighting.GetColor((DrawPos / 16).ToPoint()), Rot, DrawOrigin, projectile.scale + 0.3f, Dir == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
         }
     }
 }

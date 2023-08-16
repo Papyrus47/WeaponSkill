@@ -28,5 +28,28 @@ namespace WeaponSkill.Helper
             }
             RenderDraw.Clear();
         }
+        public bool Add(IRenderTargetShaderDraw draw)
+        {
+            for (int i = 0; i < RenderDraw.Count; i++)
+            {
+                if (RenderDraw[i].GetType().Equals(draw.GetType()))
+                {
+                    return false;
+                }
+            }
+            RenderDraw.Add(draw);
+            return true;
+        }
+        public T GetRenderDrawWithType<T>() where T : class, IRenderTargetShaderDraw
+        {
+            for (int i = 0; i < RenderDraw.Count; i++)
+            {
+                if (RenderDraw[i] is T)
+                {
+                    return RenderDraw[i] as T;
+                }
+            }
+            throw new NotImplementedException();
+        }
     }
 }

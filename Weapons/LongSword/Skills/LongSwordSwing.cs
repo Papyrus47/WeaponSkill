@@ -30,7 +30,7 @@ namespace WeaponSkill.Weapons.LongSword.Skills
 
         public const int SLASH_TIME = 36;
         public const int PREATTACK_TIME = 12;
-        public const int TIMEOUT_TIME = 23;
+        public const int TIMEOUT_TIME = 120;
         public const float CHANGE_LERP_SPEED = 0.35f;
         public override void AI()
         {
@@ -51,6 +51,7 @@ namespace WeaponSkill.Weapons.LongSword.Skills
                             Projectile.ai[0]++;
                             Projectile.ai[1] = 0;
                             Projectile.extraUpdates = 1;
+                            TheUtility.Player_ItemCheck_Shoot(player, LongSword.SpawnItem, Projectile.damage);
                             TheUtility.ResetProjHit(Projectile);
                         }
                         break;
@@ -58,6 +59,7 @@ namespace WeaponSkill.Weapons.LongSword.Skills
                 case 1: // 挥舞进行
                     {
                         Projectile.ai[1]++;
+                        player.heldProj = Projectile.whoAmI;
                         float Time = LongSword.TimeChange(Projectile.ai[1] / SLASH_TIME);
                         if (Time > 1)
                         {
@@ -93,7 +95,10 @@ namespace WeaponSkill.Weapons.LongSword.Skills
             base.OnHitNPC(target, hit, damageDone);
             OnHit?.Invoke(target,hit,damageDone);
             TheUtility.SetPlayerImmune(player);
+            player.itemAnimation = player.itemAnimationMax;
+            player.itemTime = player.itemTimeMax;
             TheUtility.VillagesItemOnHit(LongSword.SpawnItem, player,Projectile.Hitbox, hit.Damage, hit.Knockback, target.whoAmI, damageDone, damageDone);
+            //ItemLoader.OnHitNPC(LongSword.SpawnItem, player,target, hit, damageDone);
         }
         public override bool PreDraw(SpriteBatch sb, ref Color lightColor)
         {

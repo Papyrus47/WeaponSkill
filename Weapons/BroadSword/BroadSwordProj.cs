@@ -31,8 +31,8 @@ namespace WeaponSkill.Weapons.BroadSword
                 Projectile.Name = SpawnItem.Name;
                 SwingHelper = new(Projectile,16, TextureAssets.Item[SpawnItem.type]);
                 Projectile.ai[0] = -1;
-                Projectile.scale = Player.GetAdjustedItemScale(SpawnItem) + 1f;
-                Projectile.Size = TextureAssets.Item[SpawnItem.type].Size() * Projectile.scale;
+                Projectile.scale = Player.GetAdjustedItemScale(SpawnItem) + 2f;
+                Projectile.Size = SpawnItem.Size * Projectile.scale;
                 SwingLength = Projectile.Size.Length();
                 Init();
             }
@@ -73,6 +73,11 @@ namespace WeaponSkill.Weapons.BroadSword
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            Type type = Player.GetType();
+            type.GetField("_spawnVolcanoExplosion", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(Player, true);
+            type.GetField("_spawnBloodButcherer", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(Player, true);
+            type.GetField("_batbatCanHeal", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(Player, true);
+            type.GetField("_spawnTentacleSpikes", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(Player, true);
             CurrentSkill.OnHitNPC(target, hit, damageDone);
             ItemLoader.OnHitNPC(SpawnItem,Player, target, hit, damageDone);
             TheUtility.VillagesItemOnHit(SpawnItem, Player,Projectile.Hitbox, Projectile.originalDamage, Projectile.knockBack,target.whoAmI,Projectile.damage,damageDone);

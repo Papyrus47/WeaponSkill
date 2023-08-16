@@ -16,6 +16,7 @@ namespace WeaponSkill.Weapons.LongSword.Skills
         public override void AI()
         {
             base.AI();
+            LongSword.swordScabbard.Dir = -player.direction;
             if ((int)Projectile.ai[0] == 0)
             {
                 Projectile.ai[1] -= 0.65f;
@@ -30,6 +31,7 @@ namespace WeaponSkill.Weapons.LongSword.Skills
             else if ((int)Projectile.ai[0] == 2)
             {
                 player.velocity.X *= 0.3f;
+                Projectile.ai[2] += 2;
                 if (!IsLevelUp && !player.GetModPlayer<WeaponSkillPlayer>().Naknotsu_Slash_OnHit)
                 {
                     IsLevelUp = true;

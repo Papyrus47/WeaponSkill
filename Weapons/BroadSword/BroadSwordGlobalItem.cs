@@ -26,6 +26,14 @@ namespace WeaponSkill.Weapons.BroadSword
             entity.noMelee = true;
             entity.useStyle = ItemUseStyleID.Rapier;
             entity.UseSound = null;
+            switch (entity.type)
+            {
+                case 121:
+                    {
+                        entity.Size = new(50);
+                        break;
+                    }
+            }
         }
         public override void HoldItem(Item item, Player player)
         {

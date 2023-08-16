@@ -34,7 +34,7 @@ namespace WeaponSkill.Weapons.Bows
                     Projectile.Kill();
                     return;
                 }
-                Projectile.Size = TextureAssets.Item[SpawnItem.type].Size() * Projectile.scale;
+                Projectile.Size = SpawnItem.Size * Projectile.scale;
                 Projectile.scale = Player.GetAdjustedItemScale(SpawnItem);
                 Init();
             }

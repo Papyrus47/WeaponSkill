@@ -181,7 +181,7 @@ namespace WeaponSkill.Helper
         {
             SpriteBatch sb = Main.spriteBatch;
             sb.End();
-            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicWrap, DepthStencilState.Default, RasterizerState.CullNone);
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone);
 
             DrawSwingItem(drawColor);
             DrawTrailing(tex, colorFunc, effect, SetZ);
@@ -200,7 +200,7 @@ namespace WeaponSkill.Helper
         {
             SpriteBatch sb = Main.spriteBatch;
             sb.End();
-            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicWrap, DepthStencilState.Default, RasterizerState.CullNone);
+            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone);
 
             Swing_Draw_Afterimage(colorFunc, drawCount);
             DrawSwingItem(drawColor);
@@ -222,12 +222,12 @@ namespace WeaponSkill.Helper
         {
             SpriteBatch sb = Main.spriteBatch;
             sb.End();
-            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicWrap, DepthStencilState.Default, RasterizerState.CullNone);
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone);
 
             DrawTrailing(tex, TrailingColorFunc, effect, SetZ);
 
             sb.End();
-            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicWrap, DepthStencilState.Default, RasterizerState.CullNone);
+            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone);
 
             Swing_Draw_Afterimage(AfterimageColorFunc, drawAfterimageCount);
             DrawSwingItem(drawColor);

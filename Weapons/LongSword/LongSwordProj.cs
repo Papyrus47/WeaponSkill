@@ -45,13 +45,13 @@ namespace WeaponSkill.Weapons.LongSword
                 Projectile.Name = SpawnItem.Name;
                 SwingHelper = new(Projectile, 18, TextureAssets.Item[SpawnItem.type]);
                 Projectile.scale = Player.GetAdjustedItemScale(SpawnItem) + 0.15f;
-                Projectile.Size = TextureAssets.Item[SpawnItem.type].Size() * Projectile.scale;
+                Projectile.Size = SpawnItem.Size * Projectile.scale;
                 SwingLength = Projectile.Size.Length();
                 LongSwordGlobalItem longSwordGlobalItem = SpawnItem.GetGlobalItem<LongSwordGlobalItem>();
                 swordScabbard = new(longSwordGlobalItem.ScabbardTex);
                 if(longSwordGlobalItem.ScabbardAction != null)
                 {
-                    swordScabbard.DrawAction = longSwordGlobalItem.ScabbardAction;
+                    swordScabbard.DrawAction.AddRange(longSwordGlobalItem.ScabbardAction);
                 }
                 Init();
             }
@@ -89,7 +89,7 @@ namespace WeaponSkill.Weapons.LongSword
             }
             if (!CanChangeScabbardRot)
             {
-                swordScabbard.Rot = (MathHelper.PiOver2 * 1.86f) * Player.direction;
+                swordScabbard.Rot = (MathHelper.PiOver2 * 1.82f) * Player.direction;
             }
             CanChangeScabbardRot = false;
             OldSkills.TrimExcess();
@@ -112,11 +112,12 @@ namespace WeaponSkill.Weapons.LongSword
             };
             lightColor = Color.Lerp(lightColor, color, 0.2f);
             //Main.spriteBatch.Draw(DrawColorTex, new Vector2(500), null, Color.White, 0f, default, 4, SpriteEffects.None, 0f);
-            return CurrentSkill.PreDraw(Main.spriteBatch, ref lightColor);
+            bool flag = CurrentSkill.PreDraw(Main.spriteBatch, ref lightColor);
+            swordScabbard.Draw(Main.spriteBatch, lightColor);
+            return flag;
         }
         public override void PostDraw(Color lightColor)
         {
-            swordScabbard.Draw(Main.spriteBatch, lightColor);
             if(!WeaponSkill.RenderTargetShaderSystem.RenderDraw.Any(x => x is LongSwordSwingRenderDraw))
             {
                 WeaponSkill.RenderTargetShaderSystem.RenderDraw.Add(new LongSwordSwingRenderDraw());
@@ -131,6 +132,8 @@ namespace WeaponSkill.Weapons.LongSword
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            Type type = Player.GetType();
+            type.GetField("_spawnMuramasaCut", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(Player, true);
             CurrentSkill.OnHitNPC(target, hit, damageDone);
             ItemLoader.OnHitNPC(SpawnItem, Player, target, hit, damageDone);
             TheUtility.VillagesItemOnHit(SpawnItem, Player, Projectile.Hitbox, Projectile.originalDamage, Projectile.knockBack, target.whoAmI, Projectile.damage, damageDone);
@@ -286,6 +289,7 @@ namespace WeaponSkill.Weapons.LongSword
                     else if ((int)Projectile.ai[0] == 2)
                     {
                         Player.velocity.X *= 0.3f;
+                        Projectile.ai[2] += 2;
                     }
                     Player.SetImmuneTimeForAllTypes(5);
                 }
@@ -358,6 +362,10 @@ namespace WeaponSkill.Weapons.LongSword
                         Projectile.extraUpdates = 3;
                         Player.velocity.X = Player.direction * 5;
                     }
+                    else if ((int)Projectile.ai[0] == 2)
+                    {
+                        Projectile.ai[2] += 2;
+                    }
                 }
             };
             LongSword_Naknotsu_RotSlash Naknotsu_RotSlash = new(this, () => Player.controlUseTile)
@@ -384,7 +392,7 @@ namespace WeaponSkill.Weapons.LongSword
             SlashUp.AddSkill(Spurt);
             #endregion
             #region 纳刀判定
-            longSword_Naknotsu.AddBySkill(useSlash2, SlashDown, Spurt, SlashUp, longSwordSwing_Spirit, longSwordSwing_Spirit2, longSwordSwing_Spirit3_3,longSwordSwing_AfterBackSlash,longSwordSwing_Spirit_RotSlash);
+            longSword_Naknotsu.AddBySkill(useSlash2, SlashDown, Spurt, SlashUp, longSwordSwing_Spirit, longSwordSwing_Spirit2, longSwordSwing_Spirit3_3,longSwordSwing_AfterBackSlash,longSwordSwing_Spirit_RotSlash,backSlash);
             longSword_Naknotsu.AddSkill(NaknotsuSwing1).AddSkill(NaknotsuSwing2);
             longSword_Naknotsu.AddSkill(Naknotsu_RotSlash);
             #endregion
@@ -399,7 +407,7 @@ namespace WeaponSkill.Weapons.LongSword
 
             longSwordSwing_Spirit.AddSkill(SlashDown);
             longSwordSwing_Spirit2.AddSkill(Spurt);
-            longSword_SakuraSlashed.AddBySkill(SlashDown, Spurt, SlashUp, longSwordSwing_Spirit, longSwordSwing_Spirit2, longSwordSwing_Spirit3_3);
+            longSword_SakuraSlashed.AddBySkill(SlashDown, Spurt, SlashUp, longSwordSwing_Spirit, longSwordSwing_Spirit2, longSwordSwing_Spirit3_3,notUse);
             #endregion
             #region 袈裟判定
             backSlash.AddBySkill(SlashDown, SlashUp, SlashUp, longSwordSwing_Spirit, longSwordSwing_Spirit2, longSwordSwing_Spirit3_3);

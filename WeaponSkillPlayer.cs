@@ -9,6 +9,7 @@ using Terraria.Graphics.CameraModifiers;
 using Terraria.ModLoader.IO;
 using WeaponSkill.Weapons.LongSword;
 using WeaponSkill.Weapons.LongSword.Skills;
+using WeaponSkill.WeaponSkillPlayerDrawLayers;
 
 namespace WeaponSkill
 {
@@ -140,6 +141,11 @@ namespace WeaponSkill
         private void BlockingDamage(ref Player.HurtInfo info)
         {
             info.Damage -= Player.statDefense * 10;
+        }
+        public override void ModifyDrawLayerOrdering(IDictionary<PlayerDrawLayer, PlayerDrawLayer.Position> positions)
+        {
+            var crossbowPlayerDraw = new CrossbowPlayerDrawLayer();
+            positions.Add(crossbowPlayerDraw, crossbowPlayerDraw.GetDefaultPosition());
         }
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {

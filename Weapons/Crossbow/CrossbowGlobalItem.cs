@@ -25,8 +25,24 @@ namespace WeaponSkill.Weapons.Crossbow
         {
             Crossbow_Parts = new List<Item>();
         }
+        public override void ModifyShootStats(Item item, Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            WeaponSkillPlayer weaponSkillPlayer = player.GetModPlayer<WeaponSkillPlayer>();
+            Item shootItem = weaponSkillPlayer.AmmoItems[weaponSkillPlayer.UseAmmoIndex];
+            if (item.consumable && !player.IsAmmoFreeThisShot(player.HeldItem, item, item.shoot))
+            {
+                CombinedHooks.OnConsumeAmmo(player, player.HeldItem, shootItem);
+                if (item.stack-- <= 0)
+                {
+                    item.active = false;
+                    item.TurnToAir();
+                }
+            }
+            type = shootItem.shoot;
+        }
         public override void HoldItem(Item item, Player player)
         {
+            player.GetModPlayer<WeaponSkillPlayer>().ShowTheRangeChangeUI = true;
             //if (player.ownedProjectileCounts[ModContent.ProjectileType<LongSwordProj>()] <= 0) // 生成手持弹幕
             //{
             //    int proj = Projectile.NewProjectile(player.GetSource_ItemUse(item), player.position, Vector2.Zero, ModContent.ProjectileType<LongSwordProj>(), player.GetWeaponDamage(item), player.GetWeaponKnockback(item), player.whoAmI);

@@ -188,6 +188,30 @@ Mods: {
 					每一级气刃等级提供5%的伤害加成
 					'''
 			}
+
+			LightsLongSword: {
+				DisplayName: 魔光太刀
+				Tooltip: 命中时额外追加一次攻击
+			}
+
+			HarnessingWindLongSword: {
+				DisplayName: 驭风
+				Tooltip:
+					'''
+					挥舞生成鸟妖羽毛
+					命中时散射2发鸟妖羽毛
+					'''
+			}
+
+			CutTheFire: {
+				DisplayName: 断火
+				Tooltip: 使用蚁狮下颚与金属做成的太刀
+			}
+
+			TarantulaLongSword: {
+				DisplayName: 狼蛛太刀
+				Tooltip: 命中时施加猛毒2秒,以居合或者樱花气刃斩命中生成蜘蛛卵
+			}
 		}
 	}
 }

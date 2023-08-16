@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria.UI;
 using WeaponSkill.UI.ChangeAmmoUI;
+using WeaponSkill.UI.CrossbowAddPartUI;
 using WeaponSkill.UI.SpiritUI;
 using WeaponSkill.UI.StaminaUI;
 
@@ -16,6 +17,7 @@ namespace WeaponSkill
         public ChangeAmmoUI changeAmmo;
         public StaminaUI stamina;
         public SpiritUI spiritUI;
+        public CrossbowAddPartUI crossbowAddPartUI;
         public override void Load()
         {
             userInterfaces = new();
@@ -37,11 +39,11 @@ namespace WeaponSkill
             spiritUI.Initialize();
             userInterface2.SetState(spiritUI);
 
-            //crossbow_AddPartUIState = new Crossbow_AddPartUIState();
+            //crossbowAddPartUI = new();
             //UserInterface userInterface3 = new UserInterface();
             //userInterfaces.Add(userInterface3);
-            //crossbow_AddPartUIState.Initialize();
-            //userInterface3.SetState(crossbow_AddPartUIState);
+            //crossbowAddPartUI.Initialize();
+            //userInterface3.SetState(crossbowAddPartUI);
         }
         public override void Unload()
         {
