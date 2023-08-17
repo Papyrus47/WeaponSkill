@@ -36,6 +36,7 @@ namespace WeaponSkill.Weapons.Bows
                 }
                 Projectile.Size = SpawnItem.Size * Projectile.scale;
                 Projectile.scale = Player.GetAdjustedItemScale(SpawnItem);
+                Main.projFrames[Type] = TheUtility.GetItemFrameCount(SpawnItem);
                 Init();
             }
         }
@@ -54,6 +55,7 @@ namespace WeaponSkill.Weapons.Bows
                 Projectile.Kill();
                 return;
             }
+            TheUtility.SetProjFrameWithItem(Projectile, SpawnItem);
             Projectile.timeLeft = 2;
             CurrentSkill.AI();
             IBasicSkillProj basicSkillProj = this;

@@ -68,6 +68,18 @@ namespace WeaponSkill
                 DrawColorTex.SetData(colors);
             });
         }
+        public static int GetItemFrameCount(Item item)
+        {
+            if(Main.itemAnimations[item.type] != null)
+            {
+                return Main.itemAnimations[item.type].FrameCount;
+            }
+            return 1;
+        }
+        public static void SetProjFrameWithItem(Projectile proj, Item item)
+        {
+            if (Main.itemAnimations[item.type] != null) proj.frame = Main.itemAnimations[item.type].Frame;
+        }
         public static void SetPlayerImmune(Player player,int immuneTime = 12)
         {
             if (player.immuneTime < immuneTime) player.SetImmuneTimeForAllTypes(immuneTime);

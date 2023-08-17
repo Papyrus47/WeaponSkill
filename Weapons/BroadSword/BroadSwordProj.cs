@@ -34,6 +34,7 @@ namespace WeaponSkill.Weapons.BroadSword
                 Projectile.scale = Player.GetAdjustedItemScale(SpawnItem) + 2f;
                 Projectile.Size = SpawnItem.Size * Projectile.scale;
                 SwingLength = Projectile.Size.Length();
+                Main.projFrames[Type] = TheUtility.GetItemFrameCount(SpawnItem);
                 Init();
             }
         }
@@ -55,6 +56,7 @@ namespace WeaponSkill.Weapons.BroadSword
                 Projectile.Kill();
                 return;
             }
+            TheUtility.SetProjFrameWithItem(Projectile, SpawnItem);
             Projectile.timeLeft = 2;
             CurrentSkill.AI();
             Player.ResetMeleeHitCooldowns();

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
+using WeaponSkill.Configs;
 
 namespace WeaponSkill.UI.ChangeAmmoUI
 {
@@ -24,8 +25,6 @@ namespace WeaponSkill.UI.ChangeAmmoUI
 
             Width = new(100, 0);
             Height = new(30, 0);
-            Top = new(0, 0.15f);
-            Left = new(50, 0);
 
 
             Now.Top = new(0, 0.5f);
@@ -42,6 +41,8 @@ namespace WeaponSkill.UI.ChangeAmmoUI
         }
         public override void Update(GameTime gameTime)
         {
+            Left = new(0, WS_Configs_UI.Init.ChooseAmmoUI_Pos.X);
+            Top = new(0, WS_Configs_UI.Init.ChooseAmmoUI_Pos.Y);
             base.Update(gameTime);
             Player localPlayer = Main.LocalPlayer;
             if (!localPlayer.GetModPlayer<WeaponSkillPlayer>().ShowTheRangeChangeUI) return;

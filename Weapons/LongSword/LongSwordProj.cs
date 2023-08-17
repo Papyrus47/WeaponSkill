@@ -49,7 +49,8 @@ namespace WeaponSkill.Weapons.LongSword
                 SwingLength = Projectile.Size.Length();
                 LongSwordGlobalItem longSwordGlobalItem = SpawnItem.GetGlobalItem<LongSwordGlobalItem>();
                 swordScabbard = new(longSwordGlobalItem.ScabbardTex);
-                if(longSwordGlobalItem.ScabbardAction != null)
+                Main.projFrames[Type] = TheUtility.GetItemFrameCount(SpawnItem);
+                if (longSwordGlobalItem.ScabbardAction != null)
                 {
                     swordScabbard.DrawAction.AddRange(longSwordGlobalItem.ScabbardAction);
                 }
@@ -73,6 +74,7 @@ namespace WeaponSkill.Weapons.LongSword
                 Projectile.Kill();
                 return;
             }
+            TheUtility.SetProjFrameWithItem(Projectile, SpawnItem);
             Projectile.timeLeft = 2;
             InSpiritAttack = false;
             swordScabbard.projectile = Projectile;

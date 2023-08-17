@@ -59,8 +59,8 @@ namespace WeaponSkill.Weapons.Bows.Skills
         }
         public override bool PreDraw(SpriteBatch sb, ref Color lightColor)
         {
-            var tex = TextureAssets.Item[BowsProj.SpawnItem.type].Value;
-            sb.Draw(tex, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, tex.Size() * 0.5f, Projectile.scale * new Vector2(Projectile.ai[2] + 1f, 1 - Projectile.ai[2] * 0.15f), Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            Main.GetItemDrawFrame(BowsProj.SpawnItem.type, out var tex, out var rect);
+            sb.Draw(tex, Projectile.Center - Main.screenPosition, rect, lightColor, Projectile.rotation, tex.Size() * 0.5f, Projectile.scale * new Vector2(Projectile.ai[2] + 1f, 1 - Projectile.ai[2] * 0.15f), Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             return false;
         }
         public override bool SwitchCondition()

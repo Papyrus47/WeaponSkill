@@ -58,8 +58,8 @@ namespace WeaponSkill.Weapons.Bows.Skills
         }
         public override bool PreDraw(SpriteBatch sb, ref Color lightColor)
         {
-            var tex = TextureAssets.Item[BowsProj.SpawnItem.type].Value;
-            sb.Draw(tex, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, tex.Size() * 0.5f, Projectile.scale * new Vector2(Projectile.ai[2] + 1f, 1 - Projectile.ai[2] * 0.15f), Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            Main.GetItemDrawFrame(BowsProj.SpawnItem.type, out var tex, out var rect);
+            sb.Draw(tex, Projectile.Center - Main.screenPosition, rect, lightColor, Projectile.rotation, tex.Size() * 0.5f, Projectile.scale * new Vector2(Projectile.ai[2] + 1f, 1 - Projectile.ai[2] * 0.15f), Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             if(Projectile.ai[1] <= 0 && Projectile.ai[0] > 8) // 辅助瞄准
             {
                 sb.Draw(TextureAssets.FishingLine.Value, Main.MouseScreen, null, Color.Red, 0f,new Vector2(0,TextureAssets.FishingLine.Height()) , new Vector2(1, 100), SpriteEffects.None, 0f);

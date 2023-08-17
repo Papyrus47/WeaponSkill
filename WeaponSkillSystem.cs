@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using Terraria.UI;
 using WeaponSkill.UI.ChangeAmmoUI;
 using WeaponSkill.UI.CrossbowAddPartUI;
+using WeaponSkill.UI.DualBladesUI;
 using WeaponSkill.UI.SpiritUI;
 using WeaponSkill.UI.StaminaUI;
+using WeaponSkill.Weapons.DualBlades;
 
 namespace WeaponSkill
 {
@@ -18,6 +20,7 @@ namespace WeaponSkill
         public StaminaUI stamina;
         public SpiritUI spiritUI;
         public CrossbowAddPartUI crossbowAddPartUI;
+        public DualBladesUI bladesUI;
         public override void Load()
         {
             userInterfaces = new();
@@ -39,6 +42,9 @@ namespace WeaponSkill
             spiritUI.Initialize();
             userInterface2.SetState(spiritUI);
 
+            bladesUI = new();
+            bladesUI.Initialize();
+
             //crossbowAddPartUI = new();
             //UserInterface userInterface3 = new UserInterface();
             //userInterfaces.Add(userInterface3);
@@ -54,7 +60,11 @@ namespace WeaponSkill
         }
         public override void UpdateUI(GameTime gameTime)
         {
-            userInterfaces.ForEach(x => x.Update(gameTime));
+            userInterfaces.ForEach(x =>
+            {
+                TryChangeTheUserInterfacesSetState(x);
+                x.Update(gameTime);
+            });
         }
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
@@ -70,6 +80,20 @@ namespace WeaponSkill
                     return true;
                 }, InterfaceScaleType.UI));
 
+            }
+        }
+        public void TryChangeTheUserInterfacesSetState(UserInterface userInterface)
+        {
+            if (userInterface.CurrentState == bladesUI || userInterface.CurrentState == spiritUI)
+            {
+                if (Main.LocalPlayer.HeldItem.TryGetGlobalItem<DualBladesGlobalItem>(out _))
+                {
+                    userInterface.SetState(bladesUI);
+                }
+                else
+                {
+                    userInterface.SetState(spiritUI);
+                }
             }
         }
     }

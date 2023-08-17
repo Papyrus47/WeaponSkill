@@ -17,5 +17,8 @@ namespace WeaponSkill.Configs
 
         [DefaultValue(typeof(Vector2), "0.02,0.3")]
         public Vector2 SpiritUI_Pos;
+
+        [DefaultValue(typeof(Vector2), "0.01,0.15")]
+        public Vector2 ChooseAmmoUI_Pos;
     }
 }

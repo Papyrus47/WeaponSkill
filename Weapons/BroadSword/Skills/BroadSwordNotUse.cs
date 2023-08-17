@@ -23,8 +23,8 @@ namespace WeaponSkill.Weapons.BroadSword.Skills
         }
         public override bool PreDraw(SpriteBatch sb, ref Color lightColor)
         {
-            var tex = TextureAssets.Item[broadSword.SpawnItem.type].Value;
-            sb.Draw(tex, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, tex.Size() * 0.5f, Projectile.scale - 1f, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            Main.GetItemDrawFrame(broadSword.SpawnItem.type, out var tex, out var rect);
+            sb.Draw(tex, Projectile.Center - Main.screenPosition, rect, lightColor, Projectile.rotation, tex.Size() * 0.5f, Projectile.scale - 1f, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 
             return false;
         }

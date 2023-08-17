@@ -8,6 +8,7 @@ Projectiles: {
 	// StoneProj.DisplayName: Stone Proj
 	// LongSwordProj.DisplayName: Long Sword Proj
 	// SpurtsProj_JudgmentCut.DisplayName: Spurts Proj_ Judgment Cut
+	// DualBladesProj.DisplayName: Dual Blades Proj
 }
 
 Keybinds: {
@@ -28,6 +29,11 @@ Configs: {
 
 		SpiritUI_Pos: {
 			// Label: Spirit U I_ Pos
+			// Tooltip: ""
+		}
+
+		ChooseAmmoUI_Pos: {
+			// Label: Choose Ammo U I_ Pos
 			// Tooltip: ""
 		}
 	}

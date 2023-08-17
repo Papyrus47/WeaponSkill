@@ -37,6 +37,7 @@ namespace WeaponSkill.Weapons.Shortsword
                 Projectile.scale = Player.GetAdjustedItemScale(SpawnItem) * Projectile.scale;
                 Projectile.Size = SpawnItem.Size * Projectile.scale;
                 SwingLength = Projectile.Size.Length();
+                Main.projFrames[Type] = TheUtility.GetItemFrameCount(SpawnItem);
                 Init();
             }
         }
@@ -58,6 +59,7 @@ namespace WeaponSkill.Weapons.Shortsword
                 Projectile.Kill();
                 return;
             }
+            TheUtility.SetProjFrameWithItem(Projectile, SpawnItem);
             Projectile.timeLeft = 2;
             Player.ChangeDir(((Main.MouseWorld - Player.position).X > 0).ToDirectionInt());
             CurrentSkill.AI();

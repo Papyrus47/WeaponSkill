@@ -40,6 +40,7 @@ namespace WeaponSkill.Weapons.Spears
                 Projectile.Size = TextureAssets.Projectile[SpawnItem_OriginShootProj].Size() * Projectile.scale;
                 Projectile.scale = Player.GetAdjustedItemScale(SpawnItem) + 0.2f;
                 WeaponLength = Projectile.Size.Length();
+                Main.projFrames[Type] = Main.projFrames[SpawnItem_OriginShootProj];
                 Init();
             }
         }
@@ -58,6 +59,7 @@ namespace WeaponSkill.Weapons.Spears
                 Projectile.Kill();
                 return;
             }
+            TheUtility.SetProjFrameWithItem(Projectile, SpawnItem);
             Projectile.timeLeft = 2;
             Player.ChangeDir(((Main.MouseWorld - Player.position).X > 0).ToDirectionInt());
             CurrentSkill.AI();

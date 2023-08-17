@@ -212,6 +212,11 @@ Mods: {
 				DisplayName: 狼蛛太刀
 				Tooltip: 命中时施加猛毒2秒,以居合或者樱花气刃斩命中生成蜘蛛卵
 			}
+
+			CADKinef: {
+				DisplayName: 蚁狮双刀
+				Tooltip: ""
+			}
 		}
 	}
 }

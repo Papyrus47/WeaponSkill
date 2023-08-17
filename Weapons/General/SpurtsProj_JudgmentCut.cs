@@ -12,6 +12,7 @@ namespace WeaponSkill.Weapons.General
     {
         public static List<int> JudgmentCutProj;
         public bool CanUpdateScale;
+        public bool CanKill;
         public override void Load()
         {
             base.Load();
@@ -28,7 +29,15 @@ namespace WeaponSkill.Weapons.General
             player ??= Main.player[Projectile.owner];
             if (Projectile.ai[2] < 8) Projectile.ai[2]++;
             if(CanUpdateScale) Projectile.ai[1] *= 0.55f;
-            if (Projectile.ai[1] <= 0.3f) Projectile.Kill();
+            if (CanKill)
+            {
+                Projectile.Kill();
+                return;
+            }
+            if (Projectile.ai[1] <= 0.3f)
+            {
+                CanKill = true;
+            }
             if (FixedPos) Projectile.Center = player.Center;
             JudgmentCutProj.Add(Projectile.whoAmI);
         }
@@ -40,6 +49,7 @@ namespace WeaponSkill.Weapons.General
             }
             return false;
         }
+        public override bool? CanDamage() => CanKill;
         public static new SpurtsProj_JudgmentCut NewSpurtsProj(IEntitySource source, Vector2 pos, Vector2 vel, int damage, float kn, int onwer, float width, float height, Texture2D DrawColorTex = null)
         {
             int v = Projectile.NewProjectile(source, pos, vel, ModContent.ProjectileType<SpurtsProj_JudgmentCut>(), damage, kn, onwer, width, height);

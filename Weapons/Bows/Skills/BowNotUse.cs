@@ -24,8 +24,8 @@ namespace WeaponSkill.Weapons.Bows.Skills
         }
         public override bool PreDraw(SpriteBatch sb, ref Color lightColor)
         {
-            var tex = TextureAssets.Item[BowsProj.SpawnItem.type].Value;
-            sb.Draw(tex, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, tex.Size() * 0.5f,new Vector2(0.6f * Projectile.scale,Projectile.scale * 1.2f), Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            Main.GetItemDrawFrame(BowsProj.SpawnItem.type, out var tex, out var rect);
+            sb.Draw(tex, Projectile.Center - Main.screenPosition, rect, lightColor, Projectile.rotation, tex.Size() * 0.5f,new Vector2(0.6f * Projectile.scale,Projectile.scale * 1.2f), Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 
             return false;
         }

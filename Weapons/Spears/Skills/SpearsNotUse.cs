@@ -26,7 +26,8 @@ namespace WeaponSkill.Weapons.Spears.Skills
         {
             Main.instance.LoadProjectile(SpearsProj.SpawnItem_OriginShootProj);
             var tex = TextureAssets.Projectile[SpearsProj.SpawnItem_OriginShootProj].Value;
-            sb.Draw(tex, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation, tex.Size() * 0.5f, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            Rectangle rect = tex.Frame(SpearsProj.Projectile.frame + 1, Main.projFrames[SpearsProj.Type]);
+            sb.Draw(tex, Projectile.Center - Main.screenPosition, rect, lightColor, Projectile.rotation, tex.Size() * 0.5f, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 
             return false;
         }

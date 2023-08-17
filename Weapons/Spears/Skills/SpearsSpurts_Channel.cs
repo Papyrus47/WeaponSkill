@@ -110,9 +110,10 @@ namespace WeaponSkill.Weapons.Spears.Skills
             }
             Main.instance.LoadProjectile(SpearsProj.SpawnItem_OriginShootProj);
             var tex = TextureAssets.Projectile[SpearsProj.SpawnItem_OriginShootProj].Value;
+            Rectangle rect = tex.Frame(SpearsProj.Projectile.frame + 1, Main.projFrames[SpearsProj.Type]);
             float rot = Projectile.rotation;
             if (SpearsProj.SpawnItem.type == ItemID.MonkStaffT2) rot -= MathHelper.PiOver2 * Projectile.spriteDirection;
-            sb.Draw(tex, Projectile.Center - Main.screenPosition, null, lightColor,rot , tex.Size() * 0.5f, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            sb.Draw(tex, Projectile.Center - Main.screenPosition, rect, lightColor,rot , tex.Size() * 0.5f, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             if (Projectile.ai[2] > 0)
             {
                 SpurtsDraw spurtsDraw = new()
