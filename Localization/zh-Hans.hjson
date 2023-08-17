@@ -214,8 +214,13 @@ Mods: {
 			}
 
 			CADKinef: {
-				// DisplayName: C A D Kinef
+				// DisplayName: 蚁狮双刀
 				// Tooltip: ""
+			}
+
+			LightsLongSword_Change: {
+				// DisplayName: 魔光太刀·改
+				// Tooltip: 具有不可想象的力量
 			}
 		}
 	}

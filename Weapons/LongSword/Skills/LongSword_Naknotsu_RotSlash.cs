@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReLogic.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,6 +41,7 @@ namespace WeaponSkill.Weapons.LongSword.Skills
                     proj.FixedPos = false;
                 }
             }
+            LongSword.swordScabbard.Rot = ((-Vector2.UnitX).RotatedBy(-0.3f).ToRotation() - 1.5f) * -player.direction;
             LongSword.CanChangeScabbardRot = true;
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)

@@ -3,6 +3,7 @@ using Terraria.Localization;
 using ReLogic.Content.Sources;
 using Terraria.Graphics.Effects;
 using WeaponSkill.Helper;
+using WeaponSkill.Items.DualBlades;
 
 namespace WeaponSkill
 {
@@ -40,7 +41,6 @@ namespace WeaponSkill
             RenderTargetShaderSystem = new();
             Main.OnPostDraw += Main_OnPostDraw;
         }
-
         public static void Main_OnPostDraw(GameTime obj)
         {
             RenderTargetShaderSystem?.ResetData();

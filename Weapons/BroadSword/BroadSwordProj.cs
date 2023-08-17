@@ -72,7 +72,10 @@ namespace WeaponSkill.Weapons.BroadSword
             //Main.spriteBatch.Draw(DrawColorTex, new Vector2(500), null, Color.White, 0f, default, 4, SpriteEffects.None, 0f);
             return CurrentSkill.PreDraw(Main.spriteBatch, ref lightColor);
         }
-
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            ItemLoader.ModifyHitNPC(SpawnItem, Player, target, ref modifiers);
+        }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Type type = Player.GetType();

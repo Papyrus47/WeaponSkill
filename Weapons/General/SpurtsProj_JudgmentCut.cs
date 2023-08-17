@@ -13,6 +13,7 @@ namespace WeaponSkill.Weapons.General
         public static List<int> JudgmentCutProj;
         public bool CanUpdateScale;
         public bool CanKill;
+        public Action<SpurtsProj_JudgmentCut> AIAction;
         public override void Load()
         {
             base.Load();
@@ -23,11 +24,20 @@ namespace WeaponSkill.Weapons.General
             base.Unload();
             JudgmentCutProj = null;
         }
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 3000;
+        }
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            CanUpdateScale = false;
+        }
         public override void AI()
         {
-            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 3000;
+            AIAction?.Invoke(this);
             player ??= Main.player[Projectile.owner];
-            if (Projectile.ai[2] < 8) Projectile.ai[2]++;
             if(CanUpdateScale) Projectile.ai[1] *= 0.55f;
             if (CanKill)
             {

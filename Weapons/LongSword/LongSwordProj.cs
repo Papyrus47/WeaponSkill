@@ -130,7 +130,9 @@ namespace WeaponSkill.Weapons.LongSword
         {
             modifiers.SourceDamage += SpawnItem.GetGlobalItem<LongSwordGlobalItem>().SpiritLevel * 0.5f;
             CurrentSkill.ModifyHitNPC(target, ref modifiers);
+            ItemLoader.ModifyHitNPC(SpawnItem, Player, target, ref modifiers);
         }
+    
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {

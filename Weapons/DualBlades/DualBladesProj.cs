@@ -29,8 +29,12 @@ namespace WeaponSkill.Weapons.DualBlades
             {
                 DrawData data = new();
                 Texture2D tex = dualBladesProj.DrawProjTex.Value;
+                Projectile projectile = dualBladesProj.Projectile;
                 data.texture = tex;
                 data.sourceRect = tex.Frame(1, Main.projFrames[dualBladesProj.Type]);
+                data.rotation = projectile.rotation;
+                data.scale = new(projectile.scale);
+                data.effect = projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                 drawinfo.DrawDataCache.Add(data);
             }
             public virtual void Draw(SpriteBatch sb,Color drawColor)
@@ -111,6 +115,10 @@ namespace WeaponSkill.Weapons.DualBlades
         {
             //Main.spriteBatch.Draw(DrawColorTex, new Vector2(500), null, Color.White, 0f, default, 4, SpriteEffects.None, 0f);
             return CurrentSkill.PreDraw(Main.spriteBatch, ref lightColor);
+        }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            ItemLoader.ModifyHitNPC(SpawnItem,Player, target, ref modifiers);
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {

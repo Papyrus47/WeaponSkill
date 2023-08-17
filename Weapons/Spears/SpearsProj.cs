@@ -69,7 +69,11 @@ namespace WeaponSkill.Weapons.Spears
         public override bool ShouldUpdatePosition() => false;
         public override bool? CanDamage() => CurrentSkill.CanDamage();
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => CurrentSkill.Colliding(projHitbox, targetHitbox);
-        public virtual float TimeChange(float time) => MathF.Pow(time, 2.5f);
+        public virtual float TimeChange(float time) => MathF.Pow(time, 2.5f); 
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            ItemLoader.ModifyHitNPC(SpawnItem, Player, target, ref modifiers);
+        }
         public override bool PreDraw(ref Color lightColor)
         {
             float rot = Projectile.rotation;

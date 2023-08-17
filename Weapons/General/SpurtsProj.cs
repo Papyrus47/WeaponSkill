@@ -29,7 +29,7 @@ namespace WeaponSkill.Weapons.General
             player ??= Main.player[Projectile.owner];
             if (Projectile.ai[2] < 8) Projectile.ai[2]++;
             Projectile.ai[1] *= 0.85f;
-            if (Projectile.ai[1] <= 0) Projectile.Kill();
+            if (Projectile.ai[1] <= 0.2f) Projectile.Kill();
             if (FixedPos) Projectile.Center = player.Center;
         }
         public override bool? CanDamage()
