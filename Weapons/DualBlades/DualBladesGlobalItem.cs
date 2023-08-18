@@ -29,9 +29,11 @@ namespace WeaponSkill.Weapons.DualBlades
         /// <summary>
         /// 鬼人值加成修正
         /// </summary>
-        public float AddCorrection;
+        public float AddCorrection = 1;
         public static bool ShowTheDualUI;
         public string ProjTex;
+        public byte StaminaTime; 
+        public Texture2D DrawColorTex;
         public override void Load()
         {
             WeaponID = new();
@@ -42,14 +44,15 @@ namespace WeaponSkill.Weapons.DualBlades
             entity.useTime = entity.useAnimation = 10;
             entity.noMelee = true;
             entity.noUseGraphic = true;
-            DemonGaugeMax = 200;
+            entity.useStyle = ItemUseStyleID.Rapier;
+            DemonGaugeMax = 1200;
         }
         public override void HoldItem(Item item, Player player)
         {
-            ArchdemonMode = false;
-            DemonMode = false;
+            //DemonMode = true;
             ShowTheDualUI = true;
-            if(DemonGauge >= DemonGaugeMax)
+            //DemonGauge = DemonGaugeMax;
+            if (DemonGauge >= DemonGaugeMax)
             {
                 ArchdemonMode = true;
             }
@@ -58,12 +61,42 @@ namespace WeaponSkill.Weapons.DualBlades
                 DemonGauge = 0;
                 ArchdemonMode = false;
             }
+            if (DemonMode)
+            {
+                if (player.GetModPlayer<WeaponSkillPlayer>().StatStamina > 0 && StaminaTime-- <= 0)
+                {
+                    StaminaTime = 3;
+                    player.GetModPlayer<WeaponSkillPlayer>().StatStamina--;
+                    player.GetModPlayer<WeaponSkillPlayer>().StatStaminaAddTime = 0;
+                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.FireworkFountain_Red);
+                    dust.velocity = Main.rand.NextVector2Unit() * 2f;
+                    dust.noGravity = true;
+                }
+            }
+            else if (ArchdemonMode)
+            {
+                DemonGauge--;
+            }
             player.GetModPlayer<WeaponSkillPlayer>().ShowTheStamina = true;
             if (player.ownedProjectileCounts[ModContent.ProjectileType<DualBladesProj>()] <= 0) // 生成手持弹幕
             {
                 int proj = Projectile.NewProjectile(player.GetSource_ItemUse(item), player.position, Vector2.Zero, ModContent.ProjectileType<DualBladesProj>(), player.GetWeaponDamage(item), player.GetWeaponKnockback(item), player.whoAmI);
                 Main.projectile[proj].originalDamage = Main.projectile[proj].damage;
-                (Main.projectile[proj].ModProjectile as DualBladesProj).DrawProjTex = ModContent.Request<Texture2D>(ProjTex);
+                Asset<Texture2D> drawTex = ModContent.Request<Texture2D>(ProjTex);
+                if (drawTex.IsLoaded && drawTex.Value != null)
+                {
+                    (Main.projectile[proj].ModProjectile as DualBladesProj).DrawProjTex = drawTex;
+                    DrawColorTex ??= new Texture2D(Main.graphics.GraphicsDevice, 1, TextureAssets.Item[item.type].Height());
+                    TheUtility.GetWeaponDrawColor(DrawColorTex, drawTex);
+                }
+            }
+        }
+        public override void UpdateInventory(Item item, Player player)
+        {
+            if (player.HeldItem != item && DrawColorTex != null)
+            {
+                DrawColorTex.Dispose();
+                DrawColorTex = null;
             }
         }
         public override void OnHitNPC(Item item, Player player, NPC target, NPC.HitInfo hit, int damageDone)
@@ -71,11 +104,8 @@ namespace WeaponSkill.Weapons.DualBlades
             if(DemonGauge > DemonGaugeMax)DemonGauge = DemonGaugeMax;
             if (DemonMode && DemonGauge < DemonGaugeMax)
             {
-                DemonGauge += 20 * AddCorrection;
-            }
-            if(ArchdemonMode && !DemonMode)
-            {
-                DemonGauge -= 20;
+                DemonGauge += 5 * AddCorrection;
+                AddCorrection = 1;
             }
         }
     }

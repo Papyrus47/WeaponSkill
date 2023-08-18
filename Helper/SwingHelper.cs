@@ -9,7 +9,7 @@ namespace WeaponSkill.Helper
 {
     /// <summary>
     /// 挥舞用的类
-    /// <para>注意 projectile.rotation 依然发挥作用</para>
+    /// <para>注意 rotation 依然发挥作用</para>
     /// </summary>
     public class SwingHelper
     {
@@ -35,7 +35,10 @@ namespace WeaponSkill.Helper
         protected float _changeHeldLength;
         protected float _velRotBy;
         protected Asset<Texture2D> _SwingItemTex;
-
+        protected virtual Vector2 velocity { get => projectile.velocity; set => projectile.velocity = value; }
+        protected virtual Vector2 Center { get => projectile.Center;set => projectile.Center = value; }
+        protected virtual float rotation { get => projectile.rotation;set => projectile.rotation = value; }
+        protected virtual int spriteDirection { get => projectile.spriteDirection; set => projectile.spriteDirection = value; }
         public SwingHelper(Projectile proj, int oldVelLength, Asset<Texture2D> swingItemTex = null)
         {
             projectile = proj;
@@ -85,19 +88,19 @@ namespace WeaponSkill.Helper
 
                 if (_changeLerpInvoke)
                 {
-                    //projectile.velocity = Vector2.Lerp(projectile.velocity, vel * velLength, _velLerp);
+                    //velocity = Vector2.Lerp(velocity, vel * velLength, _velLerp);
                     vel *= VelScale;
-                    if (projectile.velocity == default) projectile.velocity = Vector2.One;
-                    projectile.velocity = projectile.velocity.
-                        RotatedBy(MathHelper.WrapAngle(vel.ToRotation() - projectile.velocity.ToRotation()) * _velLerp).
-                        SafeNormalize(default) * MathHelper.Lerp(projectile.velocity.Length(), velLength, _velLerp);
+                    if (velocity == default) velocity = Vector2.One;
+                    velocity = velocity.
+                        RotatedBy(MathHelper.WrapAngle(vel.ToRotation() - velocity.ToRotation()) * _velLerp).
+                        SafeNormalize(default) * MathHelper.Lerp(velocity.Length(), velLength, _velLerp);
                 }
                 else
                 {
                     vel = vel.RotatedBy(Rot * dir);
                     vel *= VelScale;
                     vel = vel.RotatedBy(_velRotBy * dir);
-                    projectile.velocity = vel * velLength;
+                    velocity = vel * velLength;
                 }
             }
             oldFrames ??= new int[oldVels.Length];
@@ -109,7 +112,7 @@ namespace WeaponSkill.Helper
                 {
                     if (i == 0)
                     {
-                        oldVels[0] = _oldVelsSave ? projectile.velocity : default;
+                        oldVels[0] = _oldVelsSave ? velocity : default;
                         oldFrames[0] = projectile.frame;
                     }
                     else
@@ -132,7 +135,7 @@ namespace WeaponSkill.Helper
         }
         /// <summary>
         /// 将弹幕锁定位置在玩家身上   <para>当<paramref name="isUseSwing"/>为ture的时候,
-        /// 则会根据<code> MathF.Atan2(projectile.velocity.Y * player.direction, projectile.velocity.X * player.direction)</code>
+        /// 则会根据<code> MathF.Atan2(velocity.Y * player.direction, velocity.X * player.direction)</code>
         /// 决定玩家手臂方向,同时设置使用时间和挥舞时间为2</para>
         /// </summary>
         /// <param name="player"></param>
@@ -141,15 +144,15 @@ namespace WeaponSkill.Helper
         /// <param name="drawCorrections">绘制修正</param>
         public virtual void ProjFixedPlayerCenter(Player player, float length = 0f, bool isUseSwing = false, bool drawCorrections = false)
         {
-            projectile.Center = player.RotatedRelativePoint(player.MountedCenter);
+            Center = player.RotatedRelativePoint(player.MountedCenter);
             _drawCorrections = drawCorrections;
-            if (!_drawCorrections) projectile.position += projectile.velocity.SafeNormalize(default) * length;
+            if (!_drawCorrections) Center += velocity.SafeNormalize(default) * length;
             _changeHeldLength = length;
             if (isUseSwing)
             {
                 SetSwingActive();
                 player.itemAnimation = player.itemTime = 2;
-                player.itemRotation = MathF.Atan2(projectile.velocity.Y * player.direction, projectile.velocity.X * player.direction);
+                player.itemRotation = MathF.Atan2(velocity.Y * player.direction, velocity.X * player.direction);
             }
         }
         /// <summary>
@@ -159,9 +162,9 @@ namespace WeaponSkill.Helper
         /// <param name="length">根据弹幕速度,决定最终位置  就是位置加上速度的单位向量乘以的这个<paramref name="length"/></param>
         public virtual void ProjFixedPos(Vector2 pos, float length = 0f, bool drawCorrections = false)
         {
-            projectile.Center = pos;
+            Center = pos;
             _drawCorrections = drawCorrections;
-            if (!_drawCorrections) projectile.position += projectile.velocity.SafeNormalize(default) * length;
+            if (!_drawCorrections) Center += velocity.SafeNormalize(default) * length;
             _changeHeldLength = length;
         }
         public virtual void SetSwingActive() => _acitveSwing = true;
@@ -255,12 +258,12 @@ namespace WeaponSkill.Helper
 
                 float factor = (oldFrames[i] + 1f) / Main.projFrames[projectile.type];
                 Vector2 velocity = GetOldVel(i);
-                Vector2 halfLength = new Vector2(-velocity.Y, velocity.X).RotatedBy(VisualRotation * projectile.spriteDirection).SafeNormalize(default)
-                    * _halfSizeLength * projectile.spriteDirection;
+                Vector2 halfLength = new Vector2(-velocity.Y, velocity.X).RotatedBy(VisualRotation * spriteDirection).SafeNormalize(default)
+                    * _halfSizeLength * spriteDirection;
                 Vector2 center = GetDrawCenter(i);
                 if (_drawCorrections)
                 {
-                    center = projectile.Center + (center - projectile.Center);
+                    center = Center + (center - Center);
                 }
                 Vector2 halfVelPos = center + velocity * 0.5f;
                 Vector2[] pos = new Vector2[4]
@@ -293,13 +296,13 @@ namespace WeaponSkill.Helper
             //gd.RasterizerState = rasterizerState;
 
             Vector2 velocity = GetOldVel(-1, true);
-            Vector2 halfLength = new Vector2(-velocity.Y, velocity.X).RotatedBy(VisualRotation * projectile.spriteDirection).SafeNormalize(default)
-                * _halfSizeLength * projectile.spriteDirection;
+            Vector2 halfLength = new Vector2(-velocity.Y, velocity.X).RotatedBy(VisualRotation * spriteDirection).SafeNormalize(default)
+                * _halfSizeLength * spriteDirection;
 
             Vector2 center = GetDrawCenter();
             if (_drawCorrections)
             {
-                center = projectile.Center + (center - projectile.Center);
+                center = Center + (center - Center);
             }
             Vector2 halfVelPos = center + velocity * 0.5f;
             Vector2[] pos = new Vector2[4]
@@ -364,7 +367,7 @@ namespace WeaponSkill.Helper
                 Vector2 pos = GetDrawCenter(i);
                 if (_drawCorrections)
                 {
-                    pos = projectile.Center + (pos - projectile.Center);
+                    pos = Center + (pos - Center);
                 }
                 if (effect == null)
                 {
@@ -399,7 +402,7 @@ namespace WeaponSkill.Helper
         #endregion
         public virtual Vector2 GetDrawCenter(int index = 0)
         {
-            Vector2 pos = projectile.Center;
+            Vector2 pos = Center;
             if (_drawCorrections)
             {
                 pos += oldVels[index].SafeNormalize(default) * _changeHeldLength;
@@ -416,19 +419,20 @@ namespace WeaponSkill.Helper
         {
             if (i < 0)
             {
-                return projectile.velocity.RotatedBy(notFilp.ToDirectionInt() * projectile.rotation * projectile.spriteDirection);
+                return velocity.RotatedBy(notFilp.ToDirectionInt() * rotation * spriteDirection);
             }
-            return oldVels[i].RotatedBy(notFilp.ToDirectionInt() * projectile.rotation * projectile.spriteDirection);
+            return oldVels[i].RotatedBy(notFilp.ToDirectionInt() * rotation * spriteDirection);
         }
+
         public virtual bool GetColliding(Rectangle targetHitBox)
         {
             float r = 0;
             if (_drawCorrections)
             {
-                return Collision.CheckAABBvLineCollision(targetHitBox.TopLeft(), targetHitBox.Size(), projectile.Center, projectile.Center + projectile.velocity.RotatedBy(projectile.rotation * projectile.spriteDirection),
+                return Collision.CheckAABBvLineCollision(targetHitBox.TopLeft(), targetHitBox.Size(), Center, Center + velocity.RotatedBy(rotation * spriteDirection),
                 projectile.width / 2, ref r);
             }
-            return Collision.CheckAABBvLineCollision(targetHitBox.TopLeft(), targetHitBox.Size(), projectile.Center, projectile.Center + projectile.velocity.RotatedBy(projectile.rotation * projectile.spriteDirection),
+            return Collision.CheckAABBvLineCollision(targetHitBox.TopLeft(), targetHitBox.Size(), Center, Center + velocity.RotatedBy(rotation * spriteDirection),
                 projectile.width / 2, ref r);
         }
         

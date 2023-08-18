@@ -16,5 +16,9 @@ namespace WeaponSkill.Items.DualBlades
             Item.crit = 7;
             Item.scale = 0.7f;
         }
+        public override void AddRecipes()
+        {
+            CreateRecipe().AddIngredient(ItemID.AntlionMandible, 20).AddRecipeGroup(RecipeGroupID.IronBar).AddTile(TileID.Anvils).Register();
+        }
     }
 }

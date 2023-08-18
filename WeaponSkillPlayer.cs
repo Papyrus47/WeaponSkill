@@ -89,10 +89,6 @@ namespace WeaponSkill
                 StatStaminaAddTime = 0;
             }
             OldStatStamina = StatStamina;
-            if(StatStamina > StatStaminaMax)
-            {
-                StatStamina = StatStaminaMax;
-            }
             if(StatStaminaAddTime < 90)
             {
                 StatStaminaAddTime++;
@@ -102,8 +98,12 @@ namespace WeaponSkill
                 StatStamina++;
                 if(Player.velocity.LengthSquared() < 1f)
                 {
-                    StatStamina++;
+                    StatStamina += 2;
                 }
+            }
+            if (StatStamina > StatStaminaMax)
+            {
+                StatStamina = StatStaminaMax;
             }
         }
         public override void OnEnterWorld()
@@ -116,7 +116,7 @@ namespace WeaponSkill
             {
                 UseAmmoIndex++;
             }
-            if (WeaponSkill.BowSlidingStep.JustPressed)
+            if (BloodSoul.InsectBack.JustPressed)
             {
                 Player_BowSidingStep = true;
             }

@@ -49,6 +49,7 @@ namespace WeaponSkill.Weapons.Bows.Skills
                 if ((int)Projectile.ai[0] % 8 == 0)
                 {
                     player.GetModPlayer<WeaponSkillPlayer>().StatStamina--;
+                    player.GetModPlayer<WeaponSkillPlayer>().StatStaminaAddTime = 0;
                 }
             }
             else if(player.GetModPlayer<WeaponSkillPlayer>().StatStamina > 0) //取消蓄力

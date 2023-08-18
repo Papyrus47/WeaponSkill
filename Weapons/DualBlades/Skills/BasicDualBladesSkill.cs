@@ -10,7 +10,11 @@ namespace WeaponSkill.Weapons.DualBlades.Skills
     public abstract class BasicDualBladesSkill : ProjSkill_Instantiation
     {
         public Player player;
+        public string ID;
+        public Action<BasicDualBladesSkill> AIAction;
         public DualBladesProj bladesProj => modProjectile as DualBladesProj;
+        public DualBladesProj.DualBlades HeldBlade => bladesProj.HeldBlades;
+        public DualBladesProj.DualBlades BackBlade => bladesProj.BackBlades;
         public DualBladesGlobalItem bladesGlobalItem => bladesProj.SpawnItem.GetGlobalItem<DualBladesGlobalItem>();
         /// <summary>
         /// 命中加成修正
@@ -20,5 +24,6 @@ namespace WeaponSkill.Weapons.DualBlades.Skills
         {
             player = dualBladesProj.Player;
         }
+        public virtual void BackDraw(SpriteBatch spriteBatch,Color color) { }
     }
 }
