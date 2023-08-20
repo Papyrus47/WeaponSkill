@@ -254,6 +254,11 @@ Mods: {
 					鬼人移动斩和鬼人强化乱舞将消耗"鬼人强化槽"
 					''' */
 			}
+
+			TestItem: {
+				// DisplayName: Test Item
+				// Tooltip: ""
+			}
 		}
 	}
 }

@@ -116,7 +116,7 @@ namespace WeaponSkill
             {
                 UseAmmoIndex++;
             }
-            if (BloodSoul.InsectBack.JustPressed)
+            if (WeaponSkill.BowSlidingStep.JustPressed)
             {
                 Player_BowSidingStep = true;
             }

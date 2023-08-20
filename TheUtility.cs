@@ -4,11 +4,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-
+using WeaponSkill.Helper;
 
 namespace WeaponSkill
 {
-    public static class BloodSoulUtils
+    public static class TheUtility
     {
         public static void VillagesItemOnHit(Item item,Player player, Rectangle itemRectangle, int damage, float knockBack, int npcIndex, int dmgRandomized, int dmgDone)
         {
