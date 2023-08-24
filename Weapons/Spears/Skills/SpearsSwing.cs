@@ -25,6 +25,7 @@ namespace WeaponSkill.Weapons.Spears.Skills
         public bool SwingDirectionChange = true;
         public override void AI()
         {
+            Projectile.rotation = 0;
             Projectile.extraUpdates = 4;
             player.itemLocation = Projectile.Center;
             swingHelper.Change(StartVel, VelScale, VisualRotation);
@@ -48,6 +49,7 @@ namespace WeaponSkill.Weapons.Spears.Skills
         }
         public override bool PreDraw(SpriteBatch sb, ref Color lightColor)
         {
+            Projectile.rotation = 0;
             Effect effect = WeaponSkill.SwingEffect.Value;
             var projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, 0, 1);
             var model = Matrix.CreateTranslation(new Vector3(-Main.screenPosition.X, -Main.screenPosition.Y, 0));

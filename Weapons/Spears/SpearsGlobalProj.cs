@@ -17,7 +17,7 @@ namespace WeaponSkill.Weapons.Spears
         }
         public override void OnSpawn(Projectile projectile, IEntitySource source)
         {
-            if(source is EntitySource_ItemUse item && item.Item.GetGlobalItem<SpearsGlobalItem>().SPItem)
+            if((source is EntitySource_ItemUse item && item.Item.GetGlobalItem<SpearsGlobalItem>().SPItem) || projectile.type == ProjectileID.Daybreak)
             {
                 Spears_SPProj = true;
             }

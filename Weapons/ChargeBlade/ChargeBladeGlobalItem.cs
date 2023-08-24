@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WeaponSkill.Helper.SkillsNPC.ChangeRule
+namespace WeaponSkill.Weapons.ChargeBlade
 {
-    public interface INPCSkillsChangeRule
+    public class ChargeBladeGlobalItem : BasicWeaponItem<ChargeBladeGlobalItem>
     {
     }
 }
