@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /Helper/TwoBoneIK.cs
 /Items/TestItem.cs
+/Helper/TestSwingHelper.cs

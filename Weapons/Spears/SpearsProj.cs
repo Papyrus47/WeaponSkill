@@ -41,6 +41,11 @@ namespace WeaponSkill.Weapons.Spears
                 Projectile.scale = Player.GetAdjustedItemScale(SpawnItem) + 0.2f;
                 WeaponLength = Projectile.Size.Length();
                 Main.projFrames[Type] = Main.projFrames[SpawnItem_OriginShootProj];
+                if (SpawnItem.type == ItemID.DayBreak)
+                {
+                    Projectile.width *= 3;
+                    SwingHelper = new SwingHelper(Projectile, 14, TextureAssets.Item[ItemID.DayBreak]);
+                }
                 Init();
             }
         }
