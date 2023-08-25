@@ -9,6 +9,7 @@ Projectiles: {
 	LongSwordProj.DisplayName: Long Sword Proj
 	SpurtsProj_JudgmentCut.DisplayName: Spurts Proj_ Judgment Cut
 	DualBladesProj.DisplayName: Dual Blades Proj
+	ChargeBladeProj.DisplayName: Charge Blade Proj
 }
 
 Keybinds: {

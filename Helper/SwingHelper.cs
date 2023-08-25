@@ -13,7 +13,7 @@ namespace WeaponSkill.Helper
     /// </summary>
     public class SwingHelper
     {
-        public Projectile projectile;
+        public object SpawnEntity;
         /// <summary>
         /// 起点向量
         /// </summary>
@@ -34,18 +34,23 @@ namespace WeaponSkill.Helper
         protected float _velLerp;
         protected float _changeHeldLength;
         protected float _velRotBy;
-        protected Asset<Texture2D> _SwingItemTex;
+        public Asset<Texture2D> SwingItemTex;
+        public Projectile projectile => SpawnEntity as Projectile;
         protected virtual Vector2 velocity { get => projectile.velocity; set => projectile.velocity = value; }
         protected virtual Vector2 Center { get => projectile.Center;set => projectile.Center = value; }
         protected virtual float rotation { get => projectile.rotation;set => projectile.rotation = value; }
         protected virtual int spriteDirection { get => projectile.spriteDirection; set => projectile.spriteDirection = value; }
-        public SwingHelper(Projectile proj, int oldVelLength, Asset<Texture2D> swingItemTex = null)
+        protected virtual int frame { get => projectile.frame;set=> projectile.frame = value; }
+        protected virtual int frameMax { get => Main.projFrames[projectile.type]; set => Main.projFrames[projectile.type] = value; }
+        protected virtual int width { get => projectile.width; set => projectile.width = value; }
+        protected virtual Vector2 Size { get => projectile.Size; set => projectile.Size = value; }
+        public SwingHelper(object spawnEntity, int oldVelLength, Asset<Texture2D> swingItemTex = null)
         {
-            projectile = proj;
+            SpawnEntity = spawnEntity;
             _halfSizeLength = 0;
             oldVels = new Vector2[oldVelLength];
             _oldVelsSave = true;
-            _SwingItemTex = swingItemTex;
+            SwingItemTex = swingItemTex;
         }
         public virtual void SetRotVel(float rotVel)
         {
@@ -57,7 +62,7 @@ namespace WeaponSkill.Helper
             StartVel.Normalize();
             VisualRotation = visualRotation;
             VelScale = velScale;
-            _halfSizeLength = projectile.Size.Length() * 0.5f;
+            _halfSizeLength = Size.Length() * 0.5f;
         }
         public virtual void Change_Lerp(Vector2 startVel, float velLerp, Vector2 velScale, float scaleAmount, float visualRotation = 0f, float visualRotAmount = 0.1f)
         {
@@ -65,7 +70,7 @@ namespace WeaponSkill.Helper
             StartVel = startVel;
             _velLerp = velLerp;
             VelScale = Vector2.Lerp(VelScale, velScale, scaleAmount);
-            _halfSizeLength = MathHelper.Lerp(_halfSizeLength, projectile.Size.Length() * 0.5f, scaleAmount);
+            _halfSizeLength = MathHelper.Lerp(_halfSizeLength, Size.Length() * 0.5f, scaleAmount);
             VisualRotation = MathHelper.Lerp(VisualRotation, visualRotation, visualRotAmount);
             _changeLerpInvoke = true;
         }
@@ -113,7 +118,7 @@ namespace WeaponSkill.Helper
                     if (i == 0)
                     {
                         oldVels[0] = _oldVelsSave ? velocity : default;
-                        oldFrames[0] = projectile.frame;
+                        oldFrames[0] = frame;
                     }
                     else
                     {
@@ -129,7 +134,7 @@ namespace WeaponSkill.Helper
             }
             #endregion
 
-            projectile.timeLeft = 2;
+            if(projectile != null) projectile.timeLeft = 2;
             _oldVelsSave = true;
             _acitveSwing = _changeLerpInvoke = false;
         }
@@ -256,7 +261,7 @@ namespace WeaponSkill.Helper
             {
                 if (i > drawCount && drawCount != -1) break;
 
-                float factor = (oldFrames[i] + 1f) / Main.projFrames[projectile.type];
+                float factor = (oldFrames[i] + 1f) / frameMax;
                 Vector2 velocity = GetOldVel(i);
                 Vector2 halfLength = new Vector2(-velocity.Y, velocity.X).RotatedBy(VisualRotation * spriteDirection).SafeNormalize(default)
                     * _halfSizeLength * spriteDirection;
@@ -279,14 +284,17 @@ namespace WeaponSkill.Helper
                 customVertices[2] = customVertices[3] = new(pos[2], drawColor, new Vector3(1f, factor - 1f, 0)); // 头
                 customVertices[4] = new(pos[3], drawColor, new Vector3(1f, factor, 0)); // 右下角
 
-                gd.Textures[0] = TextureAssets.Projectile[projectile.type].Value;
+                gd.Textures[0] = SwingItemTex.Value;
                 gd.DrawUserPrimitives(PrimitiveType.TriangleList, customVertices, 0, 2);
             }
         }
         public virtual void DrawSwingItem(Color drawColor)
         {
             GraphicsDevice gd = Main.graphics.GraphicsDevice;
-            _SwingItemTex ??= TextureAssets.Projectile[projectile.type];
+            if (projectile != null)
+            {
+                SwingItemTex ??= TextureAssets.Projectile[projectile.type];
+            }
             //var origin = gd.RasterizerState;
             //RasterizerState rasterizerState = new()
             //{
@@ -313,14 +321,14 @@ namespace WeaponSkill.Helper
                  halfVelPos + halfLength  - Main.screenPosition
             };
 
-            float factor = (projectile.frame + 1f) / Main.projFrames[projectile.type];
+            float factor = (frame + 1f) / frameMax;
             CustomVertexInfo[] customVertices = new CustomVertexInfo[6];
             customVertices[0] = customVertices[5] = new(pos[0], drawColor, new Vector3(0, factor, 0)); // 柄
             customVertices[1] = new(pos[1], drawColor, new Vector3(0, factor - 1f, 0)); // 左上角
             customVertices[2] = customVertices[3] = new(pos[2], drawColor, new Vector3(1, factor - 1f, 0)); // 头
             customVertices[4] = new(pos[3], drawColor, new Vector3(1, factor, 0)); // 右下角
 
-            gd.Textures[0] = _SwingItemTex.Value;
+            gd.Textures[0] = SwingItemTex.Value;
             //gd.Textures[0] = TextureAssets.MagicPixel.Value;
             gd.DrawUserPrimitives(PrimitiveType.TriangleList, customVertices, 0, 2);
             //gd.RasterizerState = origin;
@@ -349,7 +357,7 @@ namespace WeaponSkill.Helper
                 Main.Rasterizer, null, Main.Transform);
         }
 
-        public void DrawTrailing(Texture2D tex, Func<float, Color> colorFunc, Effect effect, Func<float, float> SetZ = null)
+        public virtual void DrawTrailing(Texture2D tex, Func<float, Color> colorFunc, Effect effect, Func<float, float> SetZ = null)
         {
             List<CustomVertexInfo> customVertices = new();
             int length = oldVels.Length;
@@ -430,10 +438,10 @@ namespace WeaponSkill.Helper
             if (_drawCorrections)
             {
                 return Collision.CheckAABBvLineCollision(targetHitBox.TopLeft(), targetHitBox.Size(), Center, Center + velocity.RotatedBy(rotation * spriteDirection),
-                projectile.width / 2, ref r);
+                width / 2, ref r);
             }
             return Collision.CheckAABBvLineCollision(targetHitBox.TopLeft(), targetHitBox.Size(), Center, Center + velocity.RotatedBy(rotation * spriteDirection),
-                projectile.width / 2, ref r);
+                width / 2, ref r);
         }
         
     }

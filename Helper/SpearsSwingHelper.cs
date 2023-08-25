@@ -14,7 +14,7 @@ namespace WeaponSkill.Helper
         public override void DrawSwingItem(Color drawColor)
         {
             GraphicsDevice gd = Main.graphics.GraphicsDevice;
-            _SwingItemTex ??= TextureAssets.Projectile[projectile.type];
+            SwingItemTex ??= TextureAssets.Projectile[projectile.type];
             //var origin = gd.RasterizerState;
             //RasterizerState rasterizerState = new()
             //{
@@ -50,7 +50,7 @@ namespace WeaponSkill.Helper
             customVertices[4] = new(pos[3], drawColor, new Vector3(1, factor - 1f, 0)); // 右上角
 
 
-            gd.Textures[0] = _SwingItemTex.Value;
+            gd.Textures[0] = SwingItemTex.Value;
             //gd.Textures[0] = TextureAssets.MagicPixel.Value;
             gd.DrawUserPrimitives(PrimitiveType.TriangleList, customVertices, 0, 2);
             //gd.RasterizerState = origin;
