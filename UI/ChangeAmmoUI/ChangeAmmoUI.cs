@@ -43,6 +43,7 @@ namespace WeaponSkill.UI.ChangeAmmoUI
         {
             Left = new(0, WS_Configs_UI.Init.ChooseAmmoUI_Pos.X);
             Top = new(0, WS_Configs_UI.Init.ChooseAmmoUI_Pos.Y);
+            Recalculate();
             base.Update(gameTime);
             Player localPlayer = Main.LocalPlayer;
             if (!localPlayer.GetModPlayer<WeaponSkillPlayer>().ShowTheRangeChangeUI) return;

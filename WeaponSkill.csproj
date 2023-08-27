@@ -10,6 +10,8 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Images\VanillaImages\Projectile_699.png" />
+    <None Remove="Items\ChargeBlade\DefenceCorpsChargeBlade.png" />
+    <None Remove="Items\ChargeBlade\DefenceCorpsChargeBlade_Shield.png" />
     <None Remove="Items\LongSword\CopperLongSwordScabbard.png" />
     <None Remove="Items\LongSword\CutTheFire.png" />
     <None Remove="Items\LongSword\CutTheFireScabbard.png" />
@@ -29,6 +31,5 @@
   <ItemGroup>
     <Folder Include="NPCs\Bosses\" />
     <Folder Include="Sounds\Musics\" />
-    <Folder Include="Weapons\ChargeBlade\Skills\" />
   </ItemGroup>
 </Project>

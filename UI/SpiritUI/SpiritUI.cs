@@ -22,6 +22,7 @@ namespace WeaponSkill.UI.SpiritUI
             WS_Configs_UI wS_Configs_UI = WS_Configs_UI.Init;
             Left.Percent = wS_Configs_UI.SpiritUI_Pos.X;
             Top.Percent = wS_Configs_UI.SpiritUI_Pos.Y;
+            Recalculate();
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

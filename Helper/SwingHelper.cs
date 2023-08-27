@@ -299,7 +299,7 @@ namespace WeaponSkill.Helper
             //RasterizerState rasterizerState = new()
             //{
             //    CullMode = CullMode.None,
-            //    FillMode = FillMode.Solid
+            //    FillMode = FillMode.WireFrame
             //};
             //gd.RasterizerState = rasterizerState;
 

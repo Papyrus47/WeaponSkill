@@ -23,6 +23,7 @@ namespace WeaponSkill.UI.StaminaUI
             WS_Configs_UI wS_Configs_UI = WS_Configs_UI.Init;
             Left.Percent = wS_Configs_UI.StaminaUI_Pos.X;
             Top.Percent = wS_Configs_UI.StaminaUI_Pos.Y;
+            Recalculate();
             if (Main.LocalPlayer.GetModPlayer<WeaponSkillPlayer>().ShowTheStamina && !Main.playerInventory) base.Draw(spriteBatch);
         }
         protected override void DrawSelf(SpriteBatch spriteBatch)

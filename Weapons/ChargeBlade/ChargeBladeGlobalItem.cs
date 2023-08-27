@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeaponSkill.Items.ChargeBlade;
+using WeaponSkill.Weapons.BroadSword;
 
 namespace WeaponSkill.Weapons.ChargeBlade
 {
     public class ChargeBladeGlobalItem : BasicWeaponItem<ChargeBladeGlobalItem>
     {
+        /// <summary>
+        /// 盾的贴图
+        /// </summary>
+        public Asset<Texture2D> ShieldTex;
         /// <summary>
         /// 剑强化
         /// </summary>
@@ -27,7 +33,7 @@ namespace WeaponSkill.Weapons.ChargeBlade
         /// <summary>
         /// 充能量
         /// </summary>
-        public int StatCharge;
+        public float StatCharge;
         /// <summary>
         /// 目前填充瓶子
         /// </summary>
@@ -48,10 +54,35 @@ namespace WeaponSkill.Weapons.ChargeBlade
         /// 处于盾强化,斧头形态
         /// </summary>
         public bool InShieldStreng_InAxe => ShieldStrengthening > 0 && InAxe;
+        public override void SetStaticDefaults()
+        {
+            WeaponID = new();
+        }
         public override void SetDefaults(Item entity)
         {
+            entity.DamageType = DamageClass.MeleeNoSpeed;
+            entity.useStyle = ItemUseStyleID.Rapier;
+            entity.useTurn = false;
+            entity.useAnimation = entity.useTime = 30;
+            entity.noUseGraphic = true;
+            entity.noMelee = true;
+
             StatChargeBottleMax = 5; // 默认五个瓶子
             AxeStrengtheningTime = 300;
+        }
+        public override void HoldItem(Item item, Player player)
+        {
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<ChargeBladeProj>()] <= 0) // 生成手持弹幕
+            {
+                int proj = Projectile.NewProjectile(player.GetSource_ItemUse(item), player.position, Vector2.Zero, ModContent.ProjectileType<ChargeBladeProj>(), player.GetWeaponDamage(item), player.GetWeaponKnockback(item), player.whoAmI);
+                Main.projectile[proj].originalDamage = Main.projectile[proj].damage;
+                if(item.ModItem is BasicChargeBlade chargeBlade)
+                {
+                    ShieldTex = chargeBlade.ShieldTex;
+                }
+                //DrawColorTex ??= new Texture2D(Main.graphics.GraphicsDevice, 1, TextureAssets.Item[item.type].Height());
+                //TheUtility.GetWeaponDrawColor(DrawColorTex, TextureAssets.Item[item.type]);
+            }
         }
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
         {
@@ -95,6 +126,13 @@ namespace WeaponSkill.Weapons.ChargeBlade
                 AxeStrengtheningTime = 300;
             }
             #endregion
+
+            if (StatCharge > 23) StatCharge = 23;
+            if (StatChargeBottle > StatChargeBottleMax) StatChargeBottle = StatChargeBottleMax;
+            if (player.HeldItem != item)
+            {
+                StatCharge = 0;
+            }
         }
     }
 }

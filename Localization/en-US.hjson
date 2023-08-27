@@ -259,6 +259,16 @@ Mods: {
 				DisplayName: Test Item
 				Tooltip: ""
 			}
+
+			TestBlade: {
+				DisplayName: Test Blade
+				Tooltip: ""
+			}
+
+			DefenceCorpsChargeBlade: {
+				DisplayName: 防卫队合体式盾斧
+				Tooltip: ""
+			}
 		}
 	}
 }

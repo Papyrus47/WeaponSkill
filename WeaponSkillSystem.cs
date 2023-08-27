@@ -5,11 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria.UI;
 using WeaponSkill.UI.ChangeAmmoUI;
+using WeaponSkill.UI.ChargeBladeUI;
 using WeaponSkill.UI.CrossbowAddPartUI;
 using WeaponSkill.UI.DualBladesUI;
 using WeaponSkill.UI.SpiritUI;
 using WeaponSkill.UI.StaminaUI;
+using WeaponSkill.Weapons.ChargeBlade;
 using WeaponSkill.Weapons.DualBlades;
+using WeaponSkill.Weapons.LongSword;
 
 namespace WeaponSkill
 {
@@ -21,6 +24,7 @@ namespace WeaponSkill
         public SpiritUI spiritUI;
         public CrossbowAddPartUI crossbowAddPartUI;
         public DualBladesUI bladesUI;
+        public ChargeBladeBottle chargeBladeBottle;
         public override void Load()
         {
             userInterfaces = new();
@@ -44,6 +48,9 @@ namespace WeaponSkill
 
             bladesUI = new();
             bladesUI.Initialize();
+
+            chargeBladeBottle = new ChargeBladeBottle();
+            chargeBladeBottle.Initialize();
 
             //crossbowAddPartUI = new();
             //UserInterface userInterface3 = new UserInterface();
@@ -90,9 +97,13 @@ namespace WeaponSkill
                 {
                     userInterface.SetState(bladesUI);
                 }
-                else
+                else if(Main.LocalPlayer.HeldItem.TryGetGlobalItem<LongSwordGlobalItem>(out _))
                 {
                     userInterface.SetState(spiritUI);
+                }
+                else if (Main.LocalPlayer.HeldItem.TryGetGlobalItem<ChargeBladeGlobalItem>(out _))
+                {
+                    userInterface.SetState(chargeBladeBottle);
                 }
             }
         }

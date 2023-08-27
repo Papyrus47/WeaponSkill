@@ -10,6 +10,16 @@ namespace WeaponSkill
 {
     public static class TheUtility
     {
+        public static bool InBegin()
+        {
+            SpriteBatch spriteBatch = Main.spriteBatch;
+            FieldInfo field = spriteBatch.GetType().GetField("beginCalled", BindingFlags.Instance | BindingFlags.NonPublic);
+            if (field != null && field.GetValue(spriteBatch) is bool canDraw)
+            {
+                return canDraw;
+            }
+            return false;
+        }
         public static void VillagesItemOnHit(Item item,Player player, Rectangle itemRectangle, int damage, float knockBack, int npcIndex, int dmgRandomized, int dmgDone)
         {
             Type type = player.GetType();
