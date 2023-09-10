@@ -54,6 +54,10 @@ namespace WeaponSkill.Weapons.ChargeBlade
         /// 处于盾强化,斧头形态
         /// </summary>
         public bool InShieldStreng_InAxe => ShieldStrengthening > 0 && InAxe;
+        /// <summary>
+        /// 是否为属性瓶,true为属性瓶,false为榴弹瓶
+        /// </summary>
+        public bool BottleIsAttribute = false;
         public override void SetStaticDefaults()
         {
             WeaponID = new();
@@ -68,7 +72,7 @@ namespace WeaponSkill.Weapons.ChargeBlade
             entity.noMelee = true;
 
             StatChargeBottleMax = 5; // 默认五个瓶子
-            AxeStrengtheningTime = 300;
+            AxeStrengtheningTime = 900;
         }
         public override void HoldItem(Item item, Player player)
         {
@@ -110,12 +114,14 @@ namespace WeaponSkill.Weapons.ChargeBlade
             {
                 ShieldStrengthening--;
             }
+            else if (ShieldStrengthening > StatChargeBottleMax * 1800) ShieldStrengthening = StatChargeBottleMax * 1800;
             #endregion
-            #region 斧模式强化相关
+                #region 斧模式强化相关
             if (AxeStrengthening) // 处于红斧状态下,减少计时器,然后减少瓶子
             {
                 if(AxeStrengtheningTime-- <= 0)
                 {
+                    AxeStrengtheningTime = 300;
                     StatChargeBottle--;
                 }
             }
@@ -123,7 +129,7 @@ namespace WeaponSkill.Weapons.ChargeBlade
             if(StatChargeBottle == 0) // 重置斧强化
             {
                 AxeStrengthening = false;
-                AxeStrengtheningTime = 300;
+                AxeStrengtheningTime = 900;
             }
             #endregion
 

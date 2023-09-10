@@ -50,7 +50,16 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
         {
             sb.End();
             sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicWrap, DepthStencilState.Default, RasterizerState.CullNone);
+            if (ChargeBladeProj.chargeBladeGlobal.StatCharge >= 23)
+            {
+                var effect = WeaponSkill.SwordHot.Value;
+                effect.CurrentTechnique.Passes[0].Apply();
+                effect.Parameters["tex"].SetValue(WeaponSkill.HotTex.Value);
+                effect.Parameters["uTime"].SetValue(10f);
+            }
             swingHelper.DrawSwingItem(lightColor);
+            sb.End();
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicWrap, DepthStencilState.Default, RasterizerState.CullNone);
             ChargeBladeProj.shield.Draw(sb, lightColor);
             sb.End();
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None,

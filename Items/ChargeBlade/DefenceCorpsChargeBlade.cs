@@ -23,9 +23,13 @@ namespace WeaponSkill.Items.ChargeBlade
         {
             shieldData = new()
             {
-                MaxDmg = 240,
-                MaxReduction = 0.3f
+                MaxDmg = 120,
+                MaxReduction = 0.6f
             };
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe().AddRecipeGroup(RecipeGroupID.IronBar,20).AddTile(TileID.Anvils).Register();
         }
     }
 }

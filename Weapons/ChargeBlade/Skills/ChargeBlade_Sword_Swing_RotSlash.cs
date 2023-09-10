@@ -27,10 +27,11 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
             else if (Projectile.ai[0] == 2)
             {
                 player.velocity.X *= 0.9f;
-                if ((int)Projectile.ai[1] == 0)
-                {
-                    ChargeBladeProj.shield.Fixed = false;
-                }
+                //if ((int)Projectile.ai[1] == 0)
+                //{
+                //    ChargeBladeProj.shield.Fixed = false;
+                //}
+                //Projectile.ai[2] = 0;
                 ChargeBladeProj.shield.Update(player.RotatedRelativePoint(player.MountedCenter) + new Vector2(player.direction * player.width * 0.9f, 0), player.direction);
                 ChargeBladeProj.shield.GP = true;
                 ChargeBladeProj.shield.InDef = true;

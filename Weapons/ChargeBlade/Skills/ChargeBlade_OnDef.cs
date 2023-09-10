@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WeaponSkill.Weapons.ChargeBlade.Skills
 {
-    public class ChargeBlade_OnDef : ChargeBlade_OnHeld_Sword
+    public class ChargeBlade_OnDef : ChargeBlade_Sword_Held
     {
         public ChargeBlade_OnDef(ChargeBladeProj chargeBlade) : base(chargeBlade)
         {
@@ -16,6 +16,7 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
             Vector2 rotVector = Vector2.UnitX.RotatedBy(0.225f + Math.Sin(Projectile.ai[1]) * 0.05f);
 
             player.heldProj = Projectile.whoAmI;
+            PreAttack = false;
             Projectile.ai[0]++;
             Projectile.ai[1] += player.velocity.X * 0.02f + 0.03f;
             if (!ActivationCondition() && SwitchCondition()) // 用于跳出技能
@@ -48,19 +49,19 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
                 {
                     Projectile.ai[2] = ChargeBladeProj.shield.KNLevel switch
                     {
-                        ChargeBladeShield.KNLevelEnum.Small => 8,
-                        ChargeBladeShield.KNLevelEnum.Medium => 14,
-                        ChargeBladeShield.KNLevelEnum.Big => 20,
+                        ChargeBladeShield.KNLevelEnum.Small => 12,
+                        ChargeBladeShield.KNLevelEnum.Medium => 25,
+                        ChargeBladeShield.KNLevelEnum.Big => 40,
                         _ => 1
-                    }; ;
+                    };
                 }
                 Projectile.ai[2]--;
                 Projectile.ai[0] = 0;
                 float kn = ChargeBladeProj.shield.KNLevel switch
                 {
                     ChargeBladeShield.KNLevelEnum.Small => 0.3f,
-                    ChargeBladeShield.KNLevelEnum.Medium => 0.5f,
-                    ChargeBladeShield.KNLevelEnum.Big => 1f,
+                    ChargeBladeShield.KNLevelEnum.Medium => 0.4f,
+                    ChargeBladeShield.KNLevelEnum.Big => 0.3f,
                     _ => 1f
                 };
                 player.velocity.X = Projectile.ai[2] * -player.direction * kn;

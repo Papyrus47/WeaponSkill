@@ -12,11 +12,13 @@ namespace WeaponSkill
         public static Asset<Effect> SwingEffect;
         public static Asset<Effect> SpurtsShader;
         public static Asset<Effect> OffsetShader;
+        public static Asset<Effect> SwordHot;
         public static Asset<Texture2D> ChooseAmmoUITex;
         public static Asset<Texture2D> StaminaUITex;
         public static Asset<Texture2D> SwingTex;
         public static Asset<Texture2D> SwingTex_Offset;
         public static Asset<Texture2D> SpiritUITex;
+        public static Asset<Texture2D> HotTex;
         public static ModKeybind RangeChange;
         public static ModKeybind BowSlidingStep;
         public static ModKeybind SpKeyBind;
@@ -29,11 +31,13 @@ namespace WeaponSkill
                 SwingEffect = Assets.Request<Effect>("Effects/" + nameof(SwingEffect));
                 SpurtsShader = Assets.Request<Effect>("Effects/" + nameof(SpurtsShader));
                 OffsetShader = Assets.Request<Effect>("Effects/" + nameof(OffsetShader));
+                SwordHot = Assets.Request<Effect>("Effects/" + nameof(SwordHot));
                 SwingTex = Assets.Request<Texture2D>("Images/" + nameof(SwingTex));
                 ChooseAmmoUITex = Assets.Request<Texture2D>("UI/ChangeAmmoUI/" + nameof(ChooseAmmoUITex),AssetRequestMode.ImmediateLoad);
                 StaminaUITex = Assets.Request<Texture2D>("UI/StaminaUI/" + nameof(StaminaUITex));
                 SpiritUITex = Assets.Request<Texture2D>("UI/SpiritUI/" + nameof(SpiritUITex));
                 SwingTex_Offset = Assets.Request<Texture2D>("Images/" + nameof(SwingTex_Offset));
+                HotTex = Assets.Request<Texture2D>("Images/" + nameof(HotTex));
             }
             On_FilterManager.EndCapture += On_FilterManager_EndCapture;
             On_Main.LoadWorlds += On_Main_LoadWorlds;

@@ -25,7 +25,7 @@ namespace WeaponSkill.Weapons.LongSword
             #region 绘制扭曲图片到自定义render上
             gd.SetRenderTarget(WeaponSkill.MyRender);
             gd.Clear(Color.Transparent);
-            sb.Begin(SpriteSortMode.Immediate,BlendState.AlphaBlend,SamplerState.AnisotropicWrap,DepthStencilState.None,RasterizerState.CullNone, null); // 即刻绘制需要的图片到对应的Render上
+            sb.Begin(SpriteSortMode.Immediate,BlendState.AlphaBlend,SamplerState.AnisotropicWrap,DepthStencilState.None,RasterizerState.CullNone, null, Main.Transform); // 即刻绘制需要的图片到对应的Render上
             //swingHelper.DrawTrailing(WeaponSkill.SwingTex.Value, (_) => new(0.3f, 0.3f, 0.3f, 0f), null);
             for (int i = 0; i < LongSwordProj.DrawLongSwordSwingShader_Index.Count; i++)
             {
@@ -42,7 +42,7 @@ namespace WeaponSkill.Weapons.LongSword
             //sb.Draw(Main.screenTargetSwap,Vector2.Zero, Color.White); // 原始图片
             //sb.End();
 
-            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearWrap, DepthStencilState.None, RasterizerState.CullNone,null); // 绘制扭曲
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearWrap, DepthStencilState.None, RasterizerState.CullNone); // 绘制扭曲
             //gd.Textures[1] = WeaponSkill.MyRender;
             Effect effect = WeaponSkill.OffsetShader.Value;
             effect.Parameters["uOffset"].SetValue(0.06f);
@@ -52,7 +52,7 @@ namespace WeaponSkill.Weapons.LongSword
             //sb.Draw(WeaponSkill.MyRender, Vector2.Zero, Color.White);
             sb.End();
 
-            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicWrap, DepthStencilState.None, RasterizerState.CullNone); // 绘制刀光
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform); // 绘制刀光
             for (int i = 0; i < LongSwordProj.DrawLongSwordSwingShader_Index.Count; i++)
             {
                 LongSwordProj longSwordProj = (Main.projectile[LongSwordProj.DrawLongSwordSwingShader_Index[i]].ModProjectile as LongSwordProj);

@@ -91,7 +91,7 @@ namespace WeaponSkill
         }
         public void TryChangeTheUserInterfacesSetState(UserInterface userInterface)
         {
-            if (userInterface.CurrentState == bladesUI || userInterface.CurrentState == spiritUI)
+            if (userInterface.CurrentState == bladesUI || userInterface.CurrentState == spiritUI || userInterface.CurrentState == chargeBladeBottle)
             {
                 if (Main.LocalPlayer.HeldItem.TryGetGlobalItem<DualBladesGlobalItem>(out _))
                 {

@@ -10,10 +10,20 @@ Projectiles: {
 	SpurtsProj_JudgmentCut.DisplayName: Spurts Proj_ Judgment Cut
 	DualBladesProj.DisplayName: Dual Blades Proj
 	ChargeBladeProj.DisplayName: Charge Blade Proj
+	ChargeBlade_SuperLiberateProj.DisplayName: Charge Blade_ Super Liberate Proj
 }
 
 Keybinds: {
-	Mods.WeaponSkill.ModKey.RangeChange.DisplayName: Mods. Weapon Skill. Mod Key. Range Change
+	Mods: {
+		WeaponSkill: {
+			ModKey: {
+				RangeChange.DisplayName: Mods. Weapon Skill. Mod Key. Range Change
+				BowSlidingStep.DisplayName: Mods. Weapon Skill. Mod Key. Bow Sliding Step
+				SpKeyBind.DisplayName: Mods. Weapon Skill. Mod Key. Sp Key Bind
+			}
+		}
+	}
+
 	特殊按键1.DisplayName: 特殊按键1
 	特殊按键2.DisplayName: 特殊按键2
 	特殊按键3.DisplayName: 特殊按键3

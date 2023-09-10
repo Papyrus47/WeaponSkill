@@ -189,7 +189,7 @@ namespace WeaponSkill.Helper
         {
             SpriteBatch sb = Main.spriteBatch;
             sb.End();
-            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone);
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone,null,Main.Transform);
 
             DrawSwingItem(drawColor);
             DrawTrailing(tex, colorFunc, effect, SetZ);
@@ -230,12 +230,12 @@ namespace WeaponSkill.Helper
         {
             SpriteBatch sb = Main.spriteBatch;
             sb.End();
-            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone);
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
 
             DrawTrailing(tex, TrailingColorFunc, effect, SetZ);
 
             sb.End();
-            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone);
+            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
 
             Swing_Draw_Afterimage(AfterimageColorFunc, drawAfterimageCount);
             DrawSwingItem(drawColor);
@@ -348,7 +348,7 @@ namespace WeaponSkill.Helper
             }
             SpriteBatch sb = Main.spriteBatch;
             sb.End();
-            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone);
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
 
             DrawTrailing(tex, colorFunc, effect);
 

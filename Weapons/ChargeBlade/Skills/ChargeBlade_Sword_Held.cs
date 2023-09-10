@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace WeaponSkill.Weapons.ChargeBlade.Skills
 {
-    public class ChargeBlade_OnHeld_Sword : ChargeBlade_Sword_Basic
+    public class ChargeBlade_Sword_Held : ChargeBlade_Sword_Basic
     {
-        public ChargeBlade_OnHeld_Sword(ChargeBladeProj chargeBlade) : base(chargeBlade)
+        public ChargeBlade_Sword_Held(ChargeBladeProj chargeBlade) : base(chargeBlade)
         {
         }
         public override void AI()
@@ -30,6 +30,11 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
             swingHelper.SetSwingActive();
             swingHelper.ProjFixedPos(player.RotatedRelativePoint(player.MountedCenter) + new Vector2(player.direction * -10, 0), -ChargeBladeProj.SwingLength * 0.45f, true);
             swingHelper.SwingAI(ChargeBladeProj.SwingLength, player.direction, 0);
+            ChargeBladeShield shield = ChargeBladeProj.shield;
+            if ((shield.swingHelper.center - player.Center).Length() > 30)
+            {
+                shield.AxeRot += 0.015f * (shield.swingHelper.center - player.Center).Length();
+            }
             //if (flag)
             //{
             //    Projectile.Center -= Projectile.velocity * 0.45f;
@@ -48,6 +53,13 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
         {
             sb.End();
             sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicWrap, DepthStencilState.Default, RasterizerState.CullNone);
+            if(ChargeBladeProj.chargeBladeGlobal.StatCharge >= 23)
+            {
+                var effect = WeaponSkill.SwordHot.Value;
+                effect.CurrentTechnique.Passes[0].Apply();
+                effect.Parameters["tex"].SetValue(WeaponSkill.HotTex.Value);
+                effect.Parameters["uTime"].SetValue(10f);
+            }
             swingHelper.DrawSwingItem(lightColor);
             sb.End();
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None,
