@@ -42,14 +42,14 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
                 if ((int)Projectile.ai[0] == 2 && !End)
                 {
                     End = true;
-                    if(ChargeBladeProj.chargeBladeGlobal.StatChargeBottle > 0) Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), Projectile.Center + Projectile.velocity, Vector2.UnitX * player.direction * 140, ModContent.ProjectileType<ChargeBlade_SuperLiberateProj>(), Projectile.damage, Projectile.knockBack, Projectile.owner, ChargeBladeProj.chargeBladeGlobal.StatChargeBottle);
+                    if(ChargeBladeProj.chargeBladeGlobal.StatChargeBottle > 0) Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), Projectile.Center + Projectile.velocity - Vector2.UnitY * 10, Vector2.UnitX * player.direction * 140, ModContent.ProjectileType<ChargeBlade_SuperLiberateProj>(), Projectile.damage, Projectile.knockBack, Projectile.owner, ChargeBladeProj.chargeBladeGlobal.StatChargeBottle);
                     ChargeBladeProj.chargeBladeGlobal.StatChargeBottle = 0;
                     Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Vector2.UnitY, 7, 20, 10));
                 }
             }
             else
             {
-                Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Vector2.UnitY, 6, 0.1f, 3,-1,"Spuer"));
+                Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Vector2.UnitY, 1.2f * Main.rand.Next(-1,2), 0.1f, 3,-1));
             }
         }
         public override bool ActivationCondition() => ChargeBladeProj.chargeBladeGlobal.InShieldStreng_InAxe;

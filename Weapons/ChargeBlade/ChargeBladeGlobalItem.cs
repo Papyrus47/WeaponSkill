@@ -115,6 +115,7 @@ namespace WeaponSkill.Weapons.ChargeBlade
                 ShieldStrengthening--;
             }
             else if (ShieldStrengthening > StatChargeBottleMax * 1800) ShieldStrengthening = StatChargeBottleMax * 1800;
+            //StatChargeBottle = 5;
             #endregion
                 #region 斧模式强化相关
             if (AxeStrengthening) // 处于红斧状态下,减少计时器,然后减少瓶子

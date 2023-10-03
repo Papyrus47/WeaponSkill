@@ -11,6 +11,7 @@ Projectiles: {
 	DualBladesProj.DisplayName: Dual Blades Proj
 	ChargeBladeProj.DisplayName: Charge Blade Proj
 	ChargeBlade_SuperLiberateProj.DisplayName: Charge Blade_ Super Liberate Proj
+	AxesProj.DisplayName: Axes Proj
 }
 
 Keybinds: {

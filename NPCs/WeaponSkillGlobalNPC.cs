@@ -10,6 +10,21 @@ namespace WeaponSkill.NPCs
     {
         public override bool InstancePerEntity => true;
         public List<WeaponSkillGlobalNPCComponent> weaponSkillGlobalNPCComponents = new();
+        public bool CanUpdate = true;
+        public override void Load()
+        {
+            On_NPC.UpdateNPC += On_NPC_UpdateNPC;
+        }
+        public override void Unload()
+        {
+            On_NPC.UpdateNPC -= On_NPC_UpdateNPC;
+        }
+        private static void On_NPC_UpdateNPC(On_NPC.orig_UpdateNPC orig, NPC self, int i)
+        {
+            if (self.TryGetGlobalNPC<WeaponSkillGlobalNPC>(out var skill) && !skill.CanUpdate) return;
+            orig.Invoke(self, i);
+        }
+
         public override void ResetEffects(NPC npc)
         {
             weaponSkillGlobalNPCComponents.RemoveAll(x => x.Remove);

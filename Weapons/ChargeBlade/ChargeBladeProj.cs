@@ -159,7 +159,15 @@ namespace WeaponSkill.Weapons.ChargeBlade
         public override bool ShouldUpdatePosition() => false;
         public override bool? CanDamage() => CurrentSkill.CanDamage();
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => CurrentSkill.Colliding(projHitbox, targetHitbox);
-        public virtual float TimeChange(float time) => MathHelper.SmoothStep(0, 2f, time * 0.6f);
+        public virtual float TimeChange(float time)
+        {
+            if (chargeBladeGlobal.InAxe)
+            {
+                return MathHelper.SmoothStep(0, 2f, time * 0.6f);
+            }
+            return MathF.Pow(time, 3f);
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
             //Main.spriteBatch.Draw(DrawColorTex, new Vector2(500), null, Color.White, 0f, default, 4, SpriteEffects.None, 0f);
@@ -295,11 +303,18 @@ namespace WeaponSkill.Weapons.ChargeBlade
 
             ChargeBlade_Axe_Swing_Liberate Axe_Liberate_Slash1 = new(this, () => Player.controlUseTile) // 斧解1
             {
-                StartVel = Vector2.UnitX.RotatedBy(0.8),
-                VelScale = new Vector2(1,0.25f),
-                VisualRotation = 0.75f,
-                SwingRot = MathHelper.PiOver2 * 1.25f,
-                SwingDirectionChange = false
+                StartVel = Vector2.UnitY,
+                VelScale = new Vector2(1,0.4f),
+                VisualRotation = 0.6f,
+                SwingRot = MathHelper.PiOver2,
+                SwingDirectionChange = false,
+                SwingAI = () =>
+                {
+                    if (Projectile.ai[1] > ChargeBlade_Axe_Swing.SLASH_TIME / 2 && (int)Projectile.ai[0] == 1)
+                    {
+                        Projectile.ai[1] += 0.8f;
+                    }
+                }
             };
             ChargeBlade_Axe_Swing_Liberate Axe_Liberate_Slash2 = new(this, () => Player.controlUseTile) // 斧解2
             {

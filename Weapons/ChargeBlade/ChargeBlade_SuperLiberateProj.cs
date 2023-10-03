@@ -32,6 +32,7 @@ namespace WeaponSkill.Weapons.ChargeBlade
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Projectile.velocity.Y = 0;
+            Projectile.velocity.X = oldVelocity.X;
             return false;
         }
         public override void OnSpawn(IEntitySource source)
@@ -51,8 +52,20 @@ namespace WeaponSkill.Weapons.ChargeBlade
             }
             else // 榴弹瓶
             {
-                if(!OnCollideTile) Projectile.velocity.Y = 16;
-                for (int i = 0; i < 3; i++)
+                Projectile.velocity.Y = 16;
+                Projectile.position.X -= Projectile.velocity.X;
+            }
+        }
+        public override bool ShouldUpdatePosition() => true;
+        public override void OnKill(int timeLeft)
+        {
+            if (BottleIsAttribute) // 属性瓶
+            {
+                basicChargeBlade.SuperLiberateDust(Projectile);
+            }
+            else // 榴弹瓶
+            {
+                for (int i = 0; i < 60; i++)
                 {
                     var dust = Dust.NewDustDirect(Projectile.Center, 100, 1, DustID.FireworksRGB);
                     dust.velocity.Y = -13 * Main.rand.NextFloat(0.5f, 1f);
@@ -61,18 +74,7 @@ namespace WeaponSkill.Weapons.ChargeBlade
                     dust.noGravity = true;
                     dust.color = basicChargeBlade.LiberateColor;
                 }
-            }
-        }
-        public override bool ShouldUpdatePosition() => false;
-        public override void Kill(int timeLeft)
-        {
-            if (BottleIsAttribute) // 属性瓶
-            {
-                basicChargeBlade.SuperLiberateDust(Projectile);
-            }
-            else // 榴弹瓶
-            {
-                if(UseBottle > 1) Projectile.NewProjectile(entitySource,Projectile.Center + new Vector2(Projectile.velocity.X, 0), Projectile.velocity, ModContent.ProjectileType<ChargeBlade_SuperLiberateProj>(), Projectile.damage, Projectile.knockBack, Projectile.owner, UseBottle -1);
+                if (UseBottle > 1) Projectile.NewProjectile(entitySource,Projectile.Center + new Vector2(Projectile.velocity.X, 0), Projectile.velocity, ModContent.ProjectileType<ChargeBlade_SuperLiberateProj>(), Projectile.damage, Projectile.knockBack, Projectile.owner, UseBottle -1);
             }
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
@@ -88,8 +90,22 @@ namespace WeaponSkill.Weapons.ChargeBlade
             base.ModifyHitNPC(target, ref modifiers);
             if (!BottleIsAttribute)
             {
+                modifiers.ModifyHitInfo += ModifyHitInfo_BottleIsAttribute;
                 modifiers.ScalingArmorPenetration += 1f;
             }
+        }
+
+        private void ModifyHitInfo_BottleIsAttribute(ref NPC.HitInfo info)
+        {
+            info.Damage = Projectile.damage;
+        }
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+            //height -= 150;
+            //width -= 95;
+            //hitboxCenterFrac.Y -= height;
+            fallThrough = false;
+            return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
