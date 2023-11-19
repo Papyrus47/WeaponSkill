@@ -18,6 +18,7 @@ namespace WeaponSkill.Items.Books
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
+            tooltips.Add(new TooltipLine(Mod, "AxeTooltip", "未实装"));
             if (Show)
             {
                 int index = tooltips.FindIndex(x => x.Name == "Tooltip1");

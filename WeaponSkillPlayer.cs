@@ -7,9 +7,9 @@ using Terraria;
 using Terraria.GameInput;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ModLoader.IO;
+using WeaponSkill.Weapons;
 using WeaponSkill.Weapons.LongSword;
 using WeaponSkill.Weapons.LongSword.Skills;
-using WeaponSkill.WeaponSkillPlayerDrawLayers;
 
 namespace WeaponSkill
 {
@@ -75,6 +75,7 @@ namespace WeaponSkill
         /// 水月架势被命中
         /// </summary>
         public bool SerenePoseOnHit;
+        public BasicShield HeldShield;
         public override void ResetEffects()
         {
             ShowTheRangeChangeUI = false; 
@@ -144,8 +145,8 @@ namespace WeaponSkill
         }
         public override void ModifyDrawLayerOrdering(IDictionary<PlayerDrawLayer, PlayerDrawLayer.Position> positions)
         {
-            var crossbowPlayerDraw = new CrossbowPlayerDrawLayer();
-            positions.Add(crossbowPlayerDraw, crossbowPlayerDraw.GetDefaultPosition());
+            //var crossbowPlayerDraw = new CrossbowPlayerDrawLayer();
+            //positions.Add(crossbowPlayerDraw, crossbowPlayerDraw.GetDefaultPosition());
         }
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
@@ -177,9 +178,23 @@ namespace WeaponSkill
                     }
             }
         }
-
+        public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
+        {
+            if(HeldShield != null && HeldShield.InDef)
+            {
+                HeldShield.ModifyHit(ref modifiers);
+            }
+        }
+        public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
+        {
+            if (HeldShield != null && HeldShield.InDef)
+            {
+                HeldShield.ModifyHit(ref modifiers);
+            }
+        }
         public override bool FreeDodge(Player.HurtInfo info)
         {
+            #region 大剑防御
             if (InBlocking && info.Damage <= 1)
             {
                 Main.instance.CameraModifiers.Add(new PunchCameraModifier(Player.Center, Main.rand.NextVector2Unit(), 4, 3, 1));
@@ -190,6 +205,8 @@ namespace WeaponSkill
                 Player.SetImmuneTimeForAllTypes(20);
                 return true;
             }
+            #endregion
+            #region 太刀的
             if (InForesightSlash)
             {
                 ForesightSlash_OnHit = true;
@@ -227,6 +244,34 @@ namespace WeaponSkill
                 Player.SetImmuneTimeForAllTypes(180);
                 return true;
             }
+            #endregion
+            #region 盾系列防御
+            if (HeldShield != null)
+            {
+                if (HeldShield.InDef)
+                {
+                    HeldShield.DefSucceeded = true;
+                    float prosses = info.Damage / Player.statLifeMax2;
+                    if(prosses < 0.1f)
+                    {
+                        HeldShield.KNLevel = BasicShield.KNLevelEnum.Small;
+                    }
+                    else if(prosses < 0.5f)
+                    {
+                        HeldShield.KNLevel = BasicShield.KNLevelEnum.Medium;
+                    }
+                    else
+                    {
+                        HeldShield.KNLevel = BasicShield.KNLevelEnum.Big;
+                    }
+                    if(info.Damage <= Player.statLifeMax2 * 0.01f)
+                    {
+                        return false;
+                    }
+                }
+                HeldShield = null;
+            }
+            #endregion
             return base.FreeDodge(info);
         }
     }

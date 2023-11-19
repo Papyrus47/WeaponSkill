@@ -9,6 +9,10 @@ namespace WeaponSkill.Weapons.Bows
 {
     public class BowsGlobalItem : BasicWeaponItem<BowsGlobalItem>
     {
+        /// <summary>
+        /// 消耗子弹用的玩意
+        /// </summary>
+        public bool CosumeAmmo;
         public override void SetStaticDefaults()
         {
             WeaponID = new() { 3859, 5282, 4381, 4381, 3504, 3029, 44, 655, 4953, 3516, 3516, 3516, 99, 3492, 682, 120, 2515, 661, 661, 3854, 3854, 2223, 658, 923, 3052, 3510, 796, 2888, 3498, 2624, 3486, 39, 3480 };
@@ -20,6 +24,10 @@ namespace WeaponSkill.Weapons.Bows
             entity.noMelee = true;
             entity.useStyle = ItemUseStyleID.Shoot;
             entity.UseSound = null;
+        }
+        public override bool CanConsumeAmmo(Item weapon, Item ammo, Player player)
+        {
+            return CosumeAmmo;
         }
         public override void HoldItem(Item item, Player player)
         {

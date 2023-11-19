@@ -11,55 +11,22 @@ using static Humanizer.In;
 
 namespace WeaponSkill.Weapons.ChargeBlade
 {
-    public class ChargeBladeShield
+    public class ChargeBladeShield : BasicShield
     {
-        public int width;
-        public int height;
-        public Vector2 Size
-        {
-            get => new(width, height);
-            set
-            {
-                width = (int)value.X;
-                height = (int)value.Y;
-            }
-        }
-        public enum KNLevelEnum : byte
-        {
-            Small = 1,
-            Medium = 2,
-            Big = 3
-        }
         public ShieldSwingHelper swingHelper;
         public ChargeBladeProj chargeBladeProj;
         public Vector2 StartVel = Vector2.UnitX;
         public bool Fixed;
-        public float VisualRotation;
         public float AxeRot;
         /// <summary>
         /// GP格挡攻击
         /// </summary>
         public bool GP;
         /// <summary>
-        /// 正在防御
-        /// </summary>
-        public bool InDef;
-        /// <summary>
-        /// 防御成功攻击
-        /// </summary>
-        public bool DefSucceeded;
-        /// <summary>
-        /// GP成功
-        /// </summary>
-        public bool DefSucceeded_GP;
-        /// <summary>
         /// 计时器
         /// </summary>
         public int Time = 0;
-        /// <summary>
-        /// 击退级别
-        /// </summary>
-        public KNLevelEnum KNLevel;
+        public bool DefSucceeded_GP => DefSucceeded && GP;
         //public int SPDir;
         public ChargeBladeShield(ChargeBladeProj chargeBladeProj, Asset<Texture2D> DrawShieldTex)
         {
@@ -74,6 +41,7 @@ namespace WeaponSkill.Weapons.ChargeBlade
         public virtual void Update(Vector2 Pos,int Dir)
         {
             //swingHelper.center = Pos;
+            InDef = false;
             swingHelper.Change_Lerp(StartVel,0.8f, Vector2.One,0.8f, VisualRotation,0.3f);
             StartVel = Vector2.UnitX;
             swingHelper.ChangeLerp = false;
@@ -84,6 +52,7 @@ namespace WeaponSkill.Weapons.ChargeBlade
             swingHelper.SPDir = Dir;
             swingHelper.Rot = MathHelper.Pi;
             float rot = MathHelper.PiOver4;
+            if (GP) InDef = true;
             if (AxeRotBool)
             {
                 swingHelper.AxeRot = AxeRot;
@@ -112,98 +81,108 @@ namespace WeaponSkill.Weapons.ChargeBlade
 
             //for(int i = 0;i)
         }
-        /// <summary>
-        /// 防御攻击者的攻击
-        /// </summary>
-        public virtual void CheckProjHitMe()
+        public override float GetDefence()
         {
-            Player player = chargeBladeProj.Player;
-            if(player == null || !InDef) return;
-            InDef = false;
-            if(Time > 0)
-            {
-                Time--;
-            }
-            else
-            {
-                DefSucceeded = false;
-                DefSucceeded_GP = false;
-            }
-            float maxReduction = chargeBladeProj.shieldData.MaxReduction;
-            bool flag = false; // 用于GP成功的判定
+            float def = base.GetDefence();
             if (GP)
             {
-                maxReduction *= 0.7f;
-                flag = true;
+                def *= 1.5f;
             }
-            GP = false;
-            if (chargeBladeProj.chargeBladeGlobal.ShieldStrengthening > 0)
-            {
-                maxReduction *= 0.7f;
-            }
-            foreach (Projectile projectile in Main.projectile)
-            {
-                if (projectile.active && projectile.hostile && !player.immune && swingHelper.GetColliding(projectile.Hitbox) && projectile.damage > 0 && projectile.ModProjectile is not ChargeBladeProj)
-                {
-                    double damage = player.Hurt(PlayerDeathReason.ByProjectile(player.whoAmI, projectile.whoAmI),(int)(Main.DamageVar(projectile.damage, 0f - player.luck) * maxReduction), -player.direction,false,false,-1,false, projectile.ArmorPenetration);
-                    if(damage < chargeBladeProj.shieldData.MaxDmg * 0.4f)
-                    {
-                        KNLevel = KNLevelEnum.Small; // 小退
-                    }
-                    else if(damage < chargeBladeProj.shieldData.MaxDmg)
-                    {
-                        KNLevel = KNLevelEnum.Medium;
-                    }
-                    else
-                    {
-                        KNLevel = KNLevelEnum.Big;
-                    }
-                    DefSucceeded = true;
-                    chargeBladeProj.chargeBladeGlobal.StatCharge += 0.5f;
-                    Time = 10;
-                    if (flag)
-                    {
-                        chargeBladeProj.chargeBladeGlobal.StatCharge += 1.5f;
-                        DefSucceeded_GP = true;
-                    }
-                    player.SetItemTime(50);
-                    break;
-                }
-            }
-            if (DefSucceeded) return;
-            foreach(NPC npc in Main.npc)
-            {
-                if(npc.active && !npc.friendly && !player.immune && swingHelper.GetColliding(npc.Hitbox) && npc.damage > 0)
-                {
-                    double damage = player.Hurt(PlayerDeathReason.ByNPC(npc.whoAmI),(int)(Main.DamageVar(npc.damage, 0f - player.luck) * maxReduction), -player.direction, false, false, -1, false);
-                    if (damage < chargeBladeProj.shieldData.MaxDmg * 0.4f)
-                    {
-                        KNLevel = KNLevelEnum.Small; // 小退
-                    }
-                    else if (damage < chargeBladeProj.shieldData.MaxDmg * 0.8f)
-                    {
-                        KNLevel = KNLevelEnum.Medium;
-                    }
-                    else
-                    {
-                        KNLevel = KNLevelEnum.Big;
-                    }
-                    DefSucceeded = true;
-                    chargeBladeProj.chargeBladeGlobal.StatCharge += 0.5f;
-                    Time = 10;
-                    if (flag)
-                    {
-                        chargeBladeProj.chargeBladeGlobal.StatCharge += 1.5f;
-                        DefSucceeded_GP = true;
-                    }
-                    player.SetItemTime(50);
-                    break;
-                }
-            }
+            return def;
         }
+        #region 废弃代码建议不动
+        ///// <summary>
+        ///// 防御攻击者的攻击
+        ///// </summary>
+        //public virtual void CheckProjHitMe()
+        //{
+        //    Player player = chargeBladeProj.Player;
+        //    if(player == null || !InDef) return;
+        //    InDef = false;
+        //    if(Time > 0)
+        //    {
+        //        Time--;
+        //    }
+        //    else
+        //    {
+        //        DefSucceeded = false;
+        //        DefSucceeded_GP = false;
+        //    }
+        //    float maxReduction = chargeBladeProj.shieldData.MaxReduction;
+        //    bool flag = false; // 用于GP成功的判定
+        //    if (GP)
+        //    {
+        //        maxReduction *= 0.7f;
+        //        flag = true;
+        //    }
+        //    GP = false;
+        //    if (chargeBladeProj.chargeBladeGlobal.ShieldStrengthening > 0)
+        //    {
+        //        maxReduction *= 0.7f;
+        //    }
+        //    foreach (Projectile projectile in Main.projectile)
+        //    {
+        //        if (projectile.active && projectile.hostile && !player.immune && swingHelper.GetColliding(projectile.Hitbox) && projectile.damage > 0 && projectile.ModProjectile is not ChargeBladeProj)
+        //        {
+        //            double damage = player.Hurt(PlayerDeathReason.ByProjectile(player.whoAmI, projectile.whoAmI),(int)(Main.DamageVar(projectile.damage, 0f - player.luck) * maxReduction), -player.direction,false,false,-1,false, projectile.ArmorPenetration);
+        //            if(damage < chargeBladeProj.shieldData.MaxDmg * 0.4f)
+        //            {
+        //                KNLevel = KNLevelEnum.Small; // 小退
+        //            }
+        //            else if(damage < chargeBladeProj.shieldData.MaxDmg)
+        //            {
+        //                KNLevel = KNLevelEnum.Medium;
+        //            }
+        //            else
+        //            {
+        //                KNLevel = KNLevelEnum.Big;
+        //            }
+        //            DefSucceeded = true;
+        //            chargeBladeProj.chargeBladeGlobal.StatCharge += 0.5f;
+        //            Time = 10;
+        //            if (flag)
+        //            {
+        //                chargeBladeProj.chargeBladeGlobal.StatCharge += 1.5f;
+        //                DefSucceeded_GP = true;
+        //            }
+        //            player.SetItemTime(50);
+        //            break;
+        //        }
+        //    }
+        //    if (DefSucceeded) return;
+        //    foreach(NPC npc in Main.npc)
+        //    {
+        //        if(npc.active && !npc.friendly && !player.immune && swingHelper.GetColliding(npc.Hitbox) && npc.damage > 0)
+        //        {
+        //            double damage = player.Hurt(PlayerDeathReason.ByNPC(npc.whoAmI),(int)(Main.DamageVar(npc.damage, 0f - player.luck) * maxReduction), -player.direction, false, false, -1, false);
+        //            if (damage < chargeBladeProj.shieldData.MaxDmg * 0.4f)
+        //            {
+        //                KNLevel = KNLevelEnum.Small; // 小退
+        //            }
+        //            else if (damage < chargeBladeProj.shieldData.MaxDmg * 0.8f)
+        //            {
+        //                KNLevel = KNLevelEnum.Medium;
+        //            }
+        //            else
+        //            {
+        //                KNLevel = KNLevelEnum.Big;
+        //            }
+        //            DefSucceeded = true;
+        //            chargeBladeProj.chargeBladeGlobal.StatCharge += 0.5f;
+        //            Time = 10;
+        //            if (flag)
+        //            {
+        //                chargeBladeProj.chargeBladeGlobal.StatCharge += 1.5f;
+        //                DefSucceeded_GP = true;
+        //            }
+        //            player.SetItemTime(50);
+        //            break;
+        //        }
+        //    }
+        //}
+        #endregion
         public virtual void Draw(SpriteBatch sb, Color color)
         {
-
             if (AxeRotBool)
             {
                 bool flag = false;
@@ -272,5 +251,6 @@ namespace WeaponSkill.Weapons.ChargeBlade
         }
 
         protected virtual bool AxeRotBool => (!chargeBladeProj.chargeBladeGlobal.InAxe || !chargeBladeProj.chargeBladeGlobal.AxeStrengthening || chargeBladeProj.CurrentSkill is ChargeBlade_Axe_Held) && (chargeBladeProj.CurrentSkill is not ChargeBlade_Axe_Swing_Liberate_Super || (chargeBladeProj.CurrentSkill is ChargeBlade_Axe_Swing_Liberate_Super liberate_Super && liberate_Super.End));
+
     }
 }

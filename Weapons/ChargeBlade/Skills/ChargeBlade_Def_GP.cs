@@ -35,7 +35,7 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
             Time--;
             if(Time > 0)
             {
-                player.velocity.X = Projectile.ai[2] * -player.direction * kn;
+                player.velocity.X = Time * -player.direction * kn;
             }
             else
             {
@@ -70,11 +70,12 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
                 ChargeBladeShield.KNLevelEnum.Big => 40,
                 _ => 1
             };
+            player.immuneTime += 15;
             kn = ChargeBladeProj.shield.KNLevel switch
             {
-                ChargeBladeShield.KNLevelEnum.Small => 0.3f,
-                ChargeBladeShield.KNLevelEnum.Medium => 0.6f,
-                ChargeBladeShield.KNLevelEnum.Big => 0.3f,
+                ChargeBladeShield.KNLevelEnum.Small => 0.6f,
+                ChargeBladeShield.KNLevelEnum.Medium => 0.2f,
+                ChargeBladeShield.KNLevelEnum.Big => 0.2f,
                 _ => 1f
             };
         }

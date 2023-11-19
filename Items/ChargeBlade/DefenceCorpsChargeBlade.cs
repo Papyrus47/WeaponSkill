@@ -23,8 +23,7 @@ namespace WeaponSkill.Items.ChargeBlade
         {
             shieldData = new()
             {
-                MaxDmg = 120,
-                MaxReduction = 0.6f
+                Def = 80
             };
         }
         public override void AddRecipes()

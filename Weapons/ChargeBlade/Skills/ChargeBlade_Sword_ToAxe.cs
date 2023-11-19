@@ -56,7 +56,7 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
                         swingHelper.SwingAI(ChargeBladeProj.SwingLength, player.direction, 0);
                         ChargeBladeShield shield = ChargeBladeProj.shield;
                         shield.Update(Projectile.Center + Projectile.velocity * 0.95f, 1);
-                        shield.GP = true;
+                        shield.GP = false;
                         shield.InDef = true;
                         shield.VisualRotation = 0f;
                         shield.AxeRot = Projectile.velocity.ToRotation() + MathHelper.PiOver2 * 1.02f;
