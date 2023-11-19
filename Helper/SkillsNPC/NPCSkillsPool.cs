@@ -32,7 +32,7 @@ namespace WeaponSkill.Helper.SkillsNPC
         // 这是靠NPC配合的
         // 虽然可以往技能储存列表分配技能的优先级,但综合来看,直接排序是一种更好的选择
 
-        public virtual NPCSkills_Instantiation? ChagneSkill(NPCSkills_Instantiation currentSkill)
+        public virtual NPCSkills_Instantiation ChagneSkill(NPCSkills_Instantiation currentSkill)
         {
             if (ChangeRulePart.TryGetValue(currentSkill, out var skillChangeRules))
             {

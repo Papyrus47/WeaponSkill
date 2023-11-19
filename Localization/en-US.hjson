@@ -1,9 +1,9 @@
 Mods: {
 	WeaponSkill: {
 		ModKey: {
-			RangeChange: SP Control 1
-			BowSlidingStep: SP Control 2
-			SpKeyBind: SP Control 3
+			RangeChange: special control 1 Control 1
+			BowSlidingStep: special control 1 Control 2
+			SpKeyBind: special control 1 Control 3
 		}
 
 		Spears.SP_Text: 当按下特殊按键{0}的时候,切换为形态
@@ -42,24 +42,23 @@ Mods: {
 				DisplayName: Short Sword Book
 				Tooltip:
 					'''
-					短剑，一种攻击速度较快，但是距离较短的武器，其最大的特点是带有无敌的冲刺,利用好冲刺可以应对许多情况
-					左键类型：刺击    右键类型：斩击
+					Shortsword, a weapon with fast attack speed but short range. Its biggest feature is the invincible dash. Proper use of the dash can handle many situations.
 
-						左键-左键-左键：三连刺
-						右键-右键-右键：三段斩
-						右键-右键-左键：突刺
-						左键-左键-右键-右键-右键-右键-右键-左键：高速五连斩后突刺
-						右键-左键：衔接第一次刺击的招式
-						左键-右键：衔接第二次斩击的招式
-						左键-左键-左键-右键：三连刺结束后衔接三段斩开头的招式
-						右键-右键-右键-左键：三段斩结束后衔接三连刺开头的招式
-						冲刺-右键：高范围横扫
+					Left-click type: Thrust attack
+					Right-click type: Slash attack
 
-					所有的斩击攻击将提升下一次攻击的威力，在第五次达到最大值，为原伤害的3倍，刺击将重置伤害
-					冲刺将提升自己3倍的伤害
+					Left-click - Left-click - Left-click: Triple thrust
+					Right-click - Right-click - Right-click: Triple slash
+					Right-click - Right-click - Left-click: Charge thrust
+					Left-click - Left-click - Right-click - Right-click - Right-click - Right-click - Right-click - Left-click: High-speed five-hit slash followed by charge thrust
+					Right-click - Left-click: Follow-up move after the first thrust
+					Left-click - Right-click: Follow-up move after the second slash
+					Left-click - Left-click - Left-click - Right-click: Follow-up move after the triple thrust, starting with the triple slash
+					Right-click - Right-click - Right-click - Left-click: Follow-up move after the triple slash, starting with the triple thrust
+					Dash - Right-click: Wide sweeping attack
 
-
-
+					All slash attacks will increase the power of the next attack, reaching its maximum at the fifth hit, which is 3 times the original damage. Thrust attacks will reset the damage.
+					Dash will increase damage by 3 times.
 					'''
 			}
 
@@ -67,18 +66,26 @@ Mods: {
 				DisplayName: Spears Book
 				Tooltip:
 					'''
-					长矛，一种攻击距离偏长的武器，具有高速连刺的技能
-					左键类型：刺击    右键类型：斩击
-						左键-左键-左键：三段蓄力刺
-							其中第一段蓄力伤害为原伤害的6倍，第二段蓄力为4倍，第三段蓄力为2倍
-							蓄力时间随着段数增加而减少
-						右键-右键-右键：三段斩
-							其中第一段上挑可以挑飞不免疫击退的敌人
-						横斩（三段斩最后一斩）-左键：连续刺击
-							根据攻速决定刺击刺数，攻速越快，刺击数量越多
-						左键-左键-右键：衔接三段斩最后一击的攻击
-						左键-右键：快速上挑，此技能与上挑无异
-						快速上挑/上挑-左键：第二段蓄力刺
+					Spear, a weapon with a longer attack range, has a skill for rapid thrusting.
+
+					Left-click type: Thrust attack
+					Right-click type: Slash attack
+
+					Left-click - Left-click - Left-click: Triple charged thrust
+
+					The first charge deals 6 times the original damage, the second charge deals 4 times, and the third charge deals 2 times.
+					The charging time decreases with each subsequent charge.
+					Right-click - Right-click - Right-click: Triple slash
+
+					The first slash can launch enemies who are not immune to knockback.
+					Horizontal slash (last slash of the triple slash) - Left-click: Continuous thrusting
+
+					The number of thrusts depends on the attack speed, the faster the attack speed, the more thrusts.
+					Left-click - Left-click - Right-click: Follow-up attack after the last hit of the triple slash.
+
+					Left-click - Right-click: Quick upward thrust, similar to the upward thrust.
+
+					Quick upward thrust / Upward thrust - Left-click: Second charged thrust.
 					'''
 			}
 
@@ -86,31 +93,32 @@ Mods: {
 				DisplayName: Bow Book
 				Tooltip:
 					'''
-					 弓，一种灵活且具有强大输出能力的武器
-					 左键类型：蓄力射击    右键类型：特殊射击（刚射）（吊射）
-					 蓄力级别最多到达三级，每有一级蓄力，玩家周围发光范围增大，玩家伤害提升
-					 如果弓背在背上，则第一次使用将掏出武器，不进行攻击
-					 按下{0}键选择箭类使用      按键{1}键进行滑步
-					 -------------------------------------------------------
-					 每次攻击将提升一级蓄力级别
-					 蓄力射击在蓄力级别为1/2/3时，射出1/2/3发箭
-					 刚射在蓄力级别为1/2/3时,射出3/4/5发箭
-					 吊射将插入两端刚射之中，也可在蓄力射击时按住特殊射击键单独使用
-					 滑步只能在攻击后使用，滑步一次提升一次蓄力级别
-					 蓄力射击可以衔接刚射，刚射也可以衔接蓄力射击
-					 三级蓄力射击可以接三级刚射，但三级刚射不能接三级蓄力射击
-					 如果是三级蓄力刚射，则无法进行滑步
-					    -------------------------------------------------------
-					 耐力槽：
-					 弓的行为将消耗耐力，耐力上限无法增加，恒定为600
-					 蓄力射击消耗15耐力
-					 吊射消耗10耐力
-					 刚射消耗60耐力
-					 滑步消耗40耐力
-					 耐力在不消耗耐力后1.5秒自动恢复
-					 如移动速度极慢甚至不移动，那么耐力将加速恢复
-					 如果耐力不足，则无法进行攻击
-						第一级蓄力刚射不消耗耐力(又称迅雷射击)
+					Bow, a flexible and powerful weapon with high output capability.
+					Left-click type: Charged shot
+					Right-click type: Special shot (Quick shot) (Aimed shot)
+					The charging level can reach up to three levels. With each level of charge, the area around the player will glow, and the player's damage will increase.
+					If the bow is on the player's back, the first use will draw out the weapon without attacking.
+					Press the {0} key to select the type of arrow to use. Press the {1} key to perform a slide step.
+
+					Each attack will increase the charging level by one.
+					For charged shots, when the charging level is at 1/2/3, it will shoot out 1/2/3 arrows respectively.
+					For quick shots, when the charging level is at 1/2/3, it will shoot out 3/4/5 arrows respectively.
+					Aimed shots can be inserted between two quick shots, and can also be used separately while charging a shot.
+					Slide steps can only be performed after an attack, and each slide step increases the charging level by one.
+					Charged shots can be followed by quick shots, and quick shots can also be followed by charged shots.
+					A level 3 charged shot can be followed by a level 3 quick shot, but a level 3 quick shot cannot be followed by a level 3 charged shot.
+					If a level 3 charged quick shot is performed, slide steps cannot be executed.
+
+					Stamina Gauge:
+					Using the bow will consume stamina, and the maximum stamina limit is fixed at 600.
+					Charged shots consume 15 stamina.
+					Aimed shots consume 10 stamina.
+					Quick shots consume 60 stamina.
+					Slide steps consume 40 stamina.
+					Stamina automatically recovers after not consuming stamina for 1.5 seconds.
+					If the movement speed is very slow or not moving at all, stamina will recover faster.
+					If stamina is insufficient, attacks cannot be performed.
+					The first level of charged quick shot does not consume stamina (also known as Thunder Shot).
 					'''
 			}
 
@@ -158,34 +166,33 @@ Mods: {
 				DisplayName: Long Sword Book
 				Tooltip:
 					'''
-					太刀,以中距离攻击为著称的武器,其最大的特点是变化多样
-					左键：斩击   右键：刺击   {0}键:气刃攻击   {1}键:特殊纳刀 {2}键:水月架势
-					起手左键/右键：二连斩
-					左键-左键-左键：直斩，刺击，上捞循环
-					右键-左键-右键：刺击，上捞，刺击循环
-					{0}-{0}-{0}-{0}：气刃系列连击，最后一击为气刃大回旋
-					左键与右键同时：后撤斩
-					{0}与右键同时：见切斩
-					{0}与左键同时：樱花气刃斩
-					在所有攻击连段后可接入特殊纳刀
-					特殊纳刀时，左键：气刃拔刀斩
-					特殊纳刀时，右键：居合
-					在任意攻击后,{2}键使用水月架势,水月架势举刀期间无敌,被命中后则反击,这将消耗一层气刃等级,同时清空所有气刃值
-					后撤斩后可以衔接气刃踏步斩({0}键)，随后衔接气刃3
-					见切斩命中后，可以衔接气刃大回旋
-					-------------------------------------------------------
-					气刃拔刀斩命中会随着时间恢复气刃槽
-					气刃系列攻击普遍消耗气刃槽
-					居合使用后会消耗一级气刃等级
-					樱花气刃斩命中后会增加一层气刃等级
-					气刃大回旋命中后提升一级气刃等级
-					特殊纳刀衔接攻击在被命中一瞬间会抵消伤害
-					见切在后撤过程中被命中免疫本次伤害
-					见切消耗所有气刃值，但玩家被命中后，命中敌人恢复全部气刃值
-					-------------------------------------------------------
-					气刃槽：太刀独有，气刃等级最多到达三级
-					气刃等级根据颜色区分级别，分别是：无色，白色，黄色，红色
-					每一级气刃等级提供5%的伤害加成
+					Long Sword, a weapon known for its mid-range attacks and versatility.
+					Left-click: Slashes Right-click: Thrusts {0} key: Spirit Attacks {1} key: Special Sheathe {2} key: Moonlit Stance
+					Starting with a left-click or right-click: Two consecutive slashes
+					Left-click - Left-click - Left-click: Overhead slash, thrust, upward sweep loop
+					Right-click - Left-click - Right-click: Thrust, upward sweep, thrust loop
+					{0} - {0} - {0} - {0}: Spirit combo, with the final hit being a powerful spirit spin attack
+					Left-click and right-click at the same time: Fading slash
+					{0} and right-click at the same time: Helm Breaker
+					{0} and left-click at the same time: Sakura Slash
+					After any attack combo, you can perform a Special Sheathe.
+					During Special Sheathe, left-click: Spirit Helm Breaker
+					During Special Sheathe, right-click: Resheath
+					After any attack, use the {2} key to enter Moonlit Stance. During Moonlit Stance, the player is invulnerable, and if hit, will counterattack, consuming one level of Spirit Gauge and resetting all Spirit Gauge levels.
+					After a Fading Slash, you can follow up with a Spirit Step Slash ({0} key), and then follow up with Spirit 3.
+
+					Spirit Helm Breaker restores Spirit Gauge over time when it hits.
+					Spirit attacks generally consume Spirit Gauge.
+					Resheath consumes one level of Spirit Gauge.
+					Sakura Slash increases one level of Spirit Gauge when it hits.
+					Spirit Spin Attack increases one level of Spirit Gauge when it hits.
+					During the counterattack animation of Special Sheathe, the player will negate damage for a brief moment.
+					During the evasion animation of Helm Breaker, the player is immune to damage.
+					Helm Breaker consumes all Spirit Gauge, but when the player hits an enemy, all Spirit Gauge is restored.
+
+					Spirit Gauge: Unique to the Great Sword, the Spirit Gauge can reach up to three levels.
+					Spirit Gauge levels are distinguished by colors: None, White, Yellow, Red.
+					Each level of Spirit Gauge provides a 5% damage boost.
 					'''
 			}
 
@@ -227,31 +234,33 @@ Mods: {
 				DisplayName: Duel Blades Book
 				Tooltip:
 					'''
-					双刀,以快速的攻速而出名,其挥舞速度之快,难以想象
-					左键:斩击   右键:横挥斩   {1}键:鬼人化
-					-------------------------------------------------------
-					                普通
-					左键-左键-左键:斩击-反手斩-车轮斩
-					右键-右键:移动斩-横挥斩
-					移动斩后左键:上捞斩
-					按下{1}键进入鬼人化模式
-					-------------------------------------------------------
-					                鬼人化
-					鬼人化状态下,攻击中目标将提升"鬼人强化槽",退出鬼人化后,进入鬼人强化模式
-					用于50耐力以上时{0}键,可以进行滑步(无敌)
-					在"鬼人强化槽"充满后,按下{2}键,将向前转刀位移,如果命中,则自身无敌,然后在命中目标的上面进行滚动
-						注:这将消耗所有的"鬼人强化槽"
-					左键-左键-左键:鬼人反手斩-鬼人二连斩-鬼人六连斩
-					右键-右键-右键:鬼人移动斩-横挥斩-二连横挥
-					鬼人移动斩后左键:上捞斩
-					左键与右键同时按下:乱舞
-					-------------------------------------------------------
-					                鬼人强化模式
-					左键与普通模式一致
-					右键-右键:鬼人移动斩-横挥斩
-					鬼人移动斩后左键:上捞斩
-					左键与右键同时按下:鬼人强化乱舞
-					鬼人移动斩和鬼人强化乱舞将消耗"鬼人强化槽"
+					Dual Blades, known for their fast attack speed and incredible agility.
+					Left-click: Slashes
+					Right-click: Wide Slash
+					{1} key: Demon Mode
+
+					Normal Mode:
+					Left-click - Left-click - Left-click: Slash - Backhand Slash - Spinning Slash
+					Right-click - Right-click: Dash Slash - Wide Slash
+					After Dash Slash, press left-click: Rising Slash
+					Press {1} key to enter Demon Mode.
+
+					Demon Mode:
+					In Demon Mode, hitting targets will increase the "Demon Gauge". Exiting Demon Mode will enter Archdemon Mode.
+					When stamina is above 50, press the {0} key to perform a Demon Dodge (invincible).
+					When the "Demon Gauge" is full, press the {2} key to perform a Demon Flurry Rush, which provides invincibility upon hit and allows the player to roll over the target.
+					Note: This will consume all of the "Demon Gauge".
+					Left-click - Left-click - Left-click: Demon Backhand Slash - Demon Double Slash - Demon Sixfold Slash
+					Right-click - Right-click - Right-click: Demon Dash Slash - Wide Slash - Double Wide Slash
+					After Demon Dash Slash, press left-click: Rising Slash
+					Press left-click and right-click simultaneously: Blade Dance
+
+					Archdemon Mode:
+					Same as Normal Mode.
+					Right-click - Right-click: Demon Dash Slash - Wide Slash
+					After Demon Dash Slash, press left-click: Rising Slash
+					Press left-click and right-click simultaneously: Demon Flurry Dance
+					Demon Dash Slash and Demon Flurry Dance will consume the "Demon Gauge".
 					'''
 			}
 
@@ -271,53 +280,62 @@ Mods: {
 			}
 
 			ChargeBladeBook: {
-				DisplayName: 盾斧(充能斧)说明书
+				DisplayName: Change Blade Book
 				Tooltip:
 					'''
-					盾斧,拥有较为灵活的剑模式和威力巨大的斧模式
-					<right>以切换说明
+					Change Blade,which has a versatile Sword Mode and a powerful Axe Mode.
+					Press <right> to switch modes.
 					'''
 				Tooltip1:
 					'''
-						                   剑模式
-					左键:斩击          右键:蓄力攻击        {0}键:防御
-					左键-左键-左键:牵制斩-反击斩-回旋斩
-					左键和右键一起:突进斩
-					突进斩后左键和右键一起:盾突
-					长按右键到一定时候:蓄力二连斩
-					{0}键和左键:剑-变形斩
-					{0}键和右键:瓶填充
-					瓶填充后长按左键:属性回填斩
-						                   关于充能和瓶
-					剑形态下的攻击将提供能量,能量可以装入瓶子之中
-					需要注意的是,能量过多会导致无限弹刀
-						                   关于剑强化
-					在盾强化模式下,使用属性回填斩进入剑强化模式
+					Sword Mode:
+					Left-click: Slash
+					Right-click: Charge attack
+					{0} key: Guard
+
+					Combos:
+					Left-click - Left-click - Left-click: Overhead slash - Counter slash - Roundhouse slash
+					Left-click and Right-click together: Forward slash
+					After a forward slash, Left-click and Right-click together: Shield thrust
+					Long press Right-click: Charged double slash
+					{0} key and Left-click: Sword - Morph slash
+					{0} key and Right-click: Phial fill
+
+					After phial fill, long press Left-click: Elemental discharge
+
+					About Energy and Phials:
+					Attacks in Sword mode generate energy, which can be stored in phials.
+					It is important to note that having too much energy will result in overloading the Switch Axe.
+
+					About Sword Mode Enhancement:
+					In Shield Boost mode, using Elemental discharge will activate Sword Mode Enhancement.
 					'''
 				Tooltip2:
 					'''
-						                斧模式
-					左键:斩击          右键:属性解放斩
-					左键-左键:上捞斩-直斩
-					右键-右键-右键:属性解放斩1-属性解放斩2-高输出力属性解放斩
-					高输出力属性解放斩在盾强化模式下会变为超高输出力属性解放斩
-					超高输出力属性解放斩使用时,向后移动且左键:高输出力属性解放斩
-					高输出力属性解放斩或超高输出力属性解放斩 打出前{0}键:属性强化回旋斩(进入盾强化状态)
-					高输出力属性解放斩或超高输出力属性解放斩 打出前{1}键:属性回填斧强化斩(进入斧强化状态)
-					{0}键:斧-变形斩
-					左键和右键:高输出力属性解放斩或超高输出力属性解放斩
-					属性解放斩将消耗瓶子造成额外伤害,根据瓶子种类不同,瓶子造成的额外伤害也不同
-						                   关于斧强化
-					持续消耗瓶子,让斧形态的攻击可以造成多段伤害
+					Axe Mode:
+					Left-click: Slash
+					Right-click: Elemental discharge
+					Left-click - Left-click: Rising slash - Overhead slash
+					Right-click - Right-click - Right-click: Elemental discharge 1 - Elemental discharge 2 - High output elemental discharge
+					In Shield Boost mode, the high output elemental discharge becomes super high output elemental discharge.
+					When using the super high output elemental discharge, move backward and Left-click: High output elemental discharge.
+					Before performing the high output elemental discharge or super high output elemental discharge, press {0} key: Elemental boost round slash (enter Shield Boost mode).
+					Before performing the high output elemental discharge or super high output elemental discharge, press {1} key: Phial fill axe enhancement slash (enter Axe Enhancement mode).
+					{0} key: Axe - Morph slash
+					Left-click and Right-click: High output elemental discharge or super high output elemental discharge
+					Elemental discharge consumes phials and deals additional damage. The amount of additional damage depends on the type of phial.
+
+					About Axe Enhancement:
+					Continuously consuming phials allows the attacks in Axe mode to inflict multiple hits.
 					'''
 				Tooltip3:
 					'''
-						                额外补充
-					盾强化可以提升斧形态的伤害
-					瞬间防御(GP)在一部分攻击时存在,可以减免更多的伤害(回旋斩后半部分,剑-变形斩插入盾的时候)
-					防御成功(非大退)时,左键使用牵制斩  右键使用属性解放斩2
-					左键和右键则为高输出力属性解放斩或超高输出力属性解放斩
-					盾突后左键和右键:高输出力属性解放斩或超高输出力属性解放斩
+					Additional Information:
+					- Shield Boost enhances the damage of Axe attacks.
+					- Guard Point (GP) exists during certain attacks and can reduce more damage. For example, during the second half of the round slash or when transitioning from Sword to Axe mode with a shield thrust.
+					- When successfully guarding (not a full guard), Left-click performs a restraining slash and Right-click performs Elemental discharge 2.
+					- Left-click and Right-click together perform high output elemental discharge or super high output elemental discharge.
+					- After a shield thrust, Left-click and Right-click together perform high output elemental discharge or super high output elemental discharge.
 					'''
 			}
 
@@ -367,6 +385,16 @@ Mods: {
 					拉取玩家到达斧头附近:零距离魔力输出爆破
 					此时无法回归到工具形态
 					'''
+			}
+
+			ExampleCrossbow: {
+				DisplayName: Example Crossbow
+				Tooltip: ""
+			}
+
+			HardRockLance: {
+				DisplayName: Hard Rock Lance
+				Tooltip: ""
 			}
 		}
 	}

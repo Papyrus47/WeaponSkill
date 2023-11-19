@@ -21,6 +21,7 @@ namespace WeaponSkill.Weapons.Bows.Skills
             BowsProj.NoUse = true;
             BowsProj.ChannelLevel = 0;
             SkillTimeOut = false;
+            BowsProj.SpawnItem.GetGlobalItem<BowsGlobalItem>().CosumeAmmo = false;
         }
         public override bool PreDraw(SpriteBatch sb, ref Color lightColor)
         {

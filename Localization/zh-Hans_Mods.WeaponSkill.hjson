@@ -12,6 +12,8 @@ Projectiles: {
 	// ChargeBladeProj.DisplayName: Charge Blade Proj
 	// ChargeBlade_SuperLiberateProj.DisplayName: Charge Blade_ Super Liberate Proj
 	// AxesProj.DisplayName: Axes Proj
+	// CrossbowProj.DisplayName: Crossbow Proj
+	// LancesProj.DisplayName: Lances Proj
 }
 
 Keybinds: {

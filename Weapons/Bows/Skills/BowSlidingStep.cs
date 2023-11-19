@@ -68,6 +68,7 @@ namespace WeaponSkill.Weapons.Bows.Skills
             Projectile.ai[0] = 0;
             SkillTimeOut = false;
             player.fullRotation = 0f;
+            BowsProj.NoUse = true;
         }
     }
 }

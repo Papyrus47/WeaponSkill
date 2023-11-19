@@ -99,6 +99,7 @@ namespace WeaponSkill.Weapons.Bows.Skills
             Projectile.extraUpdates = 0;
             Projectile.ai[0] = Projectile.ai[1] = Projectile.ai[2] = 0;
             EndShoot = false;
+            BowsProj.NoUse = true;
         }
         public virtual void Shoot()
         {

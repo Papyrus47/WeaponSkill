@@ -15,6 +15,7 @@ namespace WeaponSkill.Weapons.BroadSword.Skills
 
         public override void AI()
         {
+            broadSword.ChangeLevel = 0;
             Projectile.Center = player.RotatedRelativePoint(player.MountedCenter) + new Vector2(player.direction * -10,0);
             Projectile.rotation = MathHelper.Pi * 0.85f * player.direction;
             Projectile.velocity = Vector2.UnitY.RotatedBy(0.2f * player.direction);

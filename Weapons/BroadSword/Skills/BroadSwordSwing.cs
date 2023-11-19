@@ -60,6 +60,7 @@ namespace WeaponSkill.Weapons.BroadSword.Skills
                                 soundPitch = -0.4f;
                                 goto case 150;
                             case 150:
+                                broadSword.ChangeLevel++;
                                 Projectile.damage += (int)(Projectile.originalDamage * 1.95f);
                                 var sound = SoundID.Item62;
                                 sound.MaxInstances = 3;
@@ -172,6 +173,7 @@ namespace WeaponSkill.Weapons.BroadSword.Skills
             Projectile.damage = Projectile.originalDamage;
             Projectile.ai[1] = Projectile.ai[2] = Projectile.ai[0] = 0;
             Projectile.extraUpdates = 0;
+            broadSword.ChangeLevel = 0;
         }
     }
 }

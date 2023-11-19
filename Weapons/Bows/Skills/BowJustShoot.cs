@@ -97,6 +97,7 @@ namespace WeaponSkill.Weapons.Bows.Skills
             Projectile.extraUpdates = 0;
             Projectile.ai[0] = Projectile.ai[1] = Projectile.ai[2] = 0;
             EndShoot = false;
+            BowsProj.NoUse = true;
         }
         public virtual void Shoot()
         {
@@ -104,7 +105,7 @@ namespace WeaponSkill.Weapons.Bows.Skills
             for (int i = 0; i < Count; i++)
             {
                 int shootType = GetShootType(out int dmg, out float speed, out float kn, out int crit);
-                int proj = Projectile.NewProjectile(player.GetSource_ItemUse(BowsProj.SpawnItem), Projectile.Center, Projectile.velocity.RotatedByRandom(MathHelper.PiOver4 * 0.35f) * BowsProj.SpawnItem.shootSpeed * speed, shootType, (Projectile.damage + dmg) * BowsProj.ChannelLevel, Projectile.knockBack + kn, player.whoAmI);
+                int proj = Projectile.NewProjectile(player.GetSource_ItemUse(BowsProj.SpawnItem), Projectile.Center, Projectile.velocity.RotatedByRandom(MathHelper.PiOver4 * 0.35f) * BowsProj.SpawnItem.shootSpeed * speed, shootType, (int)((Projectile.damage + dmg) * BowsProj.ChannelLevel * 0.9f), Projectile.knockBack + kn, player.whoAmI);
                 Main.projectile[proj].OriginalCritChance += crit;
                 Main.projectile[proj].usesLocalNPCImmunity = true;
                 Main.projectile[proj].localNPCHitCooldown = -1;

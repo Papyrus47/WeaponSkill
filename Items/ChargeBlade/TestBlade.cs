@@ -25,8 +25,7 @@ namespace WeaponSkill.Items.ChargeBlade
         {
             shieldData = new()
             {
-                MaxDmg = 120,
-                MaxReduction = 0.5f
+                Def = 40
             };
         }
     }

@@ -20,13 +20,9 @@ namespace WeaponSkill.Weapons.ChargeBlade
         public record ShieldData
         {
             /// <summary>
-            /// 最大防御伤害量
+            /// 减少的伤害量
             /// </summary>
-            public int MaxDmg { get; init; }
-            /// <summary>
-            /// 伤害减少量
-            /// </summary>
-            public float MaxReduction { get; init; }
+            public int Def { get; init; }
         }
         public override string Texture => "Terraria/Images/Item_0";
         public List<ProjSkill_Instantiation> OldSkills { get; set; }
@@ -121,8 +117,7 @@ namespace WeaponSkill.Weapons.ChargeBlade
                 {
                     shieldData = new()
                     {
-                        MaxDmg = 100,
-                        MaxReduction = 0.1f
+                        Def = 10
                     };
                 }
                 Init();
@@ -150,11 +145,13 @@ namespace WeaponSkill.Weapons.ChargeBlade
             Projectile.timeLeft = 2;
             shieldCanDraw = true;
             chargeBladeGlobal.InAxe = false;
+            Player.GetModPlayer<WeaponSkillPlayer>().HeldShield = shield;
+            shield.Defence = shieldData.Def;
             CurrentSkill.AI();
-            shield.CheckProjHitMe();
             Player.ResetMeleeHitCooldowns();
             IBasicSkillProj basicSkillProj = this;
             basicSkillProj.SwitchSkill();
+            shield.DefSucceeded = false;
         }
         public override bool ShouldUpdatePosition() => false;
         public override bool? CanDamage() => CurrentSkill.CanDamage();

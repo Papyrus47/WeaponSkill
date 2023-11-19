@@ -16,6 +16,10 @@ namespace WeaponSkill.Weapons.BroadSword
         public Player Player;
         public float SwingLength;
         public SwingHelper SwingHelper;
+        /// <summary>
+        /// 蓄力级别
+        /// </summary>
+        public byte ChangeLevel;
         public override string Texture => "Terraria/Images/Item_0";
         public Texture2D DrawColorTex => SpawnItem.GetGlobalItem<BroadSwordGlobalItem>().DrawColorTex;
 
@@ -104,7 +108,7 @@ namespace WeaponSkill.Weapons.BroadSword
                 CanChannel = true
             };
 
-            BroadSwordSwing broadSwordSwing2= new(this)
+            BroadSwordSwing broadSwordSwing2 = new(this)
             {
                 VelScale = Vector2.One,
                 StartVel = (-Vector2.UnitY).RotatedBy(MathHelper.ToRadians(-80)),
@@ -222,6 +226,7 @@ namespace WeaponSkill.Weapons.BroadSword
                     }
                 }
             };
+            BroadSword_Dash broadSword_Dash = new(this);
             BroadSwordBlock broadSwordBlock = new(this);
             BroadSwordNotUse notUse = new(this);
 
@@ -230,6 +235,7 @@ namespace WeaponSkill.Weapons.BroadSword
             Slash2.AddBySkill(Slash1, broadSwordSwing2);
             broadSwordBlock.AddBySkill(broadSwordSwing1);
             broadSwordBlock.AddSkill(broadSwordSwing3);
+            broadSword_Dash.AddBySkill(broadSwordSwing1, broadSwordSwing2, broadSwordSwing3);
             CurrentSkill = notUse;
         }
         public virtual float GetSwingSpeed() => 100 / SpawnItem.useAnimation;

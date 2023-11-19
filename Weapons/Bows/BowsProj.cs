@@ -18,8 +18,16 @@ namespace WeaponSkill.Weapons.Bows
         /// 弓的蓄力级别,最多三级
         /// </summary>
         public byte ChannelLevel;
+        /// <summary>
+        /// 用于判断是否给弓上颜色
+        /// </summary>
+        public bool OldNoUse;
         public bool NoUse;
         public bool SpawnThePlayerDrawPartcles;
+        /// <summary>
+        /// 蓄力绘制弓的透明度
+        /// </summary>
+        public int ChannelAlpha;
         public override string Texture => "Terraria/Images/Item_0";
         public List<ProjSkill_Instantiation> OldSkills { get; set; }
         public ProjSkill_Instantiation CurrentSkill { get; set; }
@@ -57,21 +65,42 @@ namespace WeaponSkill.Weapons.Bows
             }
             TheUtility.SetProjFrameWithItem(Projectile, SpawnItem);
             Projectile.timeLeft = 2;
+            OldNoUse = NoUse;
+            SpawnItem.GetGlobalItem<BowsGlobalItem>().CosumeAmmo = true;
             CurrentSkill.AI();
             IBasicSkillProj basicSkillProj = this;
             basicSkillProj.SwitchSkill();
-            if (ChannelLevel > 0 && !SpawnThePlayerDrawPartcles)
+            //if (ChannelLevel > 0 && !SpawnThePlayerDrawPartcles)
+            //{
+            //    SpawnThePlayerDrawPartcles = true;
+            //    BowDrawPlayer bowDrawPlayer = new(this);
+            //    Main.ParticleSystem_World_BehindPlayers.Add(bowDrawPlayer);
+            //}
+            if(!NoUse && OldNoUse)
             {
-                SpawnThePlayerDrawPartcles = true;
-                BowDrawPlayer bowDrawPlayer = new(this);
-                Main.ParticleSystem_World_BehindPlayers.Add(bowDrawPlayer);
+                ChannelAlpha = 255;
             }
+            if (ChannelAlpha > 0) ChannelAlpha -= 15;
+            else ChannelAlpha = 0;
         }
         public override bool ShouldUpdatePosition() => false;
         public override bool? CanDamage() => CurrentSkill.CanDamage();
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => CurrentSkill.Colliding(projHitbox, targetHitbox);
         public virtual float TimeChange(float time) => MathF.Pow(time, 2.5f);
-        public override bool PreDraw(ref Color lightColor) => CurrentSkill.PreDraw(Main.spriteBatch, ref lightColor);
+        public override bool PreDraw(ref Color lightColor)
+        {
+            if (ChannelAlpha > 0)
+            {
+                Projectile.scale += 0.2f;
+                Color drawColor = Color.OrangeRed;
+                drawColor *= ChannelAlpha / 255f;
+                drawColor.A = 0;
+                drawColor *= ChannelLevel - 0.5f;
+                CurrentSkill.PreDraw(Main.spriteBatch, ref drawColor);
+                Projectile.scale -= 0.2f;
+            }
+            return CurrentSkill.PreDraw(Main.spriteBatch, ref lightColor);
+        }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
@@ -84,7 +113,7 @@ namespace WeaponSkill.Weapons.Bows
             BowHeld held = new(this);
             BowChannelShoot bowChannelShoot = new(this)
             {
-                ChannelTime = () => (int)MathF.Log(800 / Player.itemAnimationMax) * 13,
+                ChannelTime = () => (int)MathF.Log(800 /( Player.itemAnimationMax + 1)) * 13,
                 ShootTime = () => 12
             };
             BowJustShoot bowJustShoot = new(this)

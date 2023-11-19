@@ -16,6 +16,7 @@
     <None Remove="Items\ChargeBlade\DefenceCorpsChargeBlade_Shield_Heart.png" />
     <None Remove="Items\ChargeBlade\DefenceCorpsChargeBlade_Shield_LeftBlade.png" />
     <None Remove="Items\ChargeBlade\DefenceCorpsChargeBlade_Shield_RightBlade.png" />
+    <None Remove="Items\Crossbows\ExampleCrossbow.png" />
     <None Remove="Items\LongSword\CopperLongSwordScabbard.png" />
     <None Remove="Items\LongSword\CutTheFire.png" />
     <None Remove="Items\LongSword\CutTheFireScabbard.png" />
