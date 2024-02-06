@@ -180,8 +180,8 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
         }
         public override bool ActivationCondition()
         {
-            if (DefAttack && !ChargeBladeProj.shield.DefSucceeded) return false;
-            return ChangeCondition.Invoke() && (!DefAttack ? true : !WeaponSkill.BowSlidingStep.Current);
+            if (DefAttack && ChargeBladeProj.DefSucceededTime <= 0) return false;
+            return ChangeCondition.Invoke() /*&& (!DefAttack ? true : !WeaponSkill.BowSlidingStep.Current)*/;
         }
 
         public override bool SwitchCondition() => (int)Projectile.ai[0] == 2 && Projectile.ai[2] > 9;

@@ -39,7 +39,7 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
             shield.InDef = true;
             player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, player.direction * -MathHelper.PiOver2);
 
-            if (!ChargeBladeProj.shield.DefSucceeded && Projectile.ai[2] <= 0)
+            if (ChargeBladeProj.DefSucceededTime <= 0 && !ChargeBladeProj.shield.DefSucceeded && Projectile.ai[2] <= 0)
             {
                 if (Math.Abs(player.velocity.X) > 0.5f) player.velocity.X = 0.5f * (player.velocity.X > 0).ToDirectionInt();
             }
@@ -54,14 +54,15 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
                         ChargeBladeShield.KNLevelEnum.Big => 40,
                         _ => 1
                     };
+                    ChargeBladeProj.DefSucceededTime = 60;
                     player.immuneTime += 15;
+                    Projectile.ai[0] = 0;
                 }
-                Projectile.ai[2]--;
-                Projectile.ai[0] = 0;
+                if(Projectile.ai[2] > 0) Projectile.ai[2]--;
                 float kn = ChargeBladeProj.shield.KNLevel switch
                 {
-                    ChargeBladeShield.KNLevelEnum.Small => 0.6f,
-                    ChargeBladeShield.KNLevelEnum.Medium => 0.2f,
+                    ChargeBladeShield.KNLevelEnum.Small => 0.4f,
+                    ChargeBladeShield.KNLevelEnum.Medium => 0.4f,
                     ChargeBladeShield.KNLevelEnum.Big => 0.2f,
                     _ => 1f
                 };
@@ -70,6 +71,10 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
 
             Projectile.numHits = 0;
             SkillTimeOut = false;
+        }
+        public override bool SwitchCondition()
+        {
+            return base.SwitchCondition() && ChargeBladeProj.shield.KNLevel != BasicShield.KNLevelEnum.Big;
         }
         public override bool ActivationCondition() => WeaponSkill.BowSlidingStep.Current;
     }

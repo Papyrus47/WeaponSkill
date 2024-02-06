@@ -36,7 +36,13 @@ namespace WeaponSkill.Weapons.ChargeBlade
         public ChargeBladeGlobalItem chargeBladeGlobal => SpawnItem.GetGlobalItem<ChargeBladeGlobalItem>();
         public Asset<Texture2D> ShieldTex => chargeBladeGlobal.ShieldTex;
         public ShieldData shieldData;
+        /// <summary>
+        /// 防御成功的时间
+        /// </summary>
+        public int DefSucceededTime;
         public static List<int> DrawChargeBlade;
+        public ChargeBlade_Sword_Held SwordHeld;
+        public ChargeBlade_Axe_Held AxeHeld;
         public override void Load()
         {
             base.Load();
@@ -147,6 +153,8 @@ namespace WeaponSkill.Weapons.ChargeBlade
             chargeBladeGlobal.InAxe = false;
             Player.GetModPlayer<WeaponSkillPlayer>().HeldShield = shield;
             shield.Defence = shieldData.Def;
+            if (DefSucceededTime > 0) DefSucceededTime--;
+            if (OldSkills.Count > 10) OldSkills.RemoveAt(1);
             CurrentSkill.AI();
             Player.ResetMeleeHitCooldowns();
             IBasicSkillProj basicSkillProj = this;
@@ -193,7 +201,7 @@ namespace WeaponSkill.Weapons.ChargeBlade
             ChargeBladeNotUse chargeBladeNotUse = new ChargeBladeNotUse(this);
 
             #region 剑形态下的
-            ChargeBlade_Sword_Held chargeBlade_OnHeld_Sword = new ChargeBlade_Sword_Held(this); // 手持
+            SwordHeld = new ChargeBlade_Sword_Held(this); // 手持
 
             ChargeBlade_Sword_Swing Sword_SlashDown = new(this, () => Player.controlUseItem) // 直斩
             {
@@ -268,7 +276,7 @@ namespace WeaponSkill.Weapons.ChargeBlade
             #endregion
 
             #region 斧形态下
-            ChargeBlade_Axe_Held chargeBlade_Axe_Held = new(this);
+            AxeHeld = new(this);
 
             ChargeBlade_Axe_Swing Axe_SlashUp = new(this, () => Player.controlUseItem) // 斧上捞
             {
@@ -352,11 +360,45 @@ namespace WeaponSkill.Weapons.ChargeBlade
             ChargeBlade_Axe_Swing_ShieldStrength chargeBlade_Axe_Swing_ShieldStrength = new(this); // 盾强化
 
             ChargeBlade_Axe_Swing_AxeStrength chargeBlade_Axe_Swing_AxeStrength = new(this); // 斧强化
+
+            //ChargeBlade_LimitRemoval chargeBlade_LimitRemoval = new(this); // 瓶子限制移除
+
+            ChargeBlade_ShieldsRotSlash_LimitRemoval chargeBlade_ShieldsRotSlash_LimitRemoval = new(this);
+
+            ChargeBlade_EnergyBlade chargeBlade_EnergyBlade = new(this); // 光剑
             #endregion
 
             #endregion
             #region 技能添加
-            chargeBladeNotUse.AddSkill(chargeBlade_OnHeld_Sword).AddSkill(Sword_Def);
+            chargeBladeNotUse.AddSkill(SwordHeld).AddSkill(Sword_Def);
+            #region 盾锯特殊全部添加,用于CD,实际只有特殊动作时可以切换
+            chargeBlade_ShieldsRotSlash_LimitRemoval.AddBySkill(Sword_MoveSlash,
+                Sword_Def,
+                SwordHeld,
+                chargeBladeNotUse,
+                AxeHeld,
+                Axe_Liberate_Slash1,
+                Axe_Liberate_Slash1_OnDef,
+                Axe_Liberate_Slash2,
+                Axe_SlashDown,
+                Axe_SlashUp,
+                Axe_ToSword,
+                Sword_RotSlash,
+                Sword_SlashDown,
+                Sword_SlashDown_OnDef,
+                Sword_SlashUP,
+                chargeBlade_AddBottles,
+                chargeBlade_AddBottles_InChannel,
+                chargeBlade_AfterAddBottles_Swing,
+                chargeBlade_Axe_Swing_AxeStrength,
+                chargeBlade_Axe_Swing_Liberate_Large,
+                chargeBlade_Axe_Swing_Liberate_SP_PreAttack,
+                chargeBlade_Axe_Swing_Liberate_Super,
+                chargeBlade_Axe_Swing_ShieldStrength,
+                chargeBlade_Def_GP,
+                chargeBlade_EnergyBlade);
+            chargeBlade_ShieldsRotSlash_LimitRemoval.AddSkill(chargeBlade_Def_GP);
+            #endregion
             #region 格挡技能添加
             Axe_Liberate_Slash1_OnDef.AddBySkill(chargeBlade_Def_GP, Sword_Def);
             Sword_SlashDown_OnDef.AddBySkill(chargeBlade_Def_GP, Sword_Def);
@@ -365,16 +407,17 @@ namespace WeaponSkill.Weapons.ChargeBlade
             Axe_Liberate_Slash1_OnDef.AddSkilles(Axe_SlashDown, Axe_Liberate_Slash2);
             #endregion
             #region 剑形态技能添加
-            chargeBlade_OnHeld_Sword.AddSkill(Sword_SlashDown).AddSkill(Sword_SlashUP).AddSkill(Sword_RotSlash).AddSkill(chargeBlade_Def_GP);
+            SwordHeld.AddSkill(Sword_SlashDown).AddSkill(Sword_SlashUP).AddSkill(Sword_RotSlash).AddSkill(chargeBlade_Def_GP);
             Sword_Def.AddBySkill(Sword_SlashDown, Sword_SlashUP, Sword_RotSlash);
             Sword_Def.AddSkill(chargeBlade_AddBottles);
+            chargeBlade_AddBottles.AddBySkill(Sword_SlashDown, Sword_SlashUP, Sword_RotSlash, chargeBlade_Sword_Swing_ChannelSwing,Sword_Dash_SlashDown,Sword_MoveSlash,Sword_SlashDown_OnDef, Axe_ToSword);
             Sword_Def.AddSkill(chargeBlade_Sword_ToAxe);
             chargeBlade_AddBottles.AddSkill(chargeBlade_AddBottles_InChannel).AddSkill(chargeBlade_AfterAddBottles_Swing);
 
-            Sword_Dash_SlashDown.AddBySkill(chargeBladeNotUse, chargeBlade_OnHeld_Sword, Sword_SlashDown, Sword_SlashUP);
-            Sword_Dash_SlashDown.AddSkill(chargeBlade_Sword_ShieldSpurts);
+            chargeBlade_Sword_ShieldSpurts.AddBySkill(Sword_Dash_SlashDown, Sword_SlashUP, Sword_RotSlash, chargeBlade_AddBottles, chargeBlade_Sword_Swing_ChannelSwing);
+            Sword_Dash_SlashDown.AddBySkill(chargeBladeNotUse, SwordHeld, Sword_SlashDown, Sword_SlashUP);
 
-            chargeBlade_OnHeld_Sword.AddSkill(chargeBlade_Sword_Swing_ChannelSwing).AddSkill(Sword_RotSlash);
+            SwordHeld.AddSkill(chargeBlade_Sword_Swing_ChannelSwing).AddSkill(Sword_RotSlash);
             chargeBlade_Def_GP.AddSkill(chargeBlade_AddBottles);
             chargeBlade_Def_GP.AddSkill(chargeBlade_Sword_ToAxe);
 
@@ -388,20 +431,20 @@ namespace WeaponSkill.Weapons.ChargeBlade
             //Sword_Def.AddBySkill(chargeBladeNotUse, chargeBlade_OnHeld_Sword);
             #endregion
             #region 斧形态技能添加
-            chargeBlade_Sword_ToAxe.AddSkill(chargeBlade_Axe_Held);
+            chargeBlade_Sword_ToAxe.AddSkill(AxeHeld);
 
-            chargeBlade_Axe_Held.AddSkill(Axe_SlashUp).AddSkill(Axe_SlashDown).AddSkill(Axe_SlashUp);
-            chargeBlade_Axe_Held.AddSkill(Axe_Liberate_Slash1).AddSkill(Axe_Liberate_Slash2);
+            AxeHeld.AddSkill(Axe_SlashUp).AddSkill(Axe_SlashDown).AddSkill(Axe_SlashUp);
+            AxeHeld.AddSkill(Axe_Liberate_Slash1).AddSkill(Axe_Liberate_Slash2);
             Axe_SlashUp.AddSkill(Axe_Liberate_Slash2).AddSkill(Axe_SlashUp);
             Axe_SlashDown.AddSkill(Axe_Liberate_Slash1).AddSkill(Axe_SlashDown);
 
             #region 超解
             chargeBlade_Axe_Swing_Liberate_SP_PreAttack.AddSkill(chargeBlade_Axe_Swing_Liberate_Super);
-            chargeBlade_Axe_Swing_Liberate_Super.AddSkill(chargeBlade_Axe_Swing_Liberate_Large);
+            chargeBlade_Axe_Swing_Liberate_Super.AddSkilles(chargeBlade_EnergyBlade,chargeBlade_Axe_Swing_Liberate_Large/*, chargeBlade_LimitRemoval*/);
             #endregion
             #region 大解特殊动作
             chargeBlade_Axe_Swing_Liberate_SP_PreAttack.AddSkill(chargeBlade_Axe_Swing_Liberate_Large);
-            chargeBlade_Axe_Swing_Liberate_SP_PreAttack.AddBySkill(chargeBlade_Axe_Held, Axe_Liberate_Slash1, Axe_Liberate_Slash2, Axe_SlashUp, Axe_SlashDown, Sword_Def, chargeBlade_Def_GP,Sword_SlashDown_OnDef, Axe_Liberate_Slash1_OnDef,chargeBlade_AddBottles);
+            chargeBlade_Axe_Swing_Liberate_SP_PreAttack.AddBySkill(AxeHeld, Axe_Liberate_Slash1, Axe_Liberate_Slash2, Axe_SlashUp, Axe_SlashDown, Sword_Def, chargeBlade_Def_GP,Sword_SlashDown_OnDef, Axe_Liberate_Slash1_OnDef,chargeBlade_AddBottles);
             chargeBlade_Axe_Swing_Liberate_SP_PreAttack.AddChangeSkill(Axe_Liberate_Slash2, () => (Player.controlUseTile && Projectile.ai[0] > 1) || (Player.controlUseTile && Player.controlUseItem));
             chargeBlade_Axe_Swing_Liberate_SP_PreAttack.AddChangeSkill(Axe_Liberate_Slash1_OnDef, () =>
             {
@@ -414,7 +457,7 @@ namespace WeaponSkill.Weapons.ChargeBlade
             chargeBlade_Axe_Swing_Liberate_SP_PreAttack.AddSkilles(chargeBlade_Axe_Swing_ShieldStrength, chargeBlade_Axe_Swing_AxeStrength);
             #endregion
 
-            Axe_ToSword.AddBySkill(chargeBlade_Axe_Held, Axe_SlashUp, Axe_SlashDown);
+            Axe_ToSword.AddBySkill(SwordHeld, Axe_SlashUp, Axe_SlashDown);
             #endregion
             #endregion
             CurrentSkill = chargeBladeNotUse;
@@ -423,38 +466,46 @@ namespace WeaponSkill.Weapons.ChargeBlade
         {
             if (OldSkills.Count <= 1) return true;
 
-            if (CurrentSkill is ChargeBlade_Sword_Swing || CurrentSkill.GetType().IsSubclassOf(typeof(ChargeBlade_Sword_Held)) || CurrentSkill is ChargeBlade_AddBottles || CurrentSkill is ChargeBlade_Axe_Swing_Liberate_Large || CurrentSkill is ChargeBlade_Sword_ShieldSpurts || CurrentSkill is ChargeBlade_Axe_Swing_Liberate_Super) // 如果是剑挥舞类,或者防御类,或者装瓶
+            if (CurrentSkill is ChargeBlade_Sword_Swing || CurrentSkill.GetType().IsSubclassOf(typeof(ChargeBlade_Sword_Held)) || CurrentSkill is ChargeBlade_AddBottles || CurrentSkill is ChargeBlade_Axe_Swing_Liberate_Large || CurrentSkill is ChargeBlade_Sword_ShieldSpurts || CurrentSkill is ChargeBlade_Axe_Swing_Liberate_Super || CurrentSkill is ChargeBlade_ShieldsRotSlash_LimitRemoval || CurrentSkill is ChargeBlade_EnergyBlade) // 如果是剑挥舞类,或者防御类,或者装瓶
             {
-                var targetSkill = OldSkills.Find(x => x is ChargeBlade_Sword_Held && !x.GetType().IsSubclassOf(typeof(ChargeBlade_Sword_Held)));
-                if(targetSkill != null)
-                {
-                    CurrentSkill.OnSkillDeactivate();
-                    targetSkill.OnSkillActive();
-                    CurrentSkill = targetSkill;
-                    return false;
-                }
+                //var targetSkill = OldSkills.Find(x => x is ChargeBlade_Sword_Held && !x.GetType().IsSubclassOf(typeof(ChargeBlade_Sword_Held)));
+                //if(targetSkill != null)
+                //{
+                //    CurrentSkill.OnSkillDeactivate();
+                //    targetSkill.OnSkillActive();
+                //    CurrentSkill = targetSkill;
+                //    return false;
+                //}
+                CurrentSkill.OnSkillDeactivate();
+                SwordHeld.OnSkillActive();
+                CurrentSkill = SwordHeld;
+                return false;
             }
             else if(CurrentSkill is ChargeBlade_Axe_Basic)
             {
-                var targetSkill = OldSkills.Find(x => x is ChargeBlade_Axe_Held && !x.GetType().IsSubclassOf(typeof(ChargeBlade_Axe_Held)));
-                if (targetSkill != null)
-                {
-                    CurrentSkill.OnSkillDeactivate();
-                    targetSkill.OnSkillActive();
-                    CurrentSkill = targetSkill;
-                    return false;
-                }
-                else
-                {
-                    var skill = OldSkills[1].switchToSkill.Find(x => x is ChargeBlade_OnDef).switchToSkill.Find(x => x is ChargeBlade_Sword_ToAxe).switchToSkill.Find(x => x is ChargeBlade_Axe_Held);
-                    if(skill != null)
-                    {
-                        CurrentSkill.OnSkillDeactivate();
-                        skill.OnSkillActive();
-                        CurrentSkill = skill;
-                        return false;
-                    }
-                }
+                CurrentSkill.OnSkillDeactivate();
+                AxeHeld.OnSkillActive();
+                CurrentSkill = AxeHeld;
+                return false;
+                //var targetSkill = OldSkills.Find(x => x is ChargeBlade_Axe_Held && !x.GetType().IsSubclassOf(typeof(ChargeBlade_Axe_Held)));
+                //if (targetSkill != null)
+                //{
+                //    CurrentSkill.OnSkillDeactivate();
+                //    targetSkill.OnSkillActive();
+                //    CurrentSkill = targetSkill;
+                //    return false;
+                //}
+                //else
+                //{
+                //    var skill = OldSkills[1].switchToSkill.Find(x => x is ChargeBlade_OnDef).switchToSkill.Find(x => x is ChargeBlade_Sword_ToAxe).switchToSkill.Find(x => x is ChargeBlade_Axe_Held);
+                //    if(skill != null)
+                //    {
+                //        CurrentSkill.OnSkillDeactivate();
+                //        skill.OnSkillActive();
+                //        CurrentSkill = skill;
+                //        return false;
+                //    }
+                //}
             }
             return true;
         }

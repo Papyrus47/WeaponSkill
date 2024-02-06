@@ -25,7 +25,7 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
                 ChargeBladeProj.chargeBladeGlobal.AxeStrengthening = true;
             }
         }
-        public override bool CompulsionSwitchSkill(ProjSkill_Instantiation nowSkill) => ActivationCondition();
+        public override bool CompulsionSwitchSkill(ProjSkill_Instantiation nowSkill) => ActivationCondition() && Projectile.ai[0] > 25;
         public override bool ActivationCondition() => WeaponSkill.RangeChange.Current;
     }
 }

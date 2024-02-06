@@ -27,7 +27,7 @@ namespace WeaponSkill.Items.ChargeBlade
         {
             int def = target.defense;
             target.defense = 0;
-            player.ApplyDamageToNPC(target, Item.damage, 0f, player.direction, false);
+            player.ApplyDamageToNPC(target,player.GetWeaponDamage(Item), 0f, player.direction, false);
             for (int i = 0; i < 15; i++)
             {
                 var fire = new Particles.Fire(25);

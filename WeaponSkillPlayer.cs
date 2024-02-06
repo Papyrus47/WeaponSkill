@@ -180,15 +180,17 @@ namespace WeaponSkill
         }
         public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
         {
-            if(HeldShield != null && HeldShield.InDef)
+            if(HeldShield != null && HeldShield.InDef && HeldShield.GetDefSucced(npc.Hitbox))
             {
+                HeldShield.DefSucceeded = true;
                 HeldShield.ModifyHit(ref modifiers);
             }
         }
         public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
         {
-            if (HeldShield != null && HeldShield.InDef)
+            if (HeldShield != null && HeldShield.InDef && HeldShield.GetDefSucced(proj.Hitbox))
             {
+                HeldShield.DefSucceeded = true;
                 HeldShield.ModifyHit(ref modifiers);
             }
         }
@@ -250,7 +252,6 @@ namespace WeaponSkill
             {
                 if (HeldShield.InDef)
                 {
-                    HeldShield.DefSucceeded = true;
                     float prosses = info.Damage / Player.statLifeMax2;
                     if(prosses < 0.1f)
                     {

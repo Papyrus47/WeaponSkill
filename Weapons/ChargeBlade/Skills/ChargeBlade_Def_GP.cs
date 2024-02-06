@@ -57,7 +57,7 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
         public override bool ActivationCondition() => false; // 不能通过正常方法激活
         public override bool SwitchCondition()
         {
-            return Time <= 9 && kn < 1f;
+            return Time <= 9 && kn > 0.2f;
         }
         public override void OnSkillActive()
         {
@@ -70,11 +70,12 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
                 ChargeBladeShield.KNLevelEnum.Big => 40,
                 _ => 1
             };
+            ChargeBladeProj.DefSucceededTime = 60;
             player.immuneTime += 15;
             kn = ChargeBladeProj.shield.KNLevel switch
             {
-                ChargeBladeShield.KNLevelEnum.Small => 0.6f,
-                ChargeBladeShield.KNLevelEnum.Medium => 0.2f,
+                ChargeBladeShield.KNLevelEnum.Small => 0.4f,
+                ChargeBladeShield.KNLevelEnum.Medium => 0.4f,
                 ChargeBladeShield.KNLevelEnum.Big => 0.2f,
                 _ => 1f
             };

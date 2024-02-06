@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria.Graphics.CameraModifiers;
 using WeaponSkill.Helper;
 using WeaponSkill.NPCs;
 
@@ -27,11 +28,18 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
             player.velocity.X *= 0;
             if ((int)Projectile.ai[0] == 1)
             {
+                Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Projectile.velocity.SafeNormalize(default), 3, 0.1f, 15, -1));
                 if(Projectile.ai[1] > SLASH_TIME * 0.6f)
                 {
                     Projectile.ai[1] += 0.36f;
                 }
             }
+        }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            base.ModifyHitNPC(target, ref modifiers);
+            modifiers.SourceDamage += 4;
+
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {

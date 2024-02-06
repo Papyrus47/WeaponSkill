@@ -396,6 +396,11 @@ Mods: {
 				DisplayName: Hard Rock Lance
 				Tooltip: ""
 			}
+
+			TestItem1: {
+				DisplayName: Test Item1
+				Tooltip: ""
+			}
 		}
 	}
 }

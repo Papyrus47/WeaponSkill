@@ -21,7 +21,7 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
             Vector2 rotVector = (-Vector2.UnitY).RotatedBy(0.225f).RotatedBy(Projectile.ai[0] * 0.001);
 
             bool flag = false;
-            swingHelper.Change(rotVector, Vector2.One, 0.45f);
+            swingHelper.Change(rotVector, new Vector2(-1,1), 0.45f);
             if ((int)Projectile.ai[0]++ > 8) // 收入完毕
             {
                 if (ChargeBladeProj.chargeBladeGlobal.StatCharge >= 10)
@@ -30,7 +30,7 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
                     ChargeBladeProj.chargeBladeGlobal.StatChargeBottle += 3;
                     if (ChargeBladeProj.chargeBladeGlobal.StatCharge >= 16)
                     {
-                        ChargeBladeProj.chargeBladeGlobal.StatChargeBottle = ChargeBladeProj.chargeBladeGlobal.StatChargeBottleMax;
+                        ChargeBladeProj.chargeBladeGlobal.StatChargeBottle += 2;
                     }
                     ChargeBladeProj.chargeBladeGlobal.StatCharge = 0;
                 }
@@ -59,7 +59,7 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
             ChargeBladeShield shield = ChargeBladeProj.shield;
             shield.Update(player.RotatedRelativePoint(player.MountedCenter) + new Vector2(0, -player.height * 0.5f), -player.direction);
             shield.VisualRotation = 0.1f;
-            shield.AxeRot = -0.28f - Projectile.ai[0] * 0.001f + MathHelper.Pi;
+            shield.AxeRot = 0.28f + Projectile.ai[0] * 0.001f + MathHelper.Pi;
             ChargeBladeProj.shieldCanDraw = false;
             #endregion
             Projectile.numHits = 0;

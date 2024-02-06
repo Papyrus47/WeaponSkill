@@ -249,8 +249,16 @@ namespace WeaponSkill.Weapons.ChargeBlade
                     Main.Rasterizer, null, Main.Transform);
             }
         }
-
-        protected virtual bool AxeRotBool => (!chargeBladeProj.chargeBladeGlobal.InAxe || !chargeBladeProj.chargeBladeGlobal.AxeStrengthening || chargeBladeProj.CurrentSkill is ChargeBlade_Axe_Held) && (chargeBladeProj.CurrentSkill is not ChargeBlade_Axe_Swing_Liberate_Super || (chargeBladeProj.CurrentSkill is ChargeBlade_Axe_Swing_Liberate_Super liberate_Super && liberate_Super.End));
+        public override bool GetDefSucced(Rectangle hitbox)
+        {
+            if(chargeBladeProj.CurrentSkill is ChargeBlade_ShieldsRotSlash_LimitRemoval)
+            {
+                Vector2 center = Vector2.Lerp(chargeBladeProj.Projectile.Center, swingHelper.center, 0.1f);
+                return hitbox.Intersects(new Rectangle((int)(center.X - (width * 0.5f)), (int)(center.Y - (height * 0.5f)), width, height));
+            }
+            return hitbox.Intersects(new Rectangle((int)(swingHelper.center.X - (width * 0.5f)), (int)(swingHelper.center.Y - (height * 0.5f)), width, height));
+        }
+        protected virtual bool AxeRotBool => (!chargeBladeProj.chargeBladeGlobal.InAxe || !chargeBladeProj.chargeBladeGlobal.AxeStrengthening || chargeBladeProj.CurrentSkill is ChargeBlade_Axe_Held || chargeBladeProj.CurrentSkill is ChargeBlade_Axe_Swing_Liberate_SP_PreAttack) && (chargeBladeProj.CurrentSkill is not ChargeBlade_Axe_Swing_Liberate_Super || (chargeBladeProj.CurrentSkill is ChargeBlade_Axe_Swing_Liberate_Super liberate_Super && liberate_Super.End)) && (chargeBladeProj.CurrentSkill is not ChargeBlade_ShieldsRotSlash_LimitRemoval || (chargeBladeProj.CurrentSkill is ChargeBlade_ShieldsRotSlash_LimitRemoval shieldRotSlash && (int)shieldRotSlash.Projectile.ai[2] != 1 && (int)shieldRotSlash.Projectile.ai[2] != 2));
 
     }
 }

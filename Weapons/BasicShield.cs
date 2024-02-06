@@ -51,6 +51,7 @@
         {
             info.Damage -= (int)GetDefence();
         }
+        public virtual bool GetDefSucced(Rectangle hitbox) => false;
 
         /// <summary>
         /// 防御成功后函数

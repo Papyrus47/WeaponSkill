@@ -60,7 +60,8 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
                     }
                 case 1: // 挥舞进行
                     {
-                        if(Projectile.numHits > 0)
+                        PreAttack = false;
+                        if (Projectile.numHits > 0)
                         {
                             Projectile.numHits = 0;
                             if(ChargeBladeProj.chargeBladeGlobal.AxeStrengthening) Projectile.ai[2] = 14;
@@ -72,7 +73,8 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
                             {
                                 TheUtility.ResetProjHit(Projectile);
                             }
-                            Projectile.ai[1] += 0.3f;
+                            if (ChargeBladeProj.CurrentSkill is not ChargeBlade_Axe_Swing_Liberate_Super) Projectile.ai[1] += 0.3f;
+                            else Projectile.ai[1]++;
                         }
                         else
                         {
@@ -152,8 +154,8 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => swingHelper.GetColliding(targetHitbox) || ChargeBladeProj.shield.swingHelper.GetColliding(targetHitbox);
         public override bool ActivationCondition()
         {
-            if (DefAttack && !ChargeBladeProj.shield.DefSucceeded) return false;
-            return ChangeCondition.Invoke() && (!DefAttack ? true : !WeaponSkill.BowSlidingStep.Current);
+            if (DefAttack && ChargeBladeProj.DefSucceededTime <= 0) return false;
+            return ChangeCondition.Invoke() /*&& (!DefAttack ? true : WeaponSkill.BowSlidingStep.Current)*/;
         }
         public override bool SwitchCondition() => (int)Projectile.ai[0] == 2 && Projectile.ai[2] > 9;
         public override void OnSkillActive()

@@ -86,7 +86,7 @@ namespace WeaponSkill.Weapons.DualBlades
                 if (drawTex.IsLoaded && drawTex.Value != null)
                 {
                     (Main.projectile[proj].ModProjectile as DualBladesProj).DrawProjTex = drawTex;
-                    DrawColorTex ??= new Texture2D(Main.graphics.GraphicsDevice, 1, TextureAssets.Item[item.type].Height());
+                    DrawColorTex ??= new Texture2D(Main.graphics.GraphicsDevice, 1, drawTex.Height());
                     TheUtility.GetWeaponDrawColor(DrawColorTex, drawTex);
                 }
             }

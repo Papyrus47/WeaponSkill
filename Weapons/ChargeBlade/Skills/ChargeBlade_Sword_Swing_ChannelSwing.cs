@@ -111,6 +111,12 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
                     }
             }
         }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            base.ModifyHitNPC(target, ref modifiers);
+            modifiers.SourceDamage += 0.5f;
+
+        }
         public override bool PreDraw(SpriteBatch sb, ref Color lightColor)
         {
             sb.End();

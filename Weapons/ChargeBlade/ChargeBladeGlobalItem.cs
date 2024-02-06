@@ -31,6 +31,10 @@ namespace WeaponSkill.Weapons.ChargeBlade
         /// </summary>
         public int AxeStrengtheningTime;
         /// <summary>
+        /// 瓶子限制移除时间
+        /// </summary>
+        public int BottleLimitRemovalTime;
+        /// <summary>
         /// 充能量
         /// </summary>
         public float StatCharge;
@@ -134,6 +138,15 @@ namespace WeaponSkill.Weapons.ChargeBlade
             }
             #endregion
 
+            if (BottleLimitRemovalTime-- > 0)
+            {
+                StatChargeBottleMax = 10;
+            }
+            else
+            {
+                BottleLimitRemovalTime = 0;
+                StatChargeBottleMax = 5;
+            }
             if (StatCharge > 23) StatCharge = 23;
             if (StatChargeBottle > StatChargeBottleMax) StatChargeBottle = StatChargeBottleMax;
             if (player.HeldItem != item)

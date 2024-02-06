@@ -35,8 +35,6 @@
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="NPCs\Bosses\" />
     <Folder Include="Sounds\Musics\" />
-    <Folder Include="Weapons\ChargeBlade\Skills\" />
   </ItemGroup>
 </Project>

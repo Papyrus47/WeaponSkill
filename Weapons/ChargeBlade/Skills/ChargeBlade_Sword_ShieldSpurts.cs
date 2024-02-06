@@ -74,6 +74,7 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
         {
             base.OnHitNPC(target, hit, damageDone);
             TheUtility.SetPlayerImmune(player, 35);
+            (ChargeBladeProj.SpawnItem.ModItem as BasicChargeBlade).LiberateHit(target, player);
             WeaponSkillGlobalNPC.AddComponent(target, new LiberateOnHit(15, ChargeBladeProj.SpawnItem.ModItem as BasicChargeBlade, player));
         }
         public override bool? CanDamage()

@@ -30,7 +30,7 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
             }
             base.AI();
         }
-        public override bool CompulsionSwitchSkill(ProjSkill_Instantiation nowSkill) => ActivationCondition();
+        public override bool CompulsionSwitchSkill(ProjSkill_Instantiation nowSkill) => ActivationCondition() && Projectile.ai[0] > 25;
         public override bool ActivationCondition() => WeaponSkill.BowSlidingStep.Current;
         public override void OnSkillActive()
         {

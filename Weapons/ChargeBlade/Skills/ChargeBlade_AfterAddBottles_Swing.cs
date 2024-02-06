@@ -35,6 +35,14 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
                 }
             }
         }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            base.ModifyHitNPC(target, ref modifiers);
+            if (blade_AddBottles_InChannel.IsChannelMax)
+            {
+                modifiers.SourceDamage += 3.5f;
+            }
+        }
         public override bool ActivationCondition() => true;
         public override void OnSkillActive()
         {
