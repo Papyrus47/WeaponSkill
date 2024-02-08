@@ -10,25 +10,25 @@ namespace WeaponSkill.Items.Books
 {
     public class AxesBook : BasicInstructions
     {
-        public bool Show = false;
-        public override bool CanRightClick()
-        {
-            if (Main.mouseRightRelease)Show = !Show;
-            return base.CanRightClick();
-        }
+        //public bool Show = false;
+        //public override bool CanRightClick()
+        //{
+        //    if (Main.mouseRightRelease)Show = !Show;
+        //    return base.CanRightClick();
+        //}
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            tooltips.Add(new TooltipLine(Mod, "AxeTooltip", "未实装"));
-            if (Show)
-            {
-                int index = tooltips.FindIndex(x => x.Name == "Tooltip1");
-                tooltips.RemoveRange(index, tooltips.Count - 1 - index);
-                tooltips.Add(new TooltipLine(Mod, "AxeTooltip", Language.GetTextValue(Tooltip.Key + "1")));
-            }
-            tooltips.ForEach((x) =>
-            {
-                x.Text = string.Format(x.Text, WeaponSkill.BowSlidingStep.GetAssignedKeys(InputMode.Keyboard).FirstOrDefault());
-            });
+            //tooltips.Add(new TooltipLine(Mod, "AxeTooltip", "未实装"));
+            //if (Show)
+            //{
+            //    int index = tooltips.FindIndex(x => x.Name == "Tooltip1");
+            //    tooltips.RemoveRange(index, tooltips.Count - 1 - index);
+            //    tooltips.Add(new TooltipLine(Mod, "AxeTooltip", Language.GetTextValue(Tooltip.Key + "1")));
+            //}
+            //tooltips.ForEach((x) =>
+            //{
+            //    x.Text = string.Format(x.Text, WeaponSkill.BowSlidingStep.GetAssignedKeys(InputMode.Keyboard).FirstOrDefault());
+            //});
         }
     }
 }

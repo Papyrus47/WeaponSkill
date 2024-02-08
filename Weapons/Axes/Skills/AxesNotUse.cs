@@ -31,7 +31,7 @@ namespace WeaponSkill.Weapons.Axes.Skills
         public override bool PreDraw(SpriteBatch sb, ref Color lightColor)
         {
             Main.GetItemDrawFrame(AxesProj.SpawnItem.type, out var tex, out var rect);
-            sb.Draw(tex, Projectile.Center - Main.screenPosition, rect, lightColor, Projectile.rotation, tex.Size() * 0.5f, Projectile.scale - 1.6f, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            sb.Draw(tex, Projectile.Center - Main.screenPosition, rect, lightColor, Projectile.rotation, tex.Size() * 0.5f, Projectile.scale - 0.6f, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 
             return false;
         }

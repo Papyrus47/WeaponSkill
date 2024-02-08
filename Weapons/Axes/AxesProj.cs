@@ -26,6 +26,7 @@ namespace WeaponSkill.Weapons.Axes
         public float SwingLength;
         public SwingHelper SwingHelper;
         public Texture2D DrawColorTex => SpawnItem.GetGlobalItem<AxesGlobalItem>().DrawColorTex;
+        public Texture2D DrawSwingColorTex => SpawnItem.GetGlobalItem<AxesGlobalItem>().DrawSwingColorTex;
         public override string Texture => "Terraria/Images/Item_0";
         public override void OnSpawn(IEntitySource source)
         {
@@ -35,8 +36,8 @@ namespace WeaponSkill.Weapons.Axes
                 Player = itemUse.Player;
                 Projectile.Name = SpawnItem.Name;
                 SwingHelper = new(Projectile, 18, TextureAssets.Item[SpawnItem.type]);
-                Projectile.scale = Player.GetAdjustedItemScale(SpawnItem) + 1.6f;
-                Projectile.Size = SpawnItem.Size * Projectile.scale;
+                Projectile.scale = Player.GetAdjustedItemScale(SpawnItem) + 0.6f;
+                Projectile.Size = SpawnItem.Size * Projectile.scale * 2;
                 SwingLength = Projectile.Size.Length();
                 Main.projFrames[Type] = TheUtility.GetItemFrameCount(SpawnItem);
                 Init();
@@ -66,11 +67,18 @@ namespace WeaponSkill.Weapons.Axes
             Player.ResetMeleeHitCooldowns();
             IBasicSkillProj basicSkillProj = this;
             basicSkillProj.SwitchSkill();
+            if (InFighting && Projectile.soundDelay-- < 0)
+            {
+                Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Firework_Red);
+                dust.noGravity = true;
+                dust.velocity.Y -= 3;
+                Projectile.soundDelay = 15;
+            }
         }
         public override bool ShouldUpdatePosition() => CanUpdatePos;
         public override bool? CanDamage() => CurrentSkill.CanDamage();
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => CurrentSkill.Colliding(projHitbox, targetHitbox);
-        public virtual float TimeChange(float time) => MathHelper.SmoothStep(0, 2f, time);
+        public virtual float TimeChange(float time) => MathF.Pow(time,2.5f);
         public override bool PreDraw(ref Color lightColor)
         {
             //Main.spriteBatch.Draw(DrawColorTex, new Vector2(500), null, Color.White, 0f, default, 4, SpriteEffects.None, 0f);
@@ -93,121 +101,174 @@ namespace WeaponSkill.Weapons.Axes
             OldSkills = new List<ProjSkill_Instantiation>();
 
             AxesNotUse notUse = new(this);
-
-            #region 工具形态攻击
-            AxesSwing tool_SlashUp = new(this, () => !InFighting && Player.controlUseItem)
+            #region 工具形态
+            AxesSwing Tool_Swing1 = new(this, () => !InFighting && Player.controlUseItem)
             {
-                StartVel = Vector2.UnitY,
-                VelScale = new Vector2(1, 1f),
+                StartVel = (-Vector2.UnitY).RotatedBy(-0.9),
+                VelScale = Vector2.One,
+                SwingRot = MathHelper.Pi * 1.65f,
                 VisualRotation = 0,
-                SwingRot = MathHelper.Pi,
+                TimeChange = () => 1f / Player.itemAnimationMax,
+                TimeChangeMax = 3,
+            };
+            AxesSwing Tool_Swing2 = new(this, () => !InFighting && Player.controlUseItem)
+            {
+                StartVel = Vector2.UnitY.RotatedBy(0.9),
+                VelScale = Vector2.One,
+                SwingRot = MathHelper.Pi * 1.65f,
+                VisualRotation = 0,
                 SwingDirectionChange = false,
-                TimeChangeMax = 180,
-                TimeChange = () => 2f * Player.pickSpeed,
-                SwingAction = AxesCutTile
+                TimeChange = () => 1f / Player.itemAnimationMax,
+                TimeChangeMax = 3,
             };
-            AxesSwing tool_SlashDown = new(this, () => !InFighting && Player.controlUseItem)
+            #endregion
+            #region 武器形态
+            AxesSwing axesSwing_Channel = new(this, () => Player.controlUseItem) // 短蓄力下劈
             {
-                StartVel = (-Vector2.UnitY).RotatedBy(0.2),
-                VelScale = new Vector2(1, 1f),
+                StartVel = -Vector2.UnitX,
+                VelScale = Vector2.One,
+                SwingRot = MathHelper.Pi + MathHelper.PiOver2,
                 VisualRotation = 0,
-                SwingRot = MathHelper.Pi,
-                TimeChangeMax = 180,
-                TimeChange = () => 2f * Player.pickSpeed,
-                SwingAction = AxesCutTile
+                TimeChange = () => 1f / Player.itemAnimationMax,
+                TimeChangeMax = 2,
+                CanChannel = true,
+                ChannelTime = 360
             };
-
-            AxesSwing tool_Spurt = new(this, () => !InFighting && Player.controlUseTile)
+            AxesSwing axesSwing_BackSlash = new(this, () => Player.controlUseItem) // 回斜横劈
             {
-                StartVel = (-Vector2.UnitY).RotatedBy(0.2),
-                VelScale = new Vector2(1, 0.4f),
-                VisualRotation = 0.6f,
-                SwingRot = MathHelper.PiOver2 + 0.64f,
-                TimeChangeMax = 180,
-                TimeChange = () => 3f * Player.pickSpeed,
-                SwingAction = (swing) =>
+                StartVel = (-Vector2.UnitX).RotatedBy(0.4),
+                VelScale = new Vector2(1, 0.6f),
+                SwingRot = MathHelper.Pi + MathHelper.PiOver2,
+                VisualRotation = 0.4f,
+                TimeChange = () => 1f / Player.itemAnimationMax,
+                TimeChangeMax = 1.6f,
+                SwingDirectionChange = false,
+                AddKn = 1.3f,
+                AddDamage = 1.8f,
+                SwingAction = (x) =>
                 {
-                    AxesCutTile(swing);
-                    AxesCutTile(swing);
-                    if (Projectile.ai[0] < swing.TimeChangeMax / 2)
-                    {
-                        Player.velocity.X = Player.direction * 4;
-                    }
+                    Projectile.rotation = 0.5f;
                 }
             };
-            #endregion
-
-            #region 战斗形态攻击
-            AxesSwing fight_SlashUp = new(this, () => InFighting && Player.controlUseItem)
+            AxesSwing axesSwing_FastSlashDown = new(this, () => Player.controlUseItem) // 快速下劈
             {
-                StartVel = Vector2.UnitY,
-                VelScale = new Vector2(1, 1f),
+                StartVel = -Vector2.UnitX,
+                VelScale = Vector2.One,
+                SwingRot = MathHelper.Pi + MathHelper.PiOver2,
                 VisualRotation = 0,
-                SwingRot = MathHelper.Pi,
-                SwingDirectionChange = false,
-                TimeChangeMax = 180,
-                CanStuck = true,
-                TimeChange = () => 2f,
-                AddKn = 3,
-                KnDir = -Vector2.UnitY
+                TimeChange = () => 1f / Player.itemAnimationMax,
+                TimeChangeMax = 0.8f,
+                AddDamage = 1.2f,
             };
 
-            AxesSwing fight_InclinedSlash = new(this, () => InFighting && Player.controlUseItem)
+            AxesSwing axesSwing_WeakSlashUp = new(this, () => Player.controlUseTile) // 弱上挑
             {
-                StartVel = (-Vector2.UnitY).RotatedBy(-0.6),
-                VelScale = new Vector2(1, 0.6f),
-                VisualRotation = 0.4f,
+                StartVel = (-Vector2.UnitX).RotatedBy(0.4),
+                VelScale = Vector2.One,
                 SwingRot = MathHelper.Pi + MathHelper.PiOver2,
-                TimeChangeMax = 180,
-                CanStuck = true,
-                TimeChange = () => 2f,
-                AddDamage = 0.05f,
-                AddKn = 3.5f,
-                KnDir = new Vector2(1,0.5f)
+                VisualRotation = 0f,
+                AddDamage = 0.9f,
+                TimeChange = () => 1f / Player.itemAnimationMax,
+                TimeChangeMax = 1.6f,
+                SwingDirectionChange = false,
+            };
+            AxesSwing axesSwing_WeakSlashDown = new(this, () => Player.controlUseTile) // 弱下砸
+            {
+                StartVel = (-Vector2.UnitX).RotatedBy(-0.4),
+                VelScale = Vector2.One,
+                SwingRot = MathHelper.Pi + MathHelper.PiOver2,
+                VisualRotation = 0f,
+                AddDamage = 1.2f,
+                TimeChange = () => 1f / Player.itemAnimationMax,
+                TimeChangeMax = 1.6f,
             };
 
-            AxesSwing fight_AcrossSlash = new(this, () => InFighting && Player.controlUseItem)
+            AxesSwing axesSwing_SlashUp = new(this, () => InFighting && Player.controlUseTile) // 上挑
             {
-                StartVel = Vector2.UnitY.RotatedBy(0.6),
-                VelScale = new Vector2(1, 0.3f),
+                StartVel = (-Vector2.UnitX).RotatedBy(0.4),
+                VelScale = Vector2.One,
+                SwingRot = MathHelper.Pi + MathHelper.PiOver2,
+                VisualRotation = 0f,
+                TimeChange = () => 1f / Player.itemAnimationMax,
+                TimeChangeMax = 2.6f,
+                AddDamage = 2,
+                AddKn = 1.3f,
+                SwingDirectionChange = false,
+                OnHitFunc = OnHitNPC_SlashUp
+            };
+            AxesSwing axesSwing_SlashDown = new(this, () => Player.controlUseTile) // 下砸
+            {
+                StartVel = (-Vector2.UnitX).RotatedBy(-0.4),
+                VelScale = Vector2.One,
+                SwingRot = MathHelper.Pi + MathHelper.PiOver2,
+                VisualRotation = 0f,
+                TimeChange = () => 1f / Player.itemAnimationMax,
+                TimeChangeMax = 2.6f,
+                AddDamage = 1.3f,
+                AddKn = 2,
+                OnHitFunc = OnHitNPC_SlashDown
+            };
+
+            AxesSwing axesSwing_Slash = new(this, () => Player.controlUseItem) // 横斩
+            {
+                StartVel = (-Vector2.UnitX).RotatedBy(-0.4),
+                VelScale = new Vector2(1.3f,0.3f),
+                SwingRot = MathHelper.Pi + MathHelper.PiOver2,
                 VisualRotation = 0.7f,
-                SwingDirectionChange = false,
-                SwingRot = MathHelper.Pi + MathHelper.PiOver2,
-                TimeChangeMax = 180,
-                CanStuck = true,
-                TimeChange = () => 2f,
-                AddDamage = 0.1f,
-                AddKn = 4,
-                KnDir = new Vector2(1.5f, 0f)
+                TimeChange = () => 1f / Player.itemAnimationMax,
+                TimeChangeMax = 2.6f,
+                AddDamage = 1.8f,
+                AddKn = 2.5f,
+                SwingAction = (x) =>
+                {
+                    Projectile.rotation = -0.1f;
+                }
             };
+
+            AxesSpurts axesSpurts = new(this, null)
+            {
+                TimeChange = () => 1f / Player.itemAnimationMax,
+                TimeChangeMax = 2.4f
+            }; // 斧突刺
             #endregion
 
-            #region 工具形态使用
-            notUse.AddSkill(tool_SlashUp).AddSkill(tool_SlashDown).AddSkill(tool_SlashUp);
-            tool_Spurt.AddBySkill(tool_SlashUp, tool_SlashDown);
+            #region 添加技能表
+
+            #region 工具形态
+            notUse.AddSkill(Tool_Swing1).AddSkill(Tool_Swing2).AddSkill(Tool_Swing1);
             #endregion
-            #region 战斗形态使用
-            notUse.AddSkill(fight_SlashUp).AddSkill(fight_InclinedSlash).AddSkill(fight_AcrossSlash);
+
+            #region 武器形态
+            notUse.AddSkill(axesSwing_Channel).AddSkill(axesSwing_BackSlash).AddSkill(axesSwing_FastSlashDown);
+            notUse.AddSkill(axesSwing_SlashUp);
+
+            axesSwing_Channel.AddSkill(axesSwing_SlashUp).AddSkill(axesSwing_SlashDown);
+            axesSwing_Channel.AddSkill(axesSpurts);
+            axesSwing_BackSlash.AddSkill(axesSwing_WeakSlashUp).AddSkill(axesSwing_WeakSlashDown);
+
+            axesSpurts.AddSkilles(axesSwing_Slash, axesSwing_WeakSlashDown);
+
+            axesSwing_SlashUp.AddSkill(axesSwing_Slash);
+            #endregion
+
             #endregion
             CurrentSkill = notUse;
         }
-        public void AxesCutTile(AxesSwing axesSwing)
+        public void OnHitNPC_SlashUp(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (axesSwing.TimeChangeMax / 1.2f <= Projectile.ai[0]) return;
-            Vector2 center = Projectile.Center + Projectile.velocity; // 获取头部位置
-
-            Point point = (center / 16).ToPoint();
-            for(int i = -Projectile.width / 32; i <= Projectile.width / 32; i++)
+            if(target.knockBackResist != 0)
             {
-                for(int j = -Projectile.width / 32; j <= Projectile.width / 32; j++)
-                {
-                    Point point1 = point + new Point(i, j);
-                    if (!Main.tileAxe[Main.tile[point1].TileType])
-                    {
-                        continue;
-                    }
-                    Player.PickTile(point1.X, point1.Y,SpawnItem.axe);
-                }
+                target.velocity.Y -= hit.Knockback;
+                target.velocity.X *= 0.001f;
+                if (target.velocity.Y < -8) target.velocity.Y = -8;
+            }
+        }
+        public void OnHitNPC_SlashDown(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (target.knockBackResist != 0)
+            {
+                target.velocity.Y += hit.Knockback;
+                if (target.velocity.Y > 8) target.velocity.Y = 8;
             }
         }
     }
