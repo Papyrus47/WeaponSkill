@@ -58,6 +58,7 @@ namespace WeaponSkill.Weapons.LongSword.Skills
                     }
                 case 1: // 挥舞进行
                     {
+                        PreAttack = false;
                         Projectile.ai[1]++;
                         player.heldProj = Projectile.whoAmI;
                         float Time = LongSword.TimeChange(Projectile.ai[1] / SLASH_TIME);

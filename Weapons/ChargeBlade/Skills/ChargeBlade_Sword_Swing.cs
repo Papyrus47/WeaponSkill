@@ -69,6 +69,7 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
                     }
                 case 1: // 挥舞进行
                     {
+                        PreAttack = false;
                         if (AttackSwap)
                         {
                             Projectile.ai[1]--;

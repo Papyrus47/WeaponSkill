@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameInput;
 using Terraria.Graphics.CameraModifiers;
+using Terraria.ID;
 using Terraria.ModLoader.IO;
 using WeaponSkill.Weapons;
 using WeaponSkill.Weapons.LongSword;
@@ -75,13 +76,52 @@ namespace WeaponSkill
         /// 水月架势被命中
         /// </summary>
         public bool SerenePoseOnHit;
+        /// <summary>
+        /// 大锤水面击
+        /// </summary>
+        public bool WaterStrike;
+        /// <summary>
+        /// 大锤水面击成功
+        /// </summary>
+        /// </summary>
+        public bool WaterStrike_OnHit;
+        /// <summary>
+        /// 神圣反击判定
+        /// </summary>
+        public bool HolyStrikesBack;
+        /// <summary>
+        /// 神圣反击被命中
+        /// </summary>
+        public bool HolyStrikesBack_OnHit;
+
         public BasicShield HeldShield;
+
+        public const int DashRight = 2;
+        public const int DashLeft = 3;
+        public int DashTimer;
+        public int DashDir = -1;
         public override void ResetEffects()
         {
             ShowTheRangeChangeUI = false; 
             ShowTheStamina = false;
             AmmoItems ??= new();
             BowChannelLeave = 0;
+            if (DashTimer > 0) DashTimer--;
+
+            if (Player.controlRight && Player.releaseRight && Player.doubleTapCardinalTimer[DashRight] < 15)
+            {
+                DashDir = DashRight;
+                DashTimer = 15;
+            }
+            else if (Player.controlLeft && Player.releaseLeft && Player.doubleTapCardinalTimer[DashLeft] < 15)
+            {
+                DashDir = DashLeft;
+                DashTimer = 15;
+            }
+            else if(DashTimer <= 0)
+            {
+                DashDir = -1;
+            }
         }
         public override void PostUpdate()
         {
@@ -244,6 +284,31 @@ namespace WeaponSkill
             {
                 SerenePoseOnHit = true;
                 Player.SetImmuneTimeForAllTypes(180);
+                return true;
+            }
+            #endregion
+            #region 大锤水面击
+            if (WaterStrike)
+            {
+                WaterStrike_OnHit = true;
+                Player.SetImmuneTimeForAllTypes(60);
+                for (int i = 0; i < 9; i++)
+                {
+                    var dust = Dust.NewDustDirect(Player.Center, 1, 1, DustID.Clentaminator_Red);
+                    dust.scale = 1.5f;
+                    dust.color = Color.Gold;
+                    dust.fadeIn = 0.1f;
+                    dust.velocity = Vector2.One.RotatedBy(i / 6f * MathHelper.TwoPi) * 3;
+                    dust.noGravity = true;
+                }
+                return true;
+            }
+            #endregion
+            #region 霜拳神圣反击
+            if (HolyStrikesBack)
+            {
+                HolyStrikesBack_OnHit = true;
+                Player.SetImmuneTimeForAllTypes(60);
                 return true;
             }
             #endregion

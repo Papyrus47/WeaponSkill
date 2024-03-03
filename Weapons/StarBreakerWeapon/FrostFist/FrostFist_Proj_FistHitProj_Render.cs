@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WeaponSkill.Helper;
+using WeaponSkill.Weapons.LongSword;
 
-namespace WeaponSkill.Weapons.LongSword
+namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
 {
-    public class LongSwordSwingRenderDraw : IRenderTargetShaderDraw
+    public class FrostFist_Proj_FistHitProj_Render : IRenderTargetShaderDraw
     {
         public bool Remove { get; set; }
-
         public void Draw()
         {
             SpriteBatch sb = Main.spriteBatch;
@@ -27,10 +27,14 @@ namespace WeaponSkill.Weapons.LongSword
             gd.Clear(Color.Transparent);
             sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform); // 即刻绘制需要的图片到对应的Render上
             //swingHelper.DrawTrailing(WeaponSkill.SwingTex.Value, (_) => new(0.3f, 0.3f, 0.3f, 0f), null);
-            for (int i = 0; i < LongSwordProj.DrawLongSwordSwingShader_Index.Count; i++)
+            for (int i = 0; i < FrostFist_Proj_FistHitProj.FistHitProjs.Count; i++)
             {
-                SwingHelper swingHelper = (Main.projectile[LongSwordProj.DrawLongSwordSwingShader_Index[i]].ModProjectile as LongSwordProj).SwingHelper;
-                swingHelper.DrawTrailing(WeaponSkill.SwingTex_Offset.Value, (i) => GetDrawOffsetColor(swingHelper, i), null);
+                FrostFist_Proj_FistHitProj frostFist_Proj_FistHitProj = Main.projectile[FrostFist_Proj_FistHitProj.FistHitProjs[i]].ModProjectile as FrostFist_Proj_FistHitProj;
+                if(frostFist_Proj_FistHitProj == null)
+                {
+                    break;
+                }
+                frostFist_Proj_FistHitProj.FistHitProjDraw_Offset(GetDrawOffsetColor(frostFist_Proj_FistHitProj.Projectile.velocity));
             }
             //sb.Draw(Main.screenTargetSwap, Vector2.Zero, Color.White); // 原始图片
             sb.End();
@@ -51,38 +55,34 @@ namespace WeaponSkill.Weapons.LongSword
             sb.Draw(Main.screenTargetSwap, Vector2.Zero, Color.White);
             //sb.Draw(WeaponSkill.MyRender, Vector2.Zero, Color.White);
             sb.End();
+            #endregion
+            #region 绘制拳击
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform); // 绘制
 
-            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform); // 绘制刀光
-            for (int i = 0; i < LongSwordProj.DrawLongSwordSwingShader_Index.Count; i++)
+            for (int i = 0; i < FrostFist_Proj_FistHitProj.FistHitProjs.Count; i++)
             {
-                LongSwordProj longSwordProj = Main.projectile[LongSwordProj.DrawLongSwordSwingShader_Index[i]].ModProjectile as LongSwordProj;
-                SwingHelper swingHelper = longSwordProj.SwingHelper;
-                swingHelper.DrawTrailing(WeaponSkill.SwingTex.Value, (_) =>
+                FrostFist_Proj_FistHitProj frostFist_Proj_FistHitProj = Main.projectile[FrostFist_Proj_FistHitProj.FistHitProjs[i]].ModProjectile as FrostFist_Proj_FistHitProj;
+                if (frostFist_Proj_FistHitProj == null)
                 {
-                    if (longSwordProj.InSpiritAttack)
-                    {
-                        return new Color(255, 0, 0, 0);
-                    }
-                    return new Color(100, 100, 100, 0);
-                }, null);
+                    break;
+                }
+                frostFist_Proj_FistHitProj.FistHitProjDraw_Proj();
             }
-            //sb.Draw(WeaponSkill.MyRender, Vector2.Zero, Color.White);
             sb.End();
             #endregion
         }
         public void ResetDrawData()
         {
-            LongSwordProj.DrawLongSwordSwingShader_Index.Clear();
-            if (!Main.LocalPlayer.HeldItem.TryGetGlobalItem<LongSwordGlobalItem>(out _))
+            if(FrostFist_Proj_FistHitProj.FistHitProjs.Count <= 0)
             {
                 Remove = true;
             }
+            FrostFist_Proj_FistHitProj.FistHitProjs.Clear();
         }
-        public Color GetDrawOffsetColor(SwingHelper swingHelper, float factor)
+        public Color GetDrawOffsetColor(Vector2 vel)
         {
-            Vector2 vel = swingHelper.oldVels[(int)(factor * swingHelper.oldVels.Length)];
             vel = new Vector2(vel.Y, -vel.X);
-            Color color = new(vel.ToRotation() / MathHelper.TwoPi, factor * 0.2f, 0, 0);
+            Color color = new(vel.ToRotation() / MathHelper.TwoPi,0.2f, 0, 0);
             return color;
         }
     }

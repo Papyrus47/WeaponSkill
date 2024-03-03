@@ -212,7 +212,7 @@ namespace WeaponSkill.Helper
         {
             SpriteBatch sb = Main.spriteBatch;
             sb.End();
-            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone);
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone);
 
             Swing_Draw_Afterimage(colorFunc, drawCount);
             DrawSwingItem(drawColor);
@@ -239,7 +239,7 @@ namespace WeaponSkill.Helper
             DrawTrailing(tex, TrailingColorFunc, effect, SetZ);
 
             sb.End();
-            sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
 
             Swing_Draw_Afterimage(AfterimageColorFunc, drawAfterimageCount);
             DrawSwingItem(drawColor);

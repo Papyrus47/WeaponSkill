@@ -14,6 +14,13 @@ Projectiles: {
 	// AxesProj.DisplayName: Axes Proj
 	// CrossbowProj.DisplayName: Crossbow Proj
 	// LancesProj.DisplayName: Lances Proj
+	// HammerProj.DisplayName: Hammer Proj
+	// FrostFistProj.DisplayName: Frost Fist Proj
+	// FrostFist_Proj_FistHitProj.DisplayName: Frost Fist_ Proj_ Fist Hit Proj
+	// FrostFist_Proj_FistHitProj_MoveFist.DisplayName: Frost Fist_ Proj_ Fist Hit Proj_ Move Fist
+	// FrostFist_Proj_FistHitProj_SkyFallFist.DisplayName: Frost Fist_ Proj_ Fist Hit Proj_ Sky Fall Fist
+	// ShockProj.DisplayName: Shock Proj
+	// SpeedSlashProj.DisplayName: Speed Slash Proj
 }
 
 Keybinds: {

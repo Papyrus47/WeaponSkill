@@ -13,6 +13,7 @@ namespace WeaponSkill
         public static Asset<Effect> SpurtsShader;
         public static Asset<Effect> OffsetShader;
         public static Asset<Effect> SwordHot;
+        public static Asset<Effect> HammerChannelShader;
         public static Asset<Texture2D> ChooseAmmoUITex;
         public static Asset<Texture2D> StaminaUITex;
         public static Asset<Texture2D> SwingTex;
@@ -32,6 +33,7 @@ namespace WeaponSkill
                 SpurtsShader = Assets.Request<Effect>("Effects/" + nameof(SpurtsShader));
                 OffsetShader = Assets.Request<Effect>("Effects/" + nameof(OffsetShader));
                 SwordHot = Assets.Request<Effect>("Effects/" + nameof(SwordHot));
+                HammerChannelShader = Assets.Request<Effect>("Effects/" + nameof(HammerChannelShader));
                 SwingTex = Assets.Request<Texture2D>("Images/" + nameof(SwingTex));
                 ChooseAmmoUITex = Assets.Request<Texture2D>("UI/ChangeAmmoUI/" + nameof(ChooseAmmoUITex),AssetRequestMode.ImmediateLoad);
                 StaminaUITex = Assets.Request<Texture2D>("UI/StaminaUI/" + nameof(StaminaUITex));
@@ -85,6 +87,20 @@ namespace WeaponSkill
                 Main.OnResolutionChanged -= Main_OnResolutionChanged;
                 On_Main.LoadWorlds -= On_Main_LoadWorlds;
             }
+            if (!Main.dedServ)
+            {
+                SwingEffect = null;
+                SpurtsShader = null;
+                OffsetShader = null;
+                SwordHot = null;
+                HammerChannelShader = null;
+                SwingTex = null;
+                ChooseAmmoUITex = null;
+                StaminaUITex = null;
+                SpiritUITex = null;
+                SwingTex_Offset = null;
+                HotTex = null;
+            }
         }
 
         public override void PostSetupContent()
@@ -100,54 +116,6 @@ namespace WeaponSkill
                 throw new ArgumentNullException(nameof(args), "Arguments cannot be null!");
             }
             bool CallSucceed = false;
-            /* 规格 : 第一个是指定类型
-                 * 0 表示大剑 
-                 * 1 表示短剑
-                 * 2 表示长矛
-                 * 3 表示弓
-                 * 4 表示太刀
-            * 第二个是物品ID,一般情况下禁止手持弹幕
-            * 第三个是额外,一般用于特殊物品
-            *
-            *
-            */
-            if (args[0] is int weaponType && args[1] is int ItemType)
-            {
-                CallSucceed = true;
-                switch (weaponType)
-                {
-                    case 0: // 大剑
-                        {
-                            Weapons.BroadSword.BroadSwordGlobalItem.WeaponID.Add(ItemType);
-                            break;
-                        }
-                    case 1: // 短剑
-                        {
-                            Weapons.Shortsword.ShortswordGlobalItem.WeaponID.Add(ItemType);
-                            break;
-                        }
-                    case 2: // 长矛
-                        {
-                            Weapons.Spears.SpearsGlobalItem.WeaponID.Add(ItemType);
-                            if (args[2].Equals("Spears_SpType"))
-                            {
-                                Weapons.Spears.SpearsGlobalItem.WeaponID_SP.Add(ItemType);
-                            }
-                            break;
-                        }
-                    case 3: // 弓
-                        {
-                            Weapons.Bows.BowsGlobalItem.WeaponID.Add(ItemType);
-                            break;
-                        }
-                    case 4: // 太刀
-                        {
-                            Weapons.LongSword.LongSwordGlobalItem.WeaponID.Add(ItemType);
-                            break;
-                        }
-                    default:CallSucceed = false;break;
-                }
-            }
             return CallSucceed;
         }
     }

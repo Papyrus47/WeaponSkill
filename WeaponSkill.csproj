@@ -9,6 +9,7 @@
 	  <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Effects\HammerChannelShader.fx" />
     <None Remove="Images\VanillaImages\Projectile_699.png" />
     <None Remove="Items\ChargeBlade\DefenceCorpsChargeBlade.png" />
     <None Remove="Items\ChargeBlade\DefenceCorpsChargeBlade_Shield.png" />
@@ -30,6 +31,7 @@
     <None Remove="Localization\en-US.hjson" />
     <None Remove="Localization\zh-Hans.hjson" />
     <None Remove="Particles\Fire.png" />
+    <None Remove="Weapons\StarBreakerWeapon\FrostFist\FrostFist_LongSword.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />

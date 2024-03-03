@@ -457,7 +457,7 @@ namespace WeaponSkill.Weapons.ChargeBlade
             chargeBlade_Axe_Swing_Liberate_SP_PreAttack.AddSkilles(chargeBlade_Axe_Swing_ShieldStrength, chargeBlade_Axe_Swing_AxeStrength);
             #endregion
 
-            Axe_ToSword.AddBySkill(SwordHeld, Axe_SlashUp, Axe_SlashDown);
+            Axe_ToSword.AddBySkill(AxeHeld, Axe_SlashUp, Axe_SlashDown);
             #endregion
             #endregion
             CurrentSkill = chargeBladeNotUse;

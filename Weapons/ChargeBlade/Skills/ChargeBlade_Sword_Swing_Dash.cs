@@ -35,6 +35,6 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
                 PreAttack = true;
             }
         }
-        public override bool CompulsionSwitchSkill(ProjSkill_Instantiation nowSkill) => ActivationCondition();
+        public override bool CompulsionSwitchSkill(ProjSkill_Instantiation nowSkill) => ActivationCondition() && nowSkill is BasicChargeBladeSkill skill && skill.PreAttack;
     }
 }
