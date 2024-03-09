@@ -11,6 +11,7 @@ using Terraria.ModLoader.IO;
 using WeaponSkill.Weapons;
 using WeaponSkill.Weapons.LongSword;
 using WeaponSkill.Weapons.LongSword.Skills;
+using WeaponSkill.Weapons.StarBreakerWeapon.FrostFist;
 
 namespace WeaponSkill
 {
@@ -121,6 +122,14 @@ namespace WeaponSkill
             else if(DashTimer <= 0)
             {
                 DashDir = -1;
+            }
+        }
+        public override void PostUpdateEquips()
+        {
+            if (Player.HeldItem.ModItem is FrostFistItem)
+            {
+                if (Player.statManaMax2 < 1000) Player.statManaMax2 = 1000;
+                Player.statManaMax2 = (int)(Player.statManaMax2 * 1.5f);
             }
         }
         public override void PostUpdate()

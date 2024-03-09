@@ -44,6 +44,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
                 if(Projectile.ai[1] / SwingTime > 1)
                 {
                     Projectile.Kill();
+                    SoundEngine.PlaySound(SoundID.Item19 with { Pitch = 0.5f,MaxInstances = 3 }, Projectile.Center);
                 }
                 if (Projectile.ai[2] > 30)
                 {

@@ -77,6 +77,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
                             Projectile.ai[1] = 0;
                             Projectile.extraUpdates = 2;
                             TheUtility.ResetProjHit(Projectile);
+                            SoundEngine.PlaySound(SoundID.Item19 with { Pitch = 0.5f }, Projectile.Center);
                         }
                         break;
                     }

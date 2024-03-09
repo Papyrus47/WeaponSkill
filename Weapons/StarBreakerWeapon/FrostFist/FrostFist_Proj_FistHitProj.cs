@@ -43,10 +43,11 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
         }
         public override void OnSpawn(IEntitySource source)
         {
-            if(source is FrostFist_FistHit.FrostFistHit_ProjEntitySource proj)
+            if (source is FrostFist_FistHit.FrostFistHit_ProjEntitySource proj)
             {
                 frostFist_FistHit = proj.frostFist_FistHit;
             }
+            SoundEngine.PlaySound(SoundID.Item19 with { Pitch = -0.5f, PitchVariance = 0.3f }, Projectile.Center);
         }
         public override void AI()
         {

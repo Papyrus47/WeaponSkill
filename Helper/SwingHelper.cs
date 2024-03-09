@@ -261,6 +261,7 @@ namespace WeaponSkill.Helper
 
             CustomVertexInfo[] customVertices = new CustomVertexInfo[6];
             int velLength = oldVels.Length;
+            List<CustomVertexInfo> customVertexInfos = new List<CustomVertexInfo>();
             for (int i = 0; i < velLength; i++)
             {
                 if (i > drawCount && drawCount != -1) break;
@@ -288,9 +289,10 @@ namespace WeaponSkill.Helper
                 customVertices[2] = customVertices[3] = new(pos[2], drawColor, new Vector3(1f, factor - 1f, 0)); // 头
                 customVertices[4] = new(pos[3], drawColor, new Vector3(1f, factor, 0)); // 右下角
 
-                gd.Textures[0] = SwingItemTex.Value;
-                gd.DrawUserPrimitives(PrimitiveType.TriangleList, customVertices, 0, 2);
+                customVertexInfos.AddRange(customVertices);
             }
+            gd.Textures[0] = SwingItemTex.Value;
+            gd.DrawUserPrimitives(PrimitiveType.TriangleList, customVertexInfos.ToArray(), 0, customVertexInfos.Count / 3);
         }
         public virtual void DrawSwingItem(Color drawColor)
         {

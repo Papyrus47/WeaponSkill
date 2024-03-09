@@ -49,6 +49,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
                             Projectile.ai[1] = 0;
                             Projectile.extraUpdates = 2;
                             TheUtility.ResetProjHit(Projectile);
+                            SoundEngine.PlaySound(SoundID.Item19 with { Pitch = 0.5f, MaxInstances = 3 }, Projectile.Center);
                         }
                         break;
                     }
@@ -118,6 +119,10 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
                         float Time = Math.Max(Projectile.ai[1],0)/ 40f;
                         swingHelper.ProjFixedPlayerCenter(Player, 0, true, true);
                         swingHelper.SwingAI(FrostFist.SwordLength, Player.direction, Time * MathHelper.TwoPi * -SwingDirectionChange.ToDirectionInt());
+                        if ((int)Projectile.ai[1] == 40 || (int)Projectile.ai[1] == 0)
+                        {
+                            SoundEngine.PlaySound(SoundID.Item19 with { Pitch = 0.5f, MaxInstances = 3 }, Projectile.Center);
+                        }
                         if(Time > 2)
                         {
                             Projectile.ai[0]++;
@@ -139,6 +144,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
                             Projectile.ai[1] = 0;
                             Projectile.extraUpdates = 2;
                             TheUtility.ResetProjHit(Projectile);
+                            SoundEngine.PlaySound(SoundID.Item19 with { Pitch = 0.5f, MaxInstances = 3 }, Projectile.Center);
                         }
                         break;
                     }

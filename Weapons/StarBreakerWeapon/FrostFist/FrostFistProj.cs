@@ -74,10 +74,6 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                 Projectile.Kill();
                 return;
             }
-            if(OldSkills.Count > 10)
-            {
-                OldSkills.RemoveAt(0);
-            }
             Projectile.timeLeft = 2;
             CurrentSkill.AI();
             IBasicSkillProj basicSkillProj = this;
@@ -1088,6 +1084,34 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     }
                 }
             };
+
+            #region 猛砸冻斩派生
+            FrostFist_SwordSwing frostFist_MomentSwor_StrongSwing = new(this, () => WeaponSkill.BowSlidingStep.Current && CanChangeToStopActionSkill)
+            {
+                VelScale = new Vector2(1, 1f),
+                VisualRotation = 0f,
+                StartVel = Vector2.UnitX.RotatedBy(0.8),
+                SwingRot = MathHelper.TwoPi * 0.75f,
+                SwingDirectionChange = false,
+                AddDmg = 1.5f,
+                PreAtkTime = 10,
+                AtkTime = 40,
+                PostAtkTime = 60,
+                TimeChange = SwordChangeTime,
+                OnHit = (NPC npc, NPC.HitInfo hitInfo, int dmg) =>
+                {
+                    if (!Player.CheckMana(200, true)) return;
+                    FrostFist_FistBoom frostFist_FistBoom = new(10, Player, Projectile.velocity.SafeNormalize(default), (int)(Projectile.damage * 3))
+                    {
+                        ExtraAI = (NPC npc) =>
+                        {
+                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime += 300;
+                        }
+                    };
+                    WeaponSkillGlobalNPC.AddComponent(npc, frostFist_FistBoom);
+                }
+            };
+            #endregion
             #region 瞬·上勾拳派生
             FrostFist_FistHit frostFist_FistHit_Moment_RisingFist1 = new(this, () => Player.controlUseItem)
             {
@@ -1403,7 +1427,8 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                 fistHit_Moment_SealFist,
                 frostFist_SwordSwing_SkyFall,
                 frostFist_SwordSwing_CutItInTwo,
-                frostFist_SwordSwing_RisingSlash
+                frostFist_SwordSwing_RisingSlash,
+                frostFist_MomentSwor_StrongSwing
             };
             #region 搓招添加
             frostFistNotUse.AddSkill(frostFist_FistHit_CoiledFist).AddSkill(frostFist_FistHit_CoiledFist_AfterFist);
@@ -1460,6 +1485,8 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             frostFist_SwordSwing_Strong_2.AddSkill(fistHit_ChangedFist);
 
             #region 瞬
+            frostFist_MomentSwordSwing1.AddSkill(frostFist_MomentSwor_StrongSwing);
+
             frostFist_MomentSwordSwing1.AddSkill(frostFist_FistHit_Moment_RisingFist1).AddSkill(frostFist_FistHit_Moment_RisingFist2).AddSkill(frostFist_MomentSwordSwing3);
 
             frostFist_MomentSwordSwing1.AddSkill(fistHit_Moment_Hit1).AddSkill(fistHit_Moment_Hit2).AddSkill(fistHit_Moment_Hit3).AddSkill(fistHit_Moment_Hit4).AddSkill(fistHit_Moment_Hit5);

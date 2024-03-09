@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria;
 
 namespace WeaponSkill.NPCs
 {
@@ -26,14 +27,21 @@ namespace WeaponSkill.NPCs
         }
         private static void On_NPC_UpdateNPC(On_NPC.orig_UpdateNPC orig, NPC self, int i)
         {
-            if (self.TryGetGlobalNPC<WeaponSkillGlobalNPC>(out var skill) && !skill.CanUpdate)
+            if (self.TryGetGlobalNPC<WeaponSkillGlobalNPC>(out var skill) && (!skill.CanUpdate || (skill.FrostFist_FrozenNPCTime > 0 && self.collideY)))
             {
-                if(--skill.FrostFist_FrozenNPCTime <= 0)
+                if (skill.FrostFist_FrozenNPCTime > 0)
                 {
-                    for (int j = 0; j < 30; j++)
+                    if (--skill.FrostFist_FrozenNPCTime <= 0)
                     {
-                        Dust dust = Dust.NewDustDirect(self.position, self.width, self.height, DustID.FrostStaff, 0, 0, 150, default, 1.3f);
-                        dust.noGravity = true;
+                        for (int j = 0; j < 30; j++)
+                        {
+                            Dust dust = Dust.NewDustDirect(self.position, self.width, self.height, DustID.FrostStaff, 0, 0, 150, default, 1.3f);
+                            dust.noGravity = true;
+                        }
+                        NPC n = new NPC();
+                        n.SetDefaults(self.type);
+                        self.noTileCollide = n.noTileCollide;
+                        self.noGravity = n.noGravity;
                     }
                 }
                 skill.CanUpdate = true;
@@ -41,7 +49,25 @@ namespace WeaponSkill.NPCs
             }
             orig.Invoke(self, i);
         }
-
+        public override bool PreAI(NPC npc)
+        {
+            if (FrostFist_FrozenNPCTime > 0)
+            {
+                npc.velocity.X *= 0.5f;
+                npc.noTileCollide = false;
+                npc.noGravity = false;
+                return false;
+            }
+            return base.PreAI(npc);
+        }
+        public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot)
+        {
+            if (!CanUpdate || FrostFist_FrozenNPCTime > 0)
+            {
+                return false;
+            }
+            return base.CanHitPlayer(npc, target, ref cooldownSlot);
+        }
         public override void ResetEffects(NPC npc)
         {
             weaponSkillGlobalNPCComponents.RemoveAll(x => x.Remove);
@@ -65,7 +91,7 @@ namespace WeaponSkill.NPCs
             if (npc.realLife != -1 && Main.npc[npc.realLife].GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_Seal > 0) FrostFist_Seal = Main.npc[npc.realLife].GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_Seal;
             if (FrostFist_Seal-- >= 0)
             {
-                if (npc.velocity.LengthSquared() > 10) npc.velocity = npc.velocity.SafeNormalize(default) * 10;
+                if (npc.velocity.LengthSquared() > 100) npc.velocity = npc.velocity.SafeNormalize(default) * 10;
                 npc.damage = npc.defDamage / 5;
                 if(FrostFist_Seal == 0)
                 {
@@ -81,7 +107,6 @@ namespace WeaponSkill.NPCs
             #region 霜拳的冻结
             if (FrostFist_FrozenNPCTime > 0)
             {
-                CanUpdate = false;
                 Color color = drawColor;
                 color.A = 0;
                 Texture2D tex = TextureAssets.Frozen.Value;
