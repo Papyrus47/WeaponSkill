@@ -191,9 +191,18 @@ namespace WeaponSkill.Weapons.ChargeBlade
                     flag = true;
                     sb.End();
                 }
-                sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone);
+                sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone);
+                sb.End();
+                sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone);
 
+                Vector2 posOffset = new Vector2(width * 0.085f * swingHelper.SPDir);
+                Color color1 = color;
+                color1 *= 0.24f;
+                color1.A = 255;
+                swingHelper.DrawSwingItem(color1);
+                swingHelper.center += posOffset;
                 swingHelper.DrawSwingItem(color);
+                swingHelper.center -= posOffset;
 
                 sb.End();
                 if (flag) sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None,
@@ -208,10 +217,22 @@ namespace WeaponSkill.Weapons.ChargeBlade
                     flag = true;
                     sb.End();
                 }
-                sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone);
+                sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone);
+                sb.End();
+                sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone);
 
                 //swingHelper.Swing_Draw_ItemAndTrailling(color, ModContent.Request<Texture2D>("WeaponSkill/Images/SwingTex_Offset").Value, (_) => new(255, 245, 134, 0));
+                Vector2 posOffset = new Vector2(width * 0.085f * swingHelper.SPDir);
+                Color color1 = color;
+                color1 *= 0.24f;
+                color1.A = 255;
+                swingHelper.DrawSwingItem(color1);
+                swingHelper.center += posOffset;
                 swingHelper.DrawSwingItem(color);
+                swingHelper.center -= posOffset;
+
+                sb.End();
+                sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone);
 
                 List<CustomVertexInfo> customVertexInfos = new List<CustomVertexInfo>();
                 const int Max = 30;
