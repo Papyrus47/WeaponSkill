@@ -12,6 +12,8 @@ Mods: {
 			And: 和
 			Then: 然后
 			IsSP1Click: 特殊按键1
+			IsSP2Click: 特殊按键2
+			IsSP31Click: 特殊按键3
 			IsLeftClick: 左键
 			IsRightClick: 右键
 			InSky: 在空中

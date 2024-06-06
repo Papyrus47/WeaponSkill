@@ -19,6 +19,8 @@ namespace WeaponSkill.UI.StarBreakerUI.SkillsTreeUI
         {
             public bool InSky;
             public bool IsSP1Click;
+            public bool IsSP2Click;
+            public bool IsSP3Click;
             public bool IsLeftClick;
             public bool IsRightClick;
             /// <summary>
@@ -38,7 +40,7 @@ namespace WeaponSkill.UI.StarBreakerUI.SkillsTreeUI
             /// </summary>
             public bool IsStopAtk;
 
-            public SkillsControl(bool isLeftClick, bool isRightClick,bool isSP1Click, bool isDoubleForwardMove, bool isDoubleBackwardMove, bool isChannel, bool isStopAtk, bool inSky)
+            public SkillsControl(bool isLeftClick, bool isRightClick, bool isSP1Click, bool isDoubleForwardMove, bool isDoubleBackwardMove, bool isChannel, bool isStopAtk, bool inSky, bool isSP2Click = false, bool isSP3Click = false)
             {
                 IsLeftClick = isLeftClick;
                 IsRightClick = isRightClick;
@@ -48,6 +50,8 @@ namespace WeaponSkill.UI.StarBreakerUI.SkillsTreeUI
                 IsChannel = isChannel;
                 IsStopAtk = isStopAtk;
                 InSky = inSky;
+                IsSP2Click = isSP2Click;
+                IsSP3Click = isSP3Click;
             }
         }
         /// <summary>

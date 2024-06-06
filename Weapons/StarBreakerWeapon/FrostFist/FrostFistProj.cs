@@ -1409,7 +1409,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             SkillsTreeUI.TryAddSkillTree(frostFistNotUse, new()
             {
                 (new SkillsControl(true,false,false,false,false,false,false,true),"空中落砸"),
-                (new SkillsControl(false,true,false,false,false,false,false,true),"空中落落"),
+                (new SkillsControl(false,true,false,false,false,false,false,true),"空中落砸"),
                 (new SkillsControl(false,false,true,false,false,false,false,true),"剑-天落"),
                 (new SkillsControl(false,false,true,false,false,true,false,false),"极速乱刃"),
                 (new SkillsControl(false,false,true,true,false,false,false,false),"一刀两断"),

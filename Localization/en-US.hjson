@@ -12,6 +12,8 @@ Mods: {
 			And: and
 			Then: Then
 			IsSP1Click: SP1 Key
+			IsSP2Click: SP2 Key
+			IsSP3Click: SP3 Key
 			IsLeftClick: Left Click
 			IsRightClick: Right Click
 			InSky: In Sky
