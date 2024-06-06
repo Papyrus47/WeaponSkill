@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using WeaponSkill.Weapons.StarBreakerWeapon.General;
 
 namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
 {
@@ -149,6 +150,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
             base.OnHitNPC(target, hit, damageDone);
             OnHit?.Invoke(target,hit,damageDone);
             TheUtility.SetPlayerImmune(Player);
+            SlashDamage.SlashDamageHit();
         }
         public override void OnSkillActive()
         {

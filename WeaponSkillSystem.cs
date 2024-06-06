@@ -13,6 +13,7 @@ using WeaponSkill.UI.StaminaUI;
 using WeaponSkill.Weapons.ChargeBlade;
 using WeaponSkill.Weapons.DualBlades;
 using WeaponSkill.Weapons.LongSword;
+using WeaponSkill.Weapons.StarBreakerWeapon.General;
 
 namespace WeaponSkill
 {
@@ -57,13 +58,25 @@ namespace WeaponSkill
             //userInterfaces.Add(userInterface3);
             //crossbowAddPartUI.Initialize();
             //userInterface3.SetState(crossbowAddPartUI);
+            On_NPC.HitModifiers.ToHitInfo += HitModifiers_ToHitInfo;
         }
+
+        private NPC.HitInfo HitModifiers_ToHitInfo(On_NPC.HitModifiers.orig_ToHitInfo orig, ref NPC.HitModifiers self, float baseDamage, bool crit, float baseKnockback, bool damageVariation, float luck)
+        {
+            self.SourceDamage *= SlashDamage.GetSlashDamageMultiple();
+            return orig.Invoke(ref self, baseDamage, crit, baseKnockback, damageVariation, luck);
+        }
+
         public override void Unload()
         {
             userInterfaces.Clear();
             changeAmmo = null;
             stamina = null;
             spiritUI = null;
+        }
+        public override void PostUpdatePlayers()
+        {
+            SlashDamage.UpdateSlashDamageCount();
         }
         public override void UpdateUI(GameTime gameTime)
         {

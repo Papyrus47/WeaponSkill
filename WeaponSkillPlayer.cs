@@ -7,11 +7,13 @@ using Terraria;
 using Terraria.GameInput;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using WeaponSkill.Weapons;
 using WeaponSkill.Weapons.LongSword;
 using WeaponSkill.Weapons.LongSword.Skills;
 using WeaponSkill.Weapons.StarBreakerWeapon.FrostFist;
+using WeaponSkill.Weapons.StarBreakerWeapon.General;
 
 namespace WeaponSkill
 {
@@ -199,6 +201,14 @@ namespace WeaponSkill
         }
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
+            #region 玩家头上绘制斩击连击数量
+            if (SlashDamage.SlashCount > 0)
+            {
+                Vector2 center = Player.Top + new Vector2(0, -30) - Main.screenPosition;
+                string text = (Language.ActiveCulture.LegacyId == 7 ? "斩击伤害段数:" : "Slash Damage Count:") + SlashDamage.SlashCount.ToString();
+                Utils.DrawBorderString(Main.spriteBatch, text, center - FontAssets.MouseText.Value.MeasureString(text) * 0.5f, Color.White * (1 - SlashDamage.SlashCountRemoveTime / 180f),1.1f);
+            }
+            #endregion
             switch (BowChannelLeave)
             {
                 case 1:

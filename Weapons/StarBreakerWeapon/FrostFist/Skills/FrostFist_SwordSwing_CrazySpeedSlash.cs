@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeaponSkill.Weapons.StarBreakerWeapon.General;
 
 namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
 {
@@ -69,6 +70,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
                                     for(int i = 0; i < 5; i++)
                                     {
                                         Player.ApplyDamageToNPC(npc, dmg, 0f, hit.HitDirection, false);
+                                        SlashDamage.SlashDamageHit();
                                     }
                                 };
                             }

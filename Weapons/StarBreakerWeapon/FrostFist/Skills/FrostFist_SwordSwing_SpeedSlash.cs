@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.Graphics.CameraModifiers;
 using WeaponSkill.Helper;
+using WeaponSkill.Weapons.StarBreakerWeapon.General;
 
 namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
 {
@@ -54,6 +55,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
             public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
             {
                 Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Projectile.velocity.SafeNormalize(default), 0.2f, 0.1f, 1, -1));
+                SlashDamage.SlashDamageHit();
                 OnHit?.Invoke(target, hit, damageDone);
             }
             public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => swing.GetColliding(targetHitbox);
@@ -169,6 +171,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
             for(int i = 0;i< 29; i++)
             {
                 Player.ApplyDamageToNPC(target, damageDone, 0f, Player.direction, false);
+                SlashDamage.SlashDamageHit();
             }
         }
     }

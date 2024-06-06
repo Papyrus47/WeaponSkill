@@ -66,6 +66,12 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            #region 打击伤害追加
+            int hitDamageType_Damage= (int)(hit.SourceDamage * 0.4f);
+            if(target.CanBeChasedBy()) target.life -= hitDamageType_Damage;
+            Main.player[Projectile.owner].addDPS(hitDamageType_Damage);
+            CombatText.NewText(target.Hitbox, hit.Crit ? CombatText.DamagedFriendly * 0.5f : CombatText.DamagedFriendlyCrit * 0.5f, hitDamageType_Damage);
+            #endregion
             TheUtility.SetPlayerImmune(Main.player[Projectile.owner], 8);
             if (frostFist_FistHit is not FrostFist_SpeedAtk_FastetHit) Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Projectile.velocity.SafeNormalize(default), 3, 0.1f, 1, -1));
             for (int i = 0; i < 80; i++)
@@ -95,7 +101,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             modifiers.DamageVariationScale *= 0;
-            modifiers.Defense *= 0.4f;
+            modifiers.FinalDamage *= 1.2f;
         }
         public override bool PreDraw(ref Color lightColor)
         {
