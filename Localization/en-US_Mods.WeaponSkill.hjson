@@ -57,5 +57,10 @@ Configs: {
 			Label: Choose Ammo U I_ Pos
 			Tooltip: ""
 		}
+
+		SkillsTreeUI_Pos: {
+			Label: Skills Tree U I_ Pos
+			Tooltip: ""
+		}
 	}
 }

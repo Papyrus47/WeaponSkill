@@ -8,6 +8,19 @@ Mods: {
 
 		Spears.SP_Text: 当按下特殊按键{0}的时候,切换为形态
 
+		SkillsControl: {
+			And: and
+			Then: Then
+			IsSP1Click: SP1 Key
+			IsLeftClick: Left Click
+			IsRightClick: Right Click
+			InSky: In Sky
+			IsDoubleForwardMove: Double Forward Key
+			IsDoubleBackwardMove: Double Backward Key
+			IsChannel: Channel
+			IsStopAtk: Wait
+		}
+
 		Items: {
 			BroadSwordBook: {
 				DisplayName: Broad Sword Book

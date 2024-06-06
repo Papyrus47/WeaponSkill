@@ -10,6 +10,7 @@ using WeaponSkill.UI.CrossbowAddPartUI;
 using WeaponSkill.UI.DualBladesUI;
 using WeaponSkill.UI.SpiritUI;
 using WeaponSkill.UI.StaminaUI;
+using WeaponSkill.UI.StarBreakerUI.SkillsTreeUI;
 using WeaponSkill.Weapons.ChargeBlade;
 using WeaponSkill.Weapons.DualBlades;
 using WeaponSkill.Weapons.LongSword;
@@ -26,6 +27,7 @@ namespace WeaponSkill
         public CrossbowAddPartUI crossbowAddPartUI;
         public DualBladesUI bladesUI;
         public ChargeBladeBottle chargeBladeBottle;
+        public SkillsTreeUI skillsTreeUI;
         public override void Load()
         {
             userInterfaces = new();
@@ -53,6 +55,11 @@ namespace WeaponSkill
             chargeBladeBottle = new ChargeBladeBottle();
             chargeBladeBottle.Initialize();
 
+            skillsTreeUI = new();
+            skillsTreeUI.Initialize();
+            UserInterface userInterface3 = new UserInterface();
+            userInterfaces.Add(userInterface3);
+            userInterface3.SetState(skillsTreeUI);
             //crossbowAddPartUI = new();
             //UserInterface userInterface3 = new UserInterface();
             //userInterfaces.Add(userInterface3);
@@ -73,6 +80,7 @@ namespace WeaponSkill
             changeAmmo = null;
             stamina = null;
             spiritUI = null;
+            SkillsTreeUI.UnLoad();
         }
         public override void PostUpdatePlayers()
         {

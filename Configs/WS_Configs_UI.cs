@@ -20,5 +20,8 @@ namespace WeaponSkill.Configs
 
         [DefaultValue(typeof(Vector2), "0.01,0.15")]
         public Vector2 ChooseAmmoUI_Pos;
+
+        [DefaultValue(typeof(Vector2), "0.9,0.15")]
+        public Vector2 SkillsTreeUI_Pos;
     }
 }

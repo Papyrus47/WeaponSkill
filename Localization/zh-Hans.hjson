@@ -8,6 +8,19 @@ Mods: {
 
 		// Spears.SP_Text: 当按下特殊按键{0}的时候,切换为形态
 
+		SkillsControl: {
+			And: 和
+			Then: 然后
+			IsSP1Click: 特殊按键1
+			IsLeftClick: 左键
+			IsRightClick: 右键
+			InSky: 在空中
+			IsDoubleForwardMove: 双击前进按键
+			IsDoubleBackwardMove: 双击后退按键
+			IsChannel: 蓄力
+			IsStopAtk: 等待
+		}
+
 		Items: {
 			BroadSwordBook: {
 				DisplayName: 阔剑说明书

@@ -7,8 +7,10 @@ using Terraria;
 using WeaponSkill.Configs;
 using WeaponSkill.Helper;
 using WeaponSkill.NPCs;
+using WeaponSkill.UI.StarBreakerUI.SkillsTreeUI;
 using WeaponSkill.Weapons.Spears;
 using WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills;
+using static WeaponSkill.UI.StarBreakerUI.SkillsTreeUI.SkillsTreeUI;
 
 namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
 {
@@ -82,10 +84,16 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
         public override bool ShouldUpdatePosition() => false;
         public override bool? CanDamage() => CurrentSkill.CanDamage();
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => CurrentSkill.Colliding(projHitbox, targetHitbox);
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => CurrentSkill.ModifyHitNPC(target, ref modifiers);
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.DamageVariationScale *= 0;
+            CurrentSkill.ModifyHitNPC(target, ref modifiers);
+        }
+
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => CurrentSkill.OnHitNPC(target, hit, damageDone);
         public override bool PreDraw(ref Color lightColor)
         {
+            SkillsTreeUI.nowSkill = CurrentSkill;
             CurrentSkill.PreDraw(Main.spriteBatch, ref lightColor); 
             if (AddSwordRender)
             {
@@ -1397,6 +1405,148 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             #endregion
             #endregion
             #region 技能表添加
+            #region 技能表的说明添加
+            SkillsTreeUI.TryAddSkillTree(frostFistNotUse, new()
+            {
+                (new SkillsControl(true,false,false,false,false,false,false,true),"空中落砸"),
+                (new SkillsControl(false,true,false,false,false,false,false,true),"空中落落"),
+                (new SkillsControl(false,false,true,false,false,false,false,true),"剑-天落"),
+                (new SkillsControl(false,false,true,false,false,true,false,false),"极速乱刃"),
+                (new SkillsControl(false,false,true,true,false,false,false,false),"一刀两断"),
+                (new SkillsControl(true,false,false,true,false,false,false,false),"连续拳"),
+                (new SkillsControl(false,true,false,true,false,false,false,false),"双摆拳"),
+                (new SkillsControl(true,false,false,false,true,true,false,false),"蓄力升龙"),
+                (new SkillsControl(false,true,false,false,true,true,false,false),"蓄力冲拳"),
+                (new SkillsControl(false,false,true,false,true,false,false,false),"剑-上挑"),
+                (new SkillsControl(true,false,false,false,false,false,false,false),"速攻拳连段"),
+                (new SkillsControl(false,true,false,false,false,false,false,false),"通用拳连段"),
+                (new SkillsControl(false,false,true,false,false,false,false,false),"霜拳舞刃式-力"),
+            });
+            #region 拳
+            SkillsTreeUI.TryAddSkillTree(fistHit_SpeedAtk_Hit1, new()
+            {
+                (new SkillsControl(){IsLeftClick = true},"速攻拳连段-2"),
+            });
+            SkillsTreeUI.TryAddSkillTree(fistHit_SpeedAtk_Hit2, new()
+            {
+                (new SkillsControl(){IsLeftClick = true},"速攻拳连段-3"),
+            });
+            SkillsTreeUI.TryAddSkillTree(fistHit_SpeedAtk_Hit3, new()
+            {
+                (new SkillsControl(){IsLeftClick = true},"速攻拳连段-4"),
+                (new SkillsControl(){IsRightClick = true},"速攻拳连段3"),
+            });
+            SkillsTreeUI.TryAddSkillTree(fistHit_SpeedAtk3, new()
+            {
+                (new SkillsControl(){IsLeftClick = true},"空中落砸"),
+                (new SkillsControl(){IsRightClick = true},"空中落砸"),
+            });
+            SkillsTreeUI.TryAddSkillTree(fistHit_SpeedAtk_Hit4, new()
+            {
+                (new SkillsControl(){IsLeftClick = true},"速攻拳连段-5"),
+                (new SkillsControl(){IsRightClick = true},"速攻拳连段2"),
+            });
+            SkillsTreeUI.TryAddSkillTree(fistHit_DoubleHit2, new()
+            {                
+                (new SkillsControl(){IsLeftClick = true},"上勾拳"),
+                (new SkillsControl(){IsRightClick = true},"上勾拳")
+            });
+            SkillsTreeUI.TryAddSkillTree(fistHit_DoubleHit3, new()
+            {
+                (new SkillsControl(){IsLeftClick = true},"空中落砸"),
+                (new SkillsControl(){IsRightClick = true},"空中落砸"),
+            });
+
+            SkillsTreeUI.TryAddSkillTree(fistHit_GeneralAtk1, new()
+            {
+                (new SkillsControl(){IsRightClick = true},"通用拳连段-2"),
+            });
+            SkillsTreeUI.TryAddSkillTree(fistHit_GeneralAtk2, new()
+            {
+                (new SkillsControl(){IsRightClick = true},"通用拳连段-3"),
+            });
+            #endregion
+            #region 刀
+            #region 力
+            SkillsTreeUI.TryAddSkillTree(frostFist_SwordSwing_Strong_1, new()
+            {
+                (new SkillsControl(){IsSP1Click = true},"霜拳舞刃式-力-3"),
+                (new SkillsControl(){IsLeftClick = true},"猛拳"),
+                (new SkillsControl(){IsRightClick = true},"冰刺"),
+                (new SkillsControl(){IsSP1Click = true,IsStopAtk = true},"冲刺"),
+            });
+            SkillsTreeUI.TryAddSkillTree(frostFist_SwordSwing_Strong_2, new()
+            {
+                (new SkillsControl(){IsSP1Click = true},"霜拳舞刃式-力-4"),
+                (new SkillsControl(){IsLeftClick = true},"神圣反击"),
+                (new SkillsControl(){IsRightClick = true},"充能拳"),
+                (new SkillsControl(){IsSP1Click = true,IsStopAtk = true},"霜拳舞刃式-瞬"),
+            });
+            SkillsTreeUI.TryAddSkillTree(frostFist_SwordSwing_Strong_3, new()
+            {
+                (new SkillsControl(){IsSP1Click = true},"霜拳舞刃式-力-5"),
+            });
+
+            SkillsTreeUI.TryAddSkillTree(fistHit_StrongFistAtk1, new()
+            {
+                (new SkillsControl(){IsSP1Click = true},"猛拳-2"),
+            });
+            SkillsTreeUI.TryAddSkillTree(fistHit_StrongFistAtk2, new()
+            {
+                (new SkillsControl(){IsSP1Click = true},"猛拳-3"),
+            });
+            #region 瞬
+            SkillsTreeUI.TryAddSkillTree(frostFist_MomentSwordSwing1, new()
+            {
+                (new SkillsControl(){IsSP1Click = true},"霜拳舞刃式-瞬-2"),
+                (new SkillsControl(){IsLeftClick = true},"冲刺上勾拳"),
+                (new SkillsControl(){IsRightClick = true},"霜拳拳法·冻"),
+                (new SkillsControl(){IsSP1Click = true,IsStopAtk = true},"强冰冻斩"),
+            });
+            SkillsTreeUI.TryAddSkillTree(fistHit_Moment_Hit2, new()
+            {
+                (new SkillsControl(){IsLeftClick = true},"霜拳封印术"),
+            });
+            SkillsTreeUI.TryAddSkillTree(frostFist_MomentSwordSwing2, new()
+            {
+                (new SkillsControl(){IsSP1Click = true},"霜拳舞刃式-瞬-3"),
+            });
+            #endregion
+            #endregion
+            #region 速
+            SkillsTreeUI.TryAddSkillTree(frostFist_SwordSwing_Start, new()
+            {
+                (new SkillsControl(){IsSP1Click = true},"霜拳舞刃式-力-2"),
+                (new SkillsControl(){IsSP1Click = true,IsStopAtk = true},"霜拳舞刃式-速"),
+            });
+            SkillsTreeUI.TryAddSkillTree(frostFist_SwordSwing_Speed_3, new()
+            {
+                (new SkillsControl(){IsSP1Click = true},"霜拳舞刃式-速-1"),
+                (new SkillsControl(){IsSP1Click = true,IsStopAtk = true},"冻结斩"),
+                (new SkillsControl(){IsLeftClick = true},"冻击连续拳"),
+                (new SkillsControl(){IsRightClick = true},"最速连击"),
+            });
+            SkillsTreeUI.TryAddSkillTree(frostFist_SwordSwing_Speed_1, new()
+            {
+                (new SkillsControl(){IsSP1Click = true},"霜拳舞刃式-速-2"),
+            });
+            SkillsTreeUI.TryAddSkillTree(frostFist_SwordSwing_Speed_2, new()
+            {
+                (new SkillsControl(){IsSP1Click = true},"霜拳舞刃式-速-3"),
+                (new SkillsControl(){IsSP1Click = true,IsStopAtk = true},"乱斩"),
+                (new SkillsControl(){IsLeftClick = true},"速冻冲拳"),
+                (new SkillsControl(){IsRightClick = true},"击退横扫拳"),
+            });
+            SkillsTreeUI.TryAddSkillTree(frostFist_SwordSwing_Speed_Start, new()
+            {
+                (new SkillsControl(){IsSP1Click = true},"霜拳舞刃式-速-3"),
+                (new SkillsControl(){IsSP1Click = true,IsStopAtk = true},"乱斩"),
+                (new SkillsControl(){IsLeftClick = true},"速冻冲拳"),
+                (new SkillsControl(){IsRightClick = true},"击退横扫拳"),
+            });
+            #endregion
+            #endregion
+            #endregion
             frostFistNotUse.AddSkill(frostFist_FistHit_SkyFallFist);
             frostFistNotUse.AddSkill(frostFist_SwordSwing_SkyFall);
             ProjSkill_Instantiation[] changeSkills = new ProjSkill_Instantiation[]
