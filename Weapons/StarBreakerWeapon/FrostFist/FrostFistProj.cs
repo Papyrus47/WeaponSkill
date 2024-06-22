@@ -63,6 +63,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
         public override void SetDefaults()
         {
             Projectile.penetrate = -1;
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
@@ -90,7 +91,13 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             CurrentSkill.ModifyHitNPC(target, ref modifiers);
         }
 
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => CurrentSkill.OnHitNPC(target, hit, damageDone);
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            Player.statMana = Math.Min(Main.player[Projectile.owner].statMana + 2, Player.statManaMax2);
+            Player.ManaEffect(2);
+            CurrentSkill.OnHitNPC(target, hit, damageDone);
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
             SkillsTreeUI.nowSkill = CurrentSkill;
@@ -895,6 +902,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                 ActionDamage = 1.5f,
                 FistMoveAI = (Projectile proj) =>
                 {
+                    Player.manaRegenDelay = 100;
                     Vector2 StartVel = Vector2.UnitY.RotatedBy(0.6 * Player.direction) * 60;
                     Vector2 vel = StartVel.RotatedBy(-Player.direction * (proj.ai[0] / 60f) * MathHelper.Pi * 1.4f);
                     vel.Y *= 0.5f;

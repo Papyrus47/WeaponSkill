@@ -62,5 +62,10 @@ Configs: {
 			// Label: Skills Tree U I_ Pos
 			// Tooltip: ""
 		}
+
+		TalkUIPos: {
+			// Label: Talk U I Pos
+			// Tooltip: ""
+		}
 	}
 }

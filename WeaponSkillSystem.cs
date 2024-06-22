@@ -11,9 +11,11 @@ using WeaponSkill.UI.DualBladesUI;
 using WeaponSkill.UI.SpiritUI;
 using WeaponSkill.UI.StaminaUI;
 using WeaponSkill.UI.StarBreakerUI.SkillsTreeUI;
+using WeaponSkill.UI.StarBreakerUI.TalkUI;
 using WeaponSkill.Weapons.ChargeBlade;
 using WeaponSkill.Weapons.DualBlades;
 using WeaponSkill.Weapons.LongSword;
+using WeaponSkill.Weapons.StarBreakerWeapon.DamageTypes;
 using WeaponSkill.Weapons.StarBreakerWeapon.General;
 
 namespace WeaponSkill
@@ -28,6 +30,7 @@ namespace WeaponSkill
         public DualBladesUI bladesUI;
         public ChargeBladeBottle chargeBladeBottle;
         public SkillsTreeUI skillsTreeUI;
+        public TalkUI talkUI;
         public override void Load()
         {
             userInterfaces = new();
@@ -60,6 +63,15 @@ namespace WeaponSkill
             UserInterface userInterface3 = new UserInterface();
             userInterfaces.Add(userInterface3);
             userInterface3.SetState(skillsTreeUI);
+
+            #region 取消这段注释显示对话UI
+            //talkUI = new();
+            //talkUI.Initialize();
+            //UserInterface userInterface4 = new UserInterface();
+            //userInterfaces.Add(userInterface4);
+            //userInterface4.SetState(talkUI);
+            #endregion
+
             //crossbowAddPartUI = new();
             //UserInterface userInterface3 = new UserInterface();
             //userInterfaces.Add(userInterface3);
@@ -67,6 +79,7 @@ namespace WeaponSkill
             //userInterface3.SetState(crossbowAddPartUI);
             On_NPC.HitModifiers.ToHitInfo += HitModifiers_ToHitInfo;
         }
+
 
         private NPC.HitInfo HitModifiers_ToHitInfo(On_NPC.HitModifiers.orig_ToHitInfo orig, ref NPC.HitModifiers self, float baseDamage, bool crit, float baseKnockback, bool damageVariation, float luck)
         {
@@ -77,6 +90,10 @@ namespace WeaponSkill
         public override void Unload()
         {
             userInterfaces.Clear();
+            // 就用这个检测Mod有没有加载
+            if(changeAmmo != null)
+            {
+            }
             changeAmmo = null;
             stamina = null;
             spiritUI = null;

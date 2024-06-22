@@ -57,6 +57,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
             }
             else if (Player.controlUseTile && Projectile.ai[0] < 6)
             {
+                Player.manaRegenDelay += 6;
                 Projectile.ai[0]--;
                 Projectile.ai[1]++;
                 switch ((int)Projectile.ai[2])
@@ -144,7 +145,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
             #region 原本额外动作的位置
             if (Projectile.ai[0] < 16 && Projectile.ai[0] > 6)
             {
-                Player.SetImmuneTimeForAllTypes(1);
+                Player.SetImmuneTimeForAllTypes(3);
                 Player.velocity.X = Player.direction * 50;
                 for (int i = 0; i < 80; i++)
                 {

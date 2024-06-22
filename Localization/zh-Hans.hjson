@@ -13,7 +13,7 @@ Mods: {
 			Then: 然后
 			IsSP1Click: 特殊按键1
 			IsSP2Click: 特殊按键2
-			IsSP31Click: 特殊按键3
+			// IsSP3Click: SP3 Key
 			IsLeftClick: 左键
 			IsRightClick: 右键
 			InSky: 在空中
@@ -401,13 +401,30 @@ Mods: {
 			}
 
 			FrostFistItem: {
-				// DisplayName: 霜拳
+				DisplayName: 霜拳
 				/* Tooltip:
 					'''
 					从某地方出来的传奇武器之一,具有肉眼无法见的攻击速度与强大的控制能力
 					特别武器种类:速攻拳
 					''' */
 			}
+
+			FrostBombardment: {
+				DisplayName: 霜星轰击者
+				/* Tooltip:
+					'''
+						从某地方出来的武器之一,具有高强度的蓄力狙击和蓄力炮击
+						据说这家伙有很多重武器,如果有幸捡到,那么你会理解她的恐怖
+						特别武器种类:能量武器-能量狙击枪
+					''' */
+			}
 		}
+
+		DamageClasses: {
+			MoreDamageType.DisplayName: 混合伤害
+			EnergyDamage.DisplayName: 能量伤害
+		}
+
+		MoreDamageType.MixedShow: 混合的伤害类型:
 	}
 }

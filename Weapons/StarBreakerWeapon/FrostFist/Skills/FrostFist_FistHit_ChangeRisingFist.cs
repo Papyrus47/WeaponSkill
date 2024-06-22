@@ -66,6 +66,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
             }
             else if (Player.controlUseItem && Projectile.ai[0] < 6)
             {
+                Player.manaRegenDelay += 3;
                 Projectile.ai[0]--;
                 Projectile.ai[1]++;
                 switch ((int)Projectile.ai[2])

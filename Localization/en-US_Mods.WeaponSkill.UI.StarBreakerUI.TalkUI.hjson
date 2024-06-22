@@ -1,0 +1,7 @@
+StarBreakerWeapons: {
+	FrostFist: {
+		Name: '''霜拳	#人物名字'''
+		#人物的表情
+		Faces.0: Happy
+	}
+}

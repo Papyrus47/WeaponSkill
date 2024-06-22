@@ -10,6 +10,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using WeaponSkill.Weapons;
+using WeaponSkill.Weapons.General;
 using WeaponSkill.Weapons.LongSword;
 using WeaponSkill.Weapons.LongSword.Skills;
 using WeaponSkill.Weapons.StarBreakerWeapon.FrostFist;
@@ -133,6 +134,13 @@ namespace WeaponSkill
                 if (Player.statManaMax2 < 1000) Player.statManaMax2 = 1000;
                 Player.statManaMax2 = (int)(Player.statManaMax2 * 1.5f);
             }
+
+            #region 特殊物品无法恢复魔力
+            if (Player.HeldItem?.ModItem is SPHealMana healMana)
+            {
+                healMana.HealMana(Player);
+            }
+            #endregion
         }
         public override void PostUpdate()
         {

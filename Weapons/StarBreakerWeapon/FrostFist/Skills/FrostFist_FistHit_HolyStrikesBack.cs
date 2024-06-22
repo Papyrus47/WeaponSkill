@@ -13,6 +13,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
         }
         public override void AI()
         {
+            Player.manaRegenDelay = 0;
             if (Player.GetModPlayer<WeaponSkillPlayer>().HolyStrikesBack_OnHit && Projectile.ai[0] < 0)
             {
                 Projectile.ai[0] = 0;

@@ -27,8 +27,10 @@
     <None Remove="Items\LongSword\TarantulaLongSword.png" />
     <None Remove="Items\LongSword\TarantulaLongSwordScabbard.png" />
     <None Remove="Localization\en-US.hjson" />
+    <None Remove="Localization\en-US_Mods.WeaponSkill.UI.StarBreakerUI.TalkUI.hjson" />
     <None Remove="Localization\zh-Hans.hjson" />
     <None Remove="Particles\Fire.png" />
+    <None Remove="UI\StarBreakerUI\TalkUI\StarBreakerWeapons\FrostFist\FrostFistWeapon_Happy.png" />
     <None Remove="Weapons\StarBreakerWeapon\FrostFist\FrostFist_LongSword.png" />
   </ItemGroup>
   <ItemGroup>

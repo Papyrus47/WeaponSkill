@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using WeaponSkill.Weapons.ChargeBlade;
+using WeaponSkill.Weapons.General;
 
 namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
 {
-    public class FrostFistItem : ModItem
+    public class FrostFistItem : ModItem,SPHealMana
     {
         public override string Texture => (GetType().Namespace + "." + "FrostFist").Replace('.', '/');
         /// <summary>

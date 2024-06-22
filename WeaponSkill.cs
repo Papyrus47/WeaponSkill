@@ -4,6 +4,7 @@ using ReLogic.Content.Sources;
 using Terraria.Graphics.Effects;
 using WeaponSkill.Helper;
 using WeaponSkill.Items.DualBlades;
+using WeaponSkill.UI.StarBreakerUI.TalkUI;
 
 namespace WeaponSkill
 {
@@ -20,6 +21,7 @@ namespace WeaponSkill
         public static Asset<Texture2D> SwingTex_Offset;
         public static Asset<Texture2D> SpiritUITex;
         public static Asset<Texture2D> HotTex;
+        public static Asset<Texture2D> TalkUI;
         public static ModKeybind RangeChange;
         public static ModKeybind BowSlidingStep;
         public static ModKeybind SpKeyBind;
@@ -39,6 +41,7 @@ namespace WeaponSkill
                 StaminaUITex = Assets.Request<Texture2D>("UI/StaminaUI/" + nameof(StaminaUITex));
                 SpiritUITex = Assets.Request<Texture2D>("UI/SpiritUI/" + nameof(SpiritUITex));
                 SwingTex_Offset = Assets.Request<Texture2D>("Images/" + nameof(SwingTex_Offset));
+                TalkUI = Assets.Request<Texture2D>("UI/StarBreakerUI/TalkUI/" + nameof(TalkUI));
                 HotTex = Assets.Request<Texture2D>("Images/" + nameof(HotTex));
             }
             On_FilterManager.EndCapture += On_FilterManager_EndCapture;
@@ -100,6 +103,7 @@ namespace WeaponSkill
                 SpiritUITex = null;
                 SwingTex_Offset = null;
                 HotTex = null;
+                TalkUI = null;
             }
         }
 

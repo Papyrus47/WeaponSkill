@@ -23,5 +23,8 @@ namespace WeaponSkill.Configs
 
         [DefaultValue(typeof(Vector2), "0.9,0.15")]
         public Vector2 SkillsTreeUI_Pos;
+
+        [DefaultValue(typeof(Vector2), "0,0.3")]
+        public Vector2 TalkUIPos;
     }
 }

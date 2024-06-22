@@ -31,6 +31,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
         public override void SetDefaults()
         {
             Projectile.penetrate = -1;
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
@@ -68,6 +69,8 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
         {
             #region 打击伤害追加
             int hitDamageType_Damage= (int)(hit.SourceDamage * 0.4f);
+            Main.player[Projectile.owner].statMana = Math.Min(Main.player[Projectile.owner].statMana + 8, Main.player[Projectile.owner].statManaMax2);
+            Main.player[Projectile.owner].ManaEffect(8);
             if(target.CanBeChasedBy()) target.life -= hitDamageType_Damage;
             Main.player[Projectile.owner].addDPS(hitDamageType_Damage);
             CombatText.NewText(target.Hitbox, hit.Crit ? CombatText.DamagedFriendly * 0.5f : CombatText.DamagedFriendlyCrit * 0.5f, hitDamageType_Damage);
