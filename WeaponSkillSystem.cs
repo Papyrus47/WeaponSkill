@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria.Localization;
 using Terraria.UI;
 using WeaponSkill.UI.ChangeAmmoUI;
 using WeaponSkill.UI.ChargeBladeUI;
@@ -78,8 +79,37 @@ namespace WeaponSkill
             //crossbowAddPartUI.Initialize();
             //userInterface3.SetState(crossbowAddPartUI);
             On_NPC.HitModifiers.ToHitInfo += HitModifiers_ToHitInfo;
+            On_Main.MouseText_DrawItemTooltip_GetLinesInfo += On_Main_MouseText_DrawItemTooltip_GetLinesInfo;
         }
 
+        private static void On_Main_MouseText_DrawItemTooltip_GetLinesInfo(On_Main.orig_MouseText_DrawItemTooltip_GetLinesInfo orig, Item item, ref int yoyoLogo, ref int researchLine, float oldKB, ref int numLines, string[] toolTipLine, bool[] preFixLine, bool[] badPreFixLine, string[] toolTipNames, out int prefixlineIndex)
+        {
+            bool flag = false;
+            if(item.ModItem is StarBreakerMoreItemPart)
+            {
+                flag = true;
+                //Array.Resize(ref toolTipLine, toolTipLine.Length + 1);
+                //Array.Resize(ref toolTipNames, toolTipNames.Length + 1);
+                //Array.Resize(ref preFixLine, preFixLine.Length + 1);
+            }
+            orig.Invoke(item,ref yoyoLogo,ref researchLine,oldKB,ref numLines,toolTipLine,preFixLine,badPreFixLine,toolTipNames,out prefixlineIndex);
+
+            if(flag) // 用于增加额外的说明
+            {
+                StarBreakerMoreItemPart starBreakerMoreItemPart = item.ModItem as StarBreakerMoreItemPart;
+                if (Main.keyState.PressingShift()) // 按住Shift键时
+                {
+                    toolTipNames[numLines] = "ModifiedByWeaponSkill_Show";
+                    toolTipLine[numLines] = starBreakerMoreItemPart.PartText.Value;
+                }
+                else
+                {
+                    toolTipNames[numLines] = "ModifiedByWeaponSkill_NoShow";
+                    toolTipLine[numLines] = Language.GetTextValue("Mods.WeaponSkill.Items.General.ShowMoreText");
+                }
+                numLines++;
+            }
+        }
 
         private NPC.HitInfo HitModifiers_ToHitInfo(On_NPC.HitModifiers.orig_ToHitInfo orig, ref NPC.HitModifiers self, float baseDamage, bool crit, float baseKnockback, bool damageVariation, float luck)
         {
@@ -93,6 +123,7 @@ namespace WeaponSkill
             // 就用这个检测Mod有没有加载
             if(changeAmmo != null)
             {
+                On_NPC.HitModifiers.ToHitInfo -= HitModifiers_ToHitInfo;
             }
             changeAmmo = null;
             stamina = null;

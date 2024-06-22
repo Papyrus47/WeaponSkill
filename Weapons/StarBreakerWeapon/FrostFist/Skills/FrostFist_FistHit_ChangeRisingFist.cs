@@ -74,7 +74,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
                     case 0: // 蓄力0
                     case 1: // 蓄力1
                         {
-                            if (Projectile.ai[1] > 30)
+                            if (Projectile.ai[1] > 15)
                             {
                                 Projectile.ai[1] = 0;
                                 Projectile.ai[2]++;
@@ -83,7 +83,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
                         }
                     case 2: // 蓄力2
                         {
-                            if (Projectile.ai[1] > 60)
+                            if (Projectile.ai[1] > 30)
                             {
                                 Projectile.ai[1] = 0;
                                 Projectile.ai[2]++;
@@ -155,12 +155,25 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
-            if(target.knockBackResist != 0) target.velocity.Y = -6 * Projectile.ai[2];
+            if (target.knockBackResist != 0)
+            {
+                target.velocity.X = 0;
+                target.velocity.Y = -6 * Projectile.ai[2];
+            }
             if (Projectile.ai[2] > 2)
             {
                 float addDmg = Projectile.ai[2] * 0.5f;
-                FrostFist_FistBoom frostFist_FistBoom = new(10, Player, new Vector2(0, 8), (int)(Projectile.damage * (ActionDamage + addDmg)));
+                FrostFist_FistBoom frostFist_FistBoom = new(10, Player, new Vector2(0, 10), (int)(Projectile.damage * (ActionDamage + addDmg)));
+                FrostFist_FistBoom frostFist_FistBoom1 = new(35, Player, new Vector2(0, 20), target.life / 10)
+                {
+                    ExtraAI = (NPC npc) =>
+                    {
+                        npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime += 120;
+                    }
+                };
                 WeaponSkillGlobalNPC.AddComponent(target, frostFist_FistBoom);
+                if (target.knockBackResist != 0)
+                    WeaponSkillGlobalNPC.AddComponent(target, frostFist_FistBoom1);
             }
         }
         //public override bool ActivationCondition()

@@ -331,6 +331,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                 {
                     if (npc.knockBackResist == 0) return;
                     npc.velocity.Y = -9;
+                    npc.velocity.X = 0;
                 }
             };
             #endregion
@@ -467,6 +468,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                 {
                     if (npc.knockBackResist == 0) return;
                     npc.velocity.Y = Player.velocity.Y;
+                    npc.velocity.X = 0;
                 }
             };
             #endregion
@@ -1195,6 +1197,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     WeaponSkillGlobalNPC.AddComponent(npc, frostFist_FistBoom);
                     if (npc.knockBackResist == 0) return;
                     npc.velocity.Y = -9;
+                    npc.velocity.X = 0;
                 }
             };
             #endregion

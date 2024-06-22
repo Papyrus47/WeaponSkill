@@ -4,14 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Localization;
 using WeaponSkill.Weapons.ChargeBlade;
 using WeaponSkill.Weapons.General;
+using WeaponSkill.Weapons.StarBreakerWeapon.General;
 
 namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
 {
-    public class FrostFistItem : ModItem,SPHealMana
+    public class FrostFistItem : ModItem,SPHealMana,StarBreakerMoreItemPart
     {
         public override string Texture => (GetType().Namespace + "." + "FrostFist").Replace('.', '/');
+
+        public LocalizedText PartText => Language.GetText("Mods.WeaponSkill.Items.FrostFistItem.SPText");
+
         /// <summary>
         /// 霜拳的蓄力等级
         /// </summary>
