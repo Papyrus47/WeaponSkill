@@ -32,8 +32,23 @@ namespace WeaponSkill.NPCs
         }
         private static void On_NPC_UpdateNPC(On_NPC.orig_UpdateNPC orig, NPC self, int i)
         {
-            if (self.TryGetGlobalNPC<WeaponSkillGlobalNPC>(out var skill) && (!skill.CanUpdate || (skill.FrozenNPCTime > 0 && self.collideY)))
+            if (self.TryGetGlobalNPC<WeaponSkillGlobalNPC>(out var skill) && (!skill.CanUpdate || (skill.FrozenNPCTime > 0)))
             {
+                bool flag = false;
+                for(int j = 0; j < 3; j++)
+                {
+                    Tile tile = Main.tile[((self.Bottom + Vector2.UnitY * j * 16) / 16).ToPoint()];
+                    if (tile.HasTile && tile.HasUnactuatedTile)
+                    {
+                        flag = true;
+                    }
+                }
+                if (!flag)
+                {
+                    orig.Invoke(self, i);
+                    return;
+                }
+                    
                 if (skill.FrozenNPCTime > 0)
                 {
                     //if(self.realLife != -1)
@@ -101,7 +116,7 @@ namespace WeaponSkill.NPCs
                     goto hitTest;
                 }
                 HitPlayerTime += v;
-                if(HitPlayerTime > Math.Sqrt(npc.Size.Length() * 0.1f))
+                if(HitPlayerTime > npc.Size.LengthSquared() * 0.01f)
                 {
                     HitPlayerTime = 0;
                     return true;
