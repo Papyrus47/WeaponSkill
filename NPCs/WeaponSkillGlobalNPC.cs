@@ -13,10 +13,15 @@ namespace WeaponSkill.NPCs
         public List<WeaponSkillGlobalNPCComponent> weaponSkillGlobalNPCComponents = new();
         public bool CanUpdate = true;
         /// <summary>
-        /// 霜拳特殊的冻结NPC
+        /// 特殊的冻结NPC
         /// </summary>
-        public int FrostFist_FrozenNPCTime = 0;
+        public int FrozenNPCTime = 0;
         public int FrostFist_Seal = 0; // 霜拳封印术
+
+        /// <summary>
+        /// 这一个是根据接触而定的允许伤害
+        /// </summary>
+        public float HitPlayerTime;
         public override void Load()
         {
             On_NPC.UpdateNPC += On_NPC_UpdateNPC;
@@ -27,11 +32,27 @@ namespace WeaponSkill.NPCs
         }
         private static void On_NPC_UpdateNPC(On_NPC.orig_UpdateNPC orig, NPC self, int i)
         {
-            if (self.TryGetGlobalNPC<WeaponSkillGlobalNPC>(out var skill) && (!skill.CanUpdate || (skill.FrostFist_FrozenNPCTime > 0 && self.collideY)))
+            if (self.TryGetGlobalNPC<WeaponSkillGlobalNPC>(out var skill) && (!skill.CanUpdate || (skill.FrozenNPCTime > 0 && self.collideY)))
             {
-                if (skill.FrostFist_FrozenNPCTime > 0)
+                if (skill.FrozenNPCTime > 0)
                 {
-                    if (--skill.FrostFist_FrozenNPCTime <= 0)
+                    //if(self.realLife != -1)
+                    //{
+                    //    int time = skill.FrozenNPCTime;
+                    //    int realLife = self.realLife;
+                    //    NPC owner = Main.npc[realLife];
+                    //    while (realLife != -1 && realLife != owner.whoAmI)
+                    //    {
+                    //        if (owner.TryGetGlobalNPC<WeaponSkillGlobalNPC>(out var skill1))
+                    //        {
+                    //            skill1.FrozenNPCTime = time;
+                    //        }
+                    //        realLife = owner.realLife;
+                    //        owner = Main.npc[realLife];
+                    //    }
+                    //    skill.FrozenNPCTime = 0;
+                    //}
+                    if (--skill.FrozenNPCTime <= 0)
                     {
                         for (int j = 0; j < 30; j++)
                         {
@@ -51,7 +72,7 @@ namespace WeaponSkill.NPCs
         }
         public override bool PreAI(NPC npc)
         {
-            if (FrostFist_FrozenNPCTime > 0)
+            if (FrozenNPCTime > 0)
             {
                 npc.velocity.X *= 0.5f;
                 npc.noTileCollide = false;
@@ -62,14 +83,37 @@ namespace WeaponSkill.NPCs
         }
         public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot)
         {
-            if (!CanUpdate || FrostFist_FrozenNPCTime > 0)
+            if (!CanUpdate || FrozenNPCTime > 0)
             {
                 return false;
             }
+
+            #region 碰撞的检测
+            if (npc.Hitbox.Intersects(target.Hitbox))
+            {
+                hitTest:
+                float v = npc.velocity.LengthSquared();
+                if (v > 0 && v < 5)
+                    v *= 5;
+                if (npc.realLife != -1 && npc.realLife != npc.whoAmI)
+                {
+                    npc = Main.npc[npc.realLife];
+                    goto hitTest;
+                }
+                HitPlayerTime += v;
+                if(HitPlayerTime > Math.Sqrt(npc.Size.Length() * 0.1f))
+                {
+                    HitPlayerTime = 0;
+                    return true;
+                }
+                return false;
+            }
+            #endregion
             return base.CanHitPlayer(npc, target, ref cooldownSlot);
         }
         public override void ResetEffects(NPC npc)
         {
+            weaponSkillGlobalNPCComponents.ForEach(x => x.ResetEffect(npc));
             weaponSkillGlobalNPCComponents.RemoveAll(x => x.Remove);
         }
         public override void AI(NPC npc)
@@ -79,9 +123,9 @@ namespace WeaponSkill.NPCs
             #region 霜拳冻结特殊判定
             if(npc.realLife != -1)
             {
-                Main.npc[npc.realLife].GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime = FrostFist_FrozenNPCTime;
+                Main.npc[npc.realLife].GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime = FrozenNPCTime;
             }
-            if (npc.realLife != -1 && Main.npc[npc.realLife].GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime > 0) FrostFist_FrozenNPCTime = Main.npc[npc.realLife].GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime;
+            if (npc.realLife != -1 && Main.npc[npc.realLife].GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime > 0) FrozenNPCTime = Main.npc[npc.realLife].GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime;
             #endregion
             #region 霜拳封印术
             if (npc.realLife != -1)
@@ -105,7 +149,7 @@ namespace WeaponSkill.NPCs
             weaponSkillGlobalNPCComponents.ForEach(x => x.PostDraw(npc, spriteBatch, screenPos, drawColor));
 
             #region 霜拳的冻结
-            if (FrostFist_FrozenNPCTime > 0)
+            if (FrozenNPCTime > 0)
             {
                 Color color = drawColor;
                 color.A = 0;

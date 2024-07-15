@@ -5,6 +5,7 @@ using Terraria.Graphics.Effects;
 using WeaponSkill.Helper;
 using WeaponSkill.Items.DualBlades;
 using WeaponSkill.UI.StarBreakerUI.TalkUI;
+using WeaponSkill.Weapons.StarBreakerWeapon.General.ElementDamage;
 
 namespace WeaponSkill
 {
@@ -48,6 +49,7 @@ namespace WeaponSkill
             On_Main.LoadWorlds += On_Main_LoadWorlds;
             Main.OnResolutionChanged += Main_OnResolutionChanged;
             RenderTargetShaderSystem = new();
+            ElementDamageSystem.Load();
             Main.OnPostDraw += Main_OnPostDraw;
         }
         public static void Main_OnPostDraw(GameTime obj)

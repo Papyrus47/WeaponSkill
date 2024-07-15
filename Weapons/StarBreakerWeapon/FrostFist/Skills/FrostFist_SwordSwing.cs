@@ -151,6 +151,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
             OnHit?.Invoke(target,hit,damageDone);
             TheUtility.SetPlayerImmune(Player);
             SlashDamage.SlashDamageHit();
+            FrostFist.iceElement.statModifier += AddDmg;
         }
         public override void OnSkillActive()
         {

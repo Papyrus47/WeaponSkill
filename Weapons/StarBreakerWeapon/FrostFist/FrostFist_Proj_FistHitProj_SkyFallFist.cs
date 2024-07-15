@@ -22,9 +22,9 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             Projectile.width = 60;
             if (!FistHitProjs.Contains(Projectile.whoAmI)) FistHitProjs.Add(Projectile.whoAmI);
             if(Projectile.ai[0] < 90) Projectile.ai[0] += MathF.Pow(Projectile.timeLeft / 30f, 2);
-            if (Projectile.velocity.LengthSquared() < 64) Projectile.velocity *= 1.01f;
+            if (Projectile.velocity.LengthSquared() < 40) Projectile.velocity *= 1.01f;
             player.Center = Projectile.Center;
-            Projectile.Center = player.Center + Projectile.velocity.SafeNormalize(default) * Projectile.ai[0];
+            Projectile.Center += Projectile.velocity * Projectile.ai[0] * 0.2f;
             if (Projectile.timeLeft < 10) Projectile.timeLeft = 10;
             Projectile.rotation = Projectile.velocity.ToRotation();
             for (int i = 0; i < 2; i++)

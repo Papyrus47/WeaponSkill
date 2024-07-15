@@ -21,6 +21,9 @@ Projectiles: {
 	// FrostFist_Proj_FistHitProj_SkyFallFist.DisplayName: Frost Fist_ Proj_ Fist Hit Proj_ Sky Fall Fist
 	// ShockProj.DisplayName: Shock Proj
 	// SpeedSlashProj.DisplayName: Speed Slash Proj
+	// FrostBombardment_Proj.DisplayName: Frost Bombardment_ Proj
+	// EnergyBullet_FrostBombardment.DisplayName: Energy Bullet_ Frost Bombardment
+	// FrostBombardment_PlayerSPMove.DisplayName: Frost Bombardment_ Player S P Move
 }
 
 Keybinds: {
@@ -66,6 +69,20 @@ Configs: {
 		TalkUIPos: {
 			// Label: Talk U I Pos
 			// Tooltip: ""
+		}
+
+		ResetBossAI: {
+			// Label: Reset Boss A I
+			// Tooltip: ""
+		}
+	}
+
+	BossSetting_Config: {
+		DisplayName: Boss设置
+
+		ResetBossAI: {
+			Label: 重置Boss的AI
+			Tooltip: 启动以适配Weapon Skill（未实装）
 		}
 	}
 }

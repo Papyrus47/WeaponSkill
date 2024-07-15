@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -90,6 +91,10 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
         public override bool? CanDamage() => false;
         public override bool ActivationCondition() => ActivationConditionFunc.Invoke();
         public override bool SwitchCondition() => Projectile.ai[0] > 10;
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            base.OnHitNPC(target, hit, damageDone);
+        }
         public override void OnSkillActive()
         {
             base.OnSkillActive();

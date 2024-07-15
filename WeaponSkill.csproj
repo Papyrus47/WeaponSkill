@@ -31,11 +31,13 @@
     <None Remove="Localization\zh-Hans.hjson" />
     <None Remove="Particles\Fire.png" />
     <None Remove="UI\StarBreakerUI\TalkUI\StarBreakerWeapons\FrostFist\FrostFistWeapon_Happy.png" />
+    <None Remove="Weapons\StarBreakerWeapon\FrostBombardment\FrostBombardment_ChangedUI.png" />
     <None Remove="Weapons\StarBreakerWeapon\FrostFist\FrostFist_LongSword.png" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Sounds\Musics\" />
+    <Folder Include="Weapons\Staffs\" />
   </ItemGroup>
 </Project>

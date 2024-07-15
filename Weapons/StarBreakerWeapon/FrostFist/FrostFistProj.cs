@@ -10,6 +10,7 @@ using WeaponSkill.NPCs;
 using WeaponSkill.UI.StarBreakerUI.SkillsTreeUI;
 using WeaponSkill.Weapons.Spears;
 using WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills;
+using WeaponSkill.Weapons.StarBreakerWeapon.General.ElementDamage;
 using static WeaponSkill.UI.StarBreakerUI.SkillsTreeUI.SkillsTreeUI;
 
 namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
@@ -19,6 +20,10 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
         public override string Texture => (GetType().Namespace + "." + "FrostFist").Replace('.', '/');
         public Player Player;
         public bool AddSwordRender;
+        /// <summary>
+        /// 冰属性伤害
+        /// </summary>
+        public IceElementDamage iceElement;
         public List<ProjSkill_Instantiation> OldSkills { get; set; }
         public ProjSkill_Instantiation CurrentSkill { get; set; }
         /// <summary>
@@ -58,6 +63,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                 SwordSwingHelper = new(Projectile, 20, ModContent.Request<Texture2D>(Texture + "_LongSword"));
                 SwordLength = 120;
                 Init();
+                iceElement = new();
             }
         }
         public override void SetDefaults()
@@ -96,6 +102,8 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             Player.statMana = Math.Min(Main.player[Projectile.owner].statMana + 2, Player.statManaMax2);
             Player.ManaEffect(2);
             CurrentSkill.OnHitNPC(target, hit, damageDone);
+            iceElement.baseDamage = Projectile.damage;
+            Player.addDPS((int)ElementDamageSystem.Instance.ElementDamageApply(iceElement, target));
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -531,7 +539,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                 {
                     if ((int)Projectile.ai[0] == 0)
                     {
-                        Player.velocity.X = Player.direction * 30;
+                        Player.velocity.X = Player.direction * 20;
                     }
                     else
                     {
@@ -581,7 +589,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                 {
                     if ((int)Projectile.ai[0] == 0)
                     {
-                        Player.velocity.X = Player.direction * 30;
+                        Player.velocity.X = Player.direction * 20;
                     }
                     else
                     {
@@ -648,7 +656,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     {
                         ExtraAI = (NPC npc) =>
                         {
-                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime += 60;
+                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime += 60;
                         }
                     };
                     WeaponSkillGlobalNPC.AddComponent(npc, frostFist_FistBoom);
@@ -704,7 +712,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                 {
                     if ((int)Projectile.ai[0] == 0)
                     {
-                        Player.velocity.X = Player.direction * 30;
+                        Player.velocity.X = Player.direction * 20;
                     }
                     else
                     {
@@ -723,7 +731,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     {
                         ExtraAI = (NPC npc) =>
                         {
-                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime += 60;
+                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime += 60;
                         }
                     };
                     WeaponSkillGlobalNPC.AddComponent(npc, frostFist_FistBoom);
@@ -754,7 +762,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     {
                         ExtraAI = (NPC npc) =>
                         {
-                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime += 180;
+                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime += 180;
                         }
                     };
                     WeaponSkillGlobalNPC.AddComponent(npc, frostFist_FistBoom);
@@ -810,7 +818,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     {
                         ExtraAI = (NPC npc) =>
                         {
-                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime += 60;
+                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime += 60;
                         }
                     };
                     WeaponSkillGlobalNPC.AddComponent(npc, frostFist_FistBoom);
@@ -834,7 +842,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     {
                         ExtraAI = (NPC npc) =>
                         {
-                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime += 60;
+                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime += 60;
                         }
                     };
                     WeaponSkillGlobalNPC.AddComponent(npc, frostFist_FistBoom);
@@ -1123,7 +1131,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     {
                         ExtraAI = (NPC npc) =>
                         {
-                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime += 300;
+                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime += 300;
                         }
                     };
                     WeaponSkillGlobalNPC.AddComponent(npc, frostFist_FistBoom);
@@ -1210,7 +1218,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     {
                         ExtraAI = (NPC npc) =>
                         {
-                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime += 60;
+                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime += 60;
                         }
                     };
                     WeaponSkillGlobalNPC.AddComponent(npc, frostFist_FistBoom);
@@ -1224,7 +1232,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     {
                         ExtraAI = (NPC npc) =>
                         {
-                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime += 60;
+                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime += 60;
                         }
                     };
                     WeaponSkillGlobalNPC.AddComponent(npc, frostFist_FistBoom);
@@ -1299,7 +1307,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     {
                         ExtraAI = (NPC npc) =>
                         {
-                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime += 120;
+                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime += 120;
                         }
                     };
                     WeaponSkillGlobalNPC.AddComponent(npc, frostFist_FistBoom);
@@ -1332,7 +1340,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     {
                         ExtraAI = (NPC npc) =>
                         {
-                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime += 180;
+                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime += 180;
                         }
                     };
                     WeaponSkillGlobalNPC.AddComponent(npc, frostFist_FistBoom);
@@ -1347,7 +1355,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     {
                         ExtraAI = (NPC npc) =>
                         {
-                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime += 360;
+                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime += 360;
                         }
                     };
                     WeaponSkillGlobalNPC.AddComponent(npc, frostFist_FistBoom);

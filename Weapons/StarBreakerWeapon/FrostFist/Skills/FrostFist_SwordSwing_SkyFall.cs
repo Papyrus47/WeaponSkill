@@ -16,19 +16,19 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
             base.AI();
             if ((int)Projectile.ai[0] == 1)
             {
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < 16; i++)
                 {
-                    Player.position -= Collision.TileCollision(Player.position, -Vector2.UnitY * 5, Player.width, Player.height);
+                    Player.position -= Collision.TileCollision(Player.position, -Vector2.UnitY, Player.width, Player.height);
                     if (GetPlayerStandTile()) break;
                 }
                 if(!GetPlayerStandTile() && Projectile.ai[1] > AtkTime - 2)
                 {
                     Projectile.ai[1] = AtkTime - 1;
-                    Player.velocity.Y = -1;
+                    Player.velocity.Y = -1f;
                 }
                 else if (GetPlayerStandTile() && Projectile.ai[1] == AtkTime)
                 {
-                    Player.position.Y -= 16;
+                    Player.position.Y -= 4;
                     for (int i = 0; i < 30; i++)
                     {
                         for (int j = 0; j < 20; j++)
@@ -42,6 +42,11 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
                     }
                 }
             }
+        }
+        public override void OnSkillDeactivate()
+        {
+            base.OnSkillDeactivate();
+            Projectile.extraUpdates = 0;
         }
         public override bool ActivationCondition()
         {

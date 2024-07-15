@@ -6,6 +6,19 @@ To other language player:the introduce is inaccurate,I need help,So please forgi
 
 注意：手感可能与原版不同，装此Mod需考虑
 
+v1.2更新:
+斩击伤害段数消失时间增长
+霜拳改动
+添加属性伤害类型
+
+v1.1更新:
+星辰击碎者特殊武器(也是我的Mod):霜拳更新
+共31套技能组
+星辰击碎者特殊武器(也是我的Mod):霜星轰击者
+
+添加星击武器特殊伤害类型：斩击，刺击，打击
+
+
 v1.0更新:
 星辰击碎者特殊武器(也是我的Mod):霜拳
 霜冻残影之名

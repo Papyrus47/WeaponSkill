@@ -168,7 +168,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
                 {
                     ExtraAI = (NPC npc) =>
                     {
-                        npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime += 120;
+                        npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime += 120;
                     }
                 };
                 WeaponSkillGlobalNPC.AddComponent(target, frostFist_FistBoom);
