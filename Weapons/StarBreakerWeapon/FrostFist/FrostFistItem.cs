@@ -57,6 +57,15 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                 int proj = Projectile.NewProjectile(player.GetSource_ItemUse(Item), player.position, Vector2.Zero,Item.shoot, player.GetWeaponDamage(Item), player.GetWeaponKnockback(Item), player.whoAmI);
                 Main.projectile[proj].originalDamage = Main.projectile[proj].damage;
             }
+
+            if (player.statMana >= player.statManaMax2 && player.statLife < player.statLifeMax2)
+            {
+                player.statLife += player.statLifeMax2 / 50;
+                if (player.statLife > player.statLifeMax2) 
+                    player.statLife = player.statLifeMax2;
+                player.Heal(player.statLifeMax2 / 50);
+                player.statMana -= 1000;
+            }
         }
     }
 }

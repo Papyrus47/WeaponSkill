@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria;
 using Terraria.Graphics.CameraModifiers;
 using WeaponSkill.Helper;
 using WeaponSkill.Weapons.LongSword;
 using WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills;
+using WeaponSkill.Weapons.StarBreakerWeapon.General.ElementDamage;
 
 namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
 {
@@ -67,11 +69,22 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            #region 属性伤害
+            IceElementDamage iceElementDamage = new();
+            iceElementDamage.baseDamage = Projectile.damage;
+            iceElementDamage.statModifier += 4;
+            iceElementDamage.statModifier *= 0.8f;
+            Main.player[Projectile.owner].addDPS((int)ElementDamageSystem.Instance.ElementDamageApply(iceElementDamage, target));
+            #endregion
             #region 打击伤害追加
-            int hitDamageType_Damage= (int)(hit.SourceDamage * 0.4f);
+            int hitDamageType_Damage = (int)(hit.SourceDamage * 0.4f);
             Main.player[Projectile.owner].statMana = Math.Min(Main.player[Projectile.owner].statMana + 8, Main.player[Projectile.owner].statManaMax2);
             Main.player[Projectile.owner].ManaEffect(8);
-            if(target.CanBeChasedBy()) target.life -= hitDamageType_Damage;
+            if (target.CanBeChasedBy())
+            {
+                target.life -= hitDamageType_Damage;
+                target.checkDead();
+            }
             Main.player[Projectile.owner].addDPS(hitDamageType_Damage);
             CombatText.NewText(target.Hitbox, hit.Crit ? CombatText.DamagedFriendly * 0.5f : CombatText.DamagedFriendlyCrit * 0.5f, hitDamageType_Damage);
             #endregion

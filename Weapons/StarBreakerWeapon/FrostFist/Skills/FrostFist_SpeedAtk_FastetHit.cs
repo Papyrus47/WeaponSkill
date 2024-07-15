@@ -43,7 +43,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
                             OnHit = (n, _, _) =>
                             {
                                 HitNPCs.Add(n);
-                                n.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime += 180;
+                                n.GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime += 180;
                             };
                         }
                         if(Projectile.ai[1]++ > 10) 
@@ -106,7 +106,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
                         Player.SetImmuneTimeForAllTypes(5);
                         HitNPCs.ForEach(x => 
                         {
-                            x.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime = 60;
+                            x.GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime = 60;
                             x.Center = FixedNPCCenter;
                         });
                         if (Projectile.ai[1]++ < 50)

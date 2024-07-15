@@ -35,7 +35,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.General
         /// </summary>
         public static void UpdateSlashDamageCount()
         {
-            if(SlashCount > 0 && SlashCountRemoveTime++ > 180)
+            if(SlashCount > 0 && SlashCountRemoveTime++ > 360)
             {
                 SlashCount = 0;
                 SlashCountRemoveTime = 0;

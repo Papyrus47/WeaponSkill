@@ -66,7 +66,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
                     {
                         Player.SetImmuneTimeForAllTypes(5);
                         Player.immuneAlpha = 0;
-                        HitNPCs.ForEach(n => n.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime = 2);
+                        HitNPCs.ForEach(n => n.GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime = 2);
                         swingHelper.Change_Lerp((-Vector2.UnitY).RotatedBy(0.3), 0.1f, Vector2.One, 0.1f, 0,0.1f);
                         swingHelper.ProjFixedPlayerCenter(Player, 0, true, true);
                         swingHelper.SwingAI(FrostFist.SwordLength, Player.direction, 0);
@@ -83,7 +83,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
                     {
                         Projectile.ai[1]++;
                         Player.heldProj = Projectile.whoAmI;
-                        HitNPCs.ForEach(n => n.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime = 2);
+                        HitNPCs.ForEach(n => n.GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime = 2);
                         float Time = TimeChange.Invoke(Projectile.ai[1] / AtkTime);
                         if (Time > 1)
                         {
@@ -97,7 +97,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
                                     {
                                         frostFist_FistBoom.ExtraAI = (NPC npc) =>
                                         {
-                                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime = 120;
+                                            npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime = 120;
                                         };
                                     }
                                     WeaponSkillGlobalNPC.AddComponent(n, frostFist_FistBoom);
@@ -162,7 +162,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             HitNPCs.Add(target);
-            target.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime = 1000;
+            target.GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime = 1000;
         }
         public override void OnSkillDeactivate()
         {

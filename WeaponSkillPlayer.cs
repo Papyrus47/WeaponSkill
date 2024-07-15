@@ -214,7 +214,7 @@ namespace WeaponSkill
             {
                 Vector2 center = Player.Top + new Vector2(0, -30) - Main.screenPosition;
                 string text = (Language.ActiveCulture.LegacyId == 7 ? "斩击伤害段数:" : "Slash Damage Count:") + SlashDamage.SlashCount.ToString();
-                Utils.DrawBorderString(Main.spriteBatch, text, center - FontAssets.MouseText.Value.MeasureString(text) * 0.5f, Color.White * (1 - SlashDamage.SlashCountRemoveTime / 180f),1.1f);
+                Utils.DrawBorderString(Main.spriteBatch, text, center - FontAssets.MouseText.Value.MeasureString(text) * 0.5f, Color.White * (1 - SlashDamage.SlashCountRemoveTime / 360f),1.1f);
             }
             #endregion
             switch (BowChannelLeave)

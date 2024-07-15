@@ -27,7 +27,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
         {
             SwingAI?.Invoke();
             Projectile.spriteDirection = Player.direction * SwingDirectionChange.ToDirectionInt();
-            HitNPCs.ForEach(n => n.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime = 2);
+            HitNPCs.ForEach(n => n.GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime = 2);
             for (int i = 0; i < 4; i++)
             {
                 Dust dust = FrostFistDust();
@@ -170,7 +170,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
                                         {
                                             frostFist_FistBoom.ExtraAI = (NPC npc) =>
                                             {
-                                                npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrostFist_FrozenNPCTime = 60;
+                                                npc.GetGlobalNPC<WeaponSkillGlobalNPC>().FrozenNPCTime = 60;
                                             };
                                         }
                                         WeaponSkillGlobalNPC.AddComponent(n, frostFist_FistBoom);
