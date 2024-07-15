@@ -118,8 +118,10 @@ namespace WeaponSkill.Weapons.Bows.Skills
         {
             for (int i = 1; i <= BowsProj.ChannelLevel; i++)
             {
-                int shootType = GetShootType(out int dmg, out float speed, out float kn, out int crit);
-                int proj = Projectile.NewProjectile(player.GetSource_ItemUse(BowsProj.SpawnItem), Projectile.Center, Projectile.velocity * BowsProj.SpawnItem.shootSpeed * speed, shootType, (Projectile.damage + dmg) * BowsProj.ChannelLevel, Projectile.knockBack + kn, player.whoAmI);
+                (int, int) value = GetShootType(out int dmg, out float speed, out float kn, out int crit);
+                int shootType = value.Item1;
+                int ammoType = value.Item2;
+                int proj = Projectile.NewProjectile(player.GetSource_ItemUse_WithPotentialAmmo(BowsProj.SpawnItem,ammoType), Projectile.Center, Projectile.velocity * BowsProj.SpawnItem.shootSpeed * speed, shootType, (Projectile.damage + dmg) * BowsProj.ChannelLevel, Projectile.knockBack + kn, player.whoAmI);
                 Main.projectile[proj].OriginalCritChance += crit;
                 Main.projectile[proj].usesLocalNPCImmunity = true;
                 Main.projectile[proj].extraUpdates += i - 1;

@@ -175,6 +175,8 @@ namespace WeaponSkill
             if (ShowTheRangeChangeUI && WeaponSkill.RangeChange.JustPressed)
             {
                 UseAmmoIndex++;
+                if (UseAmmoIndex >= AmmoItems.Count)
+                    UseAmmoIndex = 0;
             }
             if (WeaponSkill.BowSlidingStep.JustPressed)
             {

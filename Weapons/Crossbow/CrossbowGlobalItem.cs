@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria.ModLoader.IO;
 using WeaponSkill.Weapons.Crossbow.Parts;
 using WeaponSkill.Weapons.LongSword;
 
@@ -15,19 +16,41 @@ namespace WeaponSkill.Weapons.Crossbow
         /// 消耗子弹用的玩意
         /// </summary>
         public bool CosumeAmmo;
-        public static Dictionary<int, List<int>> CrossbowCanAddPart;
         public static bool ShowTheUI;
-        public List<Item> Crossbow_Parts;
+        /// <summary>
+        /// 开启的物品
+        /// </summary>
+        public static Item OpenItem;
+        public Item[] Crossbow_Parts;
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
             WeaponID = new() { 1229,1194,578,436,481,1201,1187,435 };
-            CrossbowCanAddPart = new();
-            AddCrossbowAddCanPart();
+        }
+        public override void LoadData(Item item, TagCompound tag)
+        {
+            if (tag == null)
+                return;
+            if(tag.TryGet<Item[]>(nameof(Crossbow_Parts),out var items))
+            {
+                item.GetGlobalItem<CrossbowGlobalItem>().Crossbow_Parts = items;
+            }
+        }
+        public override void SaveData(Item item, TagCompound tag)
+        {
+            if (tag != null && Crossbow_Parts != null)
+            {
+                tag.Add(nameof(Crossbow_Parts), Crossbow_Parts);
+            }
         }
         public override void SetDefaults(Item entity)
         {
-            Crossbow_Parts = new List<Item>();
+            Crossbow_Parts = new Item[4];
+            for(int i = 0;i< Crossbow_Parts.Length;i++)
+            {
+                Crossbow_Parts[i] = new();
+                Crossbow_Parts[i].SetDefaults(0);
+            }
             entity.autoReuse = false;
             entity.noUseGraphic = true;
             entity.noMelee = true;
@@ -68,18 +91,15 @@ namespace WeaponSkill.Weapons.Crossbow
             if (!Main.playerInventory)
             {
                 ShowTheUI = false;
+                OpenItem = null;
             }
+
         }
         public override bool CanRightClick(Item item)
         {
             ShowTheUI = true;
+            OpenItem = item;
             return base.CanRightClick(item);
-        }
-        public static void AddCrossbowAddCanPart()
-        {
-            CrossbowCanAddPart.Add(1229, new()
-            {
-            });
         }
     }
 }

@@ -7,7 +7,7 @@ using Terraria.Localization;
 using Terraria.UI;
 using WeaponSkill.UI.ChangeAmmoUI;
 using WeaponSkill.UI.ChargeBladeUI;
-using WeaponSkill.UI.CrossbowAddPartUI;
+using WeaponSkill.UI.CrossbowPartUI;
 using WeaponSkill.UI.DualBladesUI;
 using WeaponSkill.UI.SpiritUI;
 using WeaponSkill.UI.StaminaUI;
@@ -27,7 +27,7 @@ namespace WeaponSkill
         public ChangeAmmoUI changeAmmo;
         public StaminaUI stamina;
         public SpiritUI spiritUI;
-        public CrossbowAddPartUI crossbowAddPartUI;
+        public CrossbowPartUI crossbowPartUI;
         public DualBladesUI bladesUI;
         public ChargeBladeBottle chargeBladeBottle;
         public SkillsTreeUI skillsTreeUI;
@@ -73,11 +73,12 @@ namespace WeaponSkill
             //userInterface4.SetState(talkUI);
             #endregion
 
-            //crossbowAddPartUI = new();
-            //UserInterface userInterface3 = new UserInterface();
-            //userInterfaces.Add(userInterface3);
-            //crossbowAddPartUI.Initialize();
-            //userInterface3.SetState(crossbowAddPartUI);
+            crossbowPartUI = new();
+            UserInterface userInterface4 = new UserInterface();
+            userInterfaces.Add(userInterface4);
+            crossbowPartUI.Initialize();
+            userInterface3.SetState(crossbowPartUI);
+
             On_NPC.HitModifiers.ToHitInfo += HitModifiers_ToHitInfo;
             On_Main.MouseText_DrawItemTooltip_GetLinesInfo += On_Main_MouseText_DrawItemTooltip_GetLinesInfo;
         }
