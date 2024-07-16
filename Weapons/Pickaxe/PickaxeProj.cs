@@ -110,7 +110,14 @@ namespace WeaponSkill.Weapons.Pickaxe
                 case 1: // 旋转
                     {
                         Projectile.numHits = 0;
-                        Projectile.tileCollide = false;
+                        if (Player.controlDown)
+                        {
+                            Projectile.tileCollide = true;
+                        }
+                        else
+                        {
+                            Projectile.tileCollide = false;
+                        }
                         Projectile.rotation = (Projectile.Center - Player.Center).ToRotation() + MathHelper.PiOver4;
                         if (!Player.controlUseItem)
                         {
@@ -228,7 +235,7 @@ namespace WeaponSkill.Weapons.Pickaxe
                                 Projectile.velocity = (Main.MouseWorld - Player.Center).SafeNormalize(default) * 50;
                                 SetRopeLength(50f);
                                 Projectile.ai[0] = 4;
-                                Projectile.ai[2] = -1;
+                                //Projectile.ai[2] = -1;
                                 TheUtility.ResetProjHit(Projectile);
                             }
                         }
@@ -284,6 +291,10 @@ namespace WeaponSkill.Weapons.Pickaxe
                                 {
                                     Projectile.ai[1] = 0;
                                     Player.ApplyDamageToNPC(Main.npc[(int)Projectile.ai[2]], Projectile.damage / 3, Projectile.knockBack, Player.direction, Main.rand.Next(100) < Player.GetWeaponCrit(Player.HeldItem), Player.HeldItem.DamageType);
+
+
+                                    TheUtility.VillagesItemOnHit(SpawnItem, Player, Projectile.Hitbox, Projectile.originalDamage, Projectile.knockBack, (int)Projectile.ai[2], Projectile.damage, Projectile.damage);
+                                    SpawnItem?.ModItem?.OnHitNPC(Player, Main.npc[(int)Projectile.ai[2]], Main.npc[(int)Projectile.ai[2]].CalculateHitInfo(Projectile.damage / 3,1), Projectile.damage);
                                 }
                             }
                             if (Player.controlUseTile || (!Main.npc[(int)Projectile.ai[2]].active || !Main.npc[(int)Projectile.ai[2]].CanBeChasedBy()))
@@ -309,6 +320,20 @@ namespace WeaponSkill.Weapons.Pickaxe
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.ai[2] = target.whoAmI;
+
+            TheUtility.VillagesItemOnHit(SpawnItem, Player, Projectile.Hitbox, Projectile.originalDamage, Projectile.knockBack, target.whoAmI, Projectile.damage, damageDone);
+            SpawnItem?.ModItem?.OnHitNPC(Player,target,hit,damageDone);
+
+            switch ((int)Projectile.ai[0])
+            {
+                case 2:
+                    {
+                        Projectile.ai[2] = target.whoAmI;
+                        Projectile.ai[0] = 4;
+                        Projectile.ai[1] = 0;
+                        break;
+                    }
+            }
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
@@ -316,15 +341,15 @@ namespace WeaponSkill.Weapons.Pickaxe
             Projectile.velocity.Y = -oldVelocity.Y * 0.1f;
             switch ((int)Projectile.ai[0])
             {
-                //case 1: // 破坏方块
-                //    {
-                //        for (int i = -1; i <= 1; i++)
-                //        {
-                //            for (int j = -1; j <= 1; j++)
-                //                Player.PickTile((int)Projectile.Bottom.X / 16 + i, (int)Projectile.Bottom.Y / 16 + j, Player.HeldItem.pick);
-                //        }
-                //        break;
-                //    }
+                case 1: // 破坏方块
+                    {
+                        for (int i = -1; i <= 1; i++)
+                        {
+                            for (int j = -1; j <= 1; j++)
+                                Player.PickTile((int)Projectile.Bottom.X / 16 + i, (int)Projectile.Bottom.Y / 16 + j, Player.HeldItem.pick);
+                        }
+                        break;
+                    }
                 case 2:
                     {
                         if (Projectile.velocity.Y >= -0.4f)
