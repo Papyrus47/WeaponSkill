@@ -115,6 +115,9 @@ namespace WeaponSkill
         private NPC.HitInfo HitModifiers_ToHitInfo(On_NPC.HitModifiers.orig_ToHitInfo orig, ref NPC.HitModifiers self, float baseDamage, bool crit, float baseKnockback, bool damageVariation, float luck)
         {
             self.SourceDamage *= SlashDamage.GetSlashDamageMultiple();
+            self.SourceDamage *= HitDamage.GetHitDamageMultiple_Physics();
+            self.SourceDamage *= SpurtsDamage.GetHitDamageMultiple_Physics();
+            SpurtsDamage.ModifySpurtsHit(ref self);
             return orig.Invoke(ref self, baseDamage, crit, baseKnockback, damageVariation, luck);
         }
 

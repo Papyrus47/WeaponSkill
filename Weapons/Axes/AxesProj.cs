@@ -4,11 +4,13 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria;
 using WeaponSkill.Helper;
 using WeaponSkill.NPCs;
 using WeaponSkill.Weapons.Axes.Skills;
 using WeaponSkill.Weapons.BroadSword;
 using WeaponSkill.Weapons.LongSword;
+using WeaponSkill.Weapons.Pickaxe;
 
 namespace WeaponSkill.Weapons.Axes
 {
@@ -55,7 +57,7 @@ namespace WeaponSkill.Weapons.Axes
         }
         public override void AI()
         {
-            if (Player.HeldItem != SpawnItem || Player.dead) // 玩家手上物品不是生成物品,则清除
+            if (Player.HeldItem != SpawnItem || Player.dead || (SpawnItem.TryGetGlobalItem<PickaxeGlobalItem>(out var pickaxeGlobalItem) && pickaxeGlobalItem.SP_PickaxeMode == 0)) // 玩家手上物品不是生成物品,则清除
             {
                 Projectile.Kill();
                 return;

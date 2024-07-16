@@ -6,6 +6,7 @@ using WeaponSkill.Helper;
 using WeaponSkill.Items.DualBlades;
 using WeaponSkill.UI.StarBreakerUI.TalkUI;
 using WeaponSkill.Weapons.StarBreakerWeapon.General.ElementDamage;
+using WeaponSkill.Weapons.StarBreakerWeapon.General;
 
 namespace WeaponSkill
 {
@@ -51,6 +52,10 @@ namespace WeaponSkill
             RenderTargetShaderSystem = new();
             ElementDamageSystem.Load();
             Main.OnPostDraw += Main_OnPostDraw;
+
+            SlashDamage.Load();
+            HitDamage.Load();
+            SpurtsDamage.Load();
         }
         public static void Main_OnPostDraw(GameTime obj)
         {

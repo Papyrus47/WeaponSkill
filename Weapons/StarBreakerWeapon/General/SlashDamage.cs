@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WeaponSkill.Weapons.StarBreakerWeapon.General
 {
-    public static class SlashDamage
+    public class SlashDamage : BasicDamageType<SlashDamage>
     {
         public static int SlashCount; // 斩击伤害连击次数
         public static int SlashCountRemoveTime; // 斩击伤害连击段数移除时间

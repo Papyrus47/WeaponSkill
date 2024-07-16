@@ -8,6 +8,7 @@ using Terraria.Graphics.CameraModifiers;
 using WeaponSkill.Helper;
 using WeaponSkill.Weapons.LongSword;
 using WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills;
+using WeaponSkill.Weapons.StarBreakerWeapon.General;
 using WeaponSkill.Weapons.StarBreakerWeapon.General.ElementDamage;
 
 namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
@@ -73,21 +74,9 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             IceElementDamage iceElementDamage = new();
             iceElementDamage.baseDamage = Projectile.damage;
             iceElementDamage.statModifier += 4;
-            iceElementDamage.statModifier *= 0.8f;
             Main.player[Projectile.owner].addDPS((int)ElementDamageSystem.Instance.ElementDamageApply(iceElementDamage, target));
             #endregion
-            #region 打击伤害追加
-            int hitDamageType_Damage = (int)(hit.SourceDamage * 0.4f);
-            Main.player[Projectile.owner].statMana = Math.Min(Main.player[Projectile.owner].statMana + 8, Main.player[Projectile.owner].statManaMax2);
-            Main.player[Projectile.owner].ManaEffect(8);
-            if (target.CanBeChasedBy())
-            {
-                target.life -= hitDamageType_Damage;
-                target.checkDead();
-            }
-            Main.player[Projectile.owner].addDPS(hitDamageType_Damage);
-            CombatText.NewText(target.Hitbox, hit.Crit ? CombatText.DamagedFriendly * 0.5f : CombatText.DamagedFriendlyCrit * 0.5f, hitDamageType_Damage);
-            #endregion
+            HitDamage.AddDamage(Projectile, target, hit);
             TheUtility.SetPlayerImmune(Main.player[Projectile.owner], 8);
             if (frostFist_FistHit is not FrostFist_SpeedAtk_FastetHit) Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Projectile.velocity.SafeNormalize(default), 3, 0.1f, 1, -1));
             for (int i = 0; i < 80; i++)
@@ -118,6 +107,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
         {
             modifiers.DamageVariationScale *= 0;
             modifiers.FinalDamage *= 1.2f;
+            HitDamage.HitDamageHit(true);
         }
         public override bool PreDraw(ref Color lightColor)
         {

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria;
 using WeaponSkill.Weapons.LongSword;
+using WeaponSkill.Weapons.Pickaxe;
 
 namespace WeaponSkill.Weapons.Axes
 {
@@ -16,11 +18,15 @@ namespace WeaponSkill.Weapons.Axes
             base.SetStaticDefaults();
             WeaponID = new()
             {
-                3506,3500,10,3494,3512,3488,3518,3482,991,45,799,1222,992,1223,993,1224,1223,217,4317,1507,3522,3523,3524,3525,1305,1233
+                3506,3500,10,3494,3512,3488,3518,3482,991,45,799,1222,992,1223,993,1224,1223,217,4317,1507,3522,3523,3524,3525,1305,1233,990
             };
         }
         public override void SetDefaults(Item entity)
         {
+            if (entity.TryGetGlobalItem<PickaxeGlobalItem>(out var pickaxeGlobalItem) && pickaxeGlobalItem.SP_PickaxeMode == 0)
+            {
+                return;
+            }
             base.SetDefaults(entity);
             entity.autoReuse = false;
             entity.noUseGraphic = true;
@@ -49,8 +55,18 @@ namespace WeaponSkill.Weapons.Axes
         }
         public override void HoldItem(Item item, Player player)
         {
+            if(item.TryGetGlobalItem<PickaxeGlobalItem>(out var pickaxeGlobalItem) && pickaxeGlobalItem.SP_PickaxeMode == 0)
+            {
+                return;
+            }
             if (player.ownedProjectileCounts[ModContent.ProjectileType<AxesProj>()] <= 0) // 生成手持弹幕
             {
+                item.autoReuse = false;
+                item.noUseGraphic = true;
+                item.noMelee = true;
+                item.useStyle = ItemUseStyleID.Rapier;
+                item.UseSound = null;
+                item.useTurn = false;
                 int proj = Projectile.NewProjectile(player.GetSource_ItemUse(item), player.position, Vector2.Zero, ModContent.ProjectileType<AxesProj>(), player.GetWeaponDamage(item), player.GetWeaponKnockback(item), player.whoAmI);
                 Main.projectile[proj].originalDamage = Main.projectile[proj].damage;
                 DrawColorTex ??= new Texture2D(Main.graphics.GraphicsDevice, 1, TextureAssets.Item[item.type].Height());

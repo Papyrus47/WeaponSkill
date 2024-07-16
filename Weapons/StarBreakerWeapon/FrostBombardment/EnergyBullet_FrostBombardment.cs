@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WeaponSkill.Helper;
+using WeaponSkill.Weapons.StarBreakerWeapon.General;
+using WeaponSkill.Weapons.StarBreakerWeapon.General.ElementDamage;
 
 namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostBombardment
 {
@@ -57,6 +59,40 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostBombardment
                 Projectile.velocity -= (Projectile.Center - (npc.Center + npc.velocity * 0.5f)) * 0.001f;
                 if (Projectile.velocity.LengthSquared() > 900) Projectile.velocity *= 0.99f;
             }
+        }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            base.ModifyHitNPC(target, ref modifiers);
+            if (Projectile.ai[2] > 0) // 激光炮模式
+            {
+                HitDamage.HitDamageHit(true);
+            }
+            else if (Projectile.ai[0] >= 10) // 蓄力等级
+            {
+                SpurtsDamage.SpurtsDamageHit(true);
+            }
+            else
+            {
+                HitDamage.HitDamageHit(true);
+            }
+        }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            base.OnHitNPC(target, hit, damageDone);
+            #region 属性伤害
+            IceElementDamage iceElementDamage = new();
+            iceElementDamage.baseDamage = Projectile.damage;
+            iceElementDamage.statModifier += 2;
+            if (Projectile.ai[2] > 0) // 激光炮模式
+            {
+                iceElementDamage.statModifier -= 0.5f;
+            }
+            else if (Projectile.ai[0] >= 10) // 蓄力等级
+            {
+                iceElementDamage.statModifier += 3;
+            }
+            Main.player[Projectile.owner].addDPS((int)ElementDamageSystem.Instance.ElementDamageApply(iceElementDamage, target));
+            #endregion
         }
         public override void OnKill(int timeLeft)
         {

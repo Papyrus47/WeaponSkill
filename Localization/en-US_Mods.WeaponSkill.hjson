@@ -24,6 +24,7 @@ Projectiles: {
 	FrostBombardment_Proj.DisplayName: Frost Bombardment_ Proj
 	EnergyBullet_FrostBombardment.DisplayName: Energy Bullet_ Frost Bombardment
 	FrostBombardment_PlayerSPMove.DisplayName: Frost Bombardment_ Player S P Move
+	PickaxeProj.DisplayName: Pickaxe Proj
 }
 
 Keybinds: {
