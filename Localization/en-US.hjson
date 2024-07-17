@@ -474,6 +474,61 @@ Mods: {
 				DisplayName: Wood Kinef
 				Tooltip: Why all wood recipe this?
 			}
+
+			StrongAle: {
+				DisplayName: Strong Ale
+				Tooltip: A special master rank brew for a master rank hunter. Savor every sip.
+			}
+
+			WhetfishSabers: {
+				DisplayName: Whetfish Sabers
+				Tooltip: ""
+			}
+
+			CopperKinef: {
+				DisplayName: Copper Kinef
+				Tooltip: ""
+			}
+
+			GoldKinef: {
+				DisplayName: Gold Kinef
+				Tooltip: ""
+			}
+
+			IronKinef: {
+				DisplayName: Iron Kinef
+				Tooltip: ""
+			}
+
+			LeadKinef: {
+				DisplayName: Lead Kinef
+				Tooltip: ""
+			}
+
+			LightsKinef: {
+				DisplayName: Lights Kinef
+				Tooltip: ""
+			}
+
+			PlatinumKinef: {
+				DisplayName: Platinum Kinef
+				Tooltip: ""
+			}
+
+			SilverKinef: {
+				DisplayName: Silver Kinef
+				Tooltip: ""
+			}
+
+			TinKinef: {
+				DisplayName: Tin Kinef
+				Tooltip: ""
+			}
+
+			TungstenKinef: {
+				DisplayName: Tungsten Kinef
+				Tooltip: ""
+			}
 		}
 
 		DamageClasses: {

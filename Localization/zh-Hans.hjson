@@ -457,6 +457,61 @@ Mods: {
 				DisplayName: 木双刀
 				Tooltip: 为什么所有的木头都合成这个?
 			}
+
+			StrongAle: {
+				DisplayName: 飘飘欲仙啤酒剑
+				Tooltip: 特别为酒量好的猎人所准备，一种极为机密的啤酒武器。请轻尝浅酌！
+			}
+
+			WhetfishSabers: {
+				DisplayName: 锋利锐刃
+				// Tooltip: ""
+			}
+
+			CopperKinef: {
+				DisplayName: 铜双刀
+				// Tooltip: ""
+			}
+
+			GoldKinef: {
+				DisplayName: 金双刀
+				// Tooltip: ""
+			}
+
+			IronKinef: {
+				DisplayName: 铁双刀
+				// Tooltip: ""
+			}
+
+			LeadKinef: {
+				DisplayName: 铅双刀
+				// Tooltip: ""
+			}
+
+			LightsKinef: {
+				DisplayName: 魔光双刀
+				// Tooltip: ""
+			}
+
+			PlatinumKinef: {
+				DisplayName: 铂金双刀
+				// Tooltip: ""
+			}
+
+			SilverKinef: {
+				DisplayName: 银双刀
+				// Tooltip: ""
+			}
+
+			TinKinef: {
+				DisplayName: 锡双刀
+				// Tooltip: ""
+			}
+
+			TungstenKinef: {
+				DisplayName: 钨双刀
+				// Tooltip: ""
+			}
 		}
 
 		DamageClasses: {

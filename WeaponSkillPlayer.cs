@@ -9,6 +9,7 @@ using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
+using WeaponSkill.Items.DualBlades;
 using WeaponSkill.Weapons;
 using WeaponSkill.Weapons.General;
 using WeaponSkill.Weapons.LongSword;
@@ -125,6 +126,15 @@ namespace WeaponSkill
             else if(DashTimer <= 0)
             {
                 DashDir = -1;
+            }
+        }
+        public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
+        {
+            bool inWater = !attempt.inLava && !attempt.inHoney;
+            if (inWater && Main.rand.NextBool(5,100))
+            {
+                itemDrop = ModContent.ItemType<WhetfishSabers>();
+                return;
             }
         }
         public override void PostUpdateEquips()

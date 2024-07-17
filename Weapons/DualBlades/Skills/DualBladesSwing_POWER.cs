@@ -18,7 +18,7 @@ namespace WeaponSkill.Weapons.DualBlades.Skills
             SwingRot = MathHelper.TwoPi * 2;
             AITimeChange = () => 1 / 50f;
             StartVel = Vector2.One;
-            VelScale = new Vector2(1, 0.3f);
+            VelScale = new Vector2(1, 0.8f);
             VisualRotation = 0.7f;
             ID = "POWER";
         }
@@ -44,13 +44,13 @@ namespace WeaponSkill.Weapons.DualBlades.Skills
                         HitNPC = false;
                         return;
                     }
-                    if (Projectile.ai[0] > 0.8f)
+                    if (Projectile.ai[0] > 0.4f)
                     {
                         Projectile.ai[0] = 0f;
                         Projectile.ai[1] = 0f;
                     }
-                    player.velocity.Y = 8;
-                    player.velocity.X = player.direction * 15;
+                    player.velocity.Y = 5;
+                    player.velocity.X = player.direction * Projectile.ai[2];
                     TheUtility.SetPlayerImmune(player);
                     if (HitTime-- == 7)
                     {
@@ -90,6 +90,7 @@ namespace WeaponSkill.Weapons.DualBlades.Skills
             player.position.Y = target.position.Y - target.height * 0.4f;
             Projectile.rotation = (target.position - player.position).ToRotation() + MathHelper.PiOver2;
             HitTime = 9;
+            Projectile.ai[2] = Math.Max(target.width * 0.2f,8);
         }
         public override void OnSkillActive()
         {
@@ -106,6 +107,7 @@ namespace WeaponSkill.Weapons.DualBlades.Skills
             player.velocity *= 0.3f;
             HitTime = 0;
             HitNPC = false;
+            Projectile.ai[2] = 0;
         }
     }
 }

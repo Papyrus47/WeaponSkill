@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using WeaponSkill.Items.DualBlades;
 
 namespace WeaponSkill.NPCs
 {
@@ -84,6 +85,13 @@ namespace WeaponSkill.NPCs
                 return;
             }
             orig.Invoke(self, i);
+        }
+        public override void ModifyShop(NPCShop shop)
+        {
+            //if(shop.NpcType == 550) // 酒保
+            //{
+            //    shop.Add<StrongAle>();
+            //}
         }
         public override bool PreAI(NPC npc)
         {
