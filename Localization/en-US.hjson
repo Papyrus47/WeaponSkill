@@ -469,6 +469,11 @@ Mods: {
 				DisplayName: 铜制-征收镐
 				Tooltip: 征收对面的血量上限,并且转换为自己的血量上限,一旦血量上限重置为原本血量,则减少血量上限
 			}
+
+			WoodKinef: {
+				DisplayName: Wood Kinef
+				Tooltip: Why all wood recipe this?
+			}
 		}
 
 		DamageClasses: {

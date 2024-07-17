@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WeaponSkill.Weapons.Pickaxe;
+using Terraria.ID;
 
 namespace WeaponSkill.Items.Pickaxes
 {
@@ -41,6 +42,7 @@ namespace WeaponSkill.Items.Pickaxes
                 return;
             TimeLevy += damageDone / 10;
             target.lifeMax -= damageDone / 10;
+            player.statLife++;
 
             for (int i = 0; i < 5; i++)
             {
@@ -48,5 +50,6 @@ namespace WeaponSkill.Items.Pickaxes
                 dust.velocity = (dust.position - player.Center) * -0.06f;
             }
         }
+        public override void AddRecipes() => CreateRecipe().AddIngredient(ItemID.CopperPickaxe).AddIngredient(ItemID.LunarBar,20).AddTile(TileID.LunarCraftingStation).Register();
     }
 }

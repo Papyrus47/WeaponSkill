@@ -14,6 +14,7 @@ namespace WeaponSkill.Items.DualBlades
             Item.damage = 20;
             Item.knockBack = 2;
             Item.crit = 7;
+            Item.rare = ItemRarityID.Green;
             Item.scale = 0.7f;
         }
         public override void AddRecipes()
