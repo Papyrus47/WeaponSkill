@@ -512,6 +512,21 @@ Mods: {
 				DisplayName: 钨双刀
 				// Tooltip: ""
 			}
+
+			AddDamageMode: {
+				DisplayName: 增加伤害模块
+				Tooltip: 增加弩发射的箭的伤害
+			}
+
+			FastShootingMode: {
+				DisplayName: 快速射击模块
+				Tooltip: 让弩射击间隔变短
+			}
+
+			ScatterMode: {
+				DisplayName: 散射模块
+				Tooltip: 减少散射
+			}
 		}
 
 		DamageClasses: {

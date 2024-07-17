@@ -22,6 +22,7 @@ namespace WeaponSkill.Weapons.Crossbow
         /// </summary>
         public static Item OpenItem;
         public Item[] Crossbow_Parts;
+        public Dictionary<Item,Ref<int>> CrossbowLoadArrow;
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
@@ -79,11 +80,25 @@ namespace WeaponSkill.Weapons.Crossbow
         }
         public override void HoldItem(Item item, Player player)
         {
+            WeaponSkillPlayer weaponSkillPlayer = player.GetModPlayer<WeaponSkillPlayer>();
+            CrossbowLoadArrow ??= new();
             player.GetModPlayer<WeaponSkillPlayer>().ShowTheRangeChangeUI = true;
             if (player.ownedProjectileCounts[ModContent.ProjectileType<CrossbowProj>()] <= 0) // 生成手持弹幕
             {
+                for (int i = 0;i < weaponSkillPlayer.AmmoItems.Count; i++)
+                {
+                    CrossbowLoadArrow.TryAdd(weaponSkillPlayer.AmmoItems[i],new(10));
+                }
                 int proj = Projectile.NewProjectile(player.GetSource_ItemUse(item), player.position, Vector2.Zero, ModContent.ProjectileType<CrossbowProj>(), player.GetWeaponDamage(item), player.GetWeaponKnockback(item), player.whoAmI);
                 Main.projectile[proj].originalDamage = Main.projectile[proj].damage;
+            }
+
+            for (int i = 0; i < weaponSkillPlayer.AmmoItems.Count; i++)
+            {
+                if (!CrossbowLoadArrow.Keys.Contains(weaponSkillPlayer.AmmoItems[i]))
+                {
+                    CrossbowLoadArrow.TryAdd(weaponSkillPlayer.AmmoItems[i], new(10));
+                }
             }
         }
         public override void UpdateInventory(Item item, Player player)

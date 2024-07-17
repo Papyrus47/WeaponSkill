@@ -529,6 +529,21 @@ Mods: {
 				DisplayName: Tungsten Kinef
 				Tooltip: ""
 			}
+
+			AddDamageMode: {
+				DisplayName: Add Damage Mode
+				Tooltip: Add Crossbow shoot arrow Damage
+			}
+
+			FastShootingMode: {
+				DisplayName: Fast Shooting Mode
+				Tooltip: Add Crossbow shoot speed
+			}
+
+			ScatterMode: {
+				DisplayName: Scatter Mode
+				Tooltip: Minish Crossbow scatter
+			}
 		}
 
 		DamageClasses: {

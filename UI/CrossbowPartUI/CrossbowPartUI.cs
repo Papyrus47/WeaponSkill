@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria.UI;
 using WeaponSkill.Weapons.Crossbow;
+using WeaponSkill.Weapons.Crossbow.Parts;
 
 namespace WeaponSkill.UI.CrossbowPartUI
 {
@@ -18,7 +19,7 @@ namespace WeaponSkill.UI.CrossbowPartUI
             {
                 CrossbowPartSlot crossbowPartSlot = new((item) =>
                 {
-                    return item.IsAir || (!item.IsAir && item.TryGetGlobalItem<CrossbowGlobalItem>(out _));
+                    return item.IsAir || (!item.IsAir && item.TryGetGlobalItem<PartsItemSystem>(out _));
                 });
 
                 crossbowPartSlot.Top.Set(i * crossbowPartSlot.Height.Pixels * 0.75f, 0f);

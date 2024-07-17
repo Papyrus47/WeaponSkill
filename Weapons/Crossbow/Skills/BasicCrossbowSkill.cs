@@ -22,10 +22,20 @@ namespace WeaponSkill.Weapons.Crossbow.Skills
         /// 获取发射弹幕类型,自动消耗物品
         /// </summary>
         /// <returns>弹幕type,物品type</returns>
-        public virtual (int, int) GetShootType(out int damage, out float speed, out float kn, out int crit)
+        public virtual (int, int) GetShootType(out int damage, out float speed, out float kn, out int crit,out bool resetArrow)
         {
+            resetArrow = false;
             WeaponSkillPlayer weaponSkillPlayer = player.GetModPlayer<WeaponSkillPlayer>();
             Item item = weaponSkillPlayer.AmmoItems[weaponSkillPlayer.UseAmmoIndex];
+            if(CrossProj.SpawnItem.GetGlobalItem<CrossbowGlobalItem>().CrossbowLoadArrow.TryGetValue(item,out var @ref))
+            {
+                @ref.Value--;
+                if(@ref.Value <= 0) 
+                {
+                    @ref.Value = 0;
+                    resetArrow = true;
+                }
+            }
             if (item.consumable && !player.IsAmmoFreeThisShot(player.HeldItem, item, item.shoot))
             {
                 CombinedHooks.OnConsumeAmmo(player, player.HeldItem, item);

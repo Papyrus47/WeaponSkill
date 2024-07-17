@@ -107,6 +107,8 @@ namespace WeaponSkill.Weapons.Bows.Skills
                 (int, int) value = GetShootType(out int dmg, out float speed, out float kn, out int crit);
                 int shootType = value.Item1;
                 int ammoType=value.Item2;
+                if (player.HeldItem?.ModItem?.Shoot(player, player.GetSource_ItemUse_WithPotentialAmmo(player.HeldItem, ammoType) as EntitySource_ItemUse_WithAmmo, Projectile.Center, Projectile.velocity.RotatedByRandom(MathHelper.PiOver4 * 0.35f) * BowsProj.SpawnItem.shootSpeed * speed, shootType, (int)((Projectile.damage + dmg) * BowsProj.ChannelLevel * 0.9f), Projectile.knockBack + kn) == false)
+                    return;
                 int proj = Projectile.NewProjectile(player.GetSource_ItemUse_WithPotentialAmmo(BowsProj.SpawnItem,ammoType), Projectile.Center, Projectile.velocity.RotatedByRandom(MathHelper.PiOver4 * 0.35f) * BowsProj.SpawnItem.shootSpeed * speed, shootType, (int)((Projectile.damage + dmg) * BowsProj.ChannelLevel * 0.9f), Projectile.knockBack + kn, player.whoAmI);
                 Main.projectile[proj].OriginalCritChance += crit;
                 Main.projectile[proj].usesLocalNPCImmunity = true;
