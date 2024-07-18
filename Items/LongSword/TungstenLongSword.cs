@@ -12,7 +12,7 @@ namespace WeaponSkill.Items.LongSword
         public override void SetDefaults()
         {
             Item.Size = new(52, 100);
-            Item.damage = 17;
+            Item.damage = 9;
             Item.knockBack = 2;
             Item.useTime = Item.useAnimation = 30;
             Item.DamageType = DamageClass.MeleeNoSpeed;

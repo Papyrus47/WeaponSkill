@@ -77,7 +77,7 @@ namespace WeaponSkill
             UserInterface userInterface4 = new UserInterface();
             userInterfaces.Add(userInterface4);
             crossbowPartUI.Initialize();
-            userInterface3.SetState(crossbowPartUI);
+            userInterface4.SetState(crossbowPartUI);
 
             On_NPC.HitModifiers.ToHitInfo += HitModifiers_ToHitInfo;
             On_Main.MouseText_DrawItemTooltip_GetLinesInfo += On_Main_MouseText_DrawItemTooltip_GetLinesInfo;

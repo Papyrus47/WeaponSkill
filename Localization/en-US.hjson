@@ -544,6 +544,16 @@ Mods: {
 				DisplayName: Scatter Mode
 				Tooltip: Minish Crossbow scatter
 			}
+
+			BloodKinef: {
+				DisplayName: Blood Kinef
+				Tooltip: ""
+			}
+
+			VolcanoKinef: {
+				DisplayName: Volcano Kinef
+				Tooltip: ""
+			}
 		}
 
 		DamageClasses: {

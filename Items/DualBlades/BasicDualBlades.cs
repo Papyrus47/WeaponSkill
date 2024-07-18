@@ -21,6 +21,7 @@ namespace WeaponSkill.Items.DualBlades
                 result.ProjTex = GetName() + "Proj";
             }
             InitDefault();
+            Item.damage /= 2;
         }
         public string GetName() => GetType().Namespace.Replace('.', '/') + "/" + GetType().Name;
         public virtual void InitDefault() { }

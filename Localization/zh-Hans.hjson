@@ -527,6 +527,16 @@ Mods: {
 				DisplayName: 散射模块
 				Tooltip: 减少散射
 			}
+
+			BloodKinef: {
+				DisplayName: 血腥双刀
+				// Tooltip: ""
+			}
+
+			VolcanoKinef: {
+				DisplayName: 炽热双刀
+				// Tooltip: ""
+			}
 		}
 
 		DamageClasses: {

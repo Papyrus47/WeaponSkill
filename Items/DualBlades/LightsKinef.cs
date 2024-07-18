@@ -11,7 +11,7 @@ namespace WeaponSkill.Items.DualBlades
         public override void InitDefault()
         {
             Item.Size = new(46, 44);
-            Item.damage = 23;
+            Item.damage = 24;
             Item.knockBack = 1.8f;
             Item.crit = 15;
             Item.rare = ItemRarityID.Blue;
