@@ -62,6 +62,33 @@ namespace WeaponSkill.Items.DualBlades
             Item.rare = ItemRarityID.Lime;
             Item.scale = 0.6f;
         }
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            NPC npc = null;
+            float maxDis = 500;
+            foreach (NPC n in Main.npc)
+            {
+                float dis = n.Distance(target.position);
+                if (n.active && n.CanBeChasedBy() && dis < maxDis && n != target)
+                {
+                    maxDis = dis;
+                    npc = n;
+                }
+            }
+
+            if(npc != null)
+            {
+                for(int i = 0;i<maxDis;i += 2)
+                {
+                    float amount = (float)i / maxDis;
+                    Dust dust = Dust.NewDustDirect(Vector2.Lerp(npc.Center, target.Center, amount), (int)MathHelper.Lerp(npc.width, target.width, amount), (int)MathHelper.Lerp(npc.height, target.height, amount), DustID.ChlorophyteWeapon);
+                    dust.noGravity = true;
+                    dust.velocity *= 0.1f;
+                    dust.scale *= 1;
+                }
+                player.ApplyDamageToNPC(npc, damageDone, hit.Knockback, hit.HitDirection, hit.Crit, Item.DamageType);
+            }
+        }
         //public override void HoldItem(Player player)
         //{
         //    Item.scale = 1.8f;
