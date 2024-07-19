@@ -113,7 +113,6 @@ Mods: {
 					 滑步只能在攻击后使用，滑步一次提升一次蓄力级别
 					 蓄力射击可以衔接刚射，刚射也可以衔接蓄力射击
 					 三级蓄力射击可以接三级刚射，但三级刚射不能接三级蓄力射击
-					 如果是三级蓄力刚射，则无法进行滑步
 					 
 					 耐力槽：
 					 弓的行为将消耗耐力，耐力上限无法增加，恒定为600
@@ -535,6 +534,16 @@ Mods: {
 
 			VolcanoKinef: {
 				DisplayName: 炽热双刀
+				// Tooltip: ""
+			}
+
+			ChlorophyteBlades: {
+				DisplayName: 叶绿双刃
+				// Tooltip: ""
+			}
+
+			CrossbowBook: {
+				DisplayName: 弩说明书
 				// Tooltip: ""
 			}
 		}

@@ -36,7 +36,7 @@ namespace WeaponSkill.Weapons.DualBlades
         public Texture2D DrawColorTex;
         public override void Load()
         {
-            WeaponID = new();
+            WeaponID ??= new();
         }
         public override void SetDefaults(Item entity)
         {

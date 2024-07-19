@@ -37,6 +37,7 @@
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="NPCs\Bosses\StarBreaker\FrostFist\Skills\" />
     <Folder Include="Sounds\Musics\" />
     <Folder Include="Weapons\Staffs\" />
   </ItemGroup>

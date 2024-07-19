@@ -150,6 +150,7 @@ namespace WeaponSkill.Weapons.DualBlades
                 Projectile.Kill();
                 return;
             }
+            Player.heldProj = Projectile.whoAmI;
             if(HeldBlades == null || BackBlades == null)
             {
                 HeldBlades = new(this, new DualBladesSwingHelper(this, 18, DrawProjTex));

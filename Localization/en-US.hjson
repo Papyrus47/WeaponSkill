@@ -124,7 +124,6 @@ Mods: {
 					Slide steps can only be performed after an attack, and each slide step increases the charging level by one.
 					Charged shots can be followed by quick shots, and quick shots can also be followed by charged shots.
 					A level 3 charged shot can be followed by a level 3 quick shot, but a level 3 quick shot cannot be followed by a level 3 charged shot.
-					If a level 3 charged quick shot is performed, slide steps cannot be executed.
 
 					Stamina Gauge:
 					Using the bow will consume stamina, and the maximum stamina limit is fixed at 600.
@@ -553,6 +552,23 @@ Mods: {
 			VolcanoKinef: {
 				DisplayName: Volcano Kinef
 				Tooltip: ""
+			}
+
+			ChlorophyteBlades: {
+				DisplayName: Chlorophyte Blades
+				Tooltip: ""
+			}
+
+			CrossbowBook: {
+				DisplayName: Crossbow Book
+				Tooltip:
+				'''
+				弩,拥有高级火力的武器
+				<right>物品以打开配置表,当手上持有弩时,可以合成弩的配置(无需材料,如果不能显示则拿起弩再放回去)
+				左键射击 右键瞄准 按下{0}键选择箭类使用      按键{1}键进行加热
+				加热会让弩的射速提升,直到最热后松手进行一次散射
+				弩拥有10发箭装载,射完后需重新装填
+				'''
 			}
 		}
 

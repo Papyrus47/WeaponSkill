@@ -1,3 +1,6 @@
+CrossbowPart: 手持弩
+BookCondition: 没有手持任何物品
+
 Projectiles: {
 	// BroadSwordProj.DisplayName: Broad Sword Proj
 	// ShortswordProj.DisplayName: Shortsword Proj

@@ -17,6 +17,7 @@ namespace WeaponSkill
         public static Asset<Effect> OffsetShader;
         public static Asset<Effect> SwordHot;
         public static Asset<Effect> HammerChannelShader;
+        //public static Asset<Effect> SP_SwingEffect;
         public static Asset<Texture2D> ChooseAmmoUITex;
         public static Asset<Texture2D> StaminaUITex;
         public static Asset<Texture2D> SwingTex;
@@ -37,6 +38,7 @@ namespace WeaponSkill
                 SpurtsShader = Assets.Request<Effect>("Effects/" + nameof(SpurtsShader));
                 OffsetShader = Assets.Request<Effect>("Effects/" + nameof(OffsetShader));
                 SwordHot = Assets.Request<Effect>("Effects/" + nameof(SwordHot));
+                //SP_SwingEffect = Assets.Request<Effect>("Effects/" + nameof(SP_SwingEffect));
                 HammerChannelShader = Assets.Request<Effect>("Effects/" + nameof(HammerChannelShader));
                 SwingTex = Assets.Request<Texture2D>("Images/" + nameof(SwingTex));
                 ChooseAmmoUITex = Assets.Request<Texture2D>("UI/ChangeAmmoUI/" + nameof(ChooseAmmoUITex),AssetRequestMode.ImmediateLoad);

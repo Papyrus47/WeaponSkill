@@ -137,6 +137,11 @@ namespace WeaponSkill.Helper
             if(projectile != null) projectile.timeLeft = 2;
             _oldVelsSave = true;
             _acitveSwing = _changeLerpInvoke = false;
+
+            //if (_drawCorrections)
+            //{
+            //    Center -= velocity.SafeNormalize(default) * _changeHeldLength;
+            //}
         }
         /// <summary>
         /// 将弹幕锁定位置在玩家身上   <para>当<paramref name="isUseSwing"/>为ture的时候,

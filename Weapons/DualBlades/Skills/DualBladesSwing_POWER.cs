@@ -21,6 +21,7 @@ namespace WeaponSkill.Weapons.DualBlades.Skills
             VelScale = new Vector2(1, 0.8f);
             VisualRotation = 0.7f;
             ID = "POWER";
+            SwingDirectionChange = true;
         }
         public override void AI()
         {

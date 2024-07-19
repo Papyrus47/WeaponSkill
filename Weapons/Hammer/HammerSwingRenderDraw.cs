@@ -10,6 +10,11 @@ namespace WeaponSkill.Weapons.Hammer
 {
     public class HammerSwingRenderDraw : IRenderTargetShaderDraw
     {
+        ~HammerSwingRenderDraw()
+        {
+            CanUseHammerSwingRender = null;
+        }
+        public static List<int> CanUseHammerSwingRender = new();
         public bool Remove { get; set; }
 
         public void Draw()
@@ -71,7 +76,7 @@ namespace WeaponSkill.Weapons.Hammer
         public void ResetDrawData()
         {
             HammerProj.DrawHammerSwingShader_Index.Clear();
-            if (!Main.LocalPlayer.HeldItem.TryGetGlobalItem<HammerGlobalItem>(out _))
+            if (!Main.LocalPlayer.HeldItem.TryGetGlobalItem<HammerGlobalItem>(out _) && !CanUseHammerSwingRender.Contains(Main.LocalPlayer.HeldItem.type))
             {
                 Remove = true;
             }

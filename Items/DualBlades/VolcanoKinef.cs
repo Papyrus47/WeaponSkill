@@ -44,7 +44,7 @@ namespace WeaponSkill.Items.DualBlades
             Item.damage = 53;
             Item.knockBack = 1.8f;
             Item.crit = 15;
-            Item.rare = ItemRarityID.Blue;
+            Item.rare = ItemRarityID.Orange;
             Item.scale = 0.7f;
         }
         public override void AddRecipes() => CreateRecipe().AddIngredient(ItemID.HellstoneBar, 15).AddTile(TileID.Anvils).Register();

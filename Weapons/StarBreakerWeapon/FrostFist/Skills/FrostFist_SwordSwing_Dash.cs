@@ -40,6 +40,10 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
                         {
                             var proj = SpurtsProj.NewSpurtsProj(Projectile.GetSource_FromAI(), Player.Center - Player.velocity * 10, Player.velocity.SafeNormalize(default), (int)(Projectile.damage * 2.5f), Projectile.knockBack, Projectile.owner, 500, 120, TextureAssets.Frozen.Value);
                             proj.FixedPos = false;
+                            proj = SpurtsProj.NewSpurtsProj(Projectile.GetSource_FromAI(), Player.Center - Player.velocity * 10, Player.velocity.SafeNormalize(default), 0, Projectile.knockBack, Projectile.owner, 500, 120, TextureAssets.Frozen.Value);
+                            proj.FixedPos = false;
+                            proj = SpurtsProj.NewSpurtsProj(Projectile.GetSource_FromAI(), Player.Center - Player.velocity * 10, Player.velocity.SafeNormalize(default), 0, Projectile.knockBack, Projectile.owner, 500, 120, TextureAssets.Frozen.Value);
+                            proj.FixedPos = false;
                         }
                         else if((int)Projectile.ai[1] < (int)AtkTime / 2)
                         {

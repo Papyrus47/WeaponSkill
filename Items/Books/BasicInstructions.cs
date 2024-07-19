@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria.ID;
+using Terraria.Localization;
 
 namespace WeaponSkill.Items.Books
 {
@@ -15,7 +16,7 @@ namespace WeaponSkill.Items.Books
         }
         public override void AddRecipes()
         {
-            CreateRecipe().Register();
+            CreateRecipe().AddCondition(new Condition(Language.GetTextValue("Mods.WeaponSkill.BookCondition"),() => Main.LocalPlayer.HeldItem?.IsAir == true)).Register();
         }
     }
 }

@@ -97,9 +97,10 @@ namespace WeaponSkill.Weapons.Crossbow.Skills
             {
                 int shootType = value.Item1;
                 int ammoType = value.Item2;
-                if (player.HeldItem?.ModItem?.Shoot(player, player.GetSource_ItemUse_WithPotentialAmmo(player.HeldItem, ammoType) as EntitySource_ItemUse_WithAmmo, Projectile.Center, Projectile.velocity.RotatedByRandom(MathHelper.PiOver4 * 0.2f * (1f - Scatter / 4f)) * player.HeldItem.shootSpeed * speed, shootType, (int)((Projectile.damage + dmg + AddDamage * 10) * Math.Log10((Projectile.ai[2] + 600) * 10) / 2), Projectile.knockBack + kn) == false)
+                float scatter = MathF.Pow(1f - Scatter / 4f,1.7f);
+                if (player.HeldItem?.ModItem?.Shoot(player, player.GetSource_ItemUse_WithPotentialAmmo(player.HeldItem, ammoType) as EntitySource_ItemUse_WithAmmo, Projectile.Center, Projectile.velocity.RotatedByRandom(MathHelper.PiOver4 * 0.2f * scatter) * player.HeldItem.shootSpeed * speed, shootType, (int)((Projectile.damage + dmg + AddDamage * 10) * Math.Log10((Projectile.ai[2] + 600) * 10) / 2), Projectile.knockBack + kn) == false)
                     return;
-                int proj = Projectile.NewProjectile(player.GetSource_ItemUse_WithPotentialAmmo(player.HeldItem, ammoType), Projectile.Center, Projectile.velocity.RotatedByRandom(MathHelper.PiOver4 * 0.2f * (1f - Scatter / 4f)) * player.HeldItem.shootSpeed * speed, shootType, (int)((Projectile.damage + dmg + AddDamage * 10) * Math.Log10((Projectile.ai[2] + 600) * 10) / 2), Projectile.knockBack + kn, player.whoAmI);
+                int proj = Projectile.NewProjectile(player.GetSource_ItemUse_WithPotentialAmmo(player.HeldItem, ammoType), Projectile.Center, Projectile.velocity.RotatedByRandom(MathHelper.PiOver4 * 0.2f * scatter) * player.HeldItem.shootSpeed * speed, shootType, (int)((Projectile.damage + dmg + AddDamage * 10) * Math.Log10((Projectile.ai[2] + 600) * 10) / 2), Projectile.knockBack + kn, player.whoAmI);
                 Main.projectile[proj].OriginalCritChance += crit;
                 SoundEngine.PlaySound(player.HeldItem.UseSound, player.position);
                 //Main.projectile[proj].usesLocalNPCImmunity = true;
@@ -111,7 +112,7 @@ namespace WeaponSkill.Weapons.Crossbow.Skills
                 {
                     for (int i = 0; i < Main.rand.Next(1,3); i++)
                     {
-                        proj = Projectile.NewProjectile(player.GetSource_ItemUse_WithPotentialAmmo(player.HeldItem, ammoType), Projectile.Center, Projectile.velocity.RotatedByRandom(MathHelper.PiOver4 * 0.2f * (1f - Scatter / 4f)) * player.HeldItem.shootSpeed * speed, shootType, (int)((Projectile.damage + dmg + AddDamage * 10) * Math.Log10((Projectile.ai[2] + 600) * 10) / 2), Projectile.knockBack + kn, player.whoAmI);
+                        proj = Projectile.NewProjectile(player.GetSource_ItemUse_WithPotentialAmmo(player.HeldItem, ammoType), Projectile.Center, Projectile.velocity.RotatedByRandom(MathHelper.PiOver4 * 0.2f * scatter) * player.HeldItem.shootSpeed * speed, shootType, (int)((Projectile.damage + dmg + AddDamage * 10) * Math.Log10((Projectile.ai[2] + 600) * 10) / 2), Projectile.knockBack + kn, player.whoAmI);
                         Main.projectile[proj].OriginalCritChance += crit;
                     }
                 }

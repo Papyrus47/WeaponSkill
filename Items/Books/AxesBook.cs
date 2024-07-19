@@ -25,10 +25,10 @@ namespace WeaponSkill.Items.Books
             //    tooltips.RemoveRange(index, tooltips.Count - 1 - index);
             //    tooltips.Add(new TooltipLine(Mod, "AxeTooltip", Language.GetTextValue(Tooltip.Key + "1")));
             //}
-            //tooltips.ForEach((x) =>
-            //{
-            //    x.Text = string.Format(x.Text, WeaponSkill.BowSlidingStep.GetAssignedKeys(InputMode.Keyboard).FirstOrDefault());
-            //});
+            tooltips.ForEach((x) =>
+            {
+                x.Text = string.Format(x.Text, WeaponSkill.BowSlidingStep.GetAssignedKeys(InputMode.Keyboard).FirstOrDefault());
+            });
         }
     }
 }

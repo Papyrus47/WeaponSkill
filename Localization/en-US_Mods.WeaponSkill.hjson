@@ -1,3 +1,6 @@
+CrossbowPart: Hold crossbow
+BookCondition: No hold anything
+
 Projectiles: {
 	BroadSwordProj.DisplayName: Broad Sword Proj
 	ShortswordProj.DisplayName: Shortsword Proj
