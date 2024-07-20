@@ -14,16 +14,6 @@ namespace WeaponSkill.Weapons.ChargeBlade
     // 左键攻击按一点算
     public class ChargeBladeProj : ModProjectile, IBasicSkillProj
     {
-        /// <summary>
-        /// 盾牌的数据
-        /// </summary>
-        public record ShieldData
-        {
-            /// <summary>
-            /// 减少的伤害量
-            /// </summary>
-            public int Def { get; init; }
-        }
         public override string Texture => "Terraria/Images/Item_0";
         public List<ProjSkill_Instantiation> OldSkills { get; set; }
         public ProjSkill_Instantiation CurrentSkill { get; set; }
@@ -35,7 +25,6 @@ namespace WeaponSkill.Weapons.ChargeBlade
         public bool shieldCanDraw;
         public ChargeBladeGlobalItem chargeBladeGlobal => SpawnItem.GetGlobalItem<ChargeBladeGlobalItem>();
         public Asset<Texture2D> ShieldTex => chargeBladeGlobal.ShieldTex;
-        public ShieldData shieldData;
         /// <summary>
         /// 防御成功的时间
         /// </summary>
@@ -115,17 +104,17 @@ namespace WeaponSkill.Weapons.ChargeBlade
                 Projectile.Size = SpawnItem.Size * Projectile.scale;
                 SwingLength = Projectile.Size.Length();
                 Main.projFrames[Type] = TheUtility.GetItemFrameCount(SpawnItem);
-                if(SpawnItem.ModItem is BasicChargeBlade blade)
-                {
-                    blade.SetShieldData(ref shieldData);
-                }
-                if(shieldData == default)
-                {
-                    shieldData = new()
-                    {
-                        Def = 10
-                    };
-                }
+                //if(SpawnItem.ModItem is BasicChargeBlade blade)
+                //{
+                //    blade.SetShieldData(ref shieldData);
+                //}
+                //if(shieldData == default)
+                //{
+                //    shieldData = new()
+                //    {
+                //        Def = 10
+                //    };
+                //}
                 Init();
             }
         }
@@ -152,7 +141,8 @@ namespace WeaponSkill.Weapons.ChargeBlade
             shieldCanDraw = true;
             chargeBladeGlobal.InAxe = false;
             Player.GetModPlayer<WeaponSkillPlayer>().HeldShield = shield;
-            shield.Defence = shieldData.Def;
+            //shield.Defence = shieldData.Def;
+            shield.Defence = SpawnItem.defense;
             if (DefSucceededTime > 0) DefSucceededTime--;
             if (OldSkills.Count > 10) OldSkills.RemoveAt(1);
             CurrentSkill.AI();

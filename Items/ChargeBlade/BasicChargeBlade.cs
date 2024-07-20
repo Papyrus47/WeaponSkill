@@ -10,7 +10,6 @@ namespace WeaponSkill.Items.ChargeBlade
     public abstract class BasicChargeBlade : ModItem
     {
         public abstract Asset<Texture2D> ShieldTex { get; }
-        public abstract void SetShieldData(ref ChargeBladeProj.ShieldData shieldData);
         public sealed override void SetDefaults()
         {
             _ = ShieldTex;

@@ -18,15 +18,8 @@ namespace WeaponSkill.Items.ChargeBlade
             Item.knockBack = 0.3f;
             Item.rare = ItemRarityID.Blue;
             Item.crit = 5;
+            Item.defense = 40;
             Main.instance.LoadItem(3097);
-        }
-
-        public override void SetShieldData(ref ChargeBladeProj.ShieldData shieldData)
-        {
-            shieldData = new()
-            {
-                Def = 40
-            };
         }
     }
 }
