@@ -26,7 +26,7 @@ namespace WeaponSkill.Weapons.Bows.Skills
             if (ItemLoader.ConsumeItem(item,player) && !player.IsAmmoFreeThisShot(player.HeldItem, item, item.shoot))
             {
                 CombinedHooks.OnConsumeAmmo(player, player.HeldItem, item);
-                if (item.stack-- <= 0)
+                if (item.consumable && item.stack-- <= 0)
                 {
                     item.active = false;
                     item.TurnToAir();

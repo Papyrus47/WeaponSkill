@@ -99,10 +99,16 @@ namespace WeaponSkill.Weapons.Guns
                     break;
                 case 219:
                 case 1255:
-                    GunType = new Handgun(17);
+                    GunType = new Handgun(17)
+                    {
+                        ResetTime = 15
+                    };
                     break;
                 case 3007:
-                    GunType = new Handgun(10);
+                    GunType = new Handgun(10)
+                    {
+                        ResetTime = 30
+                    };
                     break;
                 #endregion
                 default:
@@ -120,6 +126,10 @@ namespace WeaponSkill.Weapons.Guns
                 return false;
             GunType.HasBullet--;
             return base.CanShoot(item, player);
+        }
+        public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
+        {
+            GunType.ModifyWeaponDamage(item, player, ref damage);
         }
         public override bool CanUseItem(Item item, Player player)
         {
@@ -140,7 +150,7 @@ namespace WeaponSkill.Weapons.Guns
             if (ItemLoader.ConsumeItem(shootItem, player) && !player.IsAmmoFreeThisShot(player.HeldItem, item, item.shoot))
             {
                 CombinedHooks.OnConsumeAmmo(player, player.HeldItem, shootItem);
-                if (shootItem.stack-- <= 0)
+                if (shootItem.consumable && shootItem.stack-- <= 0)
                 {
                     shootItem.active = false;
                     shootItem.TurnToAir();
@@ -148,7 +158,7 @@ namespace WeaponSkill.Weapons.Guns
             }
             type = shootItem.shoot;
             #region 特判区域
-            if (item.type == ItemID.VenusMagnum)
+            if ((item.type == ItemID.VenusMagnum || item.type == ItemID.SniperRifle) && (type == ProjectileID.Bullet || type == ProjectileID.SilverBullet || type == 14))
             {
                 type = ProjectileID.BulletHighVelocity;
             }

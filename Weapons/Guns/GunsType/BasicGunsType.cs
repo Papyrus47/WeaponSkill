@@ -33,5 +33,6 @@ namespace WeaponSkill.Weapons.Guns.GunsType
         public int ResetTime = 30;
         public virtual void OnHold(Player player,Item item) { }
         public virtual void UpdateInventory(Player player, Item item) { }
+        public virtual void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage) { }
     }
 }
