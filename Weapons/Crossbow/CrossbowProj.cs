@@ -80,8 +80,8 @@ namespace WeaponSkill.Weapons.Crossbow
                 Color textColor = Color.White;
                 string text = @ref.Value + "/ 10";
                 Vector2 origin = font.MeasureString(text);
-                Vector2 textPos = Main.MouseScreen + new Vector2(0, -origin.Y * (Main.mouseY > Main.screenHeight * 0.5f).ToDirectionInt());
-                Utils.DrawBorderStringFourWay(Main.spriteBatch, font, text, textPos.X, textPos.Y, textColor, Color.Black, origin * 0.5f, 0.8f);
+                Vector2 textPos = Player.Top - Main.screenPosition + new Vector2(0, -origin.Y);
+                Utils.DrawBorderStringFourWay(Main.spriteBatch, font, text, textPos.X, textPos.Y, textColor, Color.Black, origin * 0.5f, 1.2f);
             }
             return CurrentSkill.PreDraw(Main.spriteBatch, ref lightColor);
         }

@@ -94,5 +94,28 @@ namespace WeaponSkill
         {
             if (player.immuneTime < immuneTime) player.SetImmuneTimeForAllTypes(immuneTime);
         }
+        /// <summary>
+        /// 用这个直接获取当前实例的命名空间
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static string GetInstancePart(this object obj)
+        {
+            string nameSpace = obj.GetType().Namespace;
+            nameSpace = nameSpace.Replace('.', '/');
+            nameSpace += "/";
+            return nameSpace;
+        }
+        /// <summary>
+        /// 用这个直接获取当前实例的命名空间附带名字
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static string GetInstancePartWithName(this object obj)
+        {
+            string nameSpace = GetInstancePart(obj);
+            string name = obj.GetType().Name;
+            return nameSpace + name;
+        }
     }
 }

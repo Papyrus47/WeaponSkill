@@ -9,6 +9,7 @@ using WeaponSkill.UI.ChangeAmmoUI;
 using WeaponSkill.UI.ChargeBladeUI;
 using WeaponSkill.UI.CrossbowPartUI;
 using WeaponSkill.UI.DualBladesUI;
+using WeaponSkill.UI.GunBulletUI;
 using WeaponSkill.UI.SpiritUI;
 using WeaponSkill.UI.StaminaUI;
 using WeaponSkill.UI.StarBreakerUI.SkillsTreeUI;
@@ -32,6 +33,7 @@ namespace WeaponSkill
         public ChargeBladeBottle chargeBladeBottle;
         public SkillsTreeUI skillsTreeUI;
         public TalkUI talkUI;
+        public GunBulletUI gunBulletUI;
         public override void Load()
         {
             userInterfaces = new();
@@ -78,6 +80,12 @@ namespace WeaponSkill
             userInterfaces.Add(userInterface4);
             crossbowPartUI.Initialize();
             userInterface4.SetState(crossbowPartUI);
+
+            gunBulletUI = new();
+            UserInterface userInterface5 = new UserInterface();
+            userInterfaces.Add(userInterface5);
+            gunBulletUI.Initialize();
+            userInterface5.SetState(gunBulletUI);
 
             On_NPC.HitModifiers.ToHitInfo += HitModifiers_ToHitInfo;
             On_Main.MouseText_DrawItemTooltip_GetLinesInfo += On_Main_MouseText_DrawItemTooltip_GetLinesInfo;
