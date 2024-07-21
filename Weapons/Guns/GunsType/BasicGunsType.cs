@@ -11,6 +11,10 @@ namespace WeaponSkill.Weapons.Guns.GunsType
     /// </summary>
     public abstract class BasicGunsType
     {
+        public BasicGunsType(int maxBullet = 0)
+        {
+            MaxBullet = maxBullet;
+        }
         /// <summary>
         /// 最大子弹量
         /// </summary>

@@ -85,8 +85,27 @@ namespace WeaponSkill.Weapons.DualBlades
         public float SwingLength;
         public bool BackDraw;
         public static List<int> DrawBackBlades = new();
-        public bool InDemonMode => SpawnItem.GetGlobalItem<DualBladesGlobalItem>().DemonMode;
-        public bool InArchdemonMode => SpawnItem.GetGlobalItem<DualBladesGlobalItem>().ArchdemonMode;
+        public bool InDemonMode
+        {
+            get
+            {
+                DualBladesGlobalItem dualBladesGlobalItem = SpawnItem.GetGlobalItem<DualBladesGlobalItem>();
+                if (dualBladesGlobalItem == null)
+                    return false;
+                return dualBladesGlobalItem.DemonMode;
+            }
+        }
+
+        public bool InArchdemonMode
+        {
+            get
+            {
+                DualBladesGlobalItem dualBladesGlobalItem = SpawnItem.GetGlobalItem<DualBladesGlobalItem>();
+                if (dualBladesGlobalItem == null)
+                    return false;
+                return dualBladesGlobalItem.ArchdemonMode;
+            }
+        }
         public override string Texture => "Terraria/Images/Item_0";
         public List<ProjSkill_Instantiation> OldSkills { get; set; }
         public ProjSkill_Instantiation CurrentSkill { get; set; }

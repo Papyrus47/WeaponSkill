@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WeaponSkill.Weapons.Guns.GunsType;
+using Terraria.ID;
 
 namespace WeaponSkill.Weapons.Guns
 {
@@ -31,7 +32,15 @@ namespace WeaponSkill.Weapons.Guns
         {
             int[] types =
             {
-                ItemID.Handgun
+                ItemID.Handgun,
+                95,
+                14,
+                219,
+                1255,
+                930,
+                587,
+                3007,
+                800
             };
             WeaponID ??= new();
             for (int i = 0; i < types.Length; i++)
@@ -77,11 +86,27 @@ namespace WeaponSkill.Weapons.Guns
         {
             switch (entity.type)
             {
+                #region 手枪一类
                 case ItemID.Handgun:
+                case 95:
+                case 587:
+                case 930:
+                case 800:
                     GunType = new Handgun();
                     break;
-                default:
+                case 14:
+                    GunType = new Handgun(6);
                     break;
+                case 219:
+                case 1255:
+                    GunType = new Handgun(17);
+                    break;
+                case 3007:
+                    GunType = new Handgun(10);
+                    break;
+                #endregion
+                default:
+                    throw new Exception("忘记填入枪的类型了!请修复!");
             }
         }
         public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -122,6 +147,12 @@ namespace WeaponSkill.Weapons.Guns
                 }
             }
             type = shootItem.shoot;
+            #region 特判区域
+            if (item.type == ItemID.VenusMagnum)
+            {
+                type = ProjectileID.BulletHighVelocity;
+            }
+            #endregion
         }
         public override bool? CanChooseAmmo(Item weapon, Item ammo, Player player) // 武器上调用,选择子弹
         {

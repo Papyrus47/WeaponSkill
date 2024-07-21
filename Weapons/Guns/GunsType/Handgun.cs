@@ -11,9 +11,10 @@ namespace WeaponSkill.Weapons.Guns.GunsType
     /// </summary>
     public class Handgun : BasicGunsType
     {
-        public Handgun()
+        public Handgun(int maxBullet = 0) : base(maxBullet)
         {
-            MaxBullet = 7;
+            if(maxBullet == 0)
+                MaxBullet = 7;
             HasBullet = MaxBullet;
             ResetTime = 40;
         }
