@@ -61,18 +61,20 @@ namespace WeaponSkill.Weapons.Crossbow
         public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) => false;
         public override void ModifyShootStats(Item item, Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            WeaponSkillPlayer weaponSkillPlayer = player.GetModPlayer<WeaponSkillPlayer>();
-            Item shootItem = weaponSkillPlayer.AmmoItems[weaponSkillPlayer.UseAmmoIndex];
-            if (item.consumable && !player.IsAmmoFreeThisShot(player.HeldItem, item, item.shoot))
-            {
-                CombinedHooks.OnConsumeAmmo(player, player.HeldItem, shootItem);
-                if (item.stack-- <= 0)
-                {
-                    item.active = false;
-                    item.TurnToAir();
-                }
-            }
-            type = shootItem.shoot;
+            //WeaponSkillPlayer weaponSkillPlayer = player.GetModPlayer<WeaponSkillPlayer>();
+            //if (weaponSkillPlayer.AmmoItems.Count == 0)
+            //    return;
+            //Item shootItem = weaponSkillPlayer.AmmoItems[weaponSkillPlayer.UseAmmoIndex];
+            //if (ItemLoader.ConsumeItem(shootItem, player) && !player.IsAmmoFreeThisShot(player.HeldItem, item, item.shoot))
+            //{
+            //    CombinedHooks.OnConsumeAmmo(player, player.HeldItem, shootItem);
+            //    if (shootItem.stack-- <= 0)
+            //    {
+            //        shootItem.active = false;
+            //        shootItem.TurnToAir();
+            //    }
+            //}
+            //type = shootItem.shoot;
         }
         public override bool CanConsumeAmmo(Item weapon, Item ammo, Player player)
         {
@@ -82,7 +84,7 @@ namespace WeaponSkill.Weapons.Crossbow
         {
             WeaponSkillPlayer weaponSkillPlayer = player.GetModPlayer<WeaponSkillPlayer>();
             CrossbowLoadArrow ??= new();
-            player.GetModPlayer<WeaponSkillPlayer>().ShowTheRangeChangeUI = true;
+            weaponSkillPlayer.ShowTheRangeChangeUI = true;
             if (player.ownedProjectileCounts[ModContent.ProjectileType<CrossbowProj>()] <= 0) // 生成手持弹幕
             {
                 for (int i = 0;i < weaponSkillPlayer.AmmoItems.Count; i++)

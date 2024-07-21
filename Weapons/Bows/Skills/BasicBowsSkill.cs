@@ -23,7 +23,7 @@ namespace WeaponSkill.Weapons.Bows.Skills
         {
             WeaponSkillPlayer weaponSkillPlayer = player.GetModPlayer<WeaponSkillPlayer>();
             Item item = weaponSkillPlayer.AmmoItems[weaponSkillPlayer.UseAmmoIndex];
-            if (item.consumable && !player.IsAmmoFreeThisShot(player.HeldItem, item, item.shoot))
+            if (ItemLoader.ConsumeItem(item,player) && !player.IsAmmoFreeThisShot(player.HeldItem, item, item.shoot))
             {
                 CombinedHooks.OnConsumeAmmo(player, player.HeldItem, item);
                 if (item.stack-- <= 0)

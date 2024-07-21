@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.ModLoader;
 using WeaponSkill.Helper;
 using WeaponSkill.Weapons.Bows;
+using static Terraria.GameContent.Animations.IL_Actions.NPCs;
 
 namespace WeaponSkill.Weapons.Crossbow.Skills
 {
@@ -36,7 +37,7 @@ namespace WeaponSkill.Weapons.Crossbow.Skills
                     resetArrow = true;
                 }
             }
-            if (item.consumable && !player.IsAmmoFreeThisShot(player.HeldItem, item, item.shoot))
+            if (ItemLoader.ConsumeItem(item, player) && !player.IsAmmoFreeThisShot(player.HeldItem, item, item.shoot))
             {
                 CombinedHooks.OnConsumeAmmo(player, player.HeldItem, item);
                 if (item.stack-- <= 0)

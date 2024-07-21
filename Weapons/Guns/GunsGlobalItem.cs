@@ -22,6 +22,11 @@ namespace WeaponSkill.Weapons.Guns
         /// 允许展示子弹UI
         /// </summary>
         public static bool ShowUI;
+        /// <summary>
+        /// 消耗子弹用
+        /// </summary>
+        public bool CosumeAmmo;
+
         public override void SetStaticDefaults()
         {
             int[] types =
@@ -38,6 +43,7 @@ namespace WeaponSkill.Weapons.Guns
         {
             ShowUI = true;
             GunType.OnHold(player,item);
+            player.GetModPlayer<WeaponSkillPlayer>().ShowTheRangeChangeUI = true;
             #region 如果进入装填弹药时间
             if (ResetBullet)
             {
@@ -78,6 +84,11 @@ namespace WeaponSkill.Weapons.Guns
                     break;
             }
         }
+        public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            CosumeAmmo = false;
+            return base.Shoot(item, player, source, position, velocity, type, damage, knockback);
+        }
         public override bool CanShoot(Item item, Player player)
         {
             if (ResetBullet)
@@ -94,7 +105,25 @@ namespace WeaponSkill.Weapons.Guns
             }
             return base.CanUseItem(item, player);
         }
-        public override bool? CanChooseAmmo(Item weapon, Item ammo, Player player) // 武器上调用
+        public override void ModifyShootStats(Item item, Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            CosumeAmmo = true;
+            WeaponSkillPlayer weaponSkillPlayer = player.GetModPlayer<WeaponSkillPlayer>();
+            if (weaponSkillPlayer.AmmoItems.Count == 0)
+                return;
+            Item shootItem = weaponSkillPlayer.AmmoItems[weaponSkillPlayer.UseAmmoIndex];
+            if (ItemLoader.ConsumeItem(shootItem, player) && !player.IsAmmoFreeThisShot(player.HeldItem, item, item.shoot))
+            {
+                CombinedHooks.OnConsumeAmmo(player, player.HeldItem, shootItem);
+                if (shootItem.stack-- <= 0)
+                {
+                    shootItem.active = false;
+                    shootItem.TurnToAir();
+                }
+            }
+            type = shootItem.shoot;
+        }
+        public override bool? CanChooseAmmo(Item weapon, Item ammo, Player player) // 武器上调用,选择子弹
         {
             if(GunType.HasBullet < 0) // 进入装填子弹
             {
@@ -105,9 +134,9 @@ namespace WeaponSkill.Weapons.Guns
                 return false;
             return base.CanChooseAmmo(weapon, ammo, player);
         }
-        public override bool CanConsumeAmmo(Item weapon, Item ammo, Player player) // 武器上调用
+        public override bool CanConsumeAmmo(Item weapon, Item ammo, Player player) // 武器上调用,子弹消耗
         {
-            return base.CanConsumeAmmo(weapon, ammo, player);
+            return CosumeAmmo;
         }
         public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback)
         {
