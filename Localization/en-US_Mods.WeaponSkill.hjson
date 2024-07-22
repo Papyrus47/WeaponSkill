@@ -94,4 +94,13 @@ Configs: {
 			Tooltip: Turn up will use this mod Boss AI
 		}
 	}
+
+	NormalConfig: {
+		DisplayName: Normal Config
+
+		DarkSword: {
+			Label: Dark Sword
+			Tooltip: ""
+		}
+	}
 }

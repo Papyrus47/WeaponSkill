@@ -136,9 +136,9 @@ namespace WeaponSkill.Weapons.BroadSword
                 CanChannel = true,
                 AIAction = () =>
                 {
-                    if ((int)Projectile.localAI[0] > 0)
+                    if ((int)Projectile.localAI[0] > 0) // 大于0时候,第一刀结束
                     {
-                        if (Projectile.localAI[1]++ < 50)
+                        if (Projectile.localAI[1]++ < 50) // 翻滚
                         {
                             Player.fullRotation = MathHelper.TwoPi * (Projectile.localAI[1] / 50f) * Player.direction;
                             Player.fullRotationOrigin = new Vector2(0, Player.height);
@@ -149,10 +149,11 @@ namespace WeaponSkill.Weapons.BroadSword
                             Player.SetImmuneTimeForAllTypes(120);
                             Player.immuneAlpha = 0;
                             SwingHelper.ProjFixedPlayerCenter(Player, 0, true);
-                            for(int i = 0; i < SwingHelper.oldVels.Length; i++)
+                            for (int i = 0; i < SwingHelper.oldVels.Length; i++)
                             {
                                 SwingHelper.oldVels[i] = Vector2.Zero;
                             }
+                            Projectile.numHits = 0;
                             return false;
                         }
                     }
@@ -165,8 +166,10 @@ namespace WeaponSkill.Weapons.BroadSword
                     if (Projectile.ai[1] == 0)
                     {
                         Player.fullRotation = 0;
-                        if ((int)Projectile.localAI[0] > 0) Projectile.damage += Projectile.originalDamage;
-                        else Projectile.damage = (int)(Projectile.damage * 1.5f);
+                        if ((int)Projectile.localAI[0] > 0) 
+                            Projectile.damage = Math.Abs(Projectile.damage) + Projectile.originalDamage;
+                        else 
+                            Projectile.damage = (int)(Projectile.damage * 1.5f);
                         SpawnItem.GetGlobalItem<BroadSwordGlobalItem>().ProjCanShoot = true;
                         TheUtility.Player_ItemCheck_Shoot(Player, SpawnItem, Projectile.damage);
 

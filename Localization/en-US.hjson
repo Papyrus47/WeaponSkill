@@ -51,7 +51,7 @@ Mods: {
 					One：0.5s
 					Two：1.5s
 					Three：2.5s
-					Exceeding charging ：After third attack 1/6s
+					Exceeding charging ：After third attack 0.5s
 					'''
 			}
 
