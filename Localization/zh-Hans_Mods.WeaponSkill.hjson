@@ -94,4 +94,13 @@ Configs: {
 			Tooltip: 启动以适配Weapon Skill（未实装）
 		}
 	}
+
+	NormalConfig: {
+		DisplayName: 常规设置
+
+		DarkSword: {
+			Label: 暗黑大剑
+			// Tooltip: ""
+		}
+	}
 }

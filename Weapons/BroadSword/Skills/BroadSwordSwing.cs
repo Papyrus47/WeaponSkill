@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Graphics.CameraModifiers;
+using WeaponSkill.Configs;
+using WeaponSkill.Weapons.General;
 
 namespace WeaponSkill.Weapons.BroadSword.Skills
 {
@@ -51,21 +53,35 @@ namespace WeaponSkill.Weapons.BroadSword.Skills
                         swingHelper.ProjFixedPlayerCenter(player, 0, true, true);
                         swingHelper.SwingAI(broadSword.SwingLength, player.direction, 0);
                         float soundPitch = -0.8f;
+                        int channelLevel = 0;
                         switch ((int)Projectile.ai[2])
                         {
                             case 30:
                                 soundPitch = -0.2f;
+                                channelLevel = 1;
                                 goto case 150;
                             case 90:
                                 soundPitch = -0.4f;
+                                channelLevel = 2;
                                 goto case 150;
                             case 150:
+                                if ((int)Projectile.ai[2] == 150)
+                                {
+                                    channelLevel = 3;
+                                }
                                 broadSword.ChangeLevel++;
                                 Projectile.damage += (int)(Projectile.originalDamage * 1.95f);
                                 var sound = SoundID.Item62;
-                                sound.MaxInstances = 3;
-                                sound.Pitch = soundPitch;
-                                sound.Volume = 0.8f;
+                                if (!NormalConfig.Init.DarkSword) // 不启用暗黑大剑
+                                {
+                                    sound.MaxInstances = 3;
+                                    sound.Pitch = soundPitch;
+                                    sound.Volume = 0.8f;
+                                }
+                                else
+                                {
+                                    sound = new SoundStyle("WeaponSkill/Sounds/GreatSword/En_" + channelLevel.ToString());
+                                }
                                 SoundEngine.PlaySound(sound, Projectile.position);
                                 for (int i = 0; i < 6; i++)
                                 {
@@ -77,13 +93,24 @@ namespace WeaponSkill.Weapons.BroadSword.Skills
                                     dust.noGravity = true;
                                 }
                                 break;
-                            case 160:
+                            case 180:
                                 Projectile.damage -= Projectile.originalDamage * 5;
                                 break;
                         }
                         if (Projectile.ai[1] > 20)
                         {
-                            SoundEngine.PlaySound(broadSword.SpawnItem.UseSound, player.position);
+                            if (!NormalConfig.Init.DarkSword) // 不启用暗黑大剑
+                                SoundEngine.PlaySound(broadSword.SpawnItem.UseSound, player.position);
+                            else
+                            {
+                                if(this is BroadSwordSwing_Strong)
+                                {
+                                    if (Projectile.localAI[0] <= 0)
+                                        SoundEngine.PlaySound(new SoundStyle("WeaponSkill/Sounds/GreatSword/Shit"), player.position);
+                                }
+                                else
+                                    SoundEngine.PlaySound(new SoundStyle("WeaponSkill/Sounds/GreatSword/FuckYou_Norm"), player.position);
+                            }
                             Projectile.ai[1] = Projectile.ai[2] = 0;
                             Projectile.ai[0]++;
                             Projectile.extraUpdates = 1;
@@ -92,6 +119,7 @@ namespace WeaponSkill.Weapons.BroadSword.Skills
                             {
                                 Projectile.damage *= 3;
                             }
+                            Projectile.numHits = 0;
                         }
                         break;
                     }
@@ -99,8 +127,9 @@ namespace WeaponSkill.Weapons.BroadSword.Skills
                     {
                         SwingAction?.Invoke(this);
                         Projectile.spriteDirection = player.direction * SwingDirectionChange.ToDirectionInt();
-                        if(Projectile.numHits > 0 && Projectile.ai[2] <= -6)
+                        if (Projectile.numHits > 0 && Projectile.ai[2] <= -6)
                         {
+                            Projectile.localAI[2] = 1;
                             Projectile.numHits = 0;
                             Projectile.ai[2] = TimeChange.Invoke() * 1.5f;
                             Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Main.rand.NextVector2Unit(), 9, 3, 1));
@@ -112,6 +141,15 @@ namespace WeaponSkill.Weapons.BroadSword.Skills
                         {
                             Time = 1 + (Projectile.ai[1] / TimeChangeMax) * 0.01f;
                             swingHelper.SetNotSaveOldVel();
+                            if (this is BroadSwordSwing_Strong && NormalConfig.Init.DarkSword && Projectile.localAI[0] == 1 && Projectile.localAI[1] >= 50 && Projectile.localAI[2] < 2)
+                            {
+                                SoundStyle style = new SoundStyle("WeaponSkill/Sounds/GreatSword/FuckYou_HitNull");
+                                if (Projectile.localAI[2] == 1)
+                                    style.Pitch = 0.3f;
+                                SoundEngine.PlaySound(style, player.position);
+                                Projectile.localAI[2] = 2;
+                                Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Main.rand.NextVector2Unit(), 18, 5, 18));
+                            }
                         }
                         else if ((int)(Projectile.ai[1] / TimeChange.Invoke()) % 3 == 0)
                         {
@@ -161,10 +199,19 @@ namespace WeaponSkill.Weapons.BroadSword.Skills
             ItemLoader.OnHitNPC(broadSword.SpawnItem, player, target, hit, damageDone);
             TheUtility.VillagesItemOnHit(broadSword.SpawnItem, player, new Rectangle((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height),Projectile.damage,Projectile.knockBack,target.whoAmI,Projectile.damage,damageDone);
             TheUtility.SetPlayerImmune(player);
+            if (hit.Crit)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    var proj = SpurtsProj.NewSpurtsProj(Projectile.GetSource_OnHit(target), target.Top, Projectile.velocity.RotatedBy(MathHelper.PiOver2 + MathHelper.PiOver4 * player.direction).SafeNormalize(default), 0, 0, player.whoAmI, 150, 50, TextureAssets.Extra[191].Value);
+                    proj.FixedPos = false;
+                }
+            }
         }
         public override void OnSkillActive()
         {
             Projectile.ai[1] = Projectile.ai[2] = Projectile.ai[0] = 0;
+            Projectile.localAI[2] = 0;
             SkillTimeOut = false;
         }
         public override void OnSkillDeactivate()
@@ -172,6 +219,7 @@ namespace WeaponSkill.Weapons.BroadSword.Skills
             SkillTimeOut = false;
             Projectile.damage = Projectile.originalDamage;
             Projectile.ai[1] = Projectile.ai[2] = Projectile.ai[0] = 0;
+            Projectile.localAI[2] = 0;
             Projectile.extraUpdates = 0;
             broadSword.ChangeLevel = 0;
         }
