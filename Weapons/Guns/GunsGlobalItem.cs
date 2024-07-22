@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WeaponSkill.Weapons.Guns.GunsType;
 using Terraria.ID;
+using Terraria.Localization;
 
 namespace WeaponSkill.Weapons.Guns
 {
@@ -40,7 +41,25 @@ namespace WeaponSkill.Weapons.Guns
                 930,
                 587,
                 3007,
-                800
+                800,
+                1265,
+                1254,
+                4703,
+                964,
+                534,
+                3788,
+                679,
+                2797,
+                1879,
+                905,
+                98,
+                434,
+                2270,
+                533,
+                1782,
+                1929,
+                1553,
+                //3475
             };
             WeaponID ??= new();
             for (int i = 0; i < types.Length; i++)
@@ -55,20 +74,7 @@ namespace WeaponSkill.Weapons.Guns
             player.GetModPlayer<WeaponSkillPlayer>().ShowTheRangeChangeUI = true;
             #region 如果进入装填弹药时间
             if (ResetBullet)
-            {
-                if (player.itemAnimation == 0 || player.itemTime == 0)
-                    player.itemAnimation = player.itemTime = GunType.ResetTime;
-                else if (player.itemAnimation == 2 || player.itemTime == 2)
-                {
-                    ResetBullet = false;
-                    GunType.HasBullet = GunType.MaxBullet;
-                    Item item1 = new Item(item.type);
-                    item1.SetDefaults(item.type);
-                    item.UseSound = item1.UseSound;
-                }
-                else if (player.itemAnimation == GunType.ResetTime / 2 || player.itemTime == GunType.ResetTime / 2)
-                    SoundEngine.PlaySound(GunType.ResetSound, player.position);
-            }
+                GunType.OnResetBullet(player,item);
             else
             {
                 if(GunType.HasBullet <= 0)
@@ -77,6 +83,15 @@ namespace WeaponSkill.Weapons.Guns
                 }
             }
             #endregion
+        }
+        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        {
+            int index = tooltips.FindIndex(x => x.Name == "Damage");
+            if(index != -1)
+            {
+                tooltips.Insert(index + 1, new TooltipLine(Mod, "Max Bullet", Language.GetTextValue("Mods.WeaponSkill.Guns.MaxBullet") + GunType.MaxBullet.ToString()));
+                tooltips.Insert(index + 1, new TooltipLine(Mod, "Reset Time", Language.GetTextValue("Mods.WeaponSkill.Guns.ResetTime") + (GunType.ResetTime / 60f).ToString("0.00") + "s"));
+            }
         }
         public override void UpdateInventory(Item item, Player player)
         {
@@ -111,6 +126,58 @@ namespace WeaponSkill.Weapons.Guns
                     };
                     break;
                 #endregion
+                #region 冲锋枪一类
+                case 1265:
+                case 905:
+                case 3008:
+                case 1782:
+                    GunType = new Submachinegun();
+                    break;
+                #endregion
+                #region 狙击枪一类
+                case 1254:
+                case 1879:
+                    GunType = new SniperRiflesgun();
+                    break;
+                #endregion
+                #region 散弹一类
+                case 4703:
+                case 964:
+                case 534:
+                    GunType = new Shotguns();
+                    break;
+                case 3788:
+                    GunType = new Shotguns(9)
+                    {
+                        ResetTime = 25
+                    };
+                    break;
+                case 679:
+                    GunType = new Shotguns(13)
+                    {
+                        SPShotgun = true,
+                        ResetTime = 45
+                    };
+                    break;
+                case 2797:
+                    GunType = new Shotguns(20);
+                    break;
+                #endregion
+                #region 机枪一类
+                case 98:
+                case 434:
+                    GunType = new Machinegun();
+                    break;
+                case 533:
+                    GunType = new Machinegun(100);
+                    break;
+                case 2270:
+                case 1929:
+                case 1553:
+                case 3475:
+                    GunType = new Machinegun(200);
+                    break;
+                #endregion
                 default:
                     throw new Exception("忘记填入枪的类型了!请修复!");
             }
@@ -118,6 +185,7 @@ namespace WeaponSkill.Weapons.Guns
         public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             CosumeAmmo = false;
+            GunType.OnShoot(player, item);
             return base.Shoot(item, player, source, position, velocity, type, damage, knockback);
         }
         public override bool CanShoot(Item item, Player player)
@@ -178,12 +246,6 @@ namespace WeaponSkill.Weapons.Guns
         public override bool CanConsumeAmmo(Item weapon, Item ammo, Player player) // 武器上调用,子弹消耗
         {
             return CosumeAmmo;
-        }
-        public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback)
-        {
-            if (ResetBullet)
-                return;
-            GunType.HasBullet--;
         }
     }
 }

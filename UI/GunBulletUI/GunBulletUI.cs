@@ -40,7 +40,7 @@ namespace WeaponSkill.UI.GunBulletUI
                 rectangle.X += 30;
                 var font = FontAssets.MouseText.Value;
                 string text = (item.GunType.HasBullet > 0 ? item.GunType.HasBullet : 0) + "/" + item.GunType.MaxBullet;
-                Utils.DrawBorderStringFourWay(spriteBatch, font, text, rectangle.X, rectangle.Y, Color.White, Color.Black, new Vector2(font.MeasureString(text).X * 0.5f,rectangle.Height * 0.5f));
+                Utils.DrawBorderStringFourWay(spriteBatch, font, text, rectangle.X, rectangle.Y, Color.White, Color.Black, new Vector2(10,rectangle.Height * 0.5f));
             }
         }
     }

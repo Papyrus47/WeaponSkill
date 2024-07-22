@@ -105,8 +105,10 @@ namespace WeaponSkill
         public const int DashLeft = 3;
         public int DashTimer;
         public int DashDir = -1;
+        public bool PlayerOnHurt;
         public override void ResetEffects()
         {
+            PlayerOnHurt = false;
             ShowTheRangeChangeUI = false; 
             ShowTheStamina = false;
             AmmoItems ??= new();
@@ -175,6 +177,11 @@ namespace WeaponSkill
             {
                 StatStamina = StatStaminaMax;
             }
+        }
+        public override void OnHurt(Player.HurtInfo info)
+        {
+            base.OnHurt(info);
+            PlayerOnHurt = true;
         }
         public override void OnEnterWorld()
         {

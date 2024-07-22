@@ -1,6 +1,11 @@
 CrossbowPart: Hold crossbow
 BookCondition: No hold anything
 
+Guns: {
+	ResetTime: Reset Bullet Time:
+	MaxBullet: Max Bullet:
+}
+
 Projectiles: {
 	BroadSwordProj.DisplayName: Broad Sword Proj
 	ShortswordProj.DisplayName: Shortsword Proj

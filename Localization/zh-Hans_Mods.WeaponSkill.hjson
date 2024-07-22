@@ -1,6 +1,11 @@
 CrossbowPart: 手持弩
 BookCondition: 没有手持任何物品
 
+Guns: {
+	ResetTime: 装填弹药时间:
+	MaxBullet: 弹夹最大容量:
+}
+
 Projectiles: {
 	// BroadSwordProj.DisplayName: Broad Sword Proj
 	// ShortswordProj.DisplayName: Shortsword Proj
