@@ -246,7 +246,20 @@ namespace WeaponSkill.Weapons.DualBlades.Skills
                     {
                         if (HeldBlade.NPCHit[target.whoAmI])
                         {
+                            if (hit.Crit)
+                            {
+                                var proj = TheUtility.CritProj(Projectile, target, BackBlade.vel.Value.RotatedBy(MathHelper.PiOver2 + MathHelper.PiOver4 * player.direction).SafeNormalize(default));
+                                proj.Projectile.position += proj.Projectile.velocity * -50;
+                            }
                             BackBlade.NPCHit[target.whoAmI] = true;
+                        }
+                        else
+                        {
+                            if (hit.Crit)
+                            {
+                                var proj = TheUtility.CritProj(Projectile, target, HeldBlade.vel.Value.RotatedBy(MathHelper.PiOver2 + MathHelper.PiOver4 * player.direction).SafeNormalize(default));
+                                proj.Projectile.position += proj.Projectile.velocity * -50;
+                            }
                         }
                         HeldBlade.NPCHit[target.whoAmI] = true;
                         break;
@@ -256,6 +269,22 @@ namespace WeaponSkill.Weapons.DualBlades.Skills
                     {
                         HeldBlade.NPCHit[target.whoAmI] = true;
                         BackBlade.NPCHit[target.whoAmI] = true;
+                        if(swingSet == SwingSet.HeldBlades)
+                        {
+                            if (hit.Crit)
+                            {
+                                var proj = TheUtility.CritProj(Projectile, target, HeldBlade.vel.Value.RotatedBy(MathHelper.PiOver2 + MathHelper.PiOver4 * player.direction).SafeNormalize(default));
+                                proj.Projectile.position += proj.Projectile.velocity * -50;
+                            }
+                        }
+                        else
+                        {
+                            if (hit.Crit)
+                            {
+                                var proj = TheUtility.CritProj(Projectile, target, BackBlade.vel.Value.RotatedBy(MathHelper.PiOver2 + MathHelper.PiOver4 * player.direction).SafeNormalize(default));
+                                proj.Projectile.position += proj.Projectile.velocity * -50;
+                            }
+                        }
                         break;
                     }
 

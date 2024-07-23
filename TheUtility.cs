@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using WeaponSkill.Helper;
+using WeaponSkill.Weapons.General;
 
 namespace WeaponSkill
 {
@@ -116,6 +117,16 @@ namespace WeaponSkill
             string nameSpace = GetInstancePart(obj);
             string name = obj.GetType().Name;
             return nameSpace + name;
+        }
+        /// <summary>
+        /// 会心特效
+        /// </summary>
+        /// <param name="target"></param>
+        public static SpurtsProj CritProj(Projectile Projectile, NPC target, Vector2 vel)
+        {
+            SpurtsProj proj = SpurtsProj.NewSpurtsProj(Projectile.GetSource_OnHit(target), target.Center, vel, 0, 0, Projectile.owner, 150, 50, TextureAssets.Heart.Value);
+            proj.FixedPos = false;
+            return proj;
         }
     }
 }

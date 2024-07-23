@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria;
 using WeaponSkill.Helper;
 using WeaponSkill.Weapons.Bows;
 using WeaponSkill.Weapons.Hammer;
@@ -333,6 +334,10 @@ namespace WeaponSkill.Weapons.Pickaxe
                         Projectile.ai[1] = 0;
                         break;
                     }
+            }
+            if (hit.Crit)
+            {
+                TheUtility.CritProj(Projectile, target, Projectile.velocity.RotatedBy(MathHelper.PiOver2).SafeNormalize(default));
             }
         }
         public override bool OnTileCollide(Vector2 oldVelocity)

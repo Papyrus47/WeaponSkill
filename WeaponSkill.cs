@@ -17,6 +17,7 @@ namespace WeaponSkill
         public static Asset<Effect> OffsetShader;
         public static Asset<Effect> SwordHot;
         public static Asset<Effect> HammerChannelShader;
+        public static Asset<Texture2D> CritTex;
         //public static Asset<Effect> SP_SwingEffect;
         public static Asset<Texture2D> ChooseAmmoUITex;
         public static Asset<Texture2D> StaminaUITex;
@@ -45,6 +46,7 @@ namespace WeaponSkill
                 StaminaUITex = Assets.Request<Texture2D>("UI/StaminaUI/" + nameof(StaminaUITex));
                 SpiritUITex = Assets.Request<Texture2D>("UI/SpiritUI/" + nameof(SpiritUITex));
                 SwingTex_Offset = Assets.Request<Texture2D>("Images/" + nameof(SwingTex_Offset));
+                CritTex = Assets.Request<Texture2D>("Images/" + nameof(CritTex));
                 TalkUI = Assets.Request<Texture2D>("UI/StarBreakerUI/TalkUI/" + nameof(TalkUI));
                 HotTex = Assets.Request<Texture2D>("Images/" + nameof(HotTex));
             }

@@ -114,6 +114,10 @@ namespace WeaponSkill.Weapons.Hammer.Skills
             base.OnHitNPC(target, hit, damageDone);
             if(Projectile.numHits < 15) Projectile.numHits += 3;
             TheUtility.SetPlayerImmune(player);
+            if (hit.Crit)
+            {
+                TheUtility.CritProj(Projectile, target, Projectile.velocity.RotatedBy(MathHelper.PiOver2 + MathHelper.PiOver4 * player.direction).SafeNormalize(default));
+            }
         }
         public override bool PreDraw(SpriteBatch sb, ref Color lightColor)
         {

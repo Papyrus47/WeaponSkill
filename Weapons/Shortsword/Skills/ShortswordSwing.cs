@@ -71,6 +71,11 @@ namespace WeaponSkill.Weapons.Shortsword.Skills
             ItemLoader.OnHitNPC(Shortsword.SpawnItem, player, target, hit, damageDone);
             TheUtility.VillagesItemOnHit(Shortsword.SpawnItem, player, new Rectangle((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height), Projectile.damage, Projectile.knockBack, target.whoAmI, Projectile.damage, damageDone);
             TheUtility.SetPlayerImmune(player,20);
+
+            if (hit.Crit)
+            {
+                TheUtility.CritProj(Projectile, target, Projectile.velocity.RotatedBy(MathHelper.PiOver2 + MathHelper.PiOver4 * player.direction).SafeNormalize(default));
+            }
         }
         public override void OnSkillActive()
         {

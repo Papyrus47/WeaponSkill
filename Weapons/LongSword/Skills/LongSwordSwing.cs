@@ -99,6 +99,10 @@ namespace WeaponSkill.Weapons.LongSword.Skills
             player.itemAnimation = player.itemAnimationMax;
             player.itemTime = player.itemTimeMax;
             TheUtility.VillagesItemOnHit(LongSword.SpawnItem, player,Projectile.Hitbox, hit.Damage, hit.Knockback, target.whoAmI, damageDone, damageDone);
+            if (hit.Crit)
+            {
+                TheUtility.CritProj(Projectile, target, Projectile.velocity.RotatedBy(MathHelper.PiOver2 + MathHelper.PiOver4 * player.direction).SafeNormalize(default));
+            }
             //ItemLoader.OnHitNPC(LongSword.SpawnItem, player,target, hit, damageDone);
         }
         public override bool PreDraw(SpriteBatch sb, ref Color lightColor)

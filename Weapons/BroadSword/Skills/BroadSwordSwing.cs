@@ -201,11 +201,7 @@ namespace WeaponSkill.Weapons.BroadSword.Skills
             TheUtility.SetPlayerImmune(player);
             if (hit.Crit)
             {
-                for (int i = 0; i < 2; i++)
-                {
-                    var proj = SpurtsProj.NewSpurtsProj(Projectile.GetSource_OnHit(target), target.Top, Projectile.velocity.RotatedBy(MathHelper.PiOver2 + MathHelper.PiOver4 * player.direction).SafeNormalize(default), 0, 0, player.whoAmI, 150, 50, TextureAssets.Extra[191].Value);
-                    proj.FixedPos = false;
-                }
+                TheUtility.CritProj(Projectile,target, Projectile.velocity.RotatedBy(MathHelper.PiOver2 + MathHelper.PiOver4 * player.direction).SafeNormalize(default));
             }
         }
         public override void OnSkillActive()
