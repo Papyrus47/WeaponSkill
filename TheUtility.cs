@@ -21,6 +21,27 @@ namespace WeaponSkill
             }
             return false;
         }
+        public static T DeepClone<T>(this T obj)
+        {
+            #region 空检查判定
+            if (obj == null)
+                return obj;
+            #endregion
+
+            #region type判定
+            var type = obj.GetType();
+            if (obj is string || type.IsValueType)
+                return obj;
+            #endregion
+
+            var result = Activator.CreateInstance(type); // 创建T的实例
+            var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic); // 获得所有字段
+            foreach (var field in fields)
+            {
+                field.SetValue(result, field.GetValue(obj)); // Clone下来所有的字段
+            }
+            return (T)result;
+        }
         public static void VillagesItemOnHit(Item item,Player player, Rectangle itemRectangle, int damage, float knockBack, int npcIndex, int dmgRandomized, int dmgDone)
         {
             Type type = player.GetType();

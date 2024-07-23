@@ -7,6 +7,7 @@ using WeaponSkill.Items.DualBlades;
 using WeaponSkill.UI.StarBreakerUI.TalkUI;
 using WeaponSkill.Weapons.StarBreakerWeapon.General.ElementDamage;
 using WeaponSkill.Weapons.StarBreakerWeapon.General;
+using WeaponSkill.Helper.ResidueSwing;
 
 namespace WeaponSkill
 {
@@ -17,8 +18,8 @@ namespace WeaponSkill
         public static Asset<Effect> OffsetShader;
         public static Asset<Effect> SwordHot;
         public static Asset<Effect> HammerChannelShader;
-        public static Asset<Texture2D> CritTex;
         //public static Asset<Effect> SP_SwingEffect;
+        public static Asset<Texture2D> CritTex;
         public static Asset<Texture2D> ChooseAmmoUITex;
         public static Asset<Texture2D> StaminaUITex;
         public static Asset<Texture2D> SwingTex;
@@ -26,6 +27,7 @@ namespace WeaponSkill
         public static Asset<Texture2D> SpiritUITex;
         public static Asset<Texture2D> HotTex;
         public static Asset<Texture2D> TalkUI;
+        public static Asset<Texture2D> Perlin;
         public static ModKeybind RangeChange;
         public static ModKeybind BowSlidingStep;
         public static ModKeybind SpKeyBind;
@@ -47,6 +49,7 @@ namespace WeaponSkill
                 SpiritUITex = Assets.Request<Texture2D>("UI/SpiritUI/" + nameof(SpiritUITex));
                 SwingTex_Offset = Assets.Request<Texture2D>("Images/" + nameof(SwingTex_Offset));
                 CritTex = Assets.Request<Texture2D>("Images/" + nameof(CritTex));
+                Perlin = Assets.Request<Texture2D>("Images/" + nameof(Perlin));
                 TalkUI = Assets.Request<Texture2D>("UI/StarBreakerUI/TalkUI/" + nameof(TalkUI));
                 HotTex = Assets.Request<Texture2D>("Images/" + nameof(HotTex));
             }
@@ -54,6 +57,7 @@ namespace WeaponSkill
             On_Main.LoadWorlds += On_Main_LoadWorlds;
             Main.OnResolutionChanged += Main_OnResolutionChanged;
             RenderTargetShaderSystem = new();
+            WeaponSkill.RenderTargetShaderSystem.RenderDraw.Add(new ResidueSwingRender());
             ElementDamageSystem.Load();
             Main.OnPostDraw += Main_OnPostDraw;
 

@@ -23,6 +23,10 @@ namespace WeaponSkill.Helper
         public float VisualRotation;
         public int[] oldFrames;
         /// <summary>
+        /// 使用Shader的索引
+        /// </summary>
+        public byte UseShaderPass = 0;
+        /// <summary>
         /// 挥舞的启用
         /// </summary>
         protected bool _acitveSwing;
@@ -388,7 +392,7 @@ namespace WeaponSkill.Helper
                 {
                     pos = Center + (pos - Center);
                 }
-                if (effect == null)
+                if (effect == null || UseShaderPass == 1)
                 {
                     pos -= Main.screenPosition;
                 }
@@ -412,7 +416,7 @@ namespace WeaponSkill.Helper
 
                 gd.Textures[0] = tex;
                 //gd.Textures[0] = TextureAssets.MagicPixel.Value;
-                effect?.CurrentTechnique.Passes[0].Apply();
+                effect?.CurrentTechnique.Passes[UseShaderPass].Apply();
                 gd.DrawUserPrimitives(PrimitiveType.TriangleList, vertices.ToArray(), 0, vertices.Count / 3);
                 //gd.RasterizerState = origin;
             }

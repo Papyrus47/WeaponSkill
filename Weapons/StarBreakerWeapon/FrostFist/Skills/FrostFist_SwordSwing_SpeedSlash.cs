@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.Graphics.CameraModifiers;
 using WeaponSkill.Helper;
+using WeaponSkill.Helper.ResidueSwing;
+using WeaponSkill.Weapons.Spears;
 using WeaponSkill.Weapons.StarBreakerWeapon.General;
 
 namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
@@ -32,22 +34,44 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
                 Projectile.localNPCHitCooldown = -1;
                 Projectile.friendly = true;
                 Projectile.aiStyle = -1;
-                swing = new(Projectile, 15);
+                swing = new(Projectile, 15)
+                {
+                    UseShaderPass = 1
+                };
                 Projectile.extraUpdates = 2;
+                //ResidueSwing.Instance.AddResidueSwing((time) =>
+                //{
+                //    if (!Projectile.active || Projectile.hide)
+                //        return false;
+
+
+                //    return true;
+                //}, Projectile.timeLeft);
             }
             public override bool ShouldUpdatePosition() => false;
             public override void AI()
             {
-                Projectile.ai[1]++;
-                swing.ProjFixedPlayerCenter(player, 0, true);
-                swing.SetRotVel(VelRot);
-                swing.SwingAI(fistProj.SwordLength, player.direction, Rot * SwingDirectionChange.ToDirectionInt() * TimeChange.Invoke(Projectile.ai[1] / SwingTime));
-                if(Projectile.ai[1] / SwingTime > 1)
+                Projectile.timeLeft = 2;
+                if (Projectile.ai[1] / SwingTime > 2f)
                 {
                     Projectile.Kill();
-                    SoundEngine.PlaySound(SoundID.Item19 with { Pitch = 0.5f,MaxInstances = 3 }, Projectile.Center);
+                    return;
                 }
-                if (Projectile.ai[2] > 30)
+                else
+                {
+                    Projectile.ai[1]++;
+                    if (Projectile.ai[1] / SwingTime <= 1)
+                    {
+                        swing.ProjFixedPlayerCenter(player, 0, true);
+                        swing.SetRotVel(VelRot);
+                        swing.SwingAI(fistProj.SwordLength, player.direction, Rot * SwingDirectionChange.ToDirectionInt() * Math.Clamp(TimeChange.Invoke(Projectile.ai[1] / SwingTime), 0, 1));
+                    }
+                    if ((int)Projectile.ai[1] == (int)SwingTime)
+                    {
+                        SoundEngine.PlaySound(SoundID.Item19 with { Pitch = 0.5f, MaxInstances = 3 }, Projectile.Center);
+                    }
+                }
+                if (Projectile.ai[2] > 20)
                 {
                     Projectile.hide = true;
                 }
@@ -61,7 +85,22 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills
             public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => swing.GetColliding(targetHitbox);
             public override bool PreDraw(ref Color lightColor)
             {
-                swing.Swing_TrailingDraw(WeaponSkill.SwingTex.Value, (_) => new Color(0.2f, 0.4f, 0.8f, 0f) * 1.4f, null);
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
+
+                Effect effect = WeaponSkill.SwingEffect.Value;
+                var projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, 0, 1);
+                var model = Matrix.CreateTranslation(new Vector3(-Main.screenPosition.X, -Main.screenPosition.Y, 0));
+                effect.Parameters["uTransform"].SetValue(model * projection);
+                effect.Parameters["uColorChange"].SetValue(0.95f);
+                effect.Parameters["uTime"].SetValue(Math.Clamp(1f - (Projectile.ai[1] - SwingTime) / SwingTime, 0, 1));
+                Main.graphics.GraphicsDevice.Textures[1] = WeaponSkill.Perlin.Value;
+                //Main.graphics.GraphicsDevice.Textures[2] = WeaponSkill.Perlin.Value;
+                swing.Swing_TrailingDraw(WeaponSkill.SwingTex.Value, (_) => new Color(0.2f, 0.4f, 0.8f, 0f) * 1.4f, WeaponSkill.SwingEffect.Value);
+
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None,Main.Rasterizer, null, Main.Transform);
+                //swing.Swing_TrailingDraw(WeaponSkill.SwingTex.Value, (_) => new Color(0.2f, 0.4f, 0.8f, 0f) * 1.4f, null);
                 return false;
             }
         }
