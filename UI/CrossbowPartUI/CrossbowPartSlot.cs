@@ -32,7 +32,7 @@ namespace WeaponSkill.UI.CrossbowPartUI
             Width.Set(TextureAssets.InventoryBack9.Width(), 0f);
             Height.Set(TextureAssets.InventoryBack9.Height(), 0f);
         }
-        protected override void DrawSelf(SpriteBatch spriteBatch)
+        public override void DrawSelf(SpriteBatch spriteBatch)
         {
             if (CrossbowGlobalItem.OpenItem == null)
                 return;

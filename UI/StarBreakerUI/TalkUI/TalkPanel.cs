@@ -39,7 +39,7 @@ namespace WeaponSkill.UI.StarBreakerUI.TalkUI
             Top.Precent = WS_Configs_UI.Init.TalkUIPos.Y;
             base.Update(gameTime);
         }
-        protected override void DrawSelf(SpriteBatch spriteBatch)
+        public override void DrawSelf(SpriteBatch spriteBatch)
         {
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.UIScaleMatrix);

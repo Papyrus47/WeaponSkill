@@ -26,7 +26,7 @@ namespace WeaponSkill.UI.StaminaUI
             Recalculate();
             if (Main.LocalPlayer.GetModPlayer<WeaponSkillPlayer>().ShowTheStamina && !Main.playerInventory) base.Draw(spriteBatch);
         }
-        protected override void DrawSelf(SpriteBatch spriteBatch)
+        public override void DrawSelf(SpriteBatch spriteBatch)
         {
             var tex = WeaponSkill.StaminaUITex.Value;
             Rectangle drawRect = GetDimensions().ToRectangle();

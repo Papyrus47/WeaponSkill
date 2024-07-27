@@ -63,7 +63,7 @@ namespace WeaponSkill.UI.ChargeBladeUI
                 base.Draw(spriteBatch);
             }
         }
-        protected override void DrawSelf(SpriteBatch spriteBatch)
+        public override void DrawSelf(SpriteBatch spriteBatch)
         {
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.SamplerStateForCursor, DepthStencilState.None, RasterizerState.CullNone, null, Main.UIScaleMatrix);

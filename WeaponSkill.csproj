@@ -1,11 +1,11 @@
-
+﻿
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\tModLoader.targets" />
   <PropertyGroup>
     <AssemblyName>WeaponSkill</AssemblyName>
     <LangVersion>latest</LangVersion>
 	  <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-  </PropertyGroup>
+  </PropertyGroup>	
   <ItemGroup>
     <None Remove="Effects\HammerChannelShader.fx" />
     <None Remove="Images\VanillaImages\Projectile_699.png" />
@@ -35,10 +35,12 @@
     <None Remove="Weapons\StarBreakerWeapon\FrostFist\FrostFist_LongSword.png" />
   </ItemGroup>
   <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="NPCs\Bosses\StarBreaker\FrostFist\Skills\" />
     <Folder Include="Sounds\Musics\" />
     <Folder Include="Weapons\Staffs\" />
+    <Folder Include="Weapons\SummonStaff\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Solaestas.tModLoader.ModBuilder" Version="1.6.1" />
   </ItemGroup>
 </Project>

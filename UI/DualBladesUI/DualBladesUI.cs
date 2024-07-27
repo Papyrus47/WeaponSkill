@@ -31,7 +31,7 @@ namespace WeaponSkill.UI.DualBladesUI
                 base.Draw(spriteBatch);
             }
         }
-        protected override void DrawSelf(SpriteBatch spriteBatch)
+        public override void DrawSelf(SpriteBatch spriteBatch)
         {
             var tex = ModContent.Request<Texture2D>("WeaponSkill/UI/DualBladesUI/DualBladesUI").Value;
             var item = Main.LocalPlayer.HeldItem.GetGlobalItem<DualBladesGlobalItem>();

@@ -24,7 +24,7 @@ namespace WeaponSkill.UI.ChangeAmmoUI
             base.MouseOver(evt);
 
         }
-        protected override void DrawSelf(SpriteBatch spriteBatch)
+        public override void DrawSelf(SpriteBatch spriteBatch)
         {
             if (AmmoItem == null) return;
             Texture2D uiTex = WeaponSkill.ChooseAmmoUITex.Value;

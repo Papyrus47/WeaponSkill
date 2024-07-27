@@ -32,7 +32,7 @@ namespace WeaponSkill.UI.SpiritUI
                 base.Draw(spriteBatch);
             }
         }
-        protected override void DrawSelf(SpriteBatch spriteBatch)
+        public override void DrawSelf(SpriteBatch spriteBatch)
         {
             //spriteBatch.End();
             //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.UIScaleMatrix);

@@ -68,8 +68,8 @@ namespace WeaponSkill.UI.ChangeAmmoUI
         {
             if (Main.LocalPlayer.GetModPlayer<WeaponSkillPlayer>().ShowTheRangeChangeUI && !Main.playerInventory) base.Draw(spriteBatch);
         }
-        protected override void DrawChildren(SpriteBatch spriteBatch) { }
-        protected override void DrawSelf(SpriteBatch spriteBatch)
+        public override void DrawChildren(SpriteBatch spriteBatch) { }
+        public override void DrawSelf(SpriteBatch spriteBatch)
         {
             int index = Main.LocalPlayer.GetModPlayer<WeaponSkillPlayer>().UseAmmoIndex;
             if (AmmoItems.Count == 0) return;
