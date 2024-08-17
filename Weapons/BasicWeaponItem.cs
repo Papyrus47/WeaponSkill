@@ -20,5 +20,10 @@ namespace WeaponSkill.Weapons
         {
             WeaponID = null;
         }
+        public virtual void SetWeaponID(params int[] weaponIDs)
+        {
+            WeaponID ??= new();
+            WeaponID.TryAdd(weaponIDs);
+        }
     }
 }
