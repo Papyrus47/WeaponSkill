@@ -149,14 +149,5 @@ namespace WeaponSkill
             proj.FixedPos = false;
             return proj;
         }
-        public static bool TryAdd<T>(this HashSet<T> hash, T[] Array)
-        {
-            for(int i =  0; i < Array.Length; i++)
-            {
-                if (!hash.Add(Array[i]))
-                    return false;
-            }
-            return true;
-        }
     }
 }

@@ -5,14 +5,7 @@
     <AssemblyName>WeaponSkill</AssemblyName>
     <LangVersion>latest</LangVersion>
 	  <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-  </PropertyGroup>
-  <ItemGroup>
-    <AdditionalFiles Remove="Weapons\SummonStaff\**" />
-    <Compile Remove="Weapons\SummonStaff\**" />
-    <EmbeddedResource Remove="Weapons\SummonStaff\**" />
-    <ModEffect Remove="Weapons\SummonStaff\**" />
-    <None Remove="Weapons\SummonStaff\**" />
-  </ItemGroup>	
+  </PropertyGroup>	
   <ItemGroup>
     <None Remove="Effects\HammerChannelShader.fx" />
     <None Remove="Images\VanillaImages\Projectile_699.png" />
@@ -45,6 +38,7 @@
     <Folder Include="NPCs\Bosses\StarBreaker\FrostFist\Skills\" />
     <Folder Include="Sounds\Musics\" />
     <Folder Include="Weapons\Staffs\" />
+    <Folder Include="Weapons\SummonStaff\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Solaestas.tModLoader.ModBuilder" Version="1.6.1" />
