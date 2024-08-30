@@ -12,7 +12,8 @@ namespace WeaponSkill.Weapons
         public static HashSet<int> WeaponID;
         public override bool AppliesToEntity(Item entity, bool lateInstantiation)
         {
-            if (WeaponID == null) return false;
+            if (WeaponID == null) 
+                return false;
             return lateInstantiation && WeaponID.Contains(entity.type);
         }
         public override void Unload()
