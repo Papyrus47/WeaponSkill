@@ -13,6 +13,24 @@ namespace WeaponSkill.Helper
     /// </summary>
     public class SwingHelper
     {
+        public abstract class SwingHelper_BasicDrawCorrections
+        {
+            public readonly SwingHelper SourceSwingHelper;
+
+            public SwingHelper_BasicDrawCorrections(SwingHelper sourceSwingHelper)
+            {
+                SourceSwingHelper = sourceSwingHelper;
+            }
+
+            public abstract void ControlDrawCenter();
+            /// <summary>
+            /// 绘制的修正
+            /// </summary>
+            public virtual void DrawVelCorrection(ref Vector2 drawCenter,Vector2 Vel)
+            {
+                drawCenter += Vel;
+            }
+        }
         public object SpawnEntity;
         /// <summary>
         /// 起点向量
@@ -22,6 +40,7 @@ namespace WeaponSkill.Helper
         public Vector2[] oldVels;
         public float VisualRotation;
         public int[] oldFrames;
+        public SwingHelper_BasicDrawCorrections DrawCorrections;
         /// <summary>
         /// 使用Shader的索引
         /// </summary>
@@ -48,6 +67,8 @@ namespace WeaponSkill.Helper
         protected virtual int frameMax { get => Main.projFrames[projectile.type]; set => Main.projFrames[projectile.type] = value; }
         protected virtual int width { get => projectile.width; set => projectile.width = value; }
         protected virtual Vector2 Size { get => projectile.Size; set => projectile.Size = value; }
+        public void SetDrawCorrections(SwingHelper_BasicDrawCorrections drawCorrections) => DrawCorrections = drawCorrections;
+
         public SwingHelper(object spawnEntity, int oldVelLength, Asset<Texture2D> swingItemTex = null)
         {
             SpawnEntity = spawnEntity;
@@ -160,7 +181,8 @@ namespace WeaponSkill.Helper
         {
             Center = player.RotatedRelativePoint(player.MountedCenter);
             _drawCorrections = drawCorrections;
-            if (!_drawCorrections) Center += velocity.SafeNormalize(default) * length;
+            if (!_drawCorrections) 
+                Center += velocity.SafeNormalize(default) * length;
             _changeHeldLength = length;
             if (isUseSwing)
             {
@@ -178,7 +200,8 @@ namespace WeaponSkill.Helper
         {
             Center = pos;
             _drawCorrections = drawCorrections;
-            if (!_drawCorrections) Center += velocity.SafeNormalize(default) * length;
+            if (!_drawCorrections) 
+                Center += velocity.SafeNormalize(default) * length;
             _changeHeldLength = length;
         }
         public virtual void SetSwingActive() => _acitveSwing = true;
@@ -280,10 +303,7 @@ namespace WeaponSkill.Helper
                 Vector2 halfLength = new Vector2(-velocity.Y, velocity.X).RotatedBy(VisualRotation * spriteDirection).SafeNormalize(default)
                     * _halfSizeLength * spriteDirection;
                 Vector2 center = GetDrawCenter(i);
-                if (_drawCorrections)
-                {
-                    center = Center + (center - Center);
-                }
+                DrawCorrections?.DrawVelCorrection(ref center,velocity);
                 Vector2 halfVelPos = center + velocity * 0.5f;
                 Vector2[] pos = new Vector2[4]
                 {
@@ -323,10 +343,9 @@ namespace WeaponSkill.Helper
                 * _halfSizeLength * spriteDirection;
 
             Vector2 center = GetDrawCenter();
-            if (_drawCorrections)
-            {
-                center = Center + (center - Center);
-            }
+
+            DrawCorrections?.DrawVelCorrection(ref center,velocity);
+
             Vector2 halfVelPos = center + velocity * 0.5f;
             Vector2[] pos = new Vector2[4]
             {
@@ -388,10 +407,7 @@ namespace WeaponSkill.Helper
                 Color drawColor = colorFunc.Invoke(factor); // 获取绘制颜色
 
                 Vector2 pos = GetDrawCenter(i);
-                if (_drawCorrections)
-                {
-                    pos = Center + (pos - Center);
-                }
+                DrawCorrections?.DrawVelCorrection(ref pos,vel);
                 if (effect == null || UseShaderPass == 1)
                 {
                     pos -= Main.screenPosition;
@@ -426,10 +442,11 @@ namespace WeaponSkill.Helper
         public virtual Vector2 GetDrawCenter(int index = 0)
         {
             Vector2 pos = Center;
-            if (_drawCorrections)
-            {
-                pos += oldVels[index].SafeNormalize(default) * _changeHeldLength;
-            }
+            //if (_drawCorrections)
+            //{
+            //    pos += oldVels[index].SafeNormalize(default) * _changeHeldLength;
+            //}
+            DrawCorrections?.ControlDrawCenter();
             return pos;
         }
         /// <summary>
@@ -450,11 +467,11 @@ namespace WeaponSkill.Helper
         public virtual bool GetColliding(Rectangle targetHitBox)
         {
             float r = 0;
-            if (_drawCorrections)
-            {
-                return Collision.CheckAABBvLineCollision(targetHitBox.TopLeft(), targetHitBox.Size(), Center, Center + velocity.RotatedBy(rotation * spriteDirection),
-                width / 2, ref r);
-            }
+            //if (_drawCorrections)
+            //{
+            //    return Collision.CheckAABBvLineCollision(targetHitBox.TopLeft(), targetHitBox.Size(), Center, Center + velocity.RotatedBy(rotation * spriteDirection),
+            //    width / 2, ref r);
+            //}
             return Collision.CheckAABBvLineCollision(targetHitBox.TopLeft(), targetHitBox.Size(), Center, Center + velocity.RotatedBy(rotation * spriteDirection),
                 width / 2, ref r);
         }
