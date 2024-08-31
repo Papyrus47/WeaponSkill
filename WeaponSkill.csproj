@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="NPCs\Bosses\StarBreaker\FrostFist\Skills\" />
     <Folder Include="Sounds\Musics\" />
-    <Folder Include="Weapons\Staffs\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Solaestas.tModLoader.ModBuilder" Version="1.6.1" />
