@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria.Graphics.Effects;
+using WeaponSkill.Effects;
 using WeaponSkill.Helper;
 using WeaponSkill.Particles;
 using static WeaponSkill.Weapons.DualBlades.Skills.DualBladesSwing;
@@ -40,6 +42,11 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
                         shield.AxeRot = -2f - Projectile.ai[0] * 0.0015f;
                         shield.Fixed = false;
                         ChargeBladeProj.shieldCanDraw = false;
+                        #endregion
+                        #region 屏幕缩放shader调用
+                        ScreenChange.SetScreenScale = 0.5f;
+                        if (!Filters.Scene[WeaponSkill.ScreenScaleShader].IsActive())
+                            Filters.Scene.Activate(WeaponSkill.ScreenScaleShader);
                         #endregion
 
                         if (Projectile.ai[0]++ > 70)
@@ -255,6 +262,10 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
             Projectile.ai[1] = 0;
             SkillTimeOut = false;
             Projectile.rotation = 0;
+            #region 屏幕缩放shader调用
+            if (Filters.Scene[WeaponSkill.ScreenScaleShader].IsActive())
+                Filters.Scene.Deactivate(WeaponSkill.ScreenScaleShader);
+            #endregion
             //Projectile.velocity = Vector2.UnitY.RotatedBy(0.15f);
         }
     }

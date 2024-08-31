@@ -7,41 +7,6 @@
 	  <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
   <ItemGroup>
-    <AdditionalFiles Remove="Weapons\SummonStaff\**" />
-    <Compile Remove="Weapons\SummonStaff\**" />
-    <EmbeddedResource Remove="Weapons\SummonStaff\**" />
-    <ModEffect Remove="Weapons\SummonStaff\**" />
-    <None Remove="Weapons\SummonStaff\**" />
-  </ItemGroup>	
-  <ItemGroup>
-    <None Remove="Effects\HammerChannelShader.fx" />
-    <None Remove="Images\VanillaImages\Projectile_699.png" />
-    <None Remove="Items\ChargeBlade\DefenceCorpsChargeBlade.png" />
-    <None Remove="Items\ChargeBlade\DefenceCorpsChargeBlade_Shield.png" />
-    <None Remove="Items\ChargeBlade\DefenceCorpsChargeBlade_Shield_Body.png" />
-    <None Remove="Items\ChargeBlade\DefenceCorpsChargeBlade_Shield_Heart.png" />
-    <None Remove="Items\ChargeBlade\DefenceCorpsChargeBlade_Shield_LeftBlade.png" />
-    <None Remove="Items\ChargeBlade\DefenceCorpsChargeBlade_Shield_RightBlade.png" />
-    <None Remove="Items\Crossbows\ExampleCrossbow.png" />
-    <None Remove="Items\LongSword\CopperLongSwordScabbard.png" />
-    <None Remove="Items\LongSword\CutTheFire.png" />
-    <None Remove="Items\LongSword\CutTheFireScabbard.png" />
-    <None Remove="Items\LongSword\DefaultLongSwordScabbard.png" />
-    <None Remove="Items\LongSword\HarnessingWindLongSword.png" />
-    <None Remove="Items\LongSword\HarnessingWindLongSwordScabbard.png" />
-    <None Remove="Items\LongSword\LightsLongSword.png" />
-    <None Remove="Items\LongSword\LightsLongSwordScabbard.png" />
-    <None Remove="Items\LongSword\TarantulaLongSword.png" />
-    <None Remove="Items\LongSword\TarantulaLongSwordScabbard.png" />
-    <None Remove="Localization\en-US.hjson" />
-    <None Remove="Localization\en-US_Mods.WeaponSkill.UI.StarBreakerUI.TalkUI.hjson" />
-    <None Remove="Localization\zh-Hans.hjson" />
-    <None Remove="Particles\Fire.png" />
-    <None Remove="UI\StarBreakerUI\TalkUI\StarBreakerWeapons\FrostFist\FrostFistWeapon_Happy.png" />
-    <None Remove="Weapons\StarBreakerWeapon\FrostBombardment\FrostBombardment_ChangedUI.png" />
-    <None Remove="Weapons\StarBreakerWeapon\FrostFist\FrostFist_LongSword.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="NPCs\Bosses\StarBreaker\FrostFist\Skills\" />
     <Folder Include="Sounds\Musics\" />
     <Folder Include="Weapons\Staffs\" />

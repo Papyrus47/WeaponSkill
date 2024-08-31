@@ -8,11 +8,13 @@ using WeaponSkill.UI.StarBreakerUI.TalkUI;
 using WeaponSkill.Weapons.StarBreakerWeapon.General.ElementDamage;
 using WeaponSkill.Weapons.StarBreakerWeapon.General;
 using WeaponSkill.Helper.ResidueSwing;
+using WeaponSkill.Effects;
 
 namespace WeaponSkill
 {
 	public class WeaponSkill : Mod
 	{
+        public const string ScreenScaleShader = "WeaponSkill:ScaleScreen";
         public static Asset<Effect> SwingEffect;
         public static Asset<Effect> SpurtsShader;
         public static Asset<Effect> OffsetShader;
@@ -52,6 +54,12 @@ namespace WeaponSkill
                 Perlin = Assets.Request<Texture2D>("Images/" + nameof(Perlin));
                 TalkUI = Assets.Request<Texture2D>("UI/StarBreakerUI/TalkUI/" + nameof(TalkUI));
                 HotTex = Assets.Request<Texture2D>("Images/" + nameof(HotTex));
+
+                // 上面没装neget包
+
+                #region 屏幕shader手动添加
+                Filters.Scene[ScreenScaleShader] = new Filter(new ScreenChange(ModAsset.ScreenChange_Async, "ScaleScreen"),EffectPriority.VeryHigh);
+                #endregion
             }
             On_FilterManager.EndCapture += On_FilterManager_EndCapture;
             On_Main.LoadWorlds += On_Main_LoadWorlds;

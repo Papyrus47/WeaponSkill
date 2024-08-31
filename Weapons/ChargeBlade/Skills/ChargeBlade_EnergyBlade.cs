@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Graphics.Effects;
+using WeaponSkill.Effects;
 using WeaponSkill.Helper;
 
 namespace WeaponSkill.Weapons.ChargeBlade.Skills
@@ -20,6 +22,11 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
             player.velocity.X *= 0f;
             if (Projectile.ai[0] <= 60)
             {
+                #region 屏幕缩放shader调用
+                ScreenChange.SetScreenScale = 0.6f;
+                if (!Filters.Scene[WeaponSkill.ScreenScaleShader].IsActive())
+                    Filters.Scene.Activate(WeaponSkill.ScreenScaleShader);
+                #endregion
                 Vector2 rotVector = (-Vector2.UnitX).RotatedBy(0.2f).RotatedBy(Projectile.ai[0] * 0.001);
 
                 //bool flag = false;
@@ -205,6 +212,10 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
             Projectile.ai[0] = 0;
             Projectile.ai[1] = 0;
             UseBottle = 0;
+            #region 屏幕缩放shader调用
+            if (Filters.Scene[WeaponSkill.ScreenScaleShader].IsActive())
+                Filters.Scene.Deactivate(WeaponSkill.ScreenScaleShader);
+            #endregion
             //Projectile.velocity = Vector2.UnitY.RotatedBy(0.15f);
         }
         public override bool? Colliding(Rectangle projhitbox, Rectangle targethitbox)

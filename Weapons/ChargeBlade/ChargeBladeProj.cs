@@ -158,7 +158,8 @@ namespace WeaponSkill.Weapons.ChargeBlade
         {
             if (chargeBladeGlobal.InAxe)
             {
-                return MathHelper.SmoothStep(0, 2f, time * 0.6f);
+                //return MathF.Pow(time, 4f);
+                return MathHelper.SmoothStep(0, 2f, MathF.Pow(time * 0.6f, 2f));
             }
             return MathF.Pow(time, 3f);
         }

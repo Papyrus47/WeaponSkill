@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Graphics.CameraModifiers;
+using Terraria.Graphics.Effects;
+using WeaponSkill.Effects;
 
 namespace WeaponSkill.Weapons.ChargeBlade.Skills
 {
@@ -36,6 +38,12 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
             }
             if (SwingTwo)
             {
+                #region 屏幕缩放shader调用
+                ScreenChange.SetScreenScale = 0.6f;
+                if (!Filters.Scene[WeaponSkill.ScreenScaleShader].IsActive())
+                    Filters.Scene.Activate(WeaponSkill.ScreenScaleShader);
+                #endregion
+
                 PreAttack = false;
                 Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Projectile.velocity.SafeNormalize(default), 9, 0.1f, 15, -1));
                 if (Projectile.ai[1] < SLASH_TIME * 0.2f)
@@ -78,6 +86,12 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
             else
             {
                 Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Projectile.velocity.SafeNormalize(default), 6f, 1f, 15, 2));
+
+                #region 屏幕缩放shader调用
+                ScreenChange.SetScreenScale = 0.7f;
+                if (!Filters.Scene[WeaponSkill.ScreenScaleShader].IsActive())
+                    Filters.Scene.Activate(WeaponSkill.ScreenScaleShader);
+                #endregion
             }
 
         }
@@ -112,6 +126,10 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
         public override void OnSkillDeactivate()
         {
             base.OnSkillDeactivate();
+            #region 屏幕缩放shader调用
+            if (Filters.Scene[WeaponSkill.ScreenScaleShader].IsActive())
+                Filters.Scene.Deactivate(WeaponSkill.ScreenScaleShader);
+            #endregion
         }
     }
 }
