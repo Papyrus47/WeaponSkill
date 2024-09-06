@@ -57,11 +57,14 @@ namespace WeaponSkill.Weapons.Staffs.Skills
                 Projectile.extraUpdates = 0;
                 if (Projectile.ai[1]++ == 1)
                 {
-                    Shoot.Invoke(this);
+                    Shoot?.Invoke(this);
 
                     Player.HeldItem.GetGlobalItem<MagicStaffsGlobalItem>().CanShootProj = true;
-                    ItemLoader.Shoot(Player.HeldItem, Player, (EntitySource_ItemUse_WithAmmo)Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, -1), Projectile.Center, (Main.MouseWorld - Player.Center).SafeNormalize(default) * Player.HeldItem.shootSpeed, Player.HeldItem.shoot, Projectile.damage, Projectile.knockBack);
-                    TheUtility.Player_ItemCheck_Shoot(Player, Player.HeldItem, Projectile.damage);
+                    if (Player.CheckMana(Player.HeldItem, -1, true))
+                    {
+                        ItemLoader.Shoot(Player.HeldItem, Player, (EntitySource_ItemUse_WithAmmo)Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, -1), Projectile.Center, (Main.MouseWorld - Player.Center).SafeNormalize(default) * Player.HeldItem.shootSpeed, Player.HeldItem.shoot, Projectile.damage, Projectile.knockBack);
+                        TheUtility.Player_ItemCheck_Shoot(Player, Player.HeldItem, Projectile.damage);
+                    }
                     Player.HeldItem.GetGlobalItem<MagicStaffsGlobalItem>().CanShootProj = false;
                 }
                 Time = 1 + (Projectile.ai[0] / SwingTime) * 0.01f;
@@ -79,17 +82,18 @@ namespace WeaponSkill.Weapons.Staffs.Skills
         {
             float Time = TimeChange.Invoke(Projectile.ai[0] / SwingTime);
             if (Time > 1)
-                Time = 1 + (Projectile.ai[0] / SwingTime) * 0.01f;
-            if (Time > 1.01)
+                Projectile.ai[2]++;
+            if (Projectile.ai[2] > 3)
                 return true;
             return false;
         }
         public override bool ActivationCondition() => ChangeCondition.Invoke(Player);
         public override bool PreDraw(SpriteBatch sb, ref Color lightColor)
         {
-            SwingHelper.Swing_Draw_ItemAndTrailling(lightColor, TextureAssets.Extra[209].Value, (f) => new Color(50, 100, 255, 0) * f);
+            SwingHelper.Swing_Draw_ItemAndTrailling(lightColor, TextureAssets.Extra[209].Value, (f) => new Color(50, 100, 255, 0) * 3 * f);
             return false;
         }
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => SwingHelper.GetColliding(targetHitbox);
         public override bool? CanDamage() => true;
         public override void OnSkillActive()
         {

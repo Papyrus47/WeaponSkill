@@ -88,20 +88,39 @@ namespace WeaponSkill.Weapons.Staffs
                 #region 特判区
                 if(skill is MagicStaffsSetting_Swing swing)
                 {
-                    var swingSkill = new MagicStaffsSwing(this, swing.TimeChange, swing.ChangeCondition)
+                    if (!swing.WillAddOther)
                     {
-                        ChangeLerpSpeed = swing.ChangeLerpSpeed,
-                        SwingRot = swing.SwingRot,
-                        VelScale = swing.VelScale,
-                        Shoot = swing.Shoot,
-                        StartVel = swing.StartVel,
-                        SwingDirectionChange = swing.SwingDirectionChange,
-                        VisualRotation = swing.VisualRotation,
-                        SwingTime = swing.SwingTime,
-                        OnUse = swing.OnUse,
-                    };
-                    addSkill.AddSkill(swingSkill);
-                    addSkill = swingSkill;
+                        var swingSkill = new MagicStaffsSwing(this, swing.TimeChange, swing.ChangeCondition)
+                        {
+                            ChangeLerpSpeed = swing.ChangeLerpSpeed,
+                            SwingRot = swing.SwingRot,
+                            VelScale = swing.VelScale,
+                            Shoot = swing.Shoot,
+                            StartVel = swing.StartVel,
+                            SwingDirectionChange = swing.SwingDirectionChange,
+                            VisualRotation = swing.VisualRotation,
+                            SwingTime = swing.SwingTime,
+                            OnUse = swing.OnUse,
+                        };
+                        addSkill.AddSkill(swingSkill);
+                        addSkill = swingSkill;
+                    }
+                    else if (swing.WillAddOther)
+                    {
+                        var swingSkill = new MagicStaffsSwing(this, swing.TimeChange, swing.ChangeCondition)
+                        {
+                            ChangeLerpSpeed = swing.ChangeLerpSpeed,
+                            SwingRot = swing.SwingRot,
+                            VelScale = swing.VelScale,
+                            Shoot = swing.Shoot,
+                            StartVel = swing.StartVel,
+                            SwingDirectionChange = swing.SwingDirectionChange,
+                            VisualRotation = swing.VisualRotation,
+                            SwingTime = swing.SwingTime,
+                            OnUse = swing.OnUse,
+                        };
+                        CurrentSkill.AddSkill(swingSkill);
+                    }
                 }
                 #endregion
             }

@@ -17,6 +17,8 @@ namespace WeaponSkill.Weapons.Staffs.Skills
         public override void AI()
         {
             Projectile.extraUpdates = 0;
+            Projectile.rotation = 0;
+            SwingHelper.SetRotVel(0);
             #region 处理玩家运动法杖偏移
             float rot = Math.Clamp(Player.velocity.X * 0.2f * Player.direction,-1,1) - MathF.Sin(Projectile.ai[0]) * 0.2f;
             Projectile.ai[0] += 0.05f;

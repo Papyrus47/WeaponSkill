@@ -12,6 +12,10 @@ namespace WeaponSkill.Weapons.Staffs
     /// </summary>
     public class MagicStaffsSetting_Swing : MagicStaffsSetting
     {
+        /// <summary>
+        /// 预备添加到另外的使用方式
+        /// </summary>
+        public bool WillAddOther;
         public Vector2 StartVel;
         public Vector2 VelScale;
         public float SwingRot;
