@@ -7,8 +7,13 @@
 	  <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
   <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="NPCs\Bosses\StarBreaker\FrostFist\Skills\" />
     <Folder Include="Sounds\Musics\" />
+    <Folder Include="Weapons\MagicBook\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Solaestas.tModLoader.ModBuilder" Version="1.6.1" />

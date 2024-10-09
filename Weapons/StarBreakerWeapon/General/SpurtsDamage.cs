@@ -8,8 +8,8 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.General
 {
     public class SpurtsDamage : BasicDamageType<SpurtsDamage>
     {
-        public static bool IsHitDamage;
-        public static bool IsHitDamage_Element;
+        public static bool IsSpurtsDamage;
+        public static bool IsSpurtsDamage_Element;
         /// <summary>
         /// 刺击命中判定
         /// </summary>
@@ -24,15 +24,15 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.General
         /// </summary>
         public static void SpurtsDamageHit(bool isElement = false)
         {
-            IsHitDamage = true;
-            IsHitDamage_Element = isElement;
+            IsSpurtsDamage = true;
+            IsSpurtsDamage_Element = isElement;
             SpurtsHit = true;
         }
         public static float GetHitDamageMultiple_Physics()
         {
-            if (!IsHitDamage)
+            if (!IsSpurtsDamage)
                 return 1;
-            IsHitDamage = false;
+            IsSpurtsDamage = false;
             return PhysicsDamageScale;
         }
         /// <summary>
@@ -48,9 +48,9 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.General
         }
         public static float GetHitDamageMultiple_Element()
         {
-            if (!IsHitDamage_Element)
+            if (!IsSpurtsDamage_Element)
                 return 1;
-            IsHitDamage_Element = false;
+            IsSpurtsDamage_Element = false;
             return ElementDamageScale;
         }
     }
