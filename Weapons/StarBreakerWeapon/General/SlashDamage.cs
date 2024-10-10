@@ -22,9 +22,9 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.General
             return MathF.Log10(SlashCount - 20);
         }
         /// <summary>
-        /// 当斩击伤害命中时候调用
+        /// 当斩击伤害命中后调用
         /// </summary>
-        public static void SlashDamageHit()
+        public static void SlashDamageOnHit()
         {
             SlashCount++;
             SlashCountRemoveTime = 0;

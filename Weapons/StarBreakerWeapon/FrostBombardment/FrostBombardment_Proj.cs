@@ -11,7 +11,7 @@ using WeaponSkill.Weapons.StarBreakerWeapon.FrostFist;
 
 namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostBombardment
 {
-    public class FrostBombardment_Proj : ModProjectile, IBasicSkillProj
+    public class FrostBombardment_Proj : StarBreakerWeaponProj, IBasicSkillProj
     {
         public override string Texture => (GetType().Namespace + "." + "FrostBombardment").Replace('.', '/');
         public List<ProjSkill_Instantiation> OldSkills { get; set; }
@@ -25,7 +25,6 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostBombardment
         /// </summary>
         public bool IsUseGun;
         public FrostBombardment SourceItem;
-        public Player Player;
         /// <summary>
         /// 霜拳的滑步行走
         /// </summary>
@@ -168,11 +167,5 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostBombardment
             rect = new(12, 28, (int)(62 * (SourceItem.ChangeLevel / 10f)), 28);
             Main.spriteBatch.Draw(UITex, position, rect, Color.White, 0, new Vector2(-12, rect.Height / 2), 1.5f, SpriteEffects.None, 0f);
         }
-        public int GetPlayerDoubleTapDir(int Dir)
-        {
-            if (Dir == 1) return 2; // 朝向为正-右边
-            else return 3;
-        }
-        public bool GetPlayerDoubleTap(int Dir) => Player.GetModPlayer<WeaponSkillPlayer>().DashDir == Dir;
     }
 }

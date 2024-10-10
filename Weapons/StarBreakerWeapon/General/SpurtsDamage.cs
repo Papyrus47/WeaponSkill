@@ -20,7 +20,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.General
             ElementDamageScale = 1.5f;
         }
         /// <summary>
-        /// 当刺击伤害命中时候调用
+        /// 当刺击伤害命中前调用
         /// </summary>
         public static void SpurtsDamageHit(bool isElement = false)
         {

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria.Localization;
 using WeaponSkill.Weapons.StarBreakerWeapon.DamageTypes;
 using WeaponSkill.Weapons.StarBreakerWeapon.FrostFist;
+using WeaponSkill.Weapons.StarBreakerWeapon.General;
 
 namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostBombardment
 {
-    public class FrostBombardment : ModItem
+    public class FrostBombardment : ModItem, StarBreakerMoreItemPart
     {
         /// <summary>
         /// 霜星的蓄力等级
@@ -19,6 +21,9 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostBombardment
         /// </summary>
         public bool InBomMode;
         public static Asset<Texture2D> ChangeTex;
+
+        public LocalizedText PartText => Language.GetOrRegister("Mods.WeaponSkill.Items.FrostBombardment.SPText");
+
         public override void Load()
         {
             ChangeTex = ModContent.Request<Texture2D>(Texture + "_BomMode");

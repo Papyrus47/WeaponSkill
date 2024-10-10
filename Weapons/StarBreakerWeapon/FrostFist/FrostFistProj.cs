@@ -15,10 +15,9 @@ using static WeaponSkill.UI.StarBreakerUI.SkillsTreeUI.SkillsTreeUI;
 
 namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
 {
-    public class FrostFistProj : ModProjectile, IBasicSkillProj
+    public class FrostFistProj : StarBreakerWeaponProj, IBasicSkillProj
     {
         public override string Texture => (GetType().Namespace + "." + "FrostFist").Replace('.', '/');
-        public Player Player;
         public bool AddSwordRender;
         /// <summary>
         /// 冰属性伤害
@@ -1679,11 +1678,5 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
 
             CurrentSkill = frostFistNotUse;
         }
-        public int GetPlayerDoubleTapDir(int Dir)
-        {
-            if (Dir == 1) return 2; // 朝向为正-右边
-            else return 3;
-        }
-        public bool GetPlayerDoubleTap(int Dir) => Player.GetModPlayer<WeaponSkillPlayer>().DashDir == Dir;
     }
 }

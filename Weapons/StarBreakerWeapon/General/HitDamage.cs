@@ -11,7 +11,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.General
         public static bool IsHitDamage;
         public static bool IsHitDamage_Element;
         /// <summary>
-        /// 当打击伤害命中时候调用
+        /// 当打击伤害命中前调用
         /// </summary>
         public static void HitDamageHit(bool isElement = false)
         {
