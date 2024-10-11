@@ -9,23 +9,27 @@ using WeaponSkill.UI.StarBreakerUI.SkillsTreeUI;
 using WeaponSkill.Weapons.StarBreakerWeapon.FrostFist;
 using WeaponSkill.Weapons.StarBreakerWeapon.General;
 using WeaponSkill.Weapons.StarBreakerWeapon.General.ElementDamage;
+using WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade.Skills;
 
 namespace WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade
 {
     public class StarSpinBladeProj : StarBreakerWeaponProj, IBasicSkillProj
     {
+        public override string Texture => (GetType().Namespace + ".StarSpinBlade").Replace('.','/');
         public List<ProjSkill_Instantiation> OldSkills { get; set; }
         public ProjSkill_Instantiation CurrentSkill { get; set; }
         public SwingHelper SwingHelper;
         public float SwingLenght;
+        public bool CanChangeToStopActionSkill;
+        public SSB_NoUse noUse;
         public override void OnSpawn(IEntitySource source)
         {
             if (source is EntitySource_ItemUse itemUse && itemUse.Item != null)
             {
                 Player = itemUse.Player;
                 Projectile.Size = itemUse.Item.Size;
-                SwingHelper = new(Projectile, 24);
-                SwingLenght = 120;
+                SwingHelper = new(Projectile, 36);
+                SwingLenght = itemUse.Item.Size.Length();
                 Init();
             }
         }
@@ -47,7 +51,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade
         }
         public override void AI()
         {
-            if (Player.HeldItem.ModItem is not FrostFistItem || !Player.active || Player.dead) // 玩家手上物品不是生成物品,则清除
+            if (Player.HeldItem.ModItem is not StarSpinBlade || !Player.active || Player.dead) // 玩家手上物品不是生成物品,则清除
             {
                 Projectile.Kill();
                 return;
@@ -78,6 +82,61 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade
         public void Init()
         {
             OldSkills = new List<ProjSkill_Instantiation>();
+            noUse = new(this);
+            LeftCombo();
+            CurrentSkill = noUse;
+        }
+        /// <summary>
+        /// 左键短按攻击注册
+        /// </summary>
+        protected void LeftCombo()
+        {
+            #region 技能创建
+            SSB_Swing LeftStart = new(this, () => Player.controlUseItem, (time) => MathF.Pow(time, 4))
+            {
+                IsTrueSlash = true,
+                SpinValue = 100,
+                PreTime = 4,
+                StartVel = -Vector2.UnitY,
+                VelScale = new Vector2(1, 0.6f),
+                SwingRot = MathHelper.Pi + MathHelper.PiOver2,
+                VisualRotation = -0.4f,
+                SwingDirectionChange = true,
+                SwingTime = 30,
+            };
+
+            SSB_Swing TwoSlash_1 = new(this, () => Player.controlUseItem, (time) => MathF.Pow(time, 4))
+            {
+                IsTrueSlash = true,
+                SpinValue = 100,
+                PreTime = 6,
+                StartVel = -Vector2.UnitX,
+                VelScale = new Vector2(1, 1f),
+                SwingRot = MathHelper.Pi + MathHelper.PiOver2,
+                VisualRotation = -0.4f,
+                SwingDirectionChange = false,
+                SwingTime = 20,
+            };
+            SSB_Swing TwoSlash_2 = new(this, () => Player.controlUseItem, (time) => MathF.Pow(time, 4))
+            {
+                IsTrueSlash = true,
+                SpinValue = 100,
+                PreTime = 6,
+                StartVel = Vector2.UnitY.RotatedBy(0.6),
+                VelScale = new Vector2(1, 0.6f),
+                SwingRot = MathHelper.Pi + MathHelper.PiOver2,
+                VisualRotation = -0.4f,
+                SwingDirectionChange = false,
+                SwingTime = 15,
+                OnUse = (skill) =>
+                {
+                    SwingHelper.SetRotVel(-0.4f);
+                }
+            };
+            #endregion
+            #region 技能连接
+            noUse.AddSkill(LeftStart).AddSkill(TwoSlash_1).AddSkill(TwoSlash_2);
+            #endregion
         }
     }
 }

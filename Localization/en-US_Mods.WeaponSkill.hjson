@@ -34,6 +34,7 @@ Projectiles: {
 	FrostBombardment_PlayerSPMove.DisplayName: Frost Bombardment_ Player S P Move
 	PickaxeProj.DisplayName: Pickaxe Proj
 	MagicStaffsProj.DisplayName: Magic Staffs Proj
+	StarSpinBladeProj.DisplayName: Star Spin Blade Proj
 }
 
 Keybinds: {

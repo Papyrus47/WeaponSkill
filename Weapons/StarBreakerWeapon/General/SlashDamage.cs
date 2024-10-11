@@ -19,7 +19,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.General
             IsSlashDamage = false;
             if (SlashCount < 20) 
                 return 1;
-            return MathF.Log10(SlashCount - 20);
+            return MathF.Log10(SlashCount - 10);
         }
         /// <summary>
         /// 当斩击伤害命中后调用
