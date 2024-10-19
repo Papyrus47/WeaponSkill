@@ -1,5 +1,35 @@
 Mods: {
 	WeaponSkill: {
+		StarSpinBladeProj: {
+			Skill: {
+				L1: 正旋起手式
+				L2: 二连挥砍
+				L3: 落砸
+				L4: 回旋斩击
+				L5: 回击斩
+				L6: 拖刀斩
+				L7: 蓄力猛斩
+				L8: 回旋上捞斩
+				L9: 回避斩
+				L10: 正旋掷刃
+				L11: 回捞转斩
+				L12: 下砍
+				L13: 斜砍
+				L14: 强化斜砍
+				L15: 推刃击
+				R0: 逆旋起手式
+				R1: 回旋横二连转斩
+				R2: 二连强上捞
+				R3: 返挥斩
+				R4: 上捞斩
+				R5: 猛竖斩
+				R6: 冲刺上捞
+				R7: 回旋连击
+				R8: 逆旋转刃
+				R9: 逆旋掷刃
+			}
+		}
+
 		ModKey: {
 			RangeChange: special control 1 Control 1
 			BowSlidingStep: special control 1 Control 2

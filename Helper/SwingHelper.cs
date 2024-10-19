@@ -412,7 +412,6 @@ namespace WeaponSkill.Helper
                 //    FillMode = FillMode.WireFrame
                 //};
                 //gd.RasterizerState = rasterizerState;
-                //gd.Textures[0] = tex;
 
                 gd.Textures[0] = tex;
                 //gd.Textures[0] = TextureAssets.MagicPixel.Value;

@@ -67,7 +67,10 @@ namespace WeaponSkill.UI.StarBreakerUI.SkillsTreeUI
         public static bool TryAddSkillTree(ProjSkill_Instantiation skill, List<(SkillsControl, string)> values)
         {
             if (skillTreeDict.ContainsKey(skill))
-                return false;
+            {
+                skillTreeDict[skill].AddRange(values);
+                return true;
+            }
             skillTreeDict.Add(skill, values);
             return true;
         }

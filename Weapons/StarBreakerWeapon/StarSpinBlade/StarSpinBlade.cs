@@ -38,7 +38,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade
             player.manaCost += 0.95f;
             if (player.ownedProjectileCounts[Item.shoot] <= 0)
             {
-                int proj = Projectile.NewProjectile(player.GetSource_ItemUse(Item), player.position, Vector2.Zero, Item.shoot, player.GetWeaponDamage(Item), player.GetWeaponKnockback(Item), player.whoAmI);
+                int proj = Projectile.NewProjectile(player.GetSource_ItemUse(Item), player.position, Vector2.Zero, Item.shoot, player.GetWeaponDamage(Item), 0f, player.whoAmI);
                 Main.projectile[proj].originalDamage = Main.projectile[proj].damage;
             }
         }

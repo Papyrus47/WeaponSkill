@@ -7,24 +7,9 @@ using WeaponSkill.Helper;
 
 namespace WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade.Skills
 {
-    public class SSB_BasicSkills : ProjSkill_Instantiation
+    public class SSB_BasicSkills : StarBreakerSkills
     {
         public StarSpinBladeProj StarSpinBladeProj => modProjectile as StarSpinBladeProj;
-        public Player Player;
-        /// <summary>
-        /// 可以用于切换停止技能
-        /// </summary>
-        public bool CanChangeToStopActionSkill
-        {
-            get
-            {
-                return StarSpinBladeProj.CanChangeToStopActionSkill;
-            }
-            set
-            {
-                StarSpinBladeProj.CanChangeToStopActionSkill = value;
-            }
-        }
         public SwingHelper SwingHelper;
         /// <summary>
         /// 攻击前摇判定
@@ -39,6 +24,8 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade.Skills
         {
             Projectile.ai[0] = Projectile.ai[1] = Projectile.ai[2] = 0;
             SkillTimeOut = false;
+            CanChangeToStopActionSkill = false;
+            Projectile.rotation = 0;
         }
 
         public StarSpinBlade GetStarSpinBladeItem()
