@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StarBreaker.Content.Appraise;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,7 @@ using WeaponSkill.Weapons.DualBlades;
 using WeaponSkill.Weapons.LongSword;
 using WeaponSkill.Weapons.StarBreakerWeapon.DamageTypes;
 using WeaponSkill.Weapons.StarBreakerWeapon.General;
+using WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade;
 
 namespace WeaponSkill
 {
@@ -90,8 +92,17 @@ namespace WeaponSkill
 
             On_NPC.HitModifiers.ToHitInfo += HitModifiers_ToHitInfo;
             On_Main.MouseText_DrawItemTooltip_GetLinesInfo += On_Main_MouseText_DrawItemTooltip_GetLinesInfo;
+            Main.OnPostDraw += Main_OnPostDraw;
         }
 
+        private void Main_OnPostDraw(GameTime obj)
+        {
+            AppraiseSystem.Instance.Draw();
+        }
+        public override void PostUpdateEverything()
+        {
+            AppraiseSystem.Instance.Update();
+        }
         private static void On_Main_MouseText_DrawItemTooltip_GetLinesInfo(On_Main.orig_MouseText_DrawItemTooltip_GetLinesInfo orig, Item item, ref int yoyoLogo, ref int researchLine, float oldKB, ref int numLines, string[] toolTipLine, bool[] preFixLine, bool[] badPreFixLine, string[] toolTipNames, out int prefixlineIndex)
         {
             bool flag = false;

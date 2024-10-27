@@ -26,10 +26,6 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
         public List<ProjSkill_Instantiation> OldSkills { get; set; }
         public ProjSkill_Instantiation CurrentSkill { get; set; }
         /// <summary>
-        /// 可以用于切换停止技能
-        /// </summary>
-        public bool CanChangeToStopActionSkill;
-        /// <summary>
         /// 剑的挥舞用的
         /// </summary>
         public SwingHelper SwordSwingHelper;
@@ -83,6 +79,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                 return;
             }
             Projectile.timeLeft = 2;
+            base.AI();
             CurrentSkill.AI();
             IBasicSkillProj basicSkillProj = this;
             basicSkillProj.SwitchSkill();
@@ -139,10 +136,10 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             FrostFistNotUse frostFistNotUse = new(this);
 
             #region 左键派生/速攻拳连段
-            FrostFist_FistHit fistHit_SpeedAtk_Hit1 = new(this, () => Player.controlUseItem);
-            FrostFist_FistHit fistHit_SpeedAtk_Hit2 = new(this, () => Player.controlUseItem);
+            FrostFist_FistHit fistHit_SpeedAtk_Hit1 = new(this, () => LeftChick);
+            FrostFist_FistHit fistHit_SpeedAtk_Hit2 = new(this, () => LeftChick);
 
-            FrostFist_FistHit_MoveFist fistHit_SpeedAtk_Hit3 = new(this, () => Player.controlUseItem)
+            FrostFist_FistHit_MoveFist fistHit_SpeedAtk_Hit3 = new(this, () => LeftChick)
             {
                 FistMoveAI = (Projectile proj) =>
                 {
@@ -164,7 +161,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     //proj.velocity = proj.velocity.RotatedBy(0.3);
                 }
             };
-            FrostFist_FistHit_MoveFist fistHit_SpeedAtk_Hit4 = new(this, () => Player.controlUseItem)
+            FrostFist_FistHit_MoveFist fistHit_SpeedAtk_Hit4 = new(this, () => LeftChick)
             {
                 FistMoveAI = (Projectile proj) =>
                 {
@@ -186,12 +183,12 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     //proj.velocity = proj.velocity.RotatedBy(0.3);
                 }
             };
-            FrostFist_FistHit fistHit_SpeedAtk_Hit5 = new(this, () => Player.controlUseItem)
+            FrostFist_FistHit fistHit_SpeedAtk_Hit5 = new(this, () => LeftChick)
             {
                 ActionDamage = 1.2f
             };
 
-            FrostFist_FistHit fistHit_SpeedAtk2 = new(this, () => Player.controlUseTile)
+            FrostFist_FistHit fistHit_SpeedAtk2 = new(this, () => RightChick)
             {
                 ActionDamage = 2f,
                 ExtraAction = () =>
@@ -230,7 +227,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     npc.velocity.X = Player.velocity.X * 1.2f;
                 }
             };
-            FrostFist_FistHit_MoveFist fistHit_SpeedAtk3 = new(this, () => Player.controlUseTile)
+            FrostFist_FistHit_MoveFist fistHit_SpeedAtk3 = new(this, () => RightChick)
             {
                 ActionDamage = 1.2f,
                 FistMoveAI = (Projectile proj) =>
@@ -284,11 +281,11 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             };
             #endregion
             #region 右键派生/通用
-            FrostFist_FistHit fistHit_GeneralAtk1 = new(this, () => Player.controlUseTile)
+            FrostFist_FistHit fistHit_GeneralAtk1 = new(this, () => RightChick)
             {
                 ActionDamage = 1.3f,
             };
-            FrostFist_FistHit_MoveFist fistHit_GeneralAtk2 = new(this, () => Player.controlUseTile)
+            FrostFist_FistHit_MoveFist fistHit_GeneralAtk2 = new(this, () => RightChick)
             {
                 ActionDamage = 1.5f,
                 FistMoveAI = (Projectile proj) =>
@@ -312,7 +309,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     //proj.velocity = proj.velocity.RotatedBy(0.3);
                 }
             };
-            FrostFist_FistHit_MoveFist fistHit_GeneralAtk3 = new(this, () => Player.controlUseTile)
+            FrostFist_FistHit_MoveFist fistHit_GeneralAtk3 = new(this, () => RightChick)
             {
                 ActionDamage = 1.5f,
                 FistMoveAI = (Projectile proj) =>
@@ -344,8 +341,8 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             #endregion
             #region 拳的搓招
             #region 连续拳
-            FrostFist_FistHit_CoiledFist frostFist_FistHit_CoiledFist = new(this, () => GetPlayerDoubleTap(GetPlayerDoubleTapDir(Player.direction)) && Player.controlUseItem);
-            FrostFist_FistHit frostFist_FistHit_CoiledFist_AfterFist = new(this, () => Player.controlUseTile || Player.controlUseItem)
+            FrostFist_FistHit_CoiledFist frostFist_FistHit_CoiledFist = new(this, () => GetPlayerDoubleTap(GetPlayerDoubleTapDir(Player.direction)) && LeftChick);
+            FrostFist_FistHit frostFist_FistHit_CoiledFist_AfterFist = new(this, () => RightChick || LeftChick)
             {
                 ExtraAction = () =>
                 {
@@ -385,7 +382,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             };
             #endregion
             #region 双摆拳
-            FrostFist_FistHit_MoveFist fistHit_DoubleHit = new(this, () => GetPlayerDoubleTap(GetPlayerDoubleTapDir(Player.direction)) && Player.controlUseTile)
+            FrostFist_FistHit_MoveFist fistHit_DoubleHit = new(this, () => GetPlayerDoubleTap(GetPlayerDoubleTapDir(Player.direction)) && RightChick)
             {
                 ActionDamage = 2f,
                 FistMoveAI = (Projectile proj) =>
@@ -433,7 +430,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     //proj.velocity = proj.velocity.RotatedBy(0.3);
                 }
             };
-            FrostFist_FistHit_MoveFist fistHit_DoubleHit3 = new(this, () => Player.controlUseTile || Player.controlUseItem)
+            FrostFist_FistHit_MoveFist fistHit_DoubleHit3 = new(this, () => RightChick || LeftChick)
             {
                 ActionDamage = 2f,
                 FistMoveAI = (Projectile proj) =>
@@ -480,10 +477,10 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             };
             #endregion
             #region 蓄力升龙
-            FrostFist_FistHit_ChangeRisingFist frostFist_FistHit_ChangeRisingFist = new(this,() => GetPlayerDoubleTap(GetPlayerDoubleTapDir(-Player.direction)) && Player.controlUseItem);
+            FrostFist_FistHit_ChangeRisingFist frostFist_FistHit_ChangeRisingFist = new(this,() => GetPlayerDoubleTap(GetPlayerDoubleTapDir(-Player.direction)) && LeftChick);
             #endregion
             #region 蓄力冲拳
-            FrostFist_FistHit_ChangeDashFist frostFist_FistHit_ChangeDashFist = new(this, () => GetPlayerDoubleTap(GetPlayerDoubleTapDir(-Player.direction)) && Player.controlUseTile);
+            FrostFist_FistHit_ChangeDashFist frostFist_FistHit_ChangeDashFist = new(this, () => GetPlayerDoubleTap(GetPlayerDoubleTapDir(-Player.direction)) && RightChick);
             #endregion
             #endregion
             #region 刀的连段
@@ -598,8 +595,8 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             };
 
             #region 速动冲拳派生
-            FrostFist_FistHit fistHit_SpeedAtk_SpeedFrozen1 = new(this, () => Player.controlUseItem);
-            FrostFist_FistHit_MoveFist fistHit_SpeedAtk_SpeedFrozen2 = new(this, () => Player.controlUseItem)
+            FrostFist_FistHit fistHit_SpeedAtk_SpeedFrozen1 = new(this, () => LeftChick);
+            FrostFist_FistHit_MoveFist fistHit_SpeedAtk_SpeedFrozen2 = new(this, () => LeftChick)
             {
                 ActionDamage = 2.5f,
                 ExtraAction = () =>
@@ -634,7 +631,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     //proj.velocity = proj.velocity.RotatedBy(0.3);
                 }
             };
-            FrostFist_FistHit fistHit_SpeedAtk_SpeedFrozen3 = new(this, () => Player.controlUseItem)
+            FrostFist_FistHit fistHit_SpeedAtk_SpeedFrozen3 = new(this, () => LeftChick)
             {
                 ActionDamage = 2.8f,
                 ExtraAction = () =>
@@ -663,7 +660,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             };
             #endregion
             #region 击退横扫拳派生
-            FrostFist_FistHit_MoveFist fistHit_SpeedAtk_KnockbackFist = new(this, () => Player.controlUseTile)
+            FrostFist_FistHit_MoveFist fistHit_SpeedAtk_KnockbackFist = new(this, () => RightChick)
             {
                 ActionDamage = 2.5f,
                 FistMoveAI = (Projectile proj) =>
@@ -721,7 +718,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             };
             #endregion
             #region 冻击连续拳
-            FrostFist_FistHit fistHit_SpeedAtk_FrozenCoiledFist = new(this, () => Player.controlUseItem)
+            FrostFist_FistHit fistHit_SpeedAtk_FrozenCoiledFist = new(this, () => LeftChick)
             {
                 ActionDamage = 2.8f,
                 OnHit = (NPC npc, NPC.HitInfo hitInfo, int dmg) =>
@@ -736,7 +733,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     WeaponSkillGlobalNPC.AddComponent(npc, frostFist_FistBoom);
                 }
             };
-            FrostFist_FistHit_CoiledFist fistHit_SpeedAtk_FrozenCoiledFist2 = new(this, () => Player.controlUseItem)
+            FrostFist_FistHit_CoiledFist fistHit_SpeedAtk_FrozenCoiledFist2 = new(this, () => LeftChick)
             {
                 ActionDamage = 0.2f,
                 HitCounst = 30
@@ -769,7 +766,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             };
             #endregion
             #region 最 速 连 击
-            FrostFist_SpeedAtk_FastetHit frostFist_SpeedAtk_FastetHit = new(this, () => Player.controlUseTile);
+            FrostFist_SpeedAtk_FastetHit frostFist_SpeedAtk_FastetHit = new(this, () => RightChick);
             #endregion
             #endregion
             #region 霜拳舞刃式·力
@@ -848,7 +845,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                 }
             };
             #region 猛拳派生
-            FrostFist_FistHit_MoveFist fistHit_StrongFistAtk1 = new(this, () => Player.controlUseItem)
+            FrostFist_FistHit_MoveFist fistHit_StrongFistAtk1 = new(this, () => LeftChick)
             {
                 ActionDamage = 2.8f,
                 FistMoveAI = (Projectile proj) =>
@@ -871,7 +868,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     //proj.velocity = proj.velocity.RotatedBy(0.3);
                 }
             };
-            FrostFist_FistHit_MoveFist fistHit_StrongFistAtk2 = new(this, () => Player.controlUseItem)
+            FrostFist_FistHit_MoveFist fistHit_StrongFistAtk2 = new(this, () => LeftChick)
             {
                 ActionDamage = 2.8f,
                 FistMoveAI = (Projectile proj) =>
@@ -894,7 +891,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     //proj.velocity = proj.velocity.RotatedBy(0.3);
                 }
             }; 
-            FrostFist_FistHit fistHit_StrongFistAtk3 = new(this, () => Player.controlUseItem)
+            FrostFist_FistHit fistHit_StrongFistAtk3 = new(this, () => LeftChick)
             {
                 ActionDamage = 2.9f,
                 OnHit = (npc, hit, _) =>
@@ -906,7 +903,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             };
             #endregion
             #region 冰刺派生
-            FrostFist_FistHit_MoveFist fistHit_IceSpurts = new(this, () => Player.controlUseTile)
+            FrostFist_FistHit_MoveFist fistHit_IceSpurts = new(this, () => RightChick)
             {
                 ActionDamage = 1.5f,
                 FistMoveAI = (Projectile proj) =>
@@ -961,7 +958,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             };
             #endregion
             #region 神圣反击派生
-            FrostFist_FistHit_HolyStrikesBack frostFist_FistHit_HolyStrikesBack = new(this, () => Player.controlUseItem)
+            FrostFist_FistHit_HolyStrikesBack frostFist_FistHit_HolyStrikesBack = new(this, () => LeftChick)
             {
                 ActionDamage = 2f,
                 FistMoveAI = (Projectile proj) =>
@@ -991,7 +988,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             };
             #endregion
             #region 充能拳派生
-            FrostFist_FistHit fistHit_ChangedFist = new(this, () => Player.controlUseTile)
+            FrostFist_FistHit fistHit_ChangedFist = new(this, () => RightChick)
             {
                 ActionDamage = 2f,
                 ExtraAction = () =>
@@ -1138,7 +1135,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             };
             #endregion
             #region 瞬·上勾拳派生
-            FrostFist_FistHit frostFist_FistHit_Moment_RisingFist1 = new(this, () => Player.controlUseItem)
+            FrostFist_FistHit frostFist_FistHit_Moment_RisingFist1 = new(this, () => LeftChick)
             {
                 ExtraAction = () =>
                 {
@@ -1176,7 +1173,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     npc.velocity.X = Player.velocity.X * 0.6f;
                 }
             };
-            FrostFist_FistHit_MoveFist frostFist_FistHit_Moment_RisingFist2 = new(this, () => Player.controlUseItem)
+            FrostFist_FistHit_MoveFist frostFist_FistHit_Moment_RisingFist2 = new(this, () => LeftChick)
             {
                 ActionDamage = 2f,
                 FistMoveAI = (Projectile proj) =>
@@ -1209,7 +1206,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             };
             #endregion
             #region 霜拳拳法·冻
-            FrostFist_FistHit fistHit_Moment_Hit1 = new(this, () => Player.controlUseTile)
+            FrostFist_FistHit fistHit_Moment_Hit1 = new(this, () => RightChick)
             {
                 OnHit = (npc,_,_) =>
                 {
@@ -1223,7 +1220,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     WeaponSkillGlobalNPC.AddComponent(npc, frostFist_FistBoom);
                 }
             };
-            FrostFist_FistHit fistHit_Moment_Hit2 = new(this, () => Player.controlUseTile)
+            FrostFist_FistHit fistHit_Moment_Hit2 = new(this, () => RightChick)
             {
                 OnHit = (npc, _, _) =>
                 {
@@ -1238,7 +1235,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                 }
             };
             #region 封印术
-            FrostFist_FistHit_MoveFist fistHit_Moment_SealFist = new(this, () => Player.controlUseItem)
+            FrostFist_FistHit_MoveFist fistHit_Moment_SealFist = new(this, () => LeftChick)
             {
                 ActionDamage = 2.5f,
                 ExtraAction = () =>
@@ -1279,7 +1276,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             };
             #endregion
 
-            FrostFist_FistHit_MoveFist fistHit_Moment_Hit3 = new(this, () => Player.controlUseTile)
+            FrostFist_FistHit_MoveFist fistHit_Moment_Hit3 = new(this, () => RightChick)
             {
                 FistMoveAI = (Projectile proj) =>
                 {
@@ -1312,7 +1309,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     WeaponSkillGlobalNPC.AddComponent(npc, frostFist_FistBoom);
                 }
             };
-            FrostFist_FistHit_MoveFist fistHit_Moment_Hit4 = new(this, () => Player.controlUseTile)
+            FrostFist_FistHit_MoveFist fistHit_Moment_Hit4 = new(this, () => RightChick)
             {
                 FistMoveAI = (Projectile proj) =>
                 {
@@ -1345,7 +1342,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
                     WeaponSkillGlobalNPC.AddComponent(npc, frostFist_FistBoom);
                 }
             };
-            FrostFist_FistHit fistHit_Moment_Hit5 = new(this, () => Player.controlUseTile)
+            FrostFist_FistHit fistHit_Moment_Hit5 = new(this, () => RightChick)
             {
                 ActionDamage = 1.2f,
                 OnHit = (npc, _, _) =>

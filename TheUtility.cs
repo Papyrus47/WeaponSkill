@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StarBreaker.Content.Appraise;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -157,6 +158,78 @@ namespace WeaponSkill
                     return false;
             }
             return true;
+        }
+        public static string GetAppraiseDrawFont(AppraiseID appraiseID)
+        {
+            string drawFont = null;
+            switch (appraiseID)
+            {
+                case AppraiseID.Deadly: drawFont = "D"; break;
+                case AppraiseID.Crazily: drawFont = "C"; break;
+                case AppraiseID.Blast: drawFont = "B"; break;
+                case AppraiseID.A: drawFont = "A"; break;
+                case AppraiseID.S: drawFont = "S"; break;
+                case AppraiseID.SS: drawFont = "SS"; break;
+                case AppraiseID.SSS: drawFont = "SSS"; break;
+                case AppraiseID.KillGod: drawFont = "KG!"; break;
+            }
+            return drawFont;
+        }
+        public static Color GetAppraiseDrawColor(AppraiseID appraiseID)
+        {
+            Color color = Color.Transparent;
+            switch (appraiseID)
+            {
+                case AppraiseID.Deadly: color = Color.White * 0.5f; break;
+                case AppraiseID.Crazily: color = Color.White * 0.8f; break;
+                case AppraiseID.Blast: color = Color.SkyBlue * 1.3f; break;
+                case AppraiseID.A: color = Color.OrangeRed; break;
+                case AppraiseID.S: color = Color.Yellow; break;
+                case AppraiseID.SS: color = Color.Lerp(Color.Yellow, Color.Gold, 0.5f); break;
+                case AppraiseID.SSS: color = Color.Gold; break;
+                case AppraiseID.KillGod: color = Color.BlueViolet; break;
+            }
+            return color;
+        }
+        public static Rectangle GetApprasieDrawRect(AppraiseID appraiseID)
+        {
+            Rectangle rect = default;
+            rect.Height = 20;
+            switch (appraiseID)
+            {
+                case AppraiseID.Deadly:
+                    rect.Width = 22;
+                    break;
+                case AppraiseID.Crazily:
+                    rect.X = 27;
+                    rect.Width = 19;
+                    break;
+                case AppraiseID.Blast:
+                    rect.X = 51;
+                    rect.Width = 18;
+                    break;
+                case AppraiseID.A:
+                    rect.X = 74;
+                    rect.Width = 19;
+                    break;
+                case AppraiseID.S:
+                    rect.X = 98;
+                    rect.Width = 16;
+                    break;
+                case AppraiseID.SS:
+                    rect.X = 119;
+                    rect.Width = 31;
+                    break;
+                case AppraiseID.SSS:
+                    rect.X = 155;
+                    rect.Width = 46;
+                    break;
+                case AppraiseID.KillGod:
+                    rect.X = 206;
+                    rect.Width = 52;
+                    break;
+            }
+            return rect;
         }
     }
 }

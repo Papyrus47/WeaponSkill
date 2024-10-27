@@ -51,7 +51,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostFist
             {
                 frostFist_FistHit = proj.frostFist_FistHit;
             }
-            SoundEngine.PlaySound(SoundID.Item19 with { Pitch = -0.5f, PitchVariance = 0.3f }, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.Item19 with { Pitch = -0.5f, PitchVariance = 0.3f}, Projectile.Center);
         }
         public override void AI()
         {

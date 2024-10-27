@@ -35,7 +35,6 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) => false;
         public override void HoldItem(Player player)
         {
-            player.manaCost += 0.95f;
             if (player.ownedProjectileCounts[Item.shoot] <= 0)
             {
                 int proj = Projectile.NewProjectile(player.GetSource_ItemUse(Item), player.position, Vector2.Zero, Item.shoot, player.GetWeaponDamage(Item), 0f, player.whoAmI);

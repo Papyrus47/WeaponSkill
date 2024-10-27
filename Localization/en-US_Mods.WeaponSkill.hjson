@@ -35,6 +35,7 @@ Projectiles: {
 	PickaxeProj.DisplayName: Pickaxe Proj
 	MagicStaffsProj.DisplayName: Magic Staffs Proj
 	StarSpinBladeProj.DisplayName: Star Spin Blade Proj
+	WindsProj.DisplayName: Winds Proj
 }
 
 Keybinds: {

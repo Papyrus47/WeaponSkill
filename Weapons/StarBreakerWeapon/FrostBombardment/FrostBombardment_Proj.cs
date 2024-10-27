@@ -17,10 +17,6 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.FrostBombardment
         public List<ProjSkill_Instantiation> OldSkills { get; set; }
         public ProjSkill_Instantiation CurrentSkill { get; set; }
         /// <summary>
-        /// 可以用于切换停止技能
-        /// </summary>
-        public bool CanChangeToStopActionSkill;
-        /// <summary>
         /// 是否使用本枪
         /// </summary>
         public bool IsUseGun;

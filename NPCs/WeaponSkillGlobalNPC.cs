@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using WeaponSkill.Items.DualBlades;
+using WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade;
 
 namespace WeaponSkill.NPCs
 {
@@ -102,6 +103,9 @@ namespace WeaponSkill.NPCs
                 npc.noGravity = false;
                 return false;
             }
+            bool useWindsState = Main.LocalPlayer.GetModPlayer<WindsPlayer>().UseWindsState;
+            if (useWindsState && npc.Center.Distance(Main.LocalPlayer.Center) < npc.Size.Length() * 1.5f)
+                npc.velocity -= (Main.LocalPlayer.position - npc.position) * 0.05f;
             return base.PreAI(npc);
         }
         public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot)

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using StarBreaker.Content.Appraise;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +11,7 @@ using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
+using WeaponSkill.Helper;
 using WeaponSkill.Items.DualBlades;
 using WeaponSkill.Weapons;
 using WeaponSkill.Weapons.General;
@@ -19,7 +22,7 @@ using WeaponSkill.Weapons.StarBreakerWeapon.General;
 
 namespace WeaponSkill
 {
-    public class WeaponSkillPlayer : ModPlayer
+    public class WeaponSkillPlayer : ModPlayer, IAppraiseEntity
     {
         public bool InBlocking;
         public bool IsBlockAttack;
@@ -106,6 +109,12 @@ namespace WeaponSkill
         public int DashTimer;
         public int DashDir = -1;
         public bool PlayerOnHurt;
+        #region 星击 评价系统
+
+        public object[] UseAttack { get => useAttack; set => useAttack = value; }
+        private object[] useAttack;
+        public float DamageFactor = 0.1f;
+        #endregion
         public override void ResetEffects()
         {
             PlayerOnHurt = false;
@@ -118,12 +127,12 @@ namespace WeaponSkill
             if (Player.controlRight && Player.releaseRight && Player.doubleTapCardinalTimer[DashRight] < 15)
             {
                 DashDir = DashRight;
-                DashTimer = 15;
+                DashTimer = 30;
             }
             else if (Player.controlLeft && Player.releaseLeft && Player.doubleTapCardinalTimer[DashLeft] < 15)
             {
                 DashDir = DashLeft;
-                DashTimer = 15;
+                DashTimer = 30;
             }
             else if(DashTimer <= 0)
             {
@@ -186,6 +195,8 @@ namespace WeaponSkill
         public override void OnEnterWorld()
         {
             if(StatStaminaMax <= 0) StatStaminaMax = 600;
+            _ = AppraiseSystem.Instance;
+            AppraiseSystem.Instance.Load(Player, this);
         }
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
@@ -385,6 +396,115 @@ namespace WeaponSkill
             }
             #endregion
             return base.FreeDodge(info);
+        }
+        #region 命中东西的判定
+        public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            AddAttack(item);
+            AppraiseSystem.Instance.OnHit(this, target, hit.Damage);
+        }
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (proj.ModProjectile is IBasicSkillProj skill)
+            {
+                AddAttack(skill.CurrentSkill);
+            }
+            if (proj.owner >= 0 && proj.owner != 255 && proj.friendly)
+            {
+                AppraiseSystem.Instance.OnHit(this, target, hit.Damage);
+            }
+        }
+        //public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)
+        //{
+        //    AddAttack(item);
+        //    AppraiseSystem.Instance.OnHit(this, target, modifiers.GetDamage(Player.GetWeaponDamage(item),false));
+        //}
+        //public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        //{
+        //    if (proj.ModProjectile is not SkillProj)
+        //    {
+        //        AddAttack(proj.Name);
+        //    }
+        //    if (proj.owner >= 0 && proj.owner != 255 && proj.friendly)
+        //    {
+        //        AppraiseSystem.Instance.OnHit(this, target, damage);
+        //    }
+        //}
+        #endregion
+        #region 被命中判定
+
+        public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
+        {
+            AppraiseSystem.Instance.OnHurt(this, npc, hurtInfo.Damage);
+        }
+        public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)
+        {
+            AppraiseSystem.Instance.OnHurt(this, proj, hurtInfo.Damage);
+        }
+        //public override void OnHitByNPC(NPC npc, int damage, bool crit)
+        //{
+        //    AppraiseSystem.Instance.OnHurt(this, npc, damage);
+        //}
+        //public override void OnHitByProjectile(Projectile proj, int damage, bool crit)
+        //{
+        //    AppraiseSystem.Instance.OnHurt(this, proj, damage);
+        //}
+        #endregion
+        public void AddAttack(object attackID)
+        {
+            useAttack ??= new object[10];
+            //DamageFactor = 0.1f;
+            if (attackID != useAttack[0])
+            {
+                for (int i = useAttack.Length - 1; i > 0; i--)
+                {
+                    useAttack[i] = useAttack[i - 1];
+                }
+                useAttack[0] = attackID; // 0存着现在命中的技能
+            }
+        }
+        public float OnHit(Entity target, int damage)
+        {
+            useAttack ??= new object[10];
+            for (int i = 1;i < 4;i++)
+            {
+                if (useAttack[0] == useAttack[i])
+                {
+                    return 0;
+                }
+            }
+            return damage * DamageFactor;
+        }
+        public float OnHurt(Entity target, int damage)
+        {
+            return damage;
+        }
+
+        public void Draw(float progress, AppraiseID id) // 评价的绘制
+        {
+            string drawFont = TheUtility.GetAppraiseDrawFont(id);
+            Color color = TheUtility.GetAppraiseDrawColor(id);
+            Rectangle drawRect = TheUtility.GetApprasieDrawRect(id);
+            if (drawFont != null)
+            {
+                SpriteBatch spriteBatch = Main.spriteBatch;
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullNone,
+                    null);
+
+                Vector2 position = new(100, (Main.screenHeight / 2) - 180);
+                //position = Player.Top - Main.screenPosition - new Vector2(0,50);
+                Vector2 origin = drawRect.Size() * 0.5f;
+
+                spriteBatch.Draw(ModAsset.AppraiseTex.Value, position, drawRect, color,
+                    0f, origin, 1.4f, SpriteEffects.None, 0f);
+                int height = drawRect.Height;
+                drawRect.Height = (int)(drawRect.Height * progress);
+                //drawRect.Y = height - drawRect.Height;
+                spriteBatch.Draw(ModAsset.AppraiseTex.Value, position, drawRect, Color.Black * 0.8f,
+                    0f, origin, 1.4f, SpriteEffects.None, 0f);
+
+                spriteBatch.End();
+            }
         }
     }
 }

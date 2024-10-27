@@ -105,6 +105,10 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade.Skills
                         break;
                     }
 
+                    if(swingTime > 0.5f) // 预输入处理
+                    {
+                        StarSpinBladeProj.PreAtk(); 
+                    }
                     OnUse?.Invoke(this);
                     swingTime = TimeChange.Invoke(swingTime);
 
@@ -121,6 +125,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade.Skills
                     if (Projectile.ai[1] > 30)
                     {
                         CanChangeToStopActionSkill = true;
+                        StarSpinBladeProj.ResetPreAtk = true;
                     }
                     SwingHelper.ProjFixedPlayerCenter(Player, 0, true);
                     SwingHelper.SetNotSaveOldVel();

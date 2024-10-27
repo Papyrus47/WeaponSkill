@@ -26,6 +26,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade.Skills
             SkillTimeOut = false;
             CanChangeToStopActionSkill = false;
             Projectile.rotation = 0;
+            StarSpinBladeProj.ResetPreAtk = true;
         }
 
         public StarSpinBlade GetStarSpinBladeItem()
