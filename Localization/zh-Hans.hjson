@@ -650,6 +650,11 @@ Mods: {
 					斩击伤害随着连击段数提升而提升伤害。
 					''' */
 			}
+
+			CopperChargeBlade: {
+				DisplayName: 铜盾斧
+				Tooltip: "这是怎么做成盾斧的？"
+			}
 		}
 
 		DamageClasses: {
