@@ -15,7 +15,7 @@ using static WeaponSkill.UI.StarBreakerUI.SkillsTreeUI.SkillsTreeUI;
 
 namespace WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade
 {
-    public class StarSpinBladeProj : StarBreakerWeaponProj, IBasicSkillProj
+    public partial class StarSpinBladeProj : StarBreakerWeaponProj, IBasicSkillProj
     {
         public override string Texture => (GetType().Namespace + ".StarSpinBlade").Replace('.', '/');
         public List<ProjSkill_Instantiation> OldSkills { get; set; }
@@ -85,6 +85,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade
         {
             OldSkills = new List<ProjSkill_Instantiation>();
             noUse = new(this);
+            RightChannelCombo();
             LeftChannelCombo();
             RightCombo();
             LeftCombo();
@@ -591,7 +592,7 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade
             SpinSalshUp.AddBySkill(FallHit, BackSlash, DodgeSlash, UpSpinSlash1, UpSpinSlash4, LeftStart);
 
             DargBladeSlash.AddBySkill(LeftStart, TwoSlash_1, TwoSlash_2, SpinSlash, ChannelSlash, StrongAcrossSlash, AcrossSlash, SlashDown);
-            ChannelSlash.AddBySkill(LeftStart, TwoSlash_1, TwoSlash_2, SpinSlash, DargBladeSlash,StrongAcrossSlash,AcrossSlash,SlashDown);
+            ChannelSlash.AddBySkill(LeftStart, TwoSlash_1, TwoSlash_2, SpinSlash, DargBladeSlash, StrongAcrossSlash, AcrossSlash, SlashDown);
 
             LeftStart.AddSkill(ThrowTrueSlash);
 
@@ -1385,6 +1386,73 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade
             StrongSpinAcrossSlash1.AddSkill(SlopeUpBackSlash);
 
             noUse.AddSkill(ChannelLeftStart).AddSkill(StrongSpinAcrossSlash1).AddSkill(StrongSpinAcrossSlash2);
+        }
+        /// <summary>
+        /// 右键长按攻击注册、连接、技能显示
+        /// </summary>
+        protected void RightChannelCombo()
+        {
+            Func<float, float> timeChange = (time) => MathF.Pow(time, 3);
+            SSB_Swing_Channel ChannelRightStart = new(this, () => RightChannel, timeChange, () => RightChannel && !LeftChick)
+            {
+                IsTrueSlash = false,
+                SpinValue = 50,
+                PreTime = 6,
+                StartVel = Vector2.UnitX.RotatedBy(MathHelper.PiOver4),
+                VelScale = new Vector2(1, 1f),
+                SwingRot = MathHelper.PiOver4,
+                VisualRotation = 0,
+                SwingDirectionChange = false,
+                SwingTime = 15,
+                ActionDmg = 0.2f,
+                DmgCounts = 3,
+                OnUse = (_) =>
+                {
+                    Player.velocity.X = Player.direction * 8;
+                    SwingHelper.SetNotSaveOldVel();
+                },
+                OnChannel = (_) =>
+                {
+                    if (Player.CheckMana(1, true))
+                    {
+                        (Player.HeldItem.ModItem as StarSpinBlade).SpinValue += 50;
+                    }
+                },
+                Name = Language.GetOrRegister("Mods.WeaponSkill.StarSpinBladeProj.Skill.RC0").Value,
+                skillsControl = new(isLeftClick: false,
+                                    isRightClick: true,
+                                    isSP1Click: false,
+                                    isDoubleForwardMove: false,
+                                    isDoubleBackwardMove: false,
+                                    isChannel: true,
+                                    isStopAtk: false,
+                                    inSky: false)
+            };
+            SSB_SC_WindSpinBlade windSpinBlade = new(this, () => RightChannel, timeChange)
+            {
+                IsTrueSlash = false,
+                SpinValue = 200,
+                PreTime = 6,
+                StartVel = Vector2.UnitX,
+                VelScale = new Vector2(1, 1f),
+                SwingRot = MathHelper.TwoPi,
+                VisualRotation = 0,
+                SwingDirectionChange = false,
+                SwingTime = 15,
+                ActionDmg = 0.2f,
+                DmgCounts = 3,
+                Name = Language.GetOrRegister("Mods.WeaponSkill.StarSpinBladeProj.Skill.RC1").Value,
+                skillsControl = new(isLeftClick: false,
+                                    isRightClick: true,
+                                    isSP1Click: false,
+                                    isDoubleForwardMove: false,
+                                    isDoubleBackwardMove: false,
+                                    isChannel: true,
+                                    isStopAtk: false,
+                                    inSky: false)
+            };
+
+            noUse.AddSkill(ChannelRightStart).AddSkill(windSpinBlade);
         }
 
         /// <summary>

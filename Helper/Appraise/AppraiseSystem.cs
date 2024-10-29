@@ -5,7 +5,7 @@
     /// <para>评价的计算是这样的:根据伤害和对应攻击的伤害乘率提升评价</para>
     /// <para>NPC也可以有这个系统,所以扩展面很广</para>
     /// </summary>
-    public class AppraiseSystem : IUnLoad
+    public class AppraiseSystem : ILoadable
     {
         private AppraiseSystem() { }
         private static AppraiseSystem instance;
@@ -88,7 +88,12 @@
              });
         }
 
-        public void UnLoad()
+        public void Load(Mod mod)
+        {
+            _ = Instance;
+        }
+
+        public void Unload()
         {
             instance = null;
         }
