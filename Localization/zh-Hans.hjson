@@ -653,7 +653,7 @@ Mods: {
 
 			CopperChargeBlade: {
 				DisplayName: 铜盾斧
-				Tooltip: "这是怎么做成盾斧的？"
+				Tooltip: 这是怎么做成盾斧的？
 			}
 		}
 
