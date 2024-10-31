@@ -37,6 +37,10 @@
         /// 防御成功攻击
         /// </summary>
         public bool DefSucceeded;
+        /// <summary>
+        /// 获得防御强度
+        /// </summary>
+        /// <returns></returns>
         public virtual float GetDefence() => Defence;
         /// <summary>
         /// 用于你的盾伤害计算用的
@@ -47,7 +51,7 @@
             hurtModifiers.ModifyHurtInfo += HurtModifiers_ModifyHurtInfo;
         }
 
-        protected virtual void HurtModifiers_ModifyHurtInfo(ref Player.HurtInfo info)
+        public virtual void HurtModifiers_ModifyHurtInfo(ref Player.HurtInfo info)
         {
             info.Damage -= (int)GetDefence();
         }

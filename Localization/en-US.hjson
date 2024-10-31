@@ -674,6 +674,11 @@ Mods: {
 				DisplayName: Copper Charge Blade
 				Tooltip: ""
 			}
+
+			WoodLances: {
+				DisplayName: Wood Lances
+				Tooltip: ""
+			}
 		}
 
 		DamageClasses: {

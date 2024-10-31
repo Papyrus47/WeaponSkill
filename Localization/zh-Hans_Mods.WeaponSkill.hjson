@@ -107,3 +107,10 @@ Configs: {
 		}
 	}
 }
+
+Buffs: {
+	PowerUp: {
+		DisplayName: 攻击守势
+		Description: 增加一倍伤害
+	}
+}

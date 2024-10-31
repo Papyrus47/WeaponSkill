@@ -16,7 +16,7 @@ namespace WeaponSkill.Items.ChargeBlade
             Item.knockBack = 3.3f;
             Item.rare = ItemRarityID.Green;
             Item.crit = 10;
-            Item.defense = 40;
+            Item.defense = 20;
         }
         public override void AddRecipes()
         {

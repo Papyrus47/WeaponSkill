@@ -7,6 +7,7 @@ using Terraria;
 using WeaponSkill.Helper;
 using WeaponSkill.Items.ChargeBlade;
 using WeaponSkill.Weapons.ChargeBlade.Skills;
+using WeaponSkill.Weapons.General;
 
 namespace WeaponSkill.Weapons.ChargeBlade
 {
@@ -29,68 +30,9 @@ namespace WeaponSkill.Weapons.ChargeBlade
         /// 防御成功的时间
         /// </summary>
         public int DefSucceededTime;
-        public static List<int> DrawChargeBlade;
+
         public ChargeBlade_Sword_Held SwordHeld;
         public ChargeBlade_Axe_Held AxeHeld;
-        public override void Load()
-        {
-            base.Load();
-            DrawChargeBlade = new();
-            On_Main.DrawPlayers_AfterProjectiles += On_Main_DrawPlayers_AfterProjectiles;
-            On_PlayerDrawLayers.DrawPlayer_10_BackAcc += On_PlayerDrawLayers_DrawPlayer_10_BackAcc;
-            Main.OnPostDraw += Main_OnPostDraw;
-        }
-
-        private void On_PlayerDrawLayers_DrawPlayer_10_BackAcc(On_PlayerDrawLayers.orig_DrawPlayer_10_BackAcc orig, ref PlayerDrawSet drawinfo)
-        {
-            orig.Invoke(ref drawinfo);
-            if (DrawChargeBlade.Count > 0)
-            {
-                for (int i = 0; i < DrawChargeBlade.Count; i++) // 剑绘制
-                {
-                    //if (Main.projectile[DrawChargeBlade[i]].ModProjectile is not ChargeBladeProj modProj) continue;
-                    //var shield = modProj.shield;
-                    //shield.Draw(Main.spriteBatch, Lighting.GetColor((shield.swingHelper.center / 16).ToPoint()));
-
-                    if (Main.projectile[DrawChargeBlade[i]].ModProjectile is not ChargeBladeProj modProj) continue;
-                    if (modProj.chargeBladeGlobal.InAxe) continue;
-
-                    Color color = Lighting.GetColor((modProj.Projectile.Center / 16).ToPoint());
-                    modProj.CurrentSkill.PreDraw(Main.spriteBatch, ref color);
-                }
-            }
-        }
-
-        private void On_Main_DrawPlayers_AfterProjectiles(On_Main.orig_DrawPlayers_AfterProjectiles orig, Main self)
-        {
-            orig.Invoke(self);
-            if (DrawChargeBlade.Count > 0)
-            {
-                for (int i = 0; i < DrawChargeBlade.Count; i++) // 盾绘制
-                {
-                    if (Main.projectile[DrawChargeBlade[i]].ModProjectile is not ChargeBladeProj modProj) continue;
-                    if (!modProj.shieldCanDraw) continue;
-
-                    var shield = modProj.shield;
-                    shield.Draw(Main.spriteBatch, Lighting.GetColor((shield.swingHelper.center / 16).ToPoint()));
-
-                    //if (Main.projectile[DrawChargeBlade[i]].ModProjectile is not ChargeBladeProj modProj) continue;
-                    //Color color = Lighting.GetColor((modProj.Projectile.Center / 16).ToPoint());
-                    //modProj.CurrentSkill.PreDraw(Main.spriteBatch, ref color);
-                }
-            }
-        }
-        private static void Main_OnPostDraw(GameTime obj)
-        {
-            DrawChargeBlade.Clear();
-        }
-        public override void Unload()
-        {
-            DrawChargeBlade = null;
-            On_Main.DrawPlayers_AfterProjectiles -= On_Main_DrawPlayers_AfterProjectiles;
-            On_PlayerDrawLayers.DrawPlayer_10_BackAcc -= On_PlayerDrawLayers_DrawPlayer_10_BackAcc;
-            Main.OnPostDraw -= Main_OnPostDraw;
-        }
         public override void OnSpawn(IEntitySource source)
         {
             if (source is EntitySource_ItemUse itemUse && itemUse.Item != null)
@@ -167,7 +109,7 @@ namespace WeaponSkill.Weapons.ChargeBlade
         public override bool PreDraw(ref Color lightColor)
         {
             //Main.spriteBatch.Draw(DrawColorTex, new Vector2(500), null, Color.White, 0f, default, 4, SpriteEffects.None, 0f);
-            DrawChargeBlade.Add(Projectile.whoAmI);
+            DrawShieldAndWeaponSystem.DrawShieldAndWeapon.Add(Projectile.whoAmI);
             if (chargeBladeGlobal.InAxe)
             {
                 CurrentSkill.PreDraw(Main.spriteBatch,ref lightColor); // 斧模式专门的绘制

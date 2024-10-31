@@ -11,10 +11,12 @@ using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
+using WeaponSkill.Buffs;
 using WeaponSkill.Helper;
 using WeaponSkill.Items.DualBlades;
 using WeaponSkill.Weapons;
 using WeaponSkill.Weapons.General;
+using WeaponSkill.Weapons.Lances;
 using WeaponSkill.Weapons.LongSword;
 using WeaponSkill.Weapons.LongSword.Skills;
 using WeaponSkill.Weapons.StarBreakerWeapon.FrostFist;
@@ -374,6 +376,12 @@ namespace WeaponSkill
             {
                 if (HeldShield.InDef)
                 {
+                    for (int i = 0; i < 15; i++) 
+                    {
+                        Dust dust = Dust.NewDustDirect(Player.Center,1,1,DustID.YellowStarDust);
+                        dust.velocity = Vector2.One.RotatedBy(i / 15f * MathHelper.TwoPi);
+                    }
+                    SoundEngine.PlaySound(SoundID.NPCHit4 with { Pitch = -0.4f }, Player.position);
                     float prosses = info.Damage / Player.statLifeMax2;
                     if(prosses < 0.1f)
                     {
@@ -387,7 +395,22 @@ namespace WeaponSkill
                     {
                         HeldShield.KNLevel = BasicShield.KNLevelEnum.Big;
                     }
-                    if(info.Damage <= Player.statLifeMax2 * 0.01f)
+                    #region 这里是特判区
+                    if(HeldShield is LancesShield lancesShield)
+                    {
+                        if (lancesShield.DefSucceeded_GP) // GP成功
+                        {
+                            SoundEngine.PlaySound(SoundID.NPCHit4 with { Pitch = 0.4f }, Player.position);
+                            for (int i = 0; i < 15; i++)
+                            {
+                                Dust dust = Dust.NewDustDirect(Player.Center, 1, 1, DustID.BlueMoss);
+                                dust.velocity = Vector2.One.RotatedBy(i / 15f * MathHelper.TwoPi) * 1.5f;
+                            }
+                            Player.AddBuff(ModContent.BuffType<PowerUp>(), 600);
+                        }
+                    }
+                    #endregion
+                    if (info.Damage <= Player.statLifeMax2 * 0.01f)
                     {
                         return false;
                     }
