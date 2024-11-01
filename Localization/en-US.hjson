@@ -698,6 +698,21 @@ Mods: {
 					攻击守势:被命中前一刻进行格挡获得攻击架势，增加一倍面板伤害。
 					'''
 			}
+
+			PlatinumLances: {
+				DisplayName: Platinum Lances
+				Tooltip: ""
+			}
+
+			CopperLances: {
+				DisplayName: Copper Lances
+				Tooltip: ""
+			}
+
+			TungstenLances: {
+				DisplayName: Tungsten Lances
+				Tooltip: ""
+			}
 		}
 
 		DamageClasses: {

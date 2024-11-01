@@ -37,7 +37,7 @@ namespace WeaponSkill.Weapons.Lances.Skills
             }
             if (Math.Abs(player.velocity.X) < 12) player.velocity.X = 12 * player.direction;
 
-            if (WeaponSkill.SpKeyBind.JustPressed) // 刹车
+            if (WeaponSkill.SpKeyBind.JustPressed || player.GetModPlayer<WeaponSkillPlayer>().StatStamina-- <= 0) // 刹车
                 SkillTimeOut = true;
             
         }
@@ -56,7 +56,7 @@ namespace WeaponSkill.Weapons.Lances.Skills
             return false;
         }
         public override bool ActivationCondition() => player.controlUseItem && player.controlUseTile;
-        public override bool SwitchCondition() => (Projectile.ai[1] > 30 && (player.controlUseItem || WeaponSkill.BowSlidingStep.JustPressed)) || player.GetModPlayer<WeaponSkillPlayer>().StatStamina-- <= 0;
+        public override bool SwitchCondition() => (Projectile.ai[1] > 30 && (player.controlUseItem || WeaponSkill.BowSlidingStep.JustPressed)) || player.GetModPlayer<WeaponSkillPlayer>().StatStamina <= 0;
         public override bool CompulsionSwitchSkill(ProjSkill_Instantiation nowSkill)
         {
             return ActivationCondition() && nowSkill is BasicLancesSkills skills && skills.PreAttack;

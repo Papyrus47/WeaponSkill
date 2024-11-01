@@ -676,10 +676,25 @@ Mods: {
 					冲刺时可以防御停止,<left>使用强力刺击。
 					防御时候<left>进行盾牌冲刺。
 					盾牌冲刺全程防御判定且有伤害，结束后<right>使用飞身跃入突刺。
-					防御反击架势可以<right>使用飞身跃入突刺。
+					力量防御可以<right>使用飞身跃入突刺。
 					防御期间不回复耐力。
-					攻击架势:被命中前一刻进行格挡获得攻击架势，增加一倍面板伤害。
+					攻击守势:被命中前一刻进行格挡获得攻击架势，增加一倍面板伤害。
 					''' */
+			}
+
+			PlatinumLances: {
+				DisplayName: 铂金长枪
+				Tooltip: ""
+			}
+
+			CopperLances: {
+				DisplayName: 铜长枪
+				Tooltip: ""
+			}
+
+			TungstenLances: {
+				DisplayName: 钨长枪
+				Tooltip: ""
 			}
 		}
 
