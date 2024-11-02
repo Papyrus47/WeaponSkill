@@ -20,7 +20,7 @@ namespace WeaponSkill.Items.LongSword
             Item.useTime = Item.useAnimation = 30;
             Item.DamageType = DamageClass.MeleeNoSpeed;
             Item.crit = 8;
-            Item.rare = ItemRarityID.Green;
+            Item.rare = ItemRarityID.Blue;
         }
         public override void HoldItem(Player player)
         {

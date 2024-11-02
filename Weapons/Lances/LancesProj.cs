@@ -61,6 +61,7 @@ namespace WeaponSkill.Weapons.Lances
             Projectile.timeLeft = 2;
             Player.GetModPlayer<WeaponSkillPlayer>().HeldShield = shield;
             shield.Defence = SpawnItem.defense;
+            Projectile.damage = Player.GetWeaponDamage(SpawnItem);
             if (OldSkills.Count > 10) OldSkills.RemoveAt(1);
             CurrentSkill.AI();
             Player.ResetMeleeHitCooldowns();
@@ -108,6 +109,27 @@ namespace WeaponSkill.Weapons.Lances
 
             LancesSpurts lancesSpurts3 = new(this);
 
+            LancesSpurts lancesSpurtsS1 = new(this)
+            {
+                ActivationConditionFunc = () => Player.controlUseTile,
+                IsMove = false,
+                ActionDmg = 1.2f
+            };
+
+            LancesSpurts lancesSpurtsS2 = new(this)
+            {
+                ActivationConditionFunc = () => Player.controlUseTile,
+                IsMove = false,
+                ActionDmg = 1.2f
+            };
+
+            LancesSpurts lancesSpurtsS3 = new(this)
+            {
+                ActivationConditionFunc = () => Player.controlUseTile,
+                IsMove = false,
+                ActionDmg = 1.2f
+            };
+
             LancesDef lancesDef =  new(this);
             LancesStrongDef lancesStrongDef = new(this);
             LancesSpurts StrongSpurts = new(this) 
@@ -134,7 +156,6 @@ namespace WeaponSkill.Weapons.Lances
             LancesShieldDash lancesShieldDash = new(this);
             LancesSpurts_FlySpurts lancesSpurts_FlySpurts = new(this);
 
-
             lancesDash.AddSkilles(lancesDef, StrongSpurts1);
             lancesDash.AddBySkill(lancesPowerDef, lancesDef);
 
@@ -142,14 +163,17 @@ namespace WeaponSkill.Weapons.Lances
             lancesPowerDef.AddSkill(lancesSpurts_FlySpurts);
 
             lancesDef.AddSkill(lancesShieldDash).AddSkill(lancesSpurts_FlySpurts);
+            lancesSpurtsS1.AddSkill(lancesSwing1).AddSkill(lancesSpurtsS2).AddSkill(lancesSwing2).AddSkill(lancesSpurtsS3);
             lancesSpurts1.AddSkill(lancesSwing1).AddSkill(lancesSpurts2).AddSkill(lancesSwing2).AddSkill(lancesSpurts3);
+            lancesSpurtsS1.AddSkill(lancesSpurts1).AddSkill(lancesSpurtsS2).AddSkill(lancesSpurts2).AddSkill(lancesSpurtsS3);
             lancesStrongDef.AddSkill(lancesPowerDef);
             lancesPowerDef.AddSkill(StrongSpurts1);
             lancesStrongDef.AddSkill(StrongSpurts);
             lancesStrongDef.AddBySkill(lancesDef);
 
-            lancesDef.AddBySkill(lancesSpurts1, lancesSpurts2, lancesSpurts3, noUse, lancesHeld);
+            lancesDef.AddBySkill(lancesSpurts1, lancesSpurtsS1, lancesSpurtsS2, lancesSpurtsS3, lancesSpurts2, lancesSpurts3, noUse, lancesHeld);
 
+            lancesHeld.AddSkill(lancesSpurtsS1).AddSkill(lancesSpurtsS2).AddSkill(lancesSpurtsS3);
             noUse.AddSkill(lancesHeld).AddSkill(lancesSpurts1).AddSkill(lancesSpurts2).AddSkill(lancesSpurts3);
             CurrentSkill = noUse;
         }

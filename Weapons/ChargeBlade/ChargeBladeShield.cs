@@ -88,7 +88,7 @@ namespace WeaponSkill.Weapons.ChargeBlade
             {
                 def *= 1.5f;
             }
-            return def;
+            return def / 10;
         }
         #region 废弃代码建议不动
         ///// <summary>
@@ -268,6 +268,19 @@ namespace WeaponSkill.Weapons.ChargeBlade
                 sb.End();
                 if (flag) sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None,
                     Main.Rasterizer, null, Main.Transform);
+            }
+        }
+        public override void ModifyHit(ref Player.HurtModifiers hurtModifiers)
+        {
+            base.ModifyHit(ref hurtModifiers);
+            hurtModifiers.FinalDamage *= 0.4f;
+            if (DefSucceeded_GP)
+            {
+                hurtModifiers.FinalDamage *= 0.9f;
+            }
+            if (chargeBladeProj.chargeBladeGlobal.ShieldStrengthening > 0)
+            {
+                hurtModifiers.FinalDamage *= 0.9f;
             }
         }
         public override bool GetDefSucced(Rectangle hitbox)

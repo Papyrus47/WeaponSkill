@@ -37,7 +37,7 @@ namespace WeaponSkill.Weapons.Lances
                 def *= 1.5f;
             if (PowerDef)
                 def += lancesProj.Player.statDefense;
-            return def;
+            return def / 10;
         }
         /// <summary>
         /// 更新盾
@@ -89,9 +89,10 @@ namespace WeaponSkill.Weapons.Lances
         public override void ModifyHit(ref Player.HurtModifiers hurtModifiers)
         {
             base.ModifyHit(ref hurtModifiers);
+            hurtModifiers.FinalDamage *= 0.2f;
             if (PowerDef)
             {
-                hurtModifiers.SourceDamage *= 0.95f;
+                hurtModifiers.FinalDamage *= 0.95f;
             }
         }
         public override void OnDefSucceeded()

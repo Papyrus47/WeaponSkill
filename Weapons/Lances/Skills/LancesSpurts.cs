@@ -18,6 +18,7 @@ namespace WeaponSkill.Weapons.Lances.Skills
         /// </summary>
         public float ActionDmg = 1f;
         public Func<bool> ActivationConditionFunc;
+        public bool IsMove = true;
         public override void AI()
         {
             if (Math.Abs(player.velocity.X) > 2) player.velocity.X = 2 * (player.velocity.X > 0).ToDirectionInt();
@@ -29,12 +30,13 @@ namespace WeaponSkill.Weapons.Lances.Skills
             }
             if (Projectile.ai[0] < 20)
             {
-                player.velocity.X = 5 * player.direction;
+                if(IsMove)
+                    player.velocity.X = 5 * player.direction;
                 PreAttack = true;
             }
             else if (Projectile.ai[0] == 20)
             {
-                SpurtsProj proj = SpurtsProj.NewSpurtsProj(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity.SafeNormalize(default), (int)(Projectile.damage * ActionDmg), 0, Projectile.owner, lancesProj.SwingLength * 2.5f, 100, TextureAssets.Heart.Value);
+                SpurtsProj proj = SpurtsProj.NewSpurtsProj(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity.SafeNormalize(default), (int)(Projectile.damage * ActionDmg), Projectile.knockBack, Projectile.owner, lancesProj.SwingLength * 2.5f, 100, TextureAssets.Heart.Value);
             }
             LancesShield lancesShield = lancesProj.shield;
             lancesShield.Update(player.Center, player.direction);

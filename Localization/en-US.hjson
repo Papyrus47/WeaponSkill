@@ -345,6 +345,7 @@ Mods: {
 				Tooltip:
 					'''
 					Change Blade,which has a versatile Sword Mode and a powerful Axe Mode.
+					防御力计算:计算防御力时,最终伤害*40%,并减去面板防御力/10的伤害
 					Press <right> to switch modes.
 					'''
 				Tooltip1:
@@ -695,7 +696,8 @@ Mods: {
 					盾牌冲刺全程防御判定且有伤害，结束后<right>使用飞身跃入突刺。
 					力量防御可以<right>使用飞身跃入突刺。
 					防御期间不回复耐力。
-					攻击守势:被命中前一刻进行格挡获得攻击架势，增加一倍面板伤害。
+					攻击守势:被命中前一刻进行格挡获得攻击架势。
+					防御力计算:计算防御力时,最终伤害*20%,并减去面板防御力/10的伤害
 					'''
 			}
 
@@ -711,6 +713,91 @@ Mods: {
 
 			TungstenLances: {
 				DisplayName: Tungsten Lances
+				Tooltip: ""
+			}
+
+			GoldLances: {
+				DisplayName: Gold Lances
+				Tooltip: ""
+			}
+
+			IronLances: {
+				DisplayName: Iron Lances
+				Tooltip: ""
+			}
+
+			LeadLances: {
+				DisplayName: Lead Lances
+				Tooltip: ""
+			}
+
+			SilverLances: {
+				DisplayName: Silver Lances
+				Tooltip: ""
+			}
+
+			TinLances: {
+				DisplayName: Tin Lances
+				Tooltip: ""
+			}
+
+			DefenseTalisman1: {
+				DisplayName: Defense Talisman1
+				Tooltip: ""
+			}
+
+			DefenseTalisman2: {
+				DisplayName: Defense Talisman2
+				Tooltip: ""
+			}
+
+			DefenseTalisman3: {
+				DisplayName: Defense Talisman3
+				Tooltip: ""
+			}
+
+			DefenseTalisman4: {
+				DisplayName: Defense Talisman4
+				Tooltip: Defense * 1.05
+			}
+
+			AttackTalisman1: {
+				DisplayName: Attack Talisman1
+				Tooltip: ""
+			}
+
+			AttackTalisman2: {
+				DisplayName: Attack Talisman2
+				Tooltip: ""
+			}
+
+			AttackTalisman3: {
+				DisplayName: Attack Talisman3
+				Tooltip: ""
+			}
+
+			AttackTalisman4: {
+				DisplayName: Attack Talisman4
+				Tooltip: ""
+			}
+
+			AttackTalisman5: {
+				DisplayName: Attack Talisman5
+				Tooltip: ""
+			}
+
+			DefenseTalisman5: {
+				DisplayName: Defense Talisman5
+				Tooltip: ""
+			}
+
+			BloodLongSword: {
+				DisplayName: Blood Long Sword
+				Tooltip: ""
+			}
+
+			VolcanoLongSword: {
+				DisplayName: Volcano Long Sword
 				Tooltip: ""
 			}
 		}

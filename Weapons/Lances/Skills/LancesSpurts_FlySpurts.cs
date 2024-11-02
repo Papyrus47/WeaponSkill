@@ -35,7 +35,7 @@ namespace WeaponSkill.Weapons.Lances.Skills
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    SpurtsProj proj = SpurtsProj.NewSpurtsProj(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity.SafeNormalize(default), (int)(Projectile.damage * ActionDmg), 0, Projectile.owner, lancesProj.SwingLength * 2.5f, 100, TextureAssets.Heart.Value);
+                    SpurtsProj proj = SpurtsProj.NewSpurtsProj(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity.SafeNormalize(default), (int)(Projectile.damage * ActionDmg), Projectile.knockBack, Projectile.owner, lancesProj.SwingLength * 2.5f, 100, TextureAssets.Heart.Value);
                 }
             }
             LancesShield lancesShield = lancesProj.shield;
@@ -50,6 +50,6 @@ namespace WeaponSkill.Weapons.Lances.Skills
                 Projectile.extraUpdates = 0;
                 SkillTimeOut = true;
             }
-        }
+        }   
     }
 }

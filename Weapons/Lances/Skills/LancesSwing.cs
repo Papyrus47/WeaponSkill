@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeaponSkill.Helper;
 using WeaponSkill.Weapons.General;
 
 namespace WeaponSkill.Weapons.Lances.Skills
@@ -11,12 +12,8 @@ namespace WeaponSkill.Weapons.Lances.Skills
     {
         public LancesSwing(LancesProj lancesProj) : base(lancesProj)
         {
-            ActivationConditionFunc = () => player.controlUseTile;
+            ActivationConditionFunc = () => player.controlUseTile && player.controlUseItem;
         }
-        /// <summary>
-        /// 动作值
-        /// </summary>
-        public float ActionDmg = 1f;
         public Func<bool> ActivationConditionFunc;
         public override void AI()
         {
@@ -85,5 +82,6 @@ namespace WeaponSkill.Weapons.Lances.Skills
             base.OnSkillDeactivate();
             swingHelper.SetRotVel(0);
         }
+        //public override bool CompulsionSwitchSkill(ProjSkill_Instantiation nowSkill) => (nowSkill as BasicLancesSkills).PreAttack && ActivationCondition();
     }
 }

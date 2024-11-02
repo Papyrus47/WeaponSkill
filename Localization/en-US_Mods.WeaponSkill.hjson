@@ -111,6 +111,6 @@ Configs: {
 Buffs: {
 	PowerUp: {
 		DisplayName: Power Up
-		Description: Mods.WeaponSkill.Buffs.PowerUp.Description
+		Description: ""
 	}
 }

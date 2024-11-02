@@ -12,7 +12,7 @@ namespace WeaponSkill.Buffs
         public override void Update(Player player, ref int buffIndex)
         {
             base.Update(player, ref buffIndex);
-            player.GetDamage(DamageClass.Generic) += 1;
+            player.GetDamage(DamageClass.Generic) *= 1.15f;
         }
     }
 }

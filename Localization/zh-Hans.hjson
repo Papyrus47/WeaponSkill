@@ -333,6 +333,7 @@ Mods: {
 				Tooltip:
 					'''
 					盾斧,拥有较为灵活的剑模式和威力巨大的斧模式
+					防御力计算:计算防御力时,最终伤害*40%,并减去面板防御力/10的伤害
 					<right>以切换说明
 					'''
 				Tooltip1:
@@ -678,7 +679,8 @@ Mods: {
 					盾牌冲刺全程防御判定且有伤害，结束后<right>使用飞身跃入突刺。
 					力量防御可以<right>使用飞身跃入突刺。
 					防御期间不回复耐力。
-					攻击守势:被命中前一刻进行格挡获得攻击架势，增加一倍面板伤害。
+					攻击守势:被命中前一刻进行格挡获得攻击架势。
+					防御力计算:计算防御力时,最终伤害*20%,并减去面板防御力/10的伤害
 					''' */
 			}
 
@@ -695,6 +697,91 @@ Mods: {
 			TungstenLances: {
 				DisplayName: 钨长枪
 				Tooltip: ""
+			}
+
+			GoldLances: {
+				DisplayName: 金长枪
+				Tooltip: ""
+			}
+
+			IronLances: {
+				DisplayName: 铁长枪
+				Tooltip: ""
+			}
+
+			LeadLances: {
+				DisplayName: 铅长枪
+				Tooltip: ""
+			}
+
+			SilverLances: {
+				DisplayName: 银长枪
+				Tooltip: ""
+			}
+
+			TinLances: {
+				DisplayName: 锡长枪
+				Tooltip: ""
+			}
+
+			DefenseTalisman1: {
+				DisplayName: 防御护石1
+				Tooltip: ""
+			}
+
+			DefenseTalisman2: {
+				DisplayName: 防御护石2
+				Tooltip: ""
+			}
+
+			DefenseTalisman3: {
+				DisplayName: 防御护石3
+				Tooltip: ""
+			}
+
+			DefenseTalisman4: {
+				DisplayName: 防御护石4
+				Tooltip: 防御乘1.05
+			}
+
+			AttackTalisman1: {
+				DisplayName: 攻击护石1
+				Tooltip: 提升3点基础攻击力
+			}
+
+			AttackTalisman2: {
+				DisplayName: 攻击护石2
+				Tooltip: 提升6点基础攻击力
+			}
+
+			AttackTalisman3: {
+				DisplayName: 攻击护石3
+				Tooltip: 提升9点基础攻击力
+			}
+
+			AttackTalisman4: {
+				DisplayName: 攻击护石4
+				Tooltip: 提升12点基础攻击力并加5%暴击率
+			}
+
+			AttackTalisman5: {
+				DisplayName: 攻击护石5
+				Tooltip: 提升15点基础攻击力并加5%暴击率
+			}
+
+			DefenseTalisman5: {
+				DisplayName: 防御护石5
+				Tooltip: 防御乘1.1
+			}
+
+			BloodLongSword: {
+				DisplayName: 血腥太刀
+				Tooltip: ""
+			}
+
+			VolcanoLongSword: {
+				DisplayName: 火山太刀
+				Tooltip: "命中发生爆炸。"
 			}
 		}
 
