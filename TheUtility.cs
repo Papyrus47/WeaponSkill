@@ -146,7 +146,7 @@ namespace WeaponSkill
         /// <param name="target"></param>
         public static SpurtsProj CritProj(Projectile Projectile, NPC target, Vector2 vel)
         {
-            SpurtsProj proj = SpurtsProj.NewSpurtsProj(Projectile.GetSource_OnHit(target), target.Center, vel, 0, 0, Projectile.owner, 150, 50, TextureAssets.Heart.Value);
+            SpurtsProj proj = SpurtsProj.NewSpurtsProj(Projectile.GetSource_OnHit(target), target.Center - vel, vel, 0, 0, Projectile.owner, 150, 50, TextureAssets.Heart.Value);
             proj.FixedPos = false;
             return proj;
         }

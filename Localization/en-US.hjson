@@ -800,6 +800,11 @@ Mods: {
 				DisplayName: Volcano Long Sword
 				Tooltip: ""
 			}
+
+			AdamantiteKinef: {
+				DisplayName: Adamantite Kinef
+				Tooltip: ""
+			}
 		}
 
 		DamageClasses: {

@@ -781,7 +781,12 @@ Mods: {
 
 			VolcanoLongSword: {
 				DisplayName: 火山太刀
-				Tooltip: "命中发生爆炸。"
+				Tooltip: 命中发生爆炸。
+			}
+
+			AdamantiteKinef: {
+				DisplayName: 精金双刀
+				// Tooltip: ""
 			}
 		}
 
