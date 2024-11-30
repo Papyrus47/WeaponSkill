@@ -96,6 +96,11 @@ Configs: {
 			Label: Reset Boss AI
 			Tooltip: Turn up will use this mod Boss AI
 		}
+
+		WoShiHuangLeiLong: {
+			Label: Wo Shi Huang Lei Long
+			Tooltip: ""
+		}
 	}
 
 	NormalConfig: {

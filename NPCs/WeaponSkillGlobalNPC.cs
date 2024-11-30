@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using WeaponSkill.Configs;
 using WeaponSkill.Items.DualBlades;
 using WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade;
 
@@ -171,8 +172,23 @@ namespace WeaponSkill.NPCs
             }
             #endregion
         }
+        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (BossSetting_Config.Init.WoShiHuangLeiLong)
+            {
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.AnisotropicClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+                ModAsset.WoShiHuangLeiLong.Value.CurrentTechnique.Passes[0].Apply();
+            }
+            return base.PreDraw(npc, spriteBatch, screenPos, drawColor);
+        }
         public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            if (BossSetting_Config.Init.WoShiHuangLeiLong)
+            {
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.AnisotropicClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            }
             weaponSkillGlobalNPCComponents.ForEach(x => x.PostDraw(npc, spriteBatch, screenPos, drawColor));
 
             #region 霜拳的冻结

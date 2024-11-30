@@ -12,6 +12,8 @@ namespace WeaponSkill.Configs
     {
         [DefaultValue(false)]
         public bool ResetBossAI;
+        [DefaultValue(false)]
+        public bool WoShiHuangLeiLong;
 
         public override ConfigScope Mode => ConfigScope.ClientSide;
     }

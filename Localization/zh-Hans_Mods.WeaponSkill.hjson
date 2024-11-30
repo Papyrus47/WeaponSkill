@@ -96,6 +96,11 @@ Configs: {
 			Label: 重置Boss的AI
 			Tooltip: 启动以适配Weapon Skill（未实装）
 		}
+
+		WoShiHuangLeiLong: {
+			Label: 我是煌雷龙
+			Tooltip: 我是煌雷龙
+		}
 	}
 
 	NormalConfig: {
