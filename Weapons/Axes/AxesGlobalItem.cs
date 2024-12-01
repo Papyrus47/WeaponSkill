@@ -9,7 +9,7 @@ using WeaponSkill.Weapons.Pickaxe;
 
 namespace WeaponSkill.Weapons.Axes
 {
-    public class AxesGlobalItem : BasicWeaponItem<AxesGlobalItem>
+    public class AxesGlobalItem : BasicWeaponItem<AxesGlobalItem>, IVanillaWeapon
     {
         public Texture2D DrawColorTex;
         public Texture2D DrawSwingColorTex;

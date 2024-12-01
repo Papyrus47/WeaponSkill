@@ -11,7 +11,7 @@ using Terraria.ID;
 
 namespace WeaponSkill.Weapons.Spears
 {
-    public class SpearsGlobalItem : BasicWeaponItem<SpearsGlobalItem>
+    public class SpearsGlobalItem : BasicWeaponItem<SpearsGlobalItem>, IVanillaWeapon
     {
         public Texture2D DrawColorTex;
         public static HashSet<int> WeaponID_SP;

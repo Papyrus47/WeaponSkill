@@ -24,18 +24,18 @@ float4 SwingShader(PSInput input) : COLOR0
 {
     float2 coords = input.Texcoord.xy;
     float alpha = input.Texcoord.z;
-    float2 offset = floor((coords - float2(0.5, 0.5)) * 50) / 50;
+    float2 offset = floor((coords - float2(0.5, 0.5)) * 150) / 150;
 
     float4 color = tex2D(uImage0, float2(0.5, 0.5) + offset);
     float4 color1 = tex2D(uImage1, coords);
-    if (color.r > 0.3 && color.b > 0.3 && color.g > 0.3)
+    color *= uColorChange;
+    color *= color1 * 2;
+    color.a = alpha;
+    float a = 0.5;
+    if (color.r > a && color.b > a && color.g > a)
     {
-        color *= uColorChange;
-        color *= color1 * 2;
         color.a = 1 - alpha;
     }
-    else
-        color.a = alpha;
     return color;
 }
 float4 DisappearSwingShader(float2 texCoords : TEXCOORD0,float4 drawColor : COLOR0) : COLOR0
@@ -53,18 +53,15 @@ float4 MixSwingShader(PSInput input) : COLOR0 // 混合方法
 {
     float2 coords = input.Texcoord.xy;
     float alpha = input.Texcoord.z;
-    float2 offset = floor((coords - float2(0.5, 0.5)) * 50) / 50;
+    float2 offset = floor((coords - float2(0.5, 0.5)) * 150) / 150;
 
     float4 color = tex2D(uImage0, float2(0.5, 0.5) + offset);
     float4 color1 = tex2D(uImage1, coords);
-    if (color.r > 0.3 && color.b > 0.3 && color.g > 0.3)
+    if (color.r > 0 && color.b > 0 && color.g > 0)
     {
         color *= uColorChange;
-        color *= color1 * 2;
-        color.a = 1 - alpha;
+        color *= color1;
     }
-    else
-        color.a = alpha;
     float4 PerlinColor = tex2D(uIamge2, coords); // 获取对应的纹理坐标上的柏林噪声图
     if (PerlinColor.r > uTime) // 截取
         return float4(0, 0, 0, 0);

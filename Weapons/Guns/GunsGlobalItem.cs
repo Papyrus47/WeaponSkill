@@ -9,7 +9,7 @@ using Terraria.Localization;
 
 namespace WeaponSkill.Weapons.Guns
 {
-    public class GunsGlobalItem : BasicWeaponItem<GunsGlobalItem>
+    public class GunsGlobalItem : BasicWeaponItem<GunsGlobalItem>, IVanillaWeapon
     {
         public override bool InstancePerEntity => true;
         /// <summary>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeaponSkill.Configs;
 
 namespace WeaponSkill.Weapons.Spears
 {
@@ -12,8 +13,9 @@ namespace WeaponSkill.Weapons.Spears
         public override bool InstancePerEntity => true;
         public override bool AppliesToEntity(Projectile entity, bool lateInstantiation)
         {
-            if (SpearsGlobalItem.WeaponID == null) return false;
-            return SpearsGlobalItem.WeaponID.Any(x => ContentSamples.ItemsByType[x].shoot == entity.type) && lateInstantiation;
+            if (SpearsGlobalItem.WeaponID == null || (entity.ModProjectile == null && !NormalConfig.Init.UseWeaponSkill))
+                return false;
+            return lateInstantiation && SpearsGlobalItem.WeaponID.Any(x => ContentSamples.ItemsByType[x].shoot == entity.type);
         }
         public override void OnSpawn(Projectile projectile, IEntitySource source)
         {

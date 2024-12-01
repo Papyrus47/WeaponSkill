@@ -7,7 +7,7 @@ using WeaponSkill.Weapons.BroadSword;
 
 namespace WeaponSkill.Weapons.Shortsword
 {
-    public class ShortswordGlobalItem : BasicWeaponItem<ShortswordGlobalItem>
+    public class ShortswordGlobalItem : BasicWeaponItem<ShortswordGlobalItem>, IVanillaWeapon
     {
         public Texture2D DrawColorTex;
         public override void SetStaticDefaults()

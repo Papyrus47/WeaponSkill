@@ -8,7 +8,7 @@ using WeaponSkill.Weapons.Shortsword;
 
 namespace WeaponSkill.Weapons.Hammer
 {
-    public class HammerGlobalItem : BasicWeaponItem<HammerGlobalItem>
+    public class HammerGlobalItem : BasicWeaponItem<HammerGlobalItem>, IVanillaWeapon
     {
         public override void SetStaticDefaults()
         {

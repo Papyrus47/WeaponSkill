@@ -110,6 +110,11 @@ Configs: {
 			Label: Dark Sword
 			Tooltip: ""
 		}
+
+		UseWeaponSkill: {
+			Label: Use Weapon Skill
+			Tooltip: ""
+		}
 	}
 }
 

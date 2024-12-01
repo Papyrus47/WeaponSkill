@@ -10,7 +10,7 @@ using WeaponSkill.Weapons.LongSword;
 
 namespace WeaponSkill.Weapons.Crossbow
 {
-    public class CrossbowGlobalItem : BasicWeaponItem<CrossbowGlobalItem>
+    public class CrossbowGlobalItem : BasicWeaponItem<CrossbowGlobalItem>, IVanillaWeapon
     {
         /// <summary>
         /// 消耗子弹用的玩意

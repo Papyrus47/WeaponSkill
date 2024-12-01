@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WeaponSkill.Weapons.BroadSword
 {
-    public class BroadSwordGlobalItem : BasicWeaponItem<BroadSwordGlobalItem>
+    public class BroadSwordGlobalItem : BasicWeaponItem<BroadSwordGlobalItem>, IVanillaWeapon
     {
         public bool ProjCanShoot;
         public Texture2D DrawColorTex;

@@ -7,7 +7,7 @@ using WeaponSkill.Weapons.Hammer;
 
 namespace WeaponSkill.Weapons.Pickaxe
 {
-    public class PickaxeGlobalItem : BasicWeaponItem<PickaxeGlobalItem>
+    public class PickaxeGlobalItem : BasicWeaponItem<PickaxeGlobalItem>, IVanillaWeapon
     {
         /// <summary>
         ///  特殊的镐子,斧镐之类

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeaponSkill.Configs;
 
 namespace WeaponSkill.Weapons
 {
@@ -14,6 +15,9 @@ namespace WeaponSkill.Weapons
         {
             if (WeaponID == null) 
                 return false;
+            if(this is IVanillaWeapon && entity.ModItem == null)
+                return lateInstantiation && WeaponID.Contains(entity.type) && NormalConfig.Init.UseWeaponSkill;
+            
             return lateInstantiation && WeaponID.Contains(entity.type);
         }
         public override void Unload()

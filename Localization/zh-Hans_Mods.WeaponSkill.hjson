@@ -110,6 +110,11 @@ Configs: {
 			Label: 暗黑大剑
 			// Tooltip: ""
 		}
+
+		UseWeaponSkill: {
+			Label: 使用weapon Skill对原版修改
+			Tooltip: 重新加载Mod生效
+		}
 	}
 }
 

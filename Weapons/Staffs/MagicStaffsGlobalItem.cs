@@ -10,7 +10,7 @@ using Terraria.ID;
 
 namespace WeaponSkill.Weapons.Staffs
 {
-    public class MagicStaffsGlobalItem : BasicWeaponItem<MagicStaffsGlobalItem>
+    public class MagicStaffsGlobalItem : BasicWeaponItem<MagicStaffsGlobalItem>, IVanillaWeapon
     {
         public bool CanShootProj;
         public List<MagicStaffsSetting> magicStaffsSetting = new();

@@ -10,6 +10,8 @@ namespace WeaponSkill.Configs
 {
     internal class NormalConfig : BasicWeaponSkillConfig<NormalConfig>
     {
+        [DefaultValue(true)]
+        public bool UseWeaponSkill;
         [DefaultValue(false)]
         public bool DarkSword;
         public override ConfigScope Mode => ConfigScope.ClientSide;

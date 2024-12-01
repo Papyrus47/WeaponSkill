@@ -7,7 +7,7 @@ using WeaponSkill.Weapons.BroadSword;
 
 namespace WeaponSkill.Weapons.Bows
 {
-    public class BowsGlobalItem : BasicWeaponItem<BowsGlobalItem>
+    public class BowsGlobalItem : BasicWeaponItem<BowsGlobalItem>, IVanillaWeapon
     {
         /// <summary>
         /// 消耗子弹用的玩意
