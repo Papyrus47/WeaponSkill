@@ -73,9 +73,9 @@ namespace WeaponSkill
             #region 取消这段注释显示对话UI
             //talkUI = new();
             //talkUI.Initialize();
-            //UserInterface userInterface4 = new UserInterface();
-            //userInterfaces.Add(userInterface4);
-            //userInterface4.SetState(talkUI);
+            //UserInterface userInterface_talk = new UserInterface();
+            //userInterfaces.Add(userInterface_talk);
+            //userInterface_talk.SetState(talkUI);
             #endregion
 
             crossbowPartUI = new();

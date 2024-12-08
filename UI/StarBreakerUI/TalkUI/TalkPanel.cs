@@ -18,6 +18,10 @@ namespace WeaponSkill.UI.StarBreakerUI.TalkUI
         public string TalkText = "这都是你的错！管理者！这都是你的错！管理者！这都是你的错！管理者！这都是你的错！管理者！这都是你的错！管理者！这都是你的错！管理者！这都是你的错！管理者！这都是你的错！管理者！这都是你的错！管理者！";
         public byte TalkTime;
         /// <summary>
+        /// 停止对话
+        /// </summary>
+        public bool StopTalk;
+        /// <summary>
         /// 正在对话用的文本
         /// </summary>
         protected string OnTalkText = "";
@@ -34,7 +38,7 @@ namespace WeaponSkill.UI.StarBreakerUI.TalkUI
         }
         public override void Update(GameTime gameTime)
         {
-            Left.Pixels = -Width.Pixels / 6;
+            Left.Pixels = 0;
             Left.Precent = WS_Configs_UI.Init.TalkUIPos.X;
             Top.Precent = WS_Configs_UI.Init.TalkUIPos.Y;
             base.Update(gameTime);
@@ -44,11 +48,11 @@ namespace WeaponSkill.UI.StarBreakerUI.TalkUI
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.UIScaleMatrix);
             DynamicSpriteFont font = FontAssets.MouseText.Value;
-            string Name = "星辰dafeiwu";
+            string Name = "星辰大废物";
             Texture2D drawTex = WeaponSkill.TalkUI.Value;
         roundAndroundWeGo:
             CalculatedStyle calculatedStyle = GetDimensions();
-            Vector2 drawPos = calculatedStyle.Position() + new Vector2(calculatedStyle.Height * 0.5f);
+            Vector2 drawPos = calculatedStyle.Position() + new Vector2(0,calculatedStyle.Height * 0.5f);
             Rectangle texRect = new(0, 0, drawTex.Width, drawTex.Height);
             bool IsChangeTextScale = false; // 是否改变了大小
             Vector2 textSize = ChatManager.GetStringSize(font, OnTalkText, Vector2.One * Scale);
@@ -58,11 +62,11 @@ namespace WeaponSkill.UI.StarBreakerUI.TalkUI
 
             while (textSize.Y * Scale * DrawTalkText.Count > Height.Pixels * 0.57f)
             {
-                Scale *= 0.99f;
+                Scale *= 0.999f;
                 IsChangeTextScale = true;
             }
 
-            if (TalkTime++ >= TalkSpeed && !Main.gamePaused)
+            if (!StopTalk && TalkTime++ >= TalkSpeed && !Main.gamePaused)
             {
                 if (OnTalkTextIndex > TalkText.Length - 1)
                 {
@@ -91,8 +95,19 @@ namespace WeaponSkill.UI.StarBreakerUI.TalkUI
                         IsChangeTextScale = true;
                     }
                     OnTalkTextIndex++;
+                    if (OnTalkTextIndex > TalkText.Length - 1)
+                    {
+                        StopTalk = true;
+                    }
                 }
 
+            }
+            else if (StopTalk)
+            {
+                if(Main.mouseLeft && calculatedStyle.ToRectangle().Contains(Main.MouseScreen.ToPoint()))
+                {
+                    StopTalk = false;
+                }
             }
             if (IsChangeTextScale)
             {
@@ -131,7 +146,7 @@ namespace WeaponSkill.UI.StarBreakerUI.TalkUI
             //        OnTalkText = OnTalkText.Remove(textEnterCount[i], 1);
             //    }
             //}
-
+            //spriteBatch.Draw(TextureAssets.BlackTile.Value, GetDimensions().ToRectangle(), Color.Red);
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.SamplerStateForCursor, DepthStencilState.None, Main.Rasterizer, null, Main.UIScaleMatrix);
             #region 粗边名字

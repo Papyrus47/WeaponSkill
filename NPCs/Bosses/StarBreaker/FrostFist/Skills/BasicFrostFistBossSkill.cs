@@ -7,7 +7,7 @@ using WeaponSkill.Helper.SkillNPC;
 
 namespace WeaponSkill.NPCs.Bosses.StarBreaker.FrostFist.Skills
 {
-    public class BasicFrostFistBossSkill : NPCSkill_Instantiation
+    public class BasicFrostFistBossSkill : ModNPCSkill_Instantiation
     {
         public FrostFist_Boss frostFist => modNPC as FrostFist_Boss;
 

@@ -8,16 +8,14 @@ namespace WeaponSkill.Helper.SkillNPC
 {
     public abstract class NPCSkill_Instantiation
     {
-        public ModNPC modNPC;
         public NPC NPC;
         public List<NPCSkill_Instantiation> switchToSkill;
         public bool SkillTimeOut;
-        public NPCSkill_Instantiation(ModNPC modNPC)
-        {
-            this.modNPC = modNPC;
-            NPC = modNPC.NPC;
-            switchToSkill = new();
-        }
+        /// <summary>
+        /// 激活这个技能的条件
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool ActivationCondition() => true;
         public void AddBySkill(params NPCSkill_Instantiation[] skill)
         {
             foreach (var skillItem in skill)
@@ -35,32 +33,26 @@ namespace WeaponSkill.Helper.SkillNPC
             switchToSkill.AddRange(projSkill);
             return new List<NPCSkill_Instantiation>(projSkill);
         }
-        public NPCSkill_Instantiation this[NPCSkill_Instantiation projSkill] => switchToSkill.Find(x => x == projSkill);
         public virtual void AI() { }
-        public virtual bool PreDraw(SpriteBatch spriteBatch,Vector2 scrennPos,Color drawColor) => true;
         public virtual bool? CanDamage() => null;
-        /// <summary>
-        /// 激活这个技能的条件
-        /// </summary>
-        /// <returns></returns>
-        public virtual bool ActivationCondition() => true;
-        /// <summary>
-        /// 技能切换的条件
-        /// </summary>
-        /// <returns>返回true 则可以切换技能</returns>
-        public virtual bool SwitchCondition() => true;
         /// <summary>
         /// 强制切换到这个技能,无视前者的条件
         /// </summary>
         /// <returns></returns>
         public virtual bool CompulsionSwitchSkill(NPCSkill_Instantiation nowSkill) => false;
         /// <summary>
-        /// 技能切换后调用
-        /// </summary>
-        public virtual void OnSkillDeactivate() { }
-        /// <summary>
         /// 技能激活时调用
         /// </summary>
         public virtual void OnSkillActive() { }
+        /// <summary>
+        /// 技能切换后调用
+        /// </summary>
+        public virtual void OnSkillDeactivate() { }
+        public virtual bool PreDraw(SpriteBatch spriteBatch,Vector2 scrennPos,Color drawColor) => true;
+        /// <summary>
+        /// 技能切换的条件
+        /// </summary>
+        /// <returns>返回true 则可以切换技能</returns>
+        public virtual bool SwitchCondition() => true;
     }
 }
