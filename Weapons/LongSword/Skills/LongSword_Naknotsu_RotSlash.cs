@@ -36,7 +36,10 @@ namespace WeaponSkill.Weapons.LongSword.Skills
                 if (!IsLevelUp)
                 {
                     IsLevelUp = true;
-                    if(LongSword.SpawnItem.GetGlobalItem<LongSwordGlobalItem>().SpiritLevel > 0 && !player.GetModPlayer<WeaponSkillPlayer>().Naknotsu_Slash_OnHit) LongSword.SpawnItem.GetGlobalItem<LongSwordGlobalItem>().SpiritLevel--;
+                    if(LongSword.SpawnItem.GetGlobalItem<LongSwordGlobalItem>().SpiritLevel < 3 && player.GetModPlayer<WeaponSkillPlayer>().Naknotsu_Slash_OnHit)
+                    {
+                        LongSword.SpawnItem.GetGlobalItem<LongSwordGlobalItem>().SpiritLevel++;
+                    }
                     var proj = SpurtsProj.NewSpurtsProj(Projectile.GetSource_FromAI(), player.Center - player.velocity.SafeNormalize(default) * LongSword.SwingLength * 5f, player.velocity.SafeNormalize(default), Projectile.damage, Projectile.knockBack, Projectile.owner, LongSword.SwingLength * 9f, 80, TextureAssets.Heart.Value);
                     proj.FixedPos = false;
                 }

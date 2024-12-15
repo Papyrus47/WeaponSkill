@@ -12,6 +12,8 @@ namespace WeaponSkill.NPCs.Bosses.StarBreaker.FrostFist
     {
         public List<NPCSkill_Instantiation> OldSkills { get; set; }
         public NPCSkill_Instantiation CurrentSkill { get; set; }
+        public NPCSkillMode CurrentMode { get; set; }
+
         public override void SetStaticDefaults()
         {
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new()

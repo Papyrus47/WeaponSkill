@@ -40,8 +40,11 @@ namespace WeaponSkill.Weapons.LongSword.Skills
                     if (Projectile.ai[2] < 5 && HitTarget != null)
                     {
                         Vector2 vel = player.velocity.SafeNormalize(default).RotatedByRandom(MathHelper.TwoPi);
-                        var proj = SpurtsProj.NewSpurtsProj(Projectile.GetSource_FromAI(), HitTarget.Center - vel * LongSword.SwingLength * 1.5f,vel , (int)(Projectile.damage * 1.5f), Projectile.knockBack, Projectile.owner, LongSword.SwingLength * 2.3f, 80, TextureAssets.Heart.Value);
-                        proj.FixedPos = false;
+                        for (int i = 0; i < 6; i++)
+                        {
+                            var proj = SpurtsProj.NewSpurtsProj(Projectile.GetSource_FromAI(), HitTarget.Center - vel.RotatedBy(MathHelper.PiOver4 * i) * LongSword.SwingLength * 1.5f, vel.RotatedBy(MathHelper.PiOver4 * i), (int)(Projectile.damage * 1.5f), Projectile.knockBack, Projectile.owner, LongSword.SwingLength * 2.3f, 80, TextureAssets.Heart.Value);
+                            proj.FixedPos = false;
+                        }
                     }
 
                     if (!IsLevelUp)
