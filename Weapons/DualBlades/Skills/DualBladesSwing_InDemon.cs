@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria.Graphics.Effects;
+using WeaponSkill.Effects;
 using WeaponSkill.Helper;
 
 namespace WeaponSkill.Weapons.DualBlades.Skills

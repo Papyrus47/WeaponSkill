@@ -7,6 +7,8 @@ using WeaponSkill.Helper;
 using System.Reflection;
 using WeaponSkill.Weapons.BroadSword.Skills;
 using Terraria;
+using WeaponSkill.Effects;
+using Terraria.Graphics.Effects;
 
 namespace WeaponSkill.Weapons.BroadSword
 {
@@ -140,6 +142,11 @@ namespace WeaponSkill.Weapons.BroadSword
                     {
                         if (Projectile.localAI[1]++ < 50) // 翻滚
                         {
+                            #region 屏幕缩放shader调用
+                            ScreenChange.SetScreenScale = 0.8f;
+                            if (!Filters.Scene[WeaponSkill.ScreenScaleShader].IsActive())
+                                Filters.Scene.Activate(WeaponSkill.ScreenScaleShader);
+                            #endregion
                             Player.fullRotation = MathHelper.TwoPi * (Projectile.localAI[1] / 50f) * Player.direction;
                             Player.fullRotationOrigin = new Vector2(0, Player.height);
                             Player.itemRotation -= Player.fullRotation;
@@ -172,6 +179,7 @@ namespace WeaponSkill.Weapons.BroadSword
                             Projectile.damage = (int)(Projectile.damage * 1.5f);
                         SpawnItem.GetGlobalItem<BroadSwordGlobalItem>().ProjCanShoot = true;
                         TheUtility.Player_ItemCheck_Shoot(Player, SpawnItem, Projectile.damage);
+                        ScreenChange.SetScreenScale = 0.7f;
 
                     }
                     else if ((int)Projectile.ai[1] == 180)

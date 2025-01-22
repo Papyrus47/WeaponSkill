@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
+using WeaponSkill.Effects;
 
 namespace WeaponSkill.Weapons.DualBlades.Skills
 {
@@ -37,6 +39,11 @@ namespace WeaponSkill.Weapons.DualBlades.Skills
             else
             {
                 player.fullRotationOrigin = player.Size * 0.5f;
+                #region 屏幕缩放shader调用
+                ScreenChange.SetScreenScale = 0.6f;
+                if (!Filters.Scene[WeaponSkill.ScreenScaleShader].IsActive())
+                    Filters.Scene.Activate(WeaponSkill.ScreenScaleShader);
+                #endregion
                 if (HitNPC)
                 {
                     player.GetModPlayer<WeaponSkillPlayer>().StatStamina--;
@@ -109,6 +116,10 @@ namespace WeaponSkill.Weapons.DualBlades.Skills
             HitTime = 0;
             HitNPC = false;
             Projectile.ai[2] = 0;
+            #region 屏幕缩放shader调用
+            if (Filters.Scene[WeaponSkill.ScreenScaleShader].IsActive())
+                Filters.Scene.Deactivate(WeaponSkill.ScreenScaleShader);
+            #endregion
         }
     }
 }
