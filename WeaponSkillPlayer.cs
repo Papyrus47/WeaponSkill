@@ -103,6 +103,10 @@ namespace WeaponSkill
         /// 神圣反击被命中
         /// </summary>
         public bool HolyStrikesBack_OnHit;
+        /// <summary>
+        /// 玩家下落速度
+        /// </summary>
+        public float playerFallSpeed;
 
         public BasicShield HeldShield;
 
@@ -157,7 +161,11 @@ namespace WeaponSkill
                 if (Player.statManaMax2 < 1000) Player.statManaMax2 = 1000;
                 Player.statManaMax2 = (int)(Player.statManaMax2 * 1.5f);
             }
-
+            if (playerFallSpeed > 0)
+            {
+                Player.maxFallSpeed = playerFallSpeed;
+                playerFallSpeed = -1;
+            }
             #region 特殊物品无法恢复魔力
             if (Player.HeldItem?.ModItem is SPHealMana healMana)
             {
@@ -233,6 +241,10 @@ namespace WeaponSkill
         private void BlockingDamage(ref Player.HurtInfo info)
         {
             info.Damage -= Player.statDefense * 10;
+        }
+        public override void PreUpdateMovement()
+        {
+
         }
         public override void ModifyDrawLayerOrdering(IDictionary<PlayerDrawLayer, PlayerDrawLayer.Position> positions)
         {

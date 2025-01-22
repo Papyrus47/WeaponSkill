@@ -14,6 +14,8 @@ namespace WeaponSkill.Configs
         public bool UseWeaponSkill;
         [DefaultValue(false)]
         public bool DarkSword;
+        [DefaultValue(false)]
+        public bool PickBrokenTile;
         public override ConfigScope Mode => ConfigScope.ClientSide;
     }
 }

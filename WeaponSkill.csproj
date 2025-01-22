@@ -10,7 +10,6 @@
     <Folder Include="NPCs\Bosses\GlobalBoss\Eye\Skills\" />
     <Folder Include="NPCs\Bosses\StarBreaker\FrostFist\Skills\" />
     <Folder Include="Sounds\Musics\" />
-    <Folder Include="Weapons\MagicBook\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Solaestas.tModLoader.ModBuilder" Version="1.6.1" />

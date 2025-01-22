@@ -84,7 +84,7 @@ Configs: {
 		}
 
 		ResetBossAI: {
-			// Label: Reset Boss A I
+			Label: 重置BossAI
 			// Tooltip: ""
 		}
 	}
@@ -114,6 +114,11 @@ Configs: {
 		UseWeaponSkill: {
 			Label: 使用weapon Skill对原版修改
 			Tooltip: 重新加载Mod生效
+		}
+
+		PickBrokenTile: {
+			// Tooltip: ""
+			Label: 镐子破坏物块
 		}
 	}
 }

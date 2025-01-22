@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using WeaponSkill.Configs;
 using WeaponSkill.Helper;
 using WeaponSkill.Weapons.Bows;
 using WeaponSkill.Weapons.Hammer;
+using static WeaponSkill.Helper.PhysicalRope;
 
 namespace WeaponSkill.Weapons.Pickaxe
 {
@@ -69,7 +71,7 @@ namespace WeaponSkill.Weapons.Pickaxe
                         Projectile.numHits = 0;
                         physicalRope.rope_Lines[^1].endPoint.locked = false;
                         Projectile.velocity.X *= 0.5f;
-                        physicalRope.gravity = Vector2.Zero;
+                        physicalRope.gravity *= 0.5f;
                         Projectile.rotation = (physicalRope.rope_Points[^1].pos - physicalRope.rope_Points[^7].pos).ToRotation() + MathHelper.PiOver4;
                         if (Projectile.velocity.Y < 12) Projectile.velocity.Y += 0.6f;
                         Tile tile = Main.tile[(Projectile.Center / 16).ToPoint()];
@@ -176,10 +178,13 @@ namespace WeaponSkill.Weapons.Pickaxe
                         {
                             if (Player.controlUseItem)
                             {
-                                for (int i = -1; i <= 1; i++)
+                                if (NormalConfig.Init.PickBrokenTile)
                                 {
-                                    for (int j = -1; j <= 1; j++)
-                                        Player.PickTile((int)Projectile.Bottom.X / 16 + i, (int)Projectile.Bottom.Y / 16 + j, Player.HeldItem.pick);
+                                    for (int i = -1; i <= 1; i++)
+                                    {
+                                        for (int j = -1; j <= 1; j++)
+                                            Player.PickTile((int)Projectile.Bottom.X / 16 + i, (int)Projectile.Bottom.Y / 16 + j, Player.HeldItem.pick);
+                                    }
                                 }
                                 Projectile.ai[0] = 0;
                                 Projectile.ai[1] = -10;
@@ -205,40 +210,48 @@ namespace WeaponSkill.Weapons.Pickaxe
                     }
                 case 3: // 挥舞
                     {
+                        Vector2 vector2 = (Main.MouseWorld - Player.Center).SafeNormalize(default);
                         Player.itemAnimation = Player.itemTime = 2;
-                        physicalRope.gravity = (Projectile.Center - Player.Center).SafeNormalize(default);
+
                         Projectile.tileCollide = false;
                         Projectile.rotation = (Projectile.Center - Player.Center).ToRotation() + MathHelper.PiOver4;
                         Player.itemAnimation = Player.itemTime = 2;
                         if (Projectile.ai[1] == 0)
                         {
+                            physicalRope.gravity = vector2 * 10;
                             Projectile.ai[1]++;
-                            SetRopeLength(0.3f);
+                            SetRopeLength(6f * Player.GetWeaponAttackSpeed(Player.HeldItem));
                         }
+                        Projectile.damage = (int)(Projectile.originalDamage * (Projectile.Center - Player.Center).Length() * 0.01f);
                         Projectile.ai[1]++;
                         Projectile.extraUpdates = 3;
-                        Projectile.velocity = (Player.Center + (-Vector2.UnitY * 100).RotatedBy((Projectile.ai[1] / 25f) * MathHelper.PiOver2 * Player.direction) - Projectile.Center) * 0.5f;
+                        //Projectile.velocity = (Player.Center + (-Vector2.UnitY * 100).RotatedBy((Projectile.ai[1] / 25f) * MathHelper.PiOver2 * Player.direction) - Projectile.Center) * 0.5f;
 
                         #region 绳子更新
+
+                        physicalRope.gravity = (vector2 * (0.5f - (Projectile.ai[1] / 60f))).RotatedBy(((Projectile.ai[1] / 60f) - 0.5f) * (vector2.X > 0).ToDirectionInt() * MathHelper.PiOver2) * 16 * Player.GetWeaponAttackSpeed(Player.HeldItem);
+                        //physicalRope.gravity = vector2.RotatedBy(((Projectile.ai[1] / 60f) - 0.5f) * (vector2.X > 0).ToDirectionInt() * MathHelper.PiOver2) * 16 * (0.5f - (Projectile.ai[1] / 60f));
+                        //physicalRope.gravity += (Player.Center - Projectile.Center).SafeNormalize(default).RotatedBy(0.2);
                         physicalRope.rope_Lines[^1].endPoint.pos += (Projectile.Center - physicalRope.rope_Lines[^1].endPoint.pos) * 0.4f;
                         physicalRope.Update();
                         Projectile.Center -= (Projectile.Center - physicalRope.rope_Lines[^1].endPoint.pos) * 0.4f;
                         #endregion
 
-                        if (Projectile.ai[1] > 51)
+                        if (Projectile.ai[1] > 60)
                         {
+                            Projectile.damage = Projectile.originalDamage;
                             TheUtility.ResetProjHit(Projectile);
                             Projectile.ai[1] = 0;
                             Projectile.extraUpdates = 0;
                             Projectile.ai[0] = 0;
-                            if(Projectile.numHits > 0)
-                            {
-                                Projectile.velocity = (Main.MouseWorld - Player.Center).SafeNormalize(default) * 50;
-                                SetRopeLength(50f);
-                                Projectile.ai[0] = 4;
-                                //Projectile.ai[2] = -1;
-                                TheUtility.ResetProjHit(Projectile);
-                            }
+                            //if(Projectile.numHits > 0)
+                            //{
+                            //    Projectile.velocity = (Main.MouseWorld - Player.Center).SafeNormalize(default) * 50;
+                            //    SetRopeLength(50f);
+                            //    Projectile.ai[0] = 4;
+                            //    //Projectile.ai[2] = -1;
+                            //    TheUtility.ResetProjHit(Projectile);
+                            //}
                         }
                         break;
                     }
@@ -361,10 +374,13 @@ namespace WeaponSkill.Weapons.Pickaxe
                         {
                             physicalRope.rope_Lines[^1].endPoint.locked = true;
                         }
-                        for (int i = -1; i <= 1; i++)
+                        if (NormalConfig.Init.PickBrokenTile)
                         {
-                            for (int j = -1; j <= 1; j++)
-                                Player.PickTile((int)Projectile.Center.X / 16 + i, (int)Projectile.Bottom.Y / 16 + j, Player.HeldItem.pick);
+                            for (int i = -1; i <= 1; i++)
+                            {
+                                for (int j = -1; j <= 1; j++)
+                                    Player.PickTile((int)Projectile.Center.X / 16 + i, (int)Projectile.Bottom.Y / 16 + j, Player.HeldItem.pick);
+                            }
                         }
                         break;
                     }
@@ -412,7 +428,7 @@ namespace WeaponSkill.Weapons.Pickaxe
             physicalRope ??= new();
             physicalRope.rope_Lines.Clear();
             physicalRope.rope_Points.Clear();
-            physicalRope.RopeRigidity = 4;
+            physicalRope.RopeRigidity = 6;
             physicalRope.width = 3;
             int length = 20;
             for (int i = 0; i < length; i++)

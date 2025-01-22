@@ -84,7 +84,7 @@ Configs: {
 		}
 
 		ResetBossAI: {
-			Label: Reset Boss A I
+			Label: Reset Boss AI
 			Tooltip: ""
 		}
 	}
@@ -114,6 +114,11 @@ Configs: {
 		UseWeaponSkill: {
 			Label: Use Weapon Skill
 			Tooltip: ""
+		}
+
+		PickBrokenTile: {
+			Tooltip: ""
+			Label: Pick Broken Tile
 		}
 	}
 }

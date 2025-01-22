@@ -50,6 +50,10 @@ namespace WeaponSkill.Weapons.LongSword
                     }
             }
         }
+        public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
+        {
+            damage += SpiritLevel * 0.05f;
+        }
         public override void HoldItem(Item item, Player player)
         {
             if (player.ownedProjectileCounts[ModContent.ProjectileType<LongSwordProj>()] <= 0) // 生成手持弹幕

@@ -78,6 +78,7 @@ namespace WeaponSkill.Weapons.LongSword
             Projectile.timeLeft = 2;
             InSpiritAttack = false;
             swordScabbard.projectile = Projectile;
+            Projectile.damage = Player.GetWeaponDamage(SpawnItem);
             CurrentSkill.AI();
             Player.itemLocation = Projectile.Center;
             if (AddSpiritTime > 0)
@@ -386,6 +387,10 @@ namespace WeaponSkill.Weapons.LongSword
                 VisualRotation = 0.4f,
                 SwingRot = MathHelper.Pi + MathHelper.PiOver2
             };
+            #endregion
+            #region 登龙与判定
+            LongSword_FlySlash flySlash = new(this);
+            flySlash.AddBySkill(Naknotsu_RotSlash);
             #endregion
             #region 普通攻击判定
             notUse.AddSkill(useSlash1).AddSkill(useSlash2);
