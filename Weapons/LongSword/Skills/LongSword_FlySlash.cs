@@ -71,6 +71,10 @@ namespace WeaponSkill.Weapons.LongSword.Skills
                     {
                         Projectile.ai[0]++;
                         TheUtility.ResetProjHit(Projectile);
+                        if (LongSword.SpawnItem.GetGlobalItem<LongSwordGlobalItem>().SpiritLevel > 0)
+                        {
+                            LongSword.SpawnItem.GetGlobalItem<LongSwordGlobalItem>().SpiritLevel--;
+                        }
                     }
                     break;
                 case 2: // 下落
