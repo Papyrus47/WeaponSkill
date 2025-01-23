@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static WeaponSkill.Weapons.DualBlades.Skills.DualBladesSwing;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace WeaponSkill.Weapons.Staffs.Skills

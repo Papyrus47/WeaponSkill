@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
 using WeaponSkill.Items.ChargeBlade;
 using WeaponSkill.Weapons.LongSword;
 

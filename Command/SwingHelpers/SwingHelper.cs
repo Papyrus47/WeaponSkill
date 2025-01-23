@@ -7,9 +7,8 @@ using System.IO;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader.Config;
-using WeaponSkill;
 
-namespace WeaponSkill.Helper
+namespace WeaponSkill.Command.SwingHelpers
 {
     /// <summary>
     /// 挥舞用的类

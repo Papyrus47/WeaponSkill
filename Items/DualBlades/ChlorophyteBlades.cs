@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
 using WeaponSkill.Weapons.DualBlades;
 using WeaponSkill.Weapons.Hammer;
 

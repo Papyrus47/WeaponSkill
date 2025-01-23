@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WeaponSkill.Configs;
-using WeaponSkill.Helper.SkillNPC;
+using WeaponSkill.Command.SkillNPC;
 using WeaponSkill.NPCs.Bosses.GlobalBoss.Eye.Modes;
 
 namespace WeaponSkill.NPCs.Bosses.GlobalBoss.Eye

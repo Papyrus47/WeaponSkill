@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WeaponSkill.Weapons.DualBlades;
 
-namespace WeaponSkill.Helper
+namespace WeaponSkill.Command.SwingHelpers
 {
     public class DualBladesSwingHelper : SwingHelper
     {

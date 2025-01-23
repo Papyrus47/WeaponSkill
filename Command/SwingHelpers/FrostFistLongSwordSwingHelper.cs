@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WeaponSkill.Helper
+namespace WeaponSkill.Command.SwingHelpers
 {
     /// <summary>
     /// 霜拳特殊拖尾

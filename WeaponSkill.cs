@@ -2,12 +2,12 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using ReLogic.Content.Sources;
 using Terraria.Graphics.Effects;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
 using WeaponSkill.Items.DualBlades;
 using WeaponSkill.UI.StarBreakerUI.TalkUI;
 using WeaponSkill.Weapons.StarBreakerWeapon.General.ElementDamage;
 using WeaponSkill.Weapons.StarBreakerWeapon.General;
-using WeaponSkill.Helper.ResidueSwing;
+using WeaponSkill.Command.ResidueSwing;
 using WeaponSkill.Effects;
 
 namespace WeaponSkill

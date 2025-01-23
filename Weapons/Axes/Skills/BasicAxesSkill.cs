@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
+using WeaponSkill.Command.SwingHelpers;
 using WeaponSkill.Weapons.BroadSword;
 
 namespace WeaponSkill.Weapons.Axes.Skills

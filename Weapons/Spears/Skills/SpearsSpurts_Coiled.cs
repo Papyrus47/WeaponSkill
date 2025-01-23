@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria.Graphics.CameraModifiers;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
 using WeaponSkill.Weapons.General;
 
 namespace WeaponSkill.Weapons.Spears.Skills

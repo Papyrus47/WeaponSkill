@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria.Localization;
 using Terraria.UI;
-using WeaponSkill.Helper.ResidueSwing;
+using WeaponSkill.Command.ResidueSwing;
 using WeaponSkill.UI.ChangeAmmoUI;
 using WeaponSkill.UI.ChargeBladeUI;
 using WeaponSkill.UI.CrossbowPartUI;

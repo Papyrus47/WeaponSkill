@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
 using WeaponSkill.Weapons.Bows;
 using static Terraria.GameContent.Animations.IL_Actions.NPCs;
 

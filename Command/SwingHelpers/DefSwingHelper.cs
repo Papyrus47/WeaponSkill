@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WeaponSkill.Weapons.ChargeBlade;
 
-namespace WeaponSkill.Helper
+namespace WeaponSkill.Command.SwingHelpers
 {
     public class DefSwingHelper : SwingHelper
     {
@@ -27,6 +27,6 @@ namespace WeaponSkill.Helper
         protected override float rotation { get => Rot; set => Rot = value; }
         protected override Vector2 velocity { get => vel; set => vel = value; }
         protected override int spriteDirection { get => SPDir; set => SPDir = value; }
-        protected override int width {get => Width; set => Width = value; }
+        protected override int width { get => Width; set => Width = value; }
     }
 }

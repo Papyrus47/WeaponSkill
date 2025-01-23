@@ -1,4 +1,4 @@
-﻿using WeaponSkill.Helper.SkillNPC;
+﻿using WeaponSkill.Command.SkillNPC;
 
 namespace WeaponSkill.NPCs.Bosses.GlobalBoss.Eye.Modes
 {

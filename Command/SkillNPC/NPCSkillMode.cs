@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WeaponSkill.Helper.SkillNPC
+namespace WeaponSkill.Command.SkillNPC
 {
     /// <summary>
     /// NPC的行动Mode

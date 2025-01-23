@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using WeaponSkill.Configs;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
 using WeaponSkill.Weapons.Bows;
 using WeaponSkill.Weapons.Hammer;
-using static WeaponSkill.Helper.PhysicalRope;
+using static WeaponSkill.Command.PhysicalRope;
 
 namespace WeaponSkill.Weapons.Pickaxe
 {

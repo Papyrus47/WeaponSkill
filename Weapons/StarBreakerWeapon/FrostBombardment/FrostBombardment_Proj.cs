@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WeaponSkill.Configs;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
 using WeaponSkill.UI.StarBreakerUI.SkillsTreeUI;
 using WeaponSkill.Weapons.StarBreakerWeapon.FrostBombardment.Skills;
 using WeaponSkill.Weapons.StarBreakerWeapon.FrostFist;

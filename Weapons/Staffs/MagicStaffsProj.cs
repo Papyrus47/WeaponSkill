@@ -5,7 +5,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
+using WeaponSkill.Command.SwingHelpers;
 using WeaponSkill.Weapons.Staffs.Skills;
 
 namespace WeaponSkill.Weapons.Staffs

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WeaponSkill.Weapons;
 using WeaponSkill.Weapons.ChargeBlade;
 
-namespace WeaponSkill.Helper
+namespace WeaponSkill.Command.SwingHelpers
 {
     public class ShieldSwingHelper : SwingHelper
     {
@@ -21,7 +21,7 @@ namespace WeaponSkill.Helper
         public float Rot;
         public float ShieldRot;
         public int SPDir;
-        public bool ChangeLerp { get => _changeLerpInvoke;set => _changeLerpInvoke = value; }
+        public bool ChangeLerp { get => _changeLerpInvoke; set => _changeLerpInvoke = value; }
         protected override Vector2 Size { get => Shield.Size; set => Shield.Size = value; }
         protected override Vector2 Center { get => center; set => center = value; }
         protected override int frame { get; set; }
@@ -86,7 +86,7 @@ namespace WeaponSkill.Helper
             };
 
             Vector2 rotPos = (pos[0] + pos[1] + pos[2] + pos[3]) / 4;
-            for(int i =0;i< 4; i++)
+            for (int i = 0; i < 4; i++)
             {
                 Vector2 v = (pos[i] - rotPos).RotatedBy(ShieldRot);
                 pos[i] = rotPos + v.SafeNormalize(default) * halfLength * 2;

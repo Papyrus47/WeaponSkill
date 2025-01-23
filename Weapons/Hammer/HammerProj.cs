@@ -7,7 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Graphics.CameraModifiers;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
+using WeaponSkill.Command.SwingHelpers;
 using WeaponSkill.Weapons.Hammer.Skills;
 using WeaponSkill.Weapons.LongSword;
 

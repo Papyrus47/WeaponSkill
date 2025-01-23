@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
 using WeaponSkill.Particles;
 using WeaponSkill.Weapons.Crossbow.Skills;
 using WeaponSkill.Weapons.StarBreakerWeapon.FrostBombardment;

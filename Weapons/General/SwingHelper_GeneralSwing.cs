@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria.Graphics.CameraModifiers;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
+using WeaponSkill.Command.SwingHelpers;
 
 namespace WeaponSkill.Weapons.General
 {

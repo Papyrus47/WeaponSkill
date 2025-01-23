@@ -6,7 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Graphics.Renderers;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
+using WeaponSkill.Command.SwingHelpers;
 using WeaponSkill.Weapons.DualBlades.Skills;
 using static WeaponSkill.Weapons.DualBlades.Skills.DualBladesSwing;
 

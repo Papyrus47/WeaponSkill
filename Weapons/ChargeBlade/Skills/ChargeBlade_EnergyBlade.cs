@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.Graphics.Effects;
 using WeaponSkill.Effects;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
 
 namespace WeaponSkill.Weapons.ChargeBlade.Skills
 {

@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria.ModLoader;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
+using WeaponSkill.Command.SwingHelpers;
 using WeaponSkill.Weapons.BroadSword;
 
 namespace WeaponSkill.Weapons.LongSword.Skills

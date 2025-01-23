@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Graphics.CameraModifiers;
-using WeaponSkill.Helper;
-using WeaponSkill.Helper.ResidueSwing;
+using WeaponSkill.Command.ResidueSwing;
+using WeaponSkill.Command.SwingHelpers;
 using WeaponSkill.Weapons.Spears;
 using WeaponSkill.Weapons.StarBreakerWeapon.General;
 

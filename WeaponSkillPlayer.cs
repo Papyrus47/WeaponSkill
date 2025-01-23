@@ -12,7 +12,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using WeaponSkill.Buffs;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
 using WeaponSkill.Items.DualBlades;
 using WeaponSkill.Weapons;
 using WeaponSkill.Weapons.General;

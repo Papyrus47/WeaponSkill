@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WeaponSkill.Helper.ResidueSwing
+namespace WeaponSkill.Command.ResidueSwing
 {
     /// <summary>
     /// 残留的刀光

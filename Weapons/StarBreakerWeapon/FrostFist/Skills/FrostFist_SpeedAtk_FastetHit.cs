@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Graphics.CameraModifiers;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
 using WeaponSkill.NPCs;
 using static WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills.FrostFist_FistHit;
 

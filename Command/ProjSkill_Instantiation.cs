@@ -1,4 +1,4 @@
-﻿namespace WeaponSkill.Helper
+﻿namespace WeaponSkill.Command
 {
     public abstract class ProjSkill_Instantiation
     {

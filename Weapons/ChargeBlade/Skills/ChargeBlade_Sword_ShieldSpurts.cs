@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
 using static WeaponSkill.Weapons.ChargeBlade.Skills.ChargeBlade_Axe_Swing_Liberate;
 using WeaponSkill.Items.ChargeBlade;
 using WeaponSkill.NPCs;

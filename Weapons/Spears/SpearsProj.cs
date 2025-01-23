@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
 using WeaponSkill.Weapons.Spears.Skills;
 using Terraria.ID;
 using WeaponSkill.Weapons.Shortsword;
 using Terraria.Enums;
+using WeaponSkill.Command.SwingHelpers;
 
 namespace WeaponSkill.Weapons.Spears
 {

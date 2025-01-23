@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria.Graphics.CameraModifiers;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
 
 namespace WeaponSkill.Weapons.Bows.Skills
 {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Terraria.Localization;
 using Terraria.UI;
 using WeaponSkill.Configs;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
 
 namespace WeaponSkill.UI.StarBreakerUI.SkillsTreeUI
 {

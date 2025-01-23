@@ -1,6 +1,6 @@
 ﻿using Terraria.Graphics.CameraModifiers;
 
-namespace WeaponSkill.Helper
+namespace WeaponSkill.Command
 {
     internal class CameraModifierToScreenPos : ICameraModifier
     {

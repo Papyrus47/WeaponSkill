@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WeaponSkill.Helper.SkillNPC;
+using WeaponSkill.Command.SkillNPC;
 
 namespace WeaponSkill.NPCs.Bosses.GlobalBoss
 {

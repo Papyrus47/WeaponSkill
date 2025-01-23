@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
 using System.Reflection;
 using WeaponSkill.Weapons.BroadSword.Skills;
 using Terraria;
 using WeaponSkill.Effects;
 using Terraria.Graphics.Effects;
+using WeaponSkill.Command.SwingHelpers;
 
 namespace WeaponSkill.Weapons.BroadSword
 {

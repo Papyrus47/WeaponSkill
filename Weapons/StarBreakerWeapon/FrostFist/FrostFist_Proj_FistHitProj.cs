@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Graphics.CameraModifiers;
-using WeaponSkill.Helper;
+using WeaponSkill.Command;
 using WeaponSkill.Weapons.LongSword;
 using WeaponSkill.Weapons.StarBreakerWeapon.FrostFist.Skills;
 using WeaponSkill.Weapons.StarBreakerWeapon.General;

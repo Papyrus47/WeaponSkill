@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
-using WeaponSkill.Helper;
+using WeaponSkill.Command.SwingHelpers;
 using WeaponSkill.NPCs;
 using WeaponSkill.Weapons.General;
 
