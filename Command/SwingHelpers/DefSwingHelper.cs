@@ -21,12 +21,12 @@ namespace WeaponSkill.Command.SwingHelpers
         public Vector2 size;
 
         public new Vector2 Size { get => size; set => size = value; }
-        protected override Vector2 Center { get => center; set => center = value; }
-        protected override int frame { get; set; }
-        protected override int frameMax { get; set; }
-        protected override float rotation { get => Rot; set => Rot = value; }
-        protected override Vector2 velocity { get => vel; set => vel = value; }
-        protected override int spriteDirection { get => SPDir; set => SPDir = value; }
-        protected override int width { get => Width; set => Width = value; }
+        public override Vector2 Center { get => center; set => center = value; }
+        public override int frame { get; set; }
+        public override int frameMax { get; set; }
+        public override float rotation { get => Rot; set => Rot = value; }
+        public override Vector2 velocity { get => vel; set => vel = value; }
+        public override int spriteDirection { get => SPDir; set => SPDir = value; }
+        public override int width { get => Width; set => Width = value; }
     }
 }

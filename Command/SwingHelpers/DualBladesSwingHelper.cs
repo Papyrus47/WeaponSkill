@@ -11,8 +11,8 @@ namespace WeaponSkill.Command.SwingHelpers
     {
         public Ref<Vector2> vel;
         public int spriteDir;
-        protected override Vector2 velocity { get => vel.Value; set => vel.Value = value; }
-        protected override int spriteDirection { get => spriteDir; set => spriteDir = value; }
+        public override Vector2 velocity { get => vel.Value; set => vel.Value = value; }
+        public override int spriteDirection { get => spriteDir; set => spriteDir = value; }
         public DualBladesSwingHelper(DualBladesProj proj, int oldVelLength, Asset<Texture2D> swingItemTex = null) : base(proj.Projectile, oldVelLength, swingItemTex)
         {
         }

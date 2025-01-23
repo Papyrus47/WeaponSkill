@@ -22,14 +22,14 @@ namespace WeaponSkill.Command.SwingHelpers
         public float ShieldRot;
         public int SPDir;
         public bool ChangeLerp { get => _changeLerpInvoke; set => _changeLerpInvoke = value; }
-        protected override Vector2 Size { get => Shield.Size; set => Shield.Size = value; }
-        protected override Vector2 Center { get => center; set => center = value; }
-        protected override int frame { get; set; }
-        protected override int frameMax { get; set; }
-        protected override float rotation { get => Rot; set => Rot = value; }
-        protected override Vector2 velocity { get => vel; set => vel = value; }
-        protected override int spriteDirection { get => SPDir; set => SPDir = value; }
-        protected override int width { get => Shield.width; set => Shield.width = value; }
+        public override Vector2 Size { get => Shield.Size; set => Shield.Size = value; }
+        public override Vector2 Center { get => center; set => center = value; }
+        public override int frame { get; set; }
+        public override int frameMax { get; set; }
+        public override float rotation { get => Rot; set => Rot = value; }
+        public override Vector2 velocity { get => vel; set => vel = value; }
+        public override int spriteDirection { get => SPDir; set => SPDir = value; }
+        public override int width { get => Shield.width; set => Shield.width = value; }
         public override Vector2 GetDrawCenter(int index = 0)
         {
             Vector2 pos = Center + velocity * 0.5f;

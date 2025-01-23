@@ -35,25 +35,25 @@ namespace WeaponSkill.Command.SwingHelpers
         /// <summary>
         /// 挥舞的启用
         /// </summary>
-        protected bool _acitveSwing;
-        protected bool _changeLerpInvoke;
-        protected bool _canDrawTrailing;
-        protected bool _drawCorrections;
-        protected bool _oldVelsSave;
-        protected float _halfSizeLength;
-        protected float _velLerp;
-        protected float _changeHeldLength;
-        protected float _velRotBy;
+        public bool _acitveSwing;
+        public bool _changeLerpInvoke;
+        public bool _canDrawTrailing;
+        public bool _drawCorrections;
+        public bool _oldVelsSave;
+        public float _halfSizeLength;
+        public float _velLerp;
+        public float _changeHeldLength;
+        public float _velRotBy;
         public Asset<Texture2D> SwingItemTex;
         public Projectile projectile => SpawnEntity as Projectile;
-        protected virtual Vector2 velocity { get => projectile.velocity; set => projectile.velocity = value; }
-        protected virtual Vector2 Center { get => projectile.Center; set => projectile.Center = value; }
-        protected virtual float rotation { get => projectile.rotation; set => projectile.rotation = value; }
-        protected virtual int spriteDirection { get => projectile.spriteDirection; set => projectile.spriteDirection = value; }
-        protected virtual int frame { get => projectile.frame; set => projectile.frame = value; }
-        protected virtual int frameMax { get => Main.projFrames[projectile.type]; set => Main.projFrames[projectile.type] = value; }
-        protected virtual int width { get => projectile.width; set => projectile.width = value; }
-        protected virtual Vector2 Size { get => projectile.Size; set => projectile.Size = value; }
+        public virtual Vector2 velocity { get => projectile.velocity; set => projectile.velocity = value; }
+        public virtual Vector2 Center { get => projectile.Center; set => projectile.Center = value; }
+        public virtual float rotation { get => projectile.rotation; set => projectile.rotation = value; }
+        public virtual int spriteDirection { get => projectile.spriteDirection; set => projectile.spriteDirection = value; }
+        public virtual int frame { get => projectile.frame; set => projectile.frame = value; }
+        public virtual int frameMax { get => Main.projFrames[projectile.type]; set => Main.projFrames[projectile.type] = value; }
+        public virtual int width { get => projectile.width; set => projectile.width = value; }
+        public virtual Vector2 Size { get => projectile.Size; set => projectile.Size = value; }
         public SwingHelper(object spawnEntity, int oldVelLength, Asset<Texture2D> swingItemTex = null)
         {
             SpawnEntity = spawnEntity;
