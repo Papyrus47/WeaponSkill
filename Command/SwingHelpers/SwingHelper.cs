@@ -485,23 +485,27 @@ namespace WeaponSkill.Command.SwingHelpers
 
         public object Clone()
         {
-            SwingHelper sh = new(SpawnEntity, oldVels.Length, SwingItemTex);
-            sh.oldVels = oldVels.Clone() as Vector2[];
-            sh.velocity = velocity;
-            sh.rotation = rotation;
-            sh.spriteDirection = spriteDirection;
-            sh.Size = Size;
-            sh.StartVel = StartVel;
-            sh.oldFrames = oldFrames.Clone() as int[];
-            sh.UseShaderPass = UseShaderPass;
-            sh._acitveSwing = _acitveSwing;
-            sh._canDrawTrailing = _canDrawTrailing;
-            sh._changeHeldLength = _changeHeldLength;
-            sh._halfSizeLength = _halfSizeLength;
-            sh._oldVelsSave = _oldVelsSave;
-            sh._velLerp = _velLerp;
-            sh._velRotBy = _velRotBy;
-            sh._drawCorrections = _drawCorrections;
+            SwingHelper sh = new(SpawnEntity, oldVels.Length, SwingItemTex)
+            {
+                oldVels = oldVels.Clone() as Vector2[],
+                velocity = velocity,
+                rotation = rotation,
+                spriteDirection = spriteDirection,
+                Size = Size,
+                StartVel = StartVel,
+                oldFrames = oldFrames.Clone() as int[],
+                UseShaderPass = UseShaderPass,
+                _acitveSwing = _acitveSwing,
+                _canDrawTrailing = _canDrawTrailing,
+                _changeHeldLength = _changeHeldLength,
+                _halfSizeLength = _halfSizeLength,
+                _oldVelsSave = _oldVelsSave,
+                _velLerp = _velLerp,
+                _velRotBy = _velRotBy,
+                _drawCorrections = _drawCorrections,
+                VelScale = VelScale,
+                VisualRotation = VisualRotation,
+            };
             return sh;
         }
     }
