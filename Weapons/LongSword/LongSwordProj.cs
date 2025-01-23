@@ -391,6 +391,7 @@ namespace WeaponSkill.Weapons.LongSword
             #region 登龙与判定
             LongSword_FlySlash flySlash = new(this);
             flySlash.AddBySkill(Naknotsu_RotSlash);
+            flySlash.AddBySkill(SlashDown, Spurt, SlashUp, longSwordSwing_Spirit, longSwordSwing_Spirit2, longSwordSwing_Spirit3_3, notUse);
             #endregion
             #region 普通攻击判定
             notUse.AddSkill(useSlash1).AddSkill(useSlash2);

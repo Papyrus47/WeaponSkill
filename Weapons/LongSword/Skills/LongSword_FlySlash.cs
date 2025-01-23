@@ -52,7 +52,7 @@ namespace WeaponSkill.Weapons.LongSword.Skills
                             Projectile.ai[1] = 0;
                             Projectile.ai[0]++;
                             player.velocity.Y = -15;
-                            var proj = SpurtsProj.NewSpurtsProj(Projectile.GetSource_FromAI(), player.Center + Vector2.UnitX, Vector2.UnitX, (int)(Projectile.damage * 1.5f), Projectile.knockBack, Projectile.owner, LongSword.SwingLength * 2.3f, 80, TextureAssets.Heart.Value);
+                            var proj = SpurtsProj.NewSpurtsProj(Projectile.GetSource_FromAI(), player.Center - Vector2.UnitX * player.direction * 150, Vector2.UnitX * player.direction, (int)(Projectile.damage * 1.5f), Projectile.knockBack, Projectile.owner, LongSword.SwingLength * 3.3f, 80, TextureAssets.Heart.Value);
                             proj.FixedPos = false;
                         }
                         else
