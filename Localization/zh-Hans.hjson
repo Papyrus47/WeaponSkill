@@ -788,6 +788,11 @@ Mods: {
 				DisplayName: 精金双刀
 				// Tooltip: ""
 			}
+
+			CopperSwordShield: {
+				// DisplayName: Copper Sword Shield
+				// Tooltip: ""
+			}
 		}
 
 		DamageClasses: {

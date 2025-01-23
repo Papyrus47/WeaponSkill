@@ -10,6 +10,7 @@ namespace WeaponSkill.Items.SwordShield
     public abstract class BasicSwordShield : ModItem
     {
         public abstract Asset<Texture2D> ShieldTex { get; }
+        public Asset<Texture2D> GetShieldTex => ModContent.Request<Texture2D>(GetType().Namespace.Replace('.', '/') + "/" + GetType().Name + "_Shield");
         public sealed override void SetDefaults()
         {
             _ = ShieldTex;

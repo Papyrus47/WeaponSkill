@@ -55,21 +55,21 @@ namespace WeaponSkill.Weapons.ChargeBlade
             if (GP) InDef = true;
             if (AxeRotBool)
             {
-                swingHelper.AxeRot = AxeRot;
+                swingHelper.ShieldRot = AxeRot;
                 if(Dir == -1)
                 {
-                    swingHelper.AxeRot += 0.15f;
+                    swingHelper.ShieldRot += 0.15f;
                 }
                 if (chargeBladeProj.chargeBladeGlobal.InAxe && chargeBladeProj.CurrentSkill is ChargeBlade_Axe_Swing swing)
                 {
                     rot += swing.VisualRotation;
                     swingHelper.VisualRotation = MathHelper.Lerp(swingHelper.VisualRotation, swing.VisualRotation, 0.3f);
-                    swingHelper.AxeRot += swing.VisualRotation * 0.5f;
+                    swingHelper.ShieldRot += swing.VisualRotation * 0.5f;
                 }
             }
             else
             {
-                swingHelper.AxeRot = AxeRot + Main.GlobalTimeWrappedHourly * 15; 
+                swingHelper.ShieldRot = AxeRot + Main.GlobalTimeWrappedHourly * 15; 
                 if (chargeBladeProj.chargeBladeGlobal.InAxe && chargeBladeProj.CurrentSkill is ChargeBlade_Axe_Swing swing)
                 {
                     rot += swing.VisualRotation;

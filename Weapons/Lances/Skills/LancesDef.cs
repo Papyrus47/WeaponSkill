@@ -22,10 +22,10 @@ namespace WeaponSkill.Weapons.Lances.Skills
             swingHelper.ProjFixedPlayerCenter(player, 0, true);
             swingHelper.SwingAI(lancesProj.SwingLength, player.direction, 0);
             PreAttack = true;
-            if (Projectile.ai[1] <= 0)
-            {
-                player.ChangeDir((player.velocity.X >= 0).ToDirectionInt());
-            }
+            //if (Projectile.ai[1]++ <= 0)
+            //{
+            //    player.ChangeDir((player.velocity.X >= 0).ToDirectionInt());
+            //}
             #region 盾的更新
 
             LancesShield lancesShield = lancesProj.shield;

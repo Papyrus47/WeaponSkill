@@ -805,6 +805,11 @@ Mods: {
 				DisplayName: Adamantite Kinef
 				Tooltip: ""
 			}
+
+			CopperSwordShield: {
+				DisplayName: Copper Sword Shield
+				Tooltip: ""
+			}
 		}
 
 		DamageClasses: {

@@ -3,32 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeaponSkill.Weapons;
 using WeaponSkill.Weapons.ChargeBlade;
 
 namespace WeaponSkill.Helper
 {
     public class ShieldSwingHelper : SwingHelper
     {
-        public ShieldSwingHelper(ChargeBladeShield chargeBladeShield, int oldVelLength, Asset<Texture2D> swingItemTex = null) : base(chargeBladeShield, oldVelLength, swingItemTex)
+        public ShieldSwingHelper(BasicShield Shield, int oldVelLength, Asset<Texture2D> swingItemTex = null) : base(Shield, oldVelLength, swingItemTex)
         {
             frame = 0;
             frameMax = 1;
         }
-        public ChargeBladeShield chargeBladeShield => SpawnEntity as ChargeBladeShield;
+        public BasicShield Shield => SpawnEntity as BasicShield;
         public Vector2 center;
         public Vector2 vel;
         public float Rot;
-        public float AxeRot;
+        public float ShieldRot;
         public int SPDir;
         public bool ChangeLerp { get => _changeLerpInvoke;set => _changeLerpInvoke = value; }
-        protected override Vector2 Size { get => chargeBladeShield.Size; set => chargeBladeShield.Size = value; }
+        protected override Vector2 Size { get => Shield.Size; set => Shield.Size = value; }
         protected override Vector2 Center { get => center; set => center = value; }
         protected override int frame { get; set; }
         protected override int frameMax { get; set; }
         protected override float rotation { get => Rot; set => Rot = value; }
         protected override Vector2 velocity { get => vel; set => vel = value; }
         protected override int spriteDirection { get => SPDir; set => SPDir = value; }
-        protected override int width { get => chargeBladeShield.width; set => chargeBladeShield.width = value; }
+        protected override int width { get => Shield.width; set => Shield.width = value; }
         public override Vector2 GetDrawCenter(int index = 0)
         {
             Vector2 pos = Center + velocity * 0.5f;
@@ -87,7 +88,7 @@ namespace WeaponSkill.Helper
             Vector2 rotPos = (pos[0] + pos[1] + pos[2] + pos[3]) / 4;
             for(int i =0;i< 4; i++)
             {
-                Vector2 v = (pos[i] - rotPos).RotatedBy(AxeRot);
+                Vector2 v = (pos[i] - rotPos).RotatedBy(ShieldRot);
                 pos[i] = rotPos + v.SafeNormalize(default) * halfLength * 2;
             }
 

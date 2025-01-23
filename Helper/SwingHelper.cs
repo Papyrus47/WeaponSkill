@@ -1,9 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.ModLoader.Config;
+using WeaponSkill;
 
 namespace WeaponSkill.Helper
 {
@@ -11,8 +15,11 @@ namespace WeaponSkill.Helper
     /// 挥舞用的类
     /// <para>注意 rotation 依然发挥作用</para>
     /// </summary>
-    public class SwingHelper
+    public class SwingHelper : ICloneable
     {
+        /// <summary>
+        /// 请设置为Projectile
+        /// </summary>
         public object SpawnEntity;
         /// <summary>
         /// 起点向量
@@ -55,6 +62,22 @@ namespace WeaponSkill.Helper
             oldVels = new Vector2[oldVelLength];
             _oldVelsSave = true;
             SwingItemTex = swingItemTex;
+        }
+        public virtual void SendData(BinaryWriter writer)
+        {
+            //for (int i = 0; i < oldVels.Length; i++)
+            //{
+            //    writer.WriteVector2(oldVels[i]);
+            //}
+            writer.Write(_velRotBy);
+        }
+        public virtual void RendData(BinaryReader reader)
+        {
+            //for (int i = 0; i < oldVels.Length; i++)
+            //{
+            //    oldVels[i] = reader.ReadVector2();
+            //}
+            _velRotBy = reader.ReadSingle();
         }
         public virtual void SetRotVel(float rotVel)
         {
@@ -198,18 +221,18 @@ namespace WeaponSkill.Helper
         {
             SpriteBatch sb = Main.spriteBatch;
             sb.End();
-            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 
             DrawTrailing(tex, colorFunc, effect, SetZ);
 
             sb.End();
-            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 
             DrawSwingItem(drawColor);
 
             sb.End();
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None,
-                Main.Rasterizer, null, Main.Transform);
+                Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
         }
         /// <summary>
         /// 绘制剑与残影
@@ -228,7 +251,7 @@ namespace WeaponSkill.Helper
 
             sb.End();
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None,
-                Main.Rasterizer, null, Main.Transform);
+                Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
         }
         /// <summary>
         /// 绘制拖尾 残影 剑
@@ -243,19 +266,19 @@ namespace WeaponSkill.Helper
         {
             SpriteBatch sb = Main.spriteBatch;
             sb.End();
-            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 
             DrawTrailing(tex, TrailingColorFunc, effect, SetZ);
 
             sb.End();
-            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 
             Swing_Draw_Afterimage(AfterimageColorFunc, drawAfterimageCount);
             DrawSwingItem(drawColor);
 
             sb.End();
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None,
-                Main.Rasterizer, null, Main.Transform);
+                Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
         }
         /// <summary>
         /// 绘制残影
@@ -363,18 +386,19 @@ namespace WeaponSkill.Helper
             }
             SpriteBatch sb = Main.spriteBatch;
             sb.End();
-            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 
             DrawTrailing(tex, colorFunc, effect);
-
             sb.End();
             sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None,
-                Main.Rasterizer, null, Main.Transform);
+                Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
         }
 
         public virtual void DrawTrailing(Texture2D tex, Func<float, Color> colorFunc, Effect effect, Func<float, float> SetZ = null)
         {
             List<CustomVertexInfo> customVertices = new();
+            if (colorFunc == null)
+                return;
             int length = oldVels.Length;
             for (int i = length - 1; i >= 0; i--)
             {
@@ -384,9 +408,10 @@ namespace WeaponSkill.Helper
                     break;
                 }
 
+                //float factor2 = EaseFunction.EaseOutQuint(i, 0f, length - 1, 0, 0.2f);
                 float factor = (float)i / length;
                 Color drawColor = colorFunc.Invoke(factor); // 获取绘制颜色
-
+                //Main.NewText(drawColor);
                 Vector2 pos = GetDrawCenter(i);
                 if (_drawCorrections)
                 {
@@ -412,6 +437,7 @@ namespace WeaponSkill.Helper
                 //    FillMode = FillMode.WireFrame
                 //};
                 //gd.RasterizerState = rasterizerState;
+                //gd.Textures[0] = tex;
 
                 gd.Textures[0] = tex;
                 //gd.Textures[0] = TextureAssets.MagicPixel.Value;
@@ -458,5 +484,26 @@ namespace WeaponSkill.Helper
                 width / 2, ref r);
         }
 
+        public object Clone()
+        {
+            SwingHelper sh = new(SpawnEntity, oldVels.Length, SwingItemTex);
+            sh.oldVels = oldVels.Clone() as Vector2[];
+            sh.velocity = velocity;
+            sh.rotation = rotation;
+            sh.spriteDirection = spriteDirection;
+            sh.Size = Size;
+            sh.StartVel = StartVel;
+            sh.oldFrames = oldFrames.Clone() as int[];
+            sh.UseShaderPass = UseShaderPass;
+            sh._acitveSwing = _acitveSwing;
+            sh._canDrawTrailing = _canDrawTrailing;
+            sh._changeHeldLength = _changeHeldLength;
+            sh._halfSizeLength = _halfSizeLength;
+            sh._oldVelsSave = _oldVelsSave;
+            sh._velLerp = _velLerp;
+            sh._velRotBy = _velRotBy;
+            sh._drawCorrections = _drawCorrections;
+            return sh;
+        }
     }
 }

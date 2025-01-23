@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeaponSkill.Items.SwordShield;
 using WeaponSkill.Weapons.ChargeBlade;
 
 namespace WeaponSkill.Weapons.SwordShield
@@ -31,7 +32,11 @@ namespace WeaponSkill.Weapons.SwordShield
             if (player.ownedProjectileCounts[ModContent.ProjectileType<SwordShieldProj>()] <= 0)
             {
                 int proj = Projectile.NewProjectile(player.GetSource_ItemUse(item), player.position, Vector2.Zero, ModContent.ProjectileType<SwordShieldProj>(), player.GetWeaponDamage(item), player.GetWeaponKnockback(item), player.whoAmI);
-                Main.projectile[proj].originalDamage = Main.projectile[proj].damage;
+                Main.projectile[proj].originalDamage = Main.projectile[proj].damage; 
+                if (item.ModItem is BasicSwordShield swordShield)
+                {
+                    ShieldTex = swordShield.ShieldTex;
+                }
             }
         }
     }
