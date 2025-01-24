@@ -7,11 +7,6 @@
 	  <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="NPCs\Bosses\GlobalBoss\Eye\Skills\" />
-    <Folder Include="NPCs\Bosses\StarBreaker\FrostFist\Skills\" />
-    <Folder Include="Sounds\Musics\" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Solaestas.tModLoader.ModBuilder" Version="1.6.1" />
   </ItemGroup>
 </Project>

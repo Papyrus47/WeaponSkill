@@ -26,7 +26,10 @@ namespace WeaponSkill.Command.SwingHelpers
             /// 旋转角度
             /// </summary>
             public float Rot;
+            public Vector2 velocity;
+            public Vector2 Size;
             public Vector2[] oldVels;
+            public int SPDir = 1;
             public PartSwingHelper Onwer;
 
             public Part(PartSwingHelper onwer)
@@ -38,14 +41,14 @@ namespace WeaponSkill.Command.SwingHelpers
             public Asset<Texture2D> DrawTex;
             public virtual void Update()
             {
-                Vector2 vel = Onwer.velocity;
-                vel = vel.RotatedBy(Rot);
+                velocity = Onwer.velocity;
+                velocity = velocity.SafeNormalize(default) * Size.Length();
                 #region 保存oldXXX
                 for (int i = oldVels.Length - 1; i >= 0; i--)
                 {
                     if (i == 0)
                     {
-                        oldVels[0] = vel;
+                        oldVels[0] = velocity;
                     }
                     else
                     {
@@ -114,13 +117,13 @@ namespace WeaponSkill.Command.SwingHelpers
                     //gd.RasterizerState = origin;
                 }
             }
-            public virtual void Draw(Color drawColor)
+            public virtual void DrawSwingItem(Color drawColor)
             {
                 GraphicsDevice gd = Main.graphics.GraphicsDevice;
-                if (Onwer.projectile != null)
-                {
-                    Onwer.SwingItemTex ??= TextureAssets.Projectile[Onwer.projectile.type];
-                }
+                //if (Onwer.projectile != null)
+                //{
+                //    Onwer.SwingItemTex ??= TextureAssets.Projectile[Onwer.projectile.type];
+                //}
                 //var origin = gd.RasterizerState;
                 //RasterizerState rasterizerState = new()
                 //{
@@ -129,10 +132,10 @@ namespace WeaponSkill.Command.SwingHelpers
                 //};
                 //gd.RasterizerState = rasterizerState;
 
-                Vector2 velocity = Onwer.GetOldVel(-1, true);
-                velocity = velocity.RotatedBy(Rot);
-                Vector2 halfLength = new Vector2(-velocity.Y, velocity.X).RotatedBy(Onwer.VisualRotation * Onwer.spriteDirection).SafeNormalize(default)
-                    * Onwer._halfSizeLength * Onwer.spriteDirection;
+                Vector2 velocity = GetOldVel(-1, true);
+                //velocity = velocity.RotatedBy(Rot);
+                Vector2 halfLength = new Vector2(-velocity.Y, velocity.X).RotatedBy(Onwer.VisualRotation * Onwer.spriteDirection * SPDir).SafeNormalize(default)
+                    * Size.Length() * 0.5f * Onwer.spriteDirection * SPDir;
 
                 Vector2 center = Onwer.GetDrawCenter();
                 center += OffestCenter;
@@ -148,8 +151,16 @@ namespace WeaponSkill.Command.SwingHelpers
                     center + velocity - Main.screenPosition,
                     halfVelPos + halfLength  - Main.screenPosition
                 };
+                Vector2 rotPos = (pos[0] + pos[1] + pos[2] + pos[3]) / 4;
+                for (int i = 0; i < 4; i++)
+                {
+                    Vector2 v = (pos[i] - rotPos).RotatedBy(Rot);
+                    pos[i] = rotPos + v;
+                }
 
                 float factor = (Onwer.frame + 1f) / Onwer.frameMax;
+                if (SPDir == -1)
+                    factor = 1 - factor;
                 CustomVertexInfo[] customVertices = new CustomVertexInfo[6];
                 customVertices[0] = customVertices[5] = new(pos[0], drawColor, new Vector3(0, factor, 0)); // 柄
                 customVertices[1] = new(pos[1], drawColor, new Vector3(0, factor - 1f, 0)); // 左上角
@@ -161,6 +172,9 @@ namespace WeaponSkill.Command.SwingHelpers
                 gd.DrawUserPrimitives(PrimitiveType.TriangleList, customVertices, 0, 2);
                 //gd.RasterizerState = origin;
             }
+            //public Part(object spawnEntity, int oldVelLength, Asset<Texture2D> swingItemTex = null) : base(spawnEntity, oldVelLength, swingItemTex)
+            //{
+            //}
         }
         public PartSwingHelper(object spawnEntity, int oldVelLength, Asset<Texture2D> swingItemTex = null) : base(spawnEntity, oldVelLength, swingItemTex)
         {
@@ -169,29 +183,5 @@ namespace WeaponSkill.Command.SwingHelpers
         /// 储存部件的字典,使用字符串ID的形式
         /// </summary>
         public Dictionary<string, Part> Parts = new();
-        public override void SwingAI(float velLength, int dir, float Rot)
-        {
-            base.SwingAI(velLength, dir, Rot);
-            foreach (var part in Parts.Values)
-            {
-                part.Update();
-            }
-        }
-        public override void DrawTrailing(Texture2D tex, Func<float, Color> colorFunc, Effect effect, Func<float, float> SetZ = null)
-        {
-            base.DrawTrailing(tex, colorFunc, effect, SetZ);
-            foreach (var part in Parts.Values)
-            {
-                part.DrawTrailing(tex,colorFunc,effect,SetZ);
-            }
-        }
-        public override void DrawSwingItem(Color drawColor)
-        {
-            base.DrawSwingItem(drawColor);
-            foreach(var part in Parts.Values)
-            {
-                part.Draw(drawColor);
-            }
-        }
     }
 }

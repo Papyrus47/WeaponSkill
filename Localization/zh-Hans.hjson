@@ -790,8 +790,18 @@ Mods: {
 			}
 
 			CopperSwordShield: {
-				// DisplayName: Copper Sword Shield
+				DisplayName: 铜片手
 				// Tooltip: ""
+			}
+
+			TestSlashAxe: {
+				DisplayName: Test Slash Axe
+				Tooltip: ""
+			}
+
+			CopperSlashAxe: {
+				DisplayName: 铜斩斧
+				Tooltip: ""
 			}
 		}
 

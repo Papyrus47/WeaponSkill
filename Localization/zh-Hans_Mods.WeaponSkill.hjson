@@ -37,6 +37,8 @@ Projectiles: {
 	// StarSpinBladeProj.DisplayName: Star Spin Blade Proj
 	// WindsProj.DisplayName: Winds Proj
 	// SwordShieldProj.DisplayName: Sword Shield Proj
+	// SlashAxeProj.DisplayName: Slash Axe Proj
+	// TransparentProj.DisplayName: Transparent Proj
 }
 
 Keybinds: {

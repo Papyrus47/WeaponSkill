@@ -89,6 +89,10 @@ namespace WeaponSkill.Weapons.SwordShield
             CurrentSkill.OnHitNPC(target, hit, damageDone);
             ItemLoader.OnHitNPC(SpawnItem, Player, target, hit, damageDone);
             TheUtility.VillagesItemOnHit(SpawnItem, Player, Projectile.Hitbox, Projectile.originalDamage, Projectile.knockBack, target.whoAmI, Projectile.damage, damageDone);
+            if (hit.Crit)
+            {
+                TheUtility.CritProj(Projectile, target, Projectile.velocity.RotatedBy(MathHelper.PiOver2 + MathHelper.PiOver4 * Player.direction).SafeNormalize(default));
+            }
         }
 
         public override bool ShouldUpdatePosition() => false;

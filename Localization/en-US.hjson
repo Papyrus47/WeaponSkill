@@ -810,6 +810,16 @@ Mods: {
 				DisplayName: Copper Sword Shield
 				Tooltip: ""
 			}
+
+			TestSlashAxe: {
+				DisplayName: Test Slash Axe
+				Tooltip: ""
+			}
+
+			CopperSlashAxe: {
+				DisplayName: Copper Slash Axe
+				Tooltip: ""
+			}
 		}
 
 		DamageClasses: {

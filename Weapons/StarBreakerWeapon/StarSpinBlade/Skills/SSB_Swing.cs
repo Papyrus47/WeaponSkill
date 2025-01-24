@@ -88,8 +88,8 @@ namespace WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade.Skills
                         Projectile.ai[1] = 0;
                         Projectile.ai[0]++;
                         GetStarSpinBladeItem().SpinValue += SpinValue * IsTrueSlash.ToDirectionInt();
-                        SoundEngine.PlaySound(SoundID.Item1 with { pitch = -0.5f,MaxInstances = 3 }, Player.position);
-                        SoundEngine.PlaySound(SoundID.Item1 with { pitch = -0.9f, MaxInstances = 3 }, Player.position);
+                        SoundEngine.PlaySound(SoundID.Item1 with { Pitch = -0.5f,MaxInstances = 3 }, Player.position);
+                        SoundEngine.PlaySound(SoundID.Item1 with { Pitch = -0.9f, MaxInstances = 3 }, Player.position);
                     }
                     break;
                 case 1: // 挥舞

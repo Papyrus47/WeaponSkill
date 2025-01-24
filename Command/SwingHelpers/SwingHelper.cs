@@ -327,6 +327,8 @@ namespace WeaponSkill.Command.SwingHelpers
         }
         public virtual void DrawSwingItem(Color drawColor)
         {
+            //if (projectile.localAI[0]++ > 2)
+            //    Main.NewText(true);
             GraphicsDevice gd = Main.graphics.GraphicsDevice;
             if (projectile != null)
             {
