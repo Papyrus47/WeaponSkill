@@ -139,8 +139,9 @@ namespace WeaponSkill.Weapons.SlashAxe.Skills
             {
                 for(int i = 0; i < 10; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(target.Center, 10, 10, DustID.FireworksRGB, 0, 0, 0, Color.Red);
+                    Dust dust = Dust.NewDustDirect(target.Center, 10, 10, DustID.FireworksRGB, 1, 1, 0, Color.Red);
                     dust.noGravity = true;
+                    dust.velocity = dust.velocity.RotatedByRandom(6.28) * 2;
                 }
                 var proj = Projectile.NewProjectileDirect(target.GetSource_OnHit(Projectile), target.Center, Vector2.Zero, ModContent.ProjectileType<TransparentProj>(), Projectile.damage, 0f, player.whoAmI);
                 proj.penetrate = 1;

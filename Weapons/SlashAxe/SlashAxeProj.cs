@@ -75,7 +75,7 @@ namespace WeaponSkill.Weapons.SlashAxe
                 {
                     Effect effect = ModAsset.SlashAxe_AxeShader.Value;
                     effect.Parameters["uTime"].SetValue(new Vector2(Main.GlobalTimeWrappedHourly * 0.1f));
-                    effect.Parameters["uColor"].SetValue(((new Color(250, 59, 20)) with { A = 255 }).ToVector4() * 5);
+                    effect.Parameters["uColor"].SetValue(((new Color(255, 111, 20)) with { A = 255 }).ToVector4() * 5);
                     effect.Parameters["tex"].SetValue(ModAsset.Perlin.Value);
                     effect.CurrentTechnique.Passes[0].Apply();
                 }
@@ -146,7 +146,7 @@ namespace WeaponSkill.Weapons.SlashAxe
                 {
                     Effect effect = ModAsset.SlashAxe_AxeShader.Value;
                     effect.Parameters["uTime"].SetValue(new Vector2(Main.GlobalTimeWrappedHourly * 0.1f));
-                    effect.Parameters["uColor"].SetValue(((new Color(250, 59, 20)) with { A = 255 }).ToVector4() * 5);
+                    effect.Parameters["uColor"].SetValue(((new Color(255, 111, 20)) with { A = 255 }).ToVector4() * 5);
                     effect.Parameters["tex"].SetValue(ModAsset.Perlin.Value);
                     effect.CurrentTechnique.Passes[0].Apply();
                 }

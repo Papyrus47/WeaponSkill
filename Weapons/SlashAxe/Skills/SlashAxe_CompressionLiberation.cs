@@ -54,8 +54,9 @@ namespace WeaponSkill.Weapons.SlashAxe.Skills
                         #region 压缩解放爆炸
                         for (int i = 0; i < 10; i++)
                         {
-                            Dust dust = Dust.NewDustDirect(Projectile.Center + Projectile.velocity, 30, 30, DustID.FireworksRGB, 0, 0, 0, Color.OrangeRed);
+                            Dust dust = Dust.NewDustDirect(Projectile.Center + Projectile.velocity, 30, 30, DustID.FireworksRGB,1,1,0, Color.OrangeRed);
                             dust.noGravity = true;
+                            dust.velocity = dust.velocity.RotatedByRandom(6.28) * 2;
                         }
                         var proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center + Projectile.velocity, Vector2.Zero, ModContent.ProjectileType<TransparentProj>(), Projectile.damage * 10, 0f, player.whoAmI);
                         proj.Size = new Vector2(30);
@@ -83,10 +84,11 @@ namespace WeaponSkill.Weapons.SlashAxe.Skills
                     swingHelper.SwingAI(SlashAxeProj.SwingLength, player.direction, Time * SwingRot * SwingDirectionChange.ToDirectionInt());
                     if ((int)Projectile.ai[1] % 3 == 0)
                     {
-                        for (int i = 0; i < 10; i++)
+                        for (int i = 0; i < 3; i++)
                         {
                             Dust dust = Dust.NewDustDirect(Projectile.Center + Projectile.velocity, 30, 30, DustID.FireworksRGB, 0, 0, 0, Color.OrangeRed);
                             dust.noGravity = true;
+                            dust.velocity = dust.velocity.RotatedByRandom(6.28) * 2;
                         }
                         var proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center + Projectile.velocity, Vector2.Zero, ModContent.ProjectileType<TransparentProj>(), Projectile.damage, 0f, player.whoAmI);
                         proj.Size = new Vector2(30);
