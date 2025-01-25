@@ -18,10 +18,14 @@ namespace WeaponSkill.Items.SlashAxe
         {
             Item.damage = 8;
             Item.knockBack = 3.5f;
-            Item.Size = new(64, 68);
+            Item.Size = new(64, 76);
 
             SwordSize = new(42, 48);
-            AxeSize = new(46, 46);
+            AxeSize = new(38);
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe().AddIngredient(ItemID.CopperBar, 12).AddTile(TileID.Anvils).Register();
         }
     }
 }

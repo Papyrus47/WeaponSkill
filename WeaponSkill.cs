@@ -55,9 +55,9 @@ namespace WeaponSkill
                 TalkUI = Assets.Request<Texture2D>("UI/StarBreakerUI/TalkUI/" + nameof(TalkUI));
                 HotTex = Assets.Request<Texture2D>("Images/" + nameof(HotTex));
 
-                // ÉÏÃæÃ»×°neget°ü
+                // ï¿½ï¿½ï¿½ï¿½Ã»×°negetï¿½ï¿½
 
-                #region ÆÁÄ»shaderÊÖ¶¯Ìí¼Ó
+                #region ï¿½ï¿½Ä»shaderï¿½Ö¶ï¿½ï¿½ï¿½ï¿½ï¿½
                 Filters.Scene[ScreenScaleShader] = new Filter(new ScreenChange(ModAsset.ScreenChange_Async, "ScaleScreen"),EffectPriority.VeryHigh);
                 #endregion
             }
