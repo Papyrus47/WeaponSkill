@@ -451,7 +451,7 @@ namespace WeaponSkill.Weapons.SlashAxe
                 SwingTimeMax = 30,
                 ActionDmg = 2.5f
             };
-            SlashAxe_SwordSwing slashAxe_Change2 = new(this, () => true)
+            SlashAxe_SwordSwing slashAxe_Change2 = new(this, () => SlashAxeGlobalItem.Slash > 460)
             {
                 StartVel = Vector2.UnitY.RotatedBy(0.4),
                 SwingRot = MathHelper.Pi + 0.8f,
@@ -482,7 +482,7 @@ namespace WeaponSkill.Weapons.SlashAxe
                 {
                     if ((int)Projectile.ai[0] == 0 && Projectile.ai[1] < 6)
                     {
-                        SlashAxeGlobalItem.Slash += 100;
+                        SlashAxeGlobalItem.Slash += 10;
                     }
                 },
             };
@@ -512,7 +512,7 @@ namespace WeaponSkill.Weapons.SlashAxe
                 PowerAdd = 60
             };
 
-            SlashAxe_SwordSwing slashAxe_SwordSwing_SlashDown_Change = new(this, () => WeaponSkill.BowSlidingStep.Current)
+            SlashAxe_SwordSwing slashAxe_SwordSwing_SlashDown_Change = new(this, () => WeaponSkill.BowSlidingStep.Current && SlashAxeGlobalItem.Slash > 460)
             {
                 StartVel = -Vector2.UnitY.RotatedBy(-0.4),
                 SwingRot = MathHelper.Pi + 0.8f,

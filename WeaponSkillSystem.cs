@@ -12,6 +12,7 @@ using WeaponSkill.UI.ChargeBladeUI;
 using WeaponSkill.UI.CrossbowPartUI;
 using WeaponSkill.UI.DualBladesUI;
 using WeaponSkill.UI.GunBulletUI;
+using WeaponSkill.UI.SlashAxeUI;
 using WeaponSkill.UI.SpiritUI;
 using WeaponSkill.UI.StaminaUI;
 using WeaponSkill.UI.StarBreakerUI.SkillsTreeUI;
@@ -19,6 +20,7 @@ using WeaponSkill.UI.StarBreakerUI.TalkUI;
 using WeaponSkill.Weapons.ChargeBlade;
 using WeaponSkill.Weapons.DualBlades;
 using WeaponSkill.Weapons.LongSword;
+using WeaponSkill.Weapons.SlashAxe;
 using WeaponSkill.Weapons.StarBreakerWeapon.DamageTypes;
 using WeaponSkill.Weapons.StarBreakerWeapon.General;
 using WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade;
@@ -37,6 +39,7 @@ namespace WeaponSkill
         public SkillsTreeUI skillsTreeUI;
         public TalkUI talkUI;
         public GunBulletUI gunBulletUI;
+        public SlashAxeUI slashAxeUI;
         public override void Load()
         {
             userInterfaces = new();
@@ -60,6 +63,9 @@ namespace WeaponSkill
 
             bladesUI = new();
             bladesUI.Initialize();
+
+            slashAxeUI = new();
+            slashAxeUI.Initialize();
 
             chargeBladeBottle = new ChargeBladeBottle();
             chargeBladeBottle.Initialize();
@@ -184,7 +190,7 @@ namespace WeaponSkill
         }
         public void TryChangeTheUserInterfacesSetState(UserInterface userInterface)
         {
-            if (userInterface.CurrentState == bladesUI || userInterface.CurrentState == spiritUI || userInterface.CurrentState == chargeBladeBottle)
+            if (userInterface.CurrentState == bladesUI || userInterface.CurrentState == spiritUI || userInterface.CurrentState == chargeBladeBottle || userInterface.CurrentState == slashAxeUI)
             {
                 if (Main.LocalPlayer.HeldItem.TryGetGlobalItem<DualBladesGlobalItem>(out _))
                 {
@@ -197,6 +203,10 @@ namespace WeaponSkill
                 else if (Main.LocalPlayer.HeldItem.TryGetGlobalItem<ChargeBladeGlobalItem>(out _))
                 {
                     userInterface.SetState(chargeBladeBottle);
+                }
+                else if (Main.LocalPlayer.HeldItem.TryGetGlobalItem<SlashAxeGlobalItem>(out _))
+                {
+                    userInterface.SetState(slashAxeUI);
                 }
             }
         }

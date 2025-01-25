@@ -16,7 +16,7 @@ namespace WeaponSkill.Weapons.SlashAxe
         /// <summary>
         /// 斩斧的觉醒条上限
         /// </summary>
-        public int PowerMax = 300;
+        public int PowerMax = 700;
         public int PowerTimeLeft;
         /// <summary>
         /// 斩击条
@@ -25,7 +25,7 @@ namespace WeaponSkill.Weapons.SlashAxe
         /// <summary>
         /// 斩击条上限
         /// </summary>
-        public int SlashMax = 1000;
+        public int SlashMax = 2000;
         /// <summary>
         /// 斧强化
         /// </summary>
