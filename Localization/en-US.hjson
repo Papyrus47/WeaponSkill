@@ -848,6 +848,16 @@ Mods: {
 					通过招式派生到空中<right>:下砸
 					'''
 			}
+
+			CopperInsectStaff: {
+				DisplayName: Copper Insect Staff
+				Tooltip: ""
+			}
+
+			TestInsect: {
+				DisplayName: Test Insect
+				Tooltip: ""
+			}
 		}
 
 		DamageClasses: {
@@ -860,6 +870,7 @@ Mods: {
 		NPCs: {
 			SPPuppet.DisplayName: S P Puppet
 			TestNPC.DisplayName: Test N P C
+			InsectDust_Boom.DisplayName: Insect Dust_ Boom
 		}
 	}
 }

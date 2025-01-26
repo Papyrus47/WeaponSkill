@@ -39,6 +39,8 @@ Projectiles: {
 	// SwordShieldProj.DisplayName: Sword Shield Proj
 	// SlashAxeProj.DisplayName: Slash Axe Proj
 	// TransparentProj.DisplayName: Transparent Proj
+	// InsectStaffProj.DisplayName: Insect Staff Proj
+	// TestInsectProj.DisplayName: Test Insect Proj
 }
 
 Keybinds: {
