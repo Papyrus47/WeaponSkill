@@ -16,6 +16,7 @@ namespace WeaponSkill.Items.InsectStaff.Insects
             Item.DamageType = DamageClass.SummonMeleeSpeed;
             Item.shoot = ModContent.ProjectileType<EyeOfDarkProj>();
         }
+        public override void AddRecipes() => CreateRecipe().Register();
     }
     public class EyeOfDarkProj : InsectProj
     {
