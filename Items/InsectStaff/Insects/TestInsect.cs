@@ -7,7 +7,7 @@ using WeaponSkill.Weapons.InsectStaff;
 
 namespace WeaponSkill.Items.InsectStaff.Insects
 {
-    public class TestInsect : ModItem
+    public class TestInsect : BasicInsect
     {
         public override void SetDefaults()
         {

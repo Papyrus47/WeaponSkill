@@ -63,6 +63,11 @@ namespace WeaponSkill.Weapons.InsectStaff
                 return;
             }
             Projectile.damage = Projectile.originalDamage;
+            Item insect = SpawnItem.GetGlobalItem<InsectStaffGlobalItem>().Insect;
+            if (insect != null)
+            {
+                Projectile.damage += insect.damage;
+            }
             Projectile.localNPCHitCooldown = 15;
             Projectile.timeLeft = 3;
             if (Projectile.numHits > 15) // 显示吸够了灯

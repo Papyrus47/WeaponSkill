@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using WeaponSkill.Items.InsectStaff;
 using WeaponSkill.Items.InsectStaff.Insects;
 using WeaponSkill.Weapons.SlashAxe;
 
@@ -27,7 +28,24 @@ namespace WeaponSkill.Weapons.InsectStaff
             entity.useTurn = false;
             entity.useAnimation = entity.useTime = 10;
             entity.noMelee = true;
-            Insect = new(ModContent.ItemType<TestInsect>());
+            //Insect = new(ModContent.ItemType<TestInsect>());
+        }
+        public override void UpdateInventory(Item item, Player player)
+        {
+            // 下面是选取虫子
+            if(Insect == null || Insect.IsAir || (Insect.ModItem is BasicInsect insect && insect.Owner == null))
+            {
+                Insect = null;
+                foreach (Item i in player.inventory)
+                {
+                    if (i.ModItem is BasicInsect basicInsect && basicInsect.Owner == null)
+                    {
+                        Insect = i;
+                        basicInsect.Owner = item.ModItem;
+                        break;
+                    }
+                }
+            }
         }
         public override void HoldItem(Item item, Player player)
         {
@@ -42,7 +60,7 @@ namespace WeaponSkill.Weapons.InsectStaff
             {
                 int proj = Projectile.NewProjectile(player.GetSource_ItemUse(item), player.position, Vector2.Zero, ModContent.ProjectileType<InsectStaffProj>(), player.GetWeaponDamage(item), player.GetWeaponKnockback(item), player.whoAmI);
                 Main.projectile[proj].originalDamage = Main.projectile[proj].damage;
-                if (player.ownedProjectileCounts[Insect.shoot] <= 0) // 召唤虫子
+                if (Insect != null && player.ownedProjectileCounts[Insect.shoot] <= 0) // 召唤虫子
                 {
                     InsectStaffProj proj1 = Main.projectile[proj].ModProjectile as InsectStaffProj;
                     proj = Projectile.NewProjectile(new InsectProj.InsectProjSource(proj1),

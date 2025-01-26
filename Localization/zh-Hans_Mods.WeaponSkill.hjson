@@ -46,6 +46,7 @@ Projectiles: {
 	// TransparentProj.DisplayName: Transparent Proj
 	// InsectStaffProj.DisplayName: Insect Staff Proj
 	// TestInsectProj.DisplayName: Test Insect Proj
+	// EyeOfDarkProj.DisplayName: Eye Of Dark Proj
 }
 
 Keybinds: {

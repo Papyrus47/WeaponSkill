@@ -7,6 +7,7 @@ using WeaponSkill.Weapons.InsectStaff.Skills;
 using WeaponSkill.Effects;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.CameraModifiers;
+using System.Collections.Generic;
 
 namespace WeaponSkill.Weapons.InsectStaff
 {
@@ -34,7 +35,7 @@ namespace WeaponSkill.Weapons.InsectStaff
         }
         public override void AI()
         {
-            if (Player.HeldItem != SpawnItem || Player.dead) // 玩家手上物品不是生成物品,则清除
+            if (Player.HeldItem != SpawnItem || Player.dead || insectProj == null) // 玩家手上物品不是生成物品,则清除,虫子不存在
             {
                 Projectile.Kill();
                 return;
