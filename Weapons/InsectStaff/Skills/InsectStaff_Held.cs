@@ -17,9 +17,9 @@ namespace WeaponSkill.Weapons.InsectStaff.Skills
             {
                 SkillTimeOut = true;
             }
-            Projectile.localAI[0] += player.velocity.X * 0.02f;
+            Projectile.localAI[0] += player.velocity.X * 0.01f;
             Projectile.spriteDirection = player.direction;
-            swingHelper.Change_Lerp(Vector2.UnitX.RotatedBy(0.4 + MathF.Sin(Projectile.localAI[0]) * 0.2f), 1, Vector2.One, 1f, 0f);
+            swingHelper.Change_Lerp(Vector2.UnitX.RotatedBy(0.4 + MathF.Sin(Projectile.localAI[0]) * 0.1f), 1, Vector2.One, 1f, 0f);
             swingHelper.ProjFixedPlayerCenter(player, -InsectStaffProj.SwingLength * 0.2f,true);
             swingHelper.SwingAI(InsectStaffProj.SwingLength, player.direction, 0);
 

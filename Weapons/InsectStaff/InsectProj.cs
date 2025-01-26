@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria.Graphics.CameraModifiers;
 
 namespace WeaponSkill.Weapons.InsectStaff
 {
@@ -141,6 +142,7 @@ namespace WeaponSkill.Weapons.InsectStaff
                     dust.velocity = Projectile.velocity.RotatedBy(MathHelper.PiOver2) * 0.2f;
                     dust = Dust.NewDustDirect(Projectile.Center, 1, 1, DustID.FireworkFountain_Red);
                     dust.velocity = Projectile.velocity.RotatedBy(-MathHelper.PiOver2) * 0.2f;
+                    Main.instance.CameraModifiers.Add(new PunchCameraModifier(Player.Center, Projectile.velocity.SafeNormalize(default), Projectile.ai[1] * 3, 0.1f, 10, -1));
                     if (Projectile.ai[1]++ > 60 * (Projectile.extraUpdates + 1))
                     {
                         Projectile.extraUpdates = 0;
@@ -174,7 +176,7 @@ namespace WeaponSkill.Weapons.InsectStaff
                     {
                         if (npc.active && npc.type == ModContent.NPCType<InsectDust_Boom>())
                         {
-                            npc.velocity = (Projectile.Center - npc.Center) * 0.5f;
+                            npc.velocity = (Projectile.Center - npc.Center) * 0.1f;
                             npc.ai[1] = 59;
                         }
                     }

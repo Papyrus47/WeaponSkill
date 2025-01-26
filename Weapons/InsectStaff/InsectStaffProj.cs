@@ -6,6 +6,7 @@ using WeaponSkill.Weapons.SlashAxe;
 using WeaponSkill.Weapons.InsectStaff.Skills;
 using WeaponSkill.Effects;
 using Terraria.Graphics.Effects;
+using Terraria.Graphics.CameraModifiers;
 
 namespace WeaponSkill.Weapons.InsectStaff
 {
@@ -502,7 +503,8 @@ namespace WeaponSkill.Weapons.InsectStaff
                 PreSwingTimeMax = 5,
                 SwingAI = () =>
                 {
-                    for (int i = 0; i < 10; i++)
+                    Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Projectile.velocity.SafeNormalize(default), 3, 0.1f, 15, -1));
+                    for (int i = 0; i < 2; i++)
                     {
                         Dust dust = Dust.NewDustDirect(Projectile.Center + Projectile.velocity, 1, 1, DustID.FireworkFountain_Red);
                         dust.velocity = Projectile.velocity.RotatedBy(MathHelper.PiOver2).RotatedByRandom(0.2) * 0.02f;
@@ -526,7 +528,8 @@ namespace WeaponSkill.Weapons.InsectStaff
                 PreSwingTimeMax = 5,
                 SwingAI = () =>
                 {
-                    for (int i = 0; i < 10; i++)
+                    Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Projectile.velocity.SafeNormalize(default), 3, 0.1f, 15, -1));
+                    for (int i = 0; i < 2; i++)
                     {
                         Dust dust = Dust.NewDustDirect(Projectile.Center + Projectile.velocity, 1, 1, DustID.FireworkFountain_Red);
                         dust.velocity = Projectile.velocity.RotatedBy(MathHelper.PiOver2).RotatedByRandom(0.2) * 0.02f;
@@ -549,7 +552,8 @@ namespace WeaponSkill.Weapons.InsectStaff
                 PreSwingTimeMax = 5,
                 SwingAI = () =>
                 {
-                    for (int i = 0; i < 10; i++)
+                    Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Projectile.velocity.SafeNormalize(default),3, 0.1f,10, -1));
+                    for (int i = 0; i < 2; i++)
                     {
                         Dust dust = Dust.NewDustDirect(Projectile.Center + Projectile.velocity, 1, 1, DustID.FireworkFountain_Red);
                         dust.velocity = Projectile.velocity.RotatedBy(MathHelper.PiOver2).RotatedByRandom(0.2) * 0.02f;
