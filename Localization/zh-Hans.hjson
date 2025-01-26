@@ -833,13 +833,28 @@ Mods: {
 			}
 
 			CopperInsectStaff: {
-				// DisplayName: Copper Insect Staff
+				DisplayName: 铜操虫棍
 				// Tooltip: ""
 			}
 
 			TestInsect: {
 				// DisplayName: Test Insect
 				// Tooltip: ""
+			}
+
+			InsectStaffBook: {
+				DisplayName: 操虫棍说明书
+				/* Tooltip:
+					'''
+					操虫棍，一种具有高机动性，并附加一次跳跃的武器
+					<left>/<right>:挥砍  {0}+<left>:操控虫子-选取攻击目标  {0}+<right>:操控虫子-回归  {0}+{1}:粉尘聚集  {1}:额外跳跃  {2}:觉虫击
+					额外跳跃后，判定为特殊跳跃状态，此时：
+						<left>:旋转下砍
+						<right>:操虫斩(冲刺命中进行第二次跳跃,并给予强化)
+						{1}:降龙
+					虫子命中目标15次后会产生粒子，此时控制虫子回归靠近到玩家的粒子圈内给予玩家强化
+					强化效果：伤害增加50% 额外跳跃高度更高 防御乘2
+					''' */
 			}
 		}
 

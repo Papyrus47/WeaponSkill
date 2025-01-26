@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria.Localization;
 using WeaponSkill.Command;
 using WeaponSkill.Weapons.General;
 
@@ -230,6 +231,10 @@ namespace WeaponSkill
                     break;
             }
             return rect;
+        }
+        public static string RegisterText(string key)
+        {
+            return Language.GetOrRegister(key, () => "Null").Value;
         }
     }
 }

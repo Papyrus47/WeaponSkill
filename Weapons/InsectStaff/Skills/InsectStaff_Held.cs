@@ -13,7 +13,7 @@ namespace WeaponSkill.Weapons.InsectStaff.Skills
         }
         public override void AI()
         {
-            if (Projectile.ai[0]++ > 120)
+            if (InsectStaffProj.insectProj.Projectile.ai[0] <= 0 && Projectile.ai[0]++ > 120)
             {
                 SkillTimeOut = true;
             }

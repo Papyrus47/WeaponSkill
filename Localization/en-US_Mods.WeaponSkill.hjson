@@ -1,5 +1,10 @@
 CrossbowPart: Hold crossbow
 BookCondition: No hold anything
+SendText:
+	'''
+	当前空手可以合成武器说明书
+	手感不好不要怪我做的不好,这是我全力了qwq
+	'''
 
 Guns: {
 	ResetTime: Reset Bullet Time:

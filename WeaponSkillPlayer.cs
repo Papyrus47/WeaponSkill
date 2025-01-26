@@ -26,6 +26,10 @@ namespace WeaponSkill
 {
     public class WeaponSkillPlayer : ModPlayer, IAppraiseEntity
     {
+        /// <summary>
+        /// 发送短信给玩家
+        /// </summary>
+        public bool SendText;
         public bool InBlocking;
         public bool IsBlockAttack;
         public bool Player_BowSidingStep;
@@ -145,6 +149,14 @@ namespace WeaponSkill
                 DashDir = -1;
             }
         }
+        public override void SaveData(TagCompound tag)
+        {
+            tag.Add(nameof(SendText), SendText);    
+        }
+        public override void LoadData(TagCompound tag)
+        {
+            SendText = tag.Get<bool>(nameof(SendText));
+        }
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
             bool inWater = !attempt.inLava && !attempt.inHoney;
@@ -207,6 +219,12 @@ namespace WeaponSkill
             if(StatStaminaMax <= 0) StatStaminaMax = 600;
             _ = AppraiseSystem.Instance;
             AppraiseSystem.Instance.Load(Player, this);
+
+            if (!SendText)
+            {
+                SendText = true;
+                Main.NewText(TheUtility.RegisterText("Mods.WeaponSkill.SendText"));
+            }
         }
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
