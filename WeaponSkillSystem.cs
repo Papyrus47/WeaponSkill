@@ -106,7 +106,7 @@ namespace WeaponSkill
             On_Main.MouseText_DrawItemTooltip_GetLinesInfo += On_Main_MouseText_DrawItemTooltip_GetLinesInfo;
             Main.OnPostDraw += Main_OnPostDraw;
 
-            HuntingHornBuff.Load(Mod);
+            //HuntingHornBuff.Load(Mod);
         }
 
         private void Main_OnPostDraw(GameTime obj)

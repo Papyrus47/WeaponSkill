@@ -19,6 +19,7 @@ Weapons: {
 			HealthBuff_Big: 回复[大]
 			SelfPowerUp: 自我强化
 			HitSound: 打周波·响
+			AttackUp_Small: 攻击力提升[小]
 		}
 	}
 }

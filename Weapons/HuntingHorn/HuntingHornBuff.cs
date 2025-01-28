@@ -38,9 +38,9 @@ namespace WeaponSkill.Weapons.HuntingHorn
             Type[] type = AssemblyManager.GetLoadableTypes(mod.Code);
             foreach (Type t in type)
             {
-                if(t == typeof(HuntingHornBuff) && !t.IsAbstract)
+                if(t.IsSubclassOf(typeof(HuntingHornBuff)) && !t.IsAbstract)
                 {
-                    (Activator.CreateInstance(t) as HuntingHornBuff).Load();
+                    (Activator.CreateInstance(t, new List<HuntingHornMelody.MelodyType>() { HuntingHornMelody.MelodyType.Left }) as HuntingHornBuff).Load();
                 }
             }
         }
