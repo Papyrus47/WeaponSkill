@@ -16,7 +16,11 @@ namespace WeaponSkill.Weapons.HuntingHorn.Melodies
         {
             if (findMelodies[Lenght - 1] == MelodyType.LeftAndRight && findMelodies[Lenght - 2] == MelodyType.Right && findMelodies[Lenght - 3] == MelodyType.Right && findMelodies[Lenght - 4] == MelodyType.Left)
             {
-                return new AttackUp_Small([MelodyType.Left,MelodyType.Right, MelodyType.Right, MelodyType.LeftAndRight]);
+                return DefHuntingHornBuff["AttackUp_Small"];
+            }
+            else if (findMelodies[Lenght - 1] == MelodyType.Right && findMelodies[Lenght - 2] == MelodyType.Right && findMelodies[Lenght - 3] == MelodyType.Left && findMelodies[Lenght - 4] == MelodyType.LeftAndRight)
+            {
+                return DefHuntingHornBuff["HealthBuff_Middle"];
             }
             return base.GetFourMelodies(findMelodies, Lenght);
         }
@@ -24,7 +28,7 @@ namespace WeaponSkill.Weapons.HuntingHorn.Melodies
         {
             if (findMelodies[Lenght - 1] == MelodyType.Left && findMelodies[Lenght - 2] == MelodyType.LeftAndRight && findMelodies[Lenght - 3] == MelodyType.Right)
             {
-                return new HealthBuff_Small([MelodyType.Right, MelodyType.LeftAndRight, MelodyType.Left]);
+                return DefHuntingHornBuff["HealthBuff_Small"];
             }
             return base.GetThreeMelodies(findMelodies, Lenght);
         }
@@ -40,6 +44,13 @@ namespace WeaponSkill.Weapons.HuntingHorn.Melodies
                     return Color.OrangeRed;
             }
             return base.DrawColor(melody);
+        }
+        public override void Register()
+        {
+            base.Register();
+            DefHuntingHornBuff.Add("HealthBuff_Small", new HealthBuff_Small([MelodyType.Right, MelodyType.LeftAndRight, MelodyType.Left]));
+            DefHuntingHornBuff.Add("HealthBuff_Middle", new HealthBuff_Middle([MelodyType.LeftAndRight, MelodyType.Left, MelodyType.Right, MelodyType.Right]));
+            DefHuntingHornBuff.Add("AttackUp_Small", new AttackUp_Small([MelodyType.Left, MelodyType.Right, MelodyType.Right, MelodyType.LeftAndRight]));
         }
     }
 }

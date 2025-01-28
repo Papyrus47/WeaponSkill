@@ -14,7 +14,7 @@ namespace WeaponSkill.Weapons.HuntingHorn.Buffs
 
         public override void OnPlay(Player player, Projectile projectile)
         {
-            player.Heal(20);
+            player.Heal(10);
         }
         public override void Register()
         {
@@ -28,7 +28,7 @@ namespace WeaponSkill.Weapons.HuntingHorn.Buffs
 
         public override void OnPlay(Player player, Projectile projectile)
         {
-            player.Heal(80);
+            player.Heal(40);
         }
         public override void Register()
         {
@@ -42,7 +42,7 @@ namespace WeaponSkill.Weapons.HuntingHorn.Buffs
 
         public override void OnPlay(Player player, Projectile projectile)
         {
-            player.Heal(160);
+            player.Heal(80);
         }
 
         public override void Register()

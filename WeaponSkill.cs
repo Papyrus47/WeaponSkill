@@ -1,4 +1,4 @@
-using Terraria.ModLoader;
+﻿using Terraria.ModLoader;
 using Terraria.Localization;
 using ReLogic.Content.Sources;
 using Terraria.Graphics.Effects;

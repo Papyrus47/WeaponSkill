@@ -15,6 +15,7 @@ namespace WeaponSkill.Weapons.InsectStaff
             NPC.lifeMax = 1;
             NPC.friendly = true;
             NPC.noGravity = true;
+            NPC.noTileCollide = true;
             NPC.aiStyle = -1;
         }
         public override void AI()

@@ -29,6 +29,7 @@ namespace WeaponSkill.Weapons.HuntingHorn
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.localNPCHitCooldown = -1;
         }
         public override void AI()
@@ -41,6 +42,8 @@ namespace WeaponSkill.Weapons.HuntingHorn
             TheUtility.SetProjFrameWithItem(Projectile, SpawnItem);
             Projectile.timeLeft = 2;
             CurrentSkill.AI();
+            if (Math.Abs(Player.velocity.X) > Player.accRunSpeed * 0.5f)
+                Player.velocity.X *= 0.99f;
             IBasicSkillProj basicSkillProj = this;
             basicSkillProj.SwitchSkill();
             (CurrentSkill as BasicHuntingHornSkill).PreAtk = false;
@@ -177,10 +180,26 @@ namespace WeaponSkill.Weapons.HuntingHorn
                 IsPlay = true,
                 SwingTimeMax = 60,
             };
+            HuntingHorn_Swing huntingHorn_ReplaySound = new(this, () => WeaponSkill.RangeChange.Current)
+            {
+                StartVel = Vector2.UnitX.RotatedBy(-0.3),
+                VelScale = new Vector2(1, 0.5f),
+                VisualRotation = 0,
+                SwingRot = MathHelper.TwoPi,
+                ActionDmg = 2f,
+                SwingDirectionChange = true,
+                IsPlay = true,
+                IsReplay = true,
+                SwingTimeMax = 60,
+            };
+
+            HuntingHorn_Shocking huntingHorn_Shocking = new(this);
             #endregion
             #region 技能连接
 
-            huntingHornNoUse.AddSkill(huntingHorn_PlaySound);
+            huntingHornNoUse.AddSkill(huntingHorn_Shocking).AddSkill(huntingHorn_PoLan);
+
+            huntingHornNoUse.AddSkill(huntingHorn_PlaySound).AddSkill(huntingHorn_ReplaySound);
 
             huntingHorn_PoLan.AddSkill(huntingHorn_ShankStrike).AddSkill(huntingHorn_PoLan);
             huntingHorn_PoLan.AddBySkill(Knock_Left, KnockDown_Left, KnockUp_Right2, Knock_Right, huntingHorn_GroundHit, huntingHorn_BackSwing);

@@ -14,11 +14,15 @@ namespace WeaponSkill.Weapons.HuntingHorn.Skills
         }
         public override void AI()
         {
-            swingHelper.Change_Lerp(-Vector2.UnitY, 0.5f, Vector2.One, 0.5f);
-            swingHelper.ProjFixedPlayerCenter(player);
+            Projectile.ai[0] += player.velocity.X * 0.01f;
+            swingHelper.Change_Lerp(-Vector2.UnitX.RotatedBy(-0.2 + MathF.Sin(Projectile.ai[0]) * 0.1f), 0.5f, Vector2.One, 0.5f);
+            swingHelper.ProjFixedPlayerCenter(player, HuntingHornProj.SwingLength * -0.1f);
             swingHelper.SetSwingActive();
             swingHelper.SwingAI(HuntingHornProj.SwingLength, player.direction, 0);
+            player.heldProj = Projectile.whoAmI;
             Projectile.position.X -= player.direction * Projectile.width * 0.1f;
+            Projectile.position.Y -= Projectile.height * 0.2f;
+            player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, MathHelper.Pi - 0.3f * player.direction);
 
             //HuntingHornGlobalItem huntingHornGlobalItem = HuntingHornProj.SpawnItem.GetGlobalItem<HuntingHornGlobalItem>();
             //HuntingHornMelody hornMelody = huntingHornGlobalItem.hornMelody;

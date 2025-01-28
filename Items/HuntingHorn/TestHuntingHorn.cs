@@ -18,6 +18,7 @@ namespace WeaponSkill.Items.HuntingHorn
             Item.damage = 8;
             Item.knockBack = 5.5f;
             Item.Size = new(56);
+            Item.scale = 2;
         }
         public override void AddRecipes()
         {

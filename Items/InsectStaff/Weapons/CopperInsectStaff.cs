@@ -13,7 +13,7 @@ namespace WeaponSkill.Items.InsectStaff.Weapons
         {
             Item.damage = 8;
             Item.knockBack = 5.5f;
-            Item.Size = new(74,80);
+            Item.Size = new(76);
         }
         public override void AddRecipes()
         {

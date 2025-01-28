@@ -13,9 +13,11 @@ namespace WeaponSkill.Weapons.HuntingHorn
         }
         public enum MelodyType : byte
         {
-            Left = 1, Right = 2,LeftAndRight = 3,SP = 4
+            Left = 1, Right = 2,LeftAndRight = 3,SP = 4,None = 255
         }
+        public bool IsRegister;
         public Queue<MelodyType> melodies = new(4);
+        public Dictionary<string, HuntingHornBuff> DefHuntingHornBuff = new();
 
         /// <summary>
         /// 应该按照旋律多到旋律少的地方排序,应该在添加旋律的时候判断(需要重写)
@@ -44,11 +46,19 @@ namespace WeaponSkill.Weapons.HuntingHorn
             }
             return null;
         }
+        ///// <summary>
+        ///// UI绘制
+        ///// </summary>
+        ///// <param name="spriteBatch"></param>
+        //public virtual void DrawUI(SpriteBatch spriteBatch,Vector2 drawPos) { }
         /// <summary>
-        /// UI绘制
+        /// 注册
         /// </summary>
-        /// <param name="spriteBatch"></param>
-        public virtual void DrawUI(SpriteBatch spriteBatch,Vector2 drawPos) { }
+        public virtual void Register() 
+        {
+            DefHuntingHornBuff.Add("SelfPowerUp", new SelfPowerUp([MelodyType.Left, MelodyType.Left]));
+            DefHuntingHornBuff.Add("HitSound", new HitSound([MelodyType.SP, MelodyType.Left]));
+        }
         /// <summary>
         /// UI绘制的乐谱颜色
         /// </summary>
@@ -68,9 +78,9 @@ namespace WeaponSkill.Weapons.HuntingHorn
             switch (findMelodies[Lenght - 1]) // 自我强化旋律
             {
                 case MelodyType.Left when findMelodies[Lenght - 2] == MelodyType.Left:
-                    return new SelfPowerUp([MelodyType.Left, MelodyType.Left]);
+                    return DefHuntingHornBuff["SelfPowerUp"];
                 case MelodyType.Left when findMelodies[Lenght - 2] == MelodyType.SP:
-                    return new HitSound([MelodyType.SP, MelodyType.Left]);
+                    return DefHuntingHornBuff["HitSound"];
             }
             return null;
         }
@@ -81,6 +91,11 @@ namespace WeaponSkill.Weapons.HuntingHorn
         {
             if (melodies.Count > 4)
                 melodies.Dequeue(); // 取出元素
+            if (!IsRegister)
+            {
+                IsRegister = true;
+                Register();
+            }
         }
     }
 }

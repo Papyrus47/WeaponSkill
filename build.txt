@@ -1,3 +1,4 @@
 displayName = Weapon Skill Mod(武器技能组Mod)
 author = Papyrus
 version = 2.20
+modReferences = InnoVault@1.0

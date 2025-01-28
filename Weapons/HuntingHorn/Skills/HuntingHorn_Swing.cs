@@ -30,12 +30,20 @@ namespace WeaponSkill.Weapons.HuntingHorn.Skills
         /// 演奏
         /// </summary>
         public bool IsPlay;
+        /// <summary>
+        /// 属于重奏
+        /// </summary>
+        public bool IsReplay;
         public const float CHANGE_LERP_SPEED = 0.35f;
         /// <summary>
         /// 动作值
         /// </summary>
         public float ActionDmg = 1f;
         public HuntingHornMelody.MelodyType melodyType;
+        /// <summary>
+        /// 重奏用
+        /// </summary>
+        public Queue<HuntingHornBuff> SaveBuff;
         public HuntingHorn_Swing(HuntingHornProj proj, Func<bool> changeCondition) : base(proj)
         {
             ChangeCondition = changeCondition;
@@ -55,9 +63,10 @@ namespace WeaponSkill.Weapons.HuntingHorn.Skills
                     {
                         Projectile.ai[0]++;
                         Projectile.ai[1] = 0;
-                        Projectile.extraUpdates = 1;
+                        Projectile.extraUpdates = 0;
                         TheUtility.Player_ItemCheck_Shoot(player, HuntingHornProj.SpawnItem, Projectile.damage);
                         TheUtility.ResetProjHit(Projectile);
+                        SoundEngine.PlaySound(SoundID.Item1 with { Pitch = -0.6f }, player.position);
                         if (melodyType != default)
                         {
                             HuntingHornGlobalItem huntingHornGlobalItem = HuntingHornProj.SpawnItem.GetGlobalItem<HuntingHornGlobalItem>();
@@ -71,7 +80,7 @@ namespace WeaponSkill.Weapons.HuntingHorn.Skills
                     }
                     break;
                 case 1: // 挥舞
-                    Projectile.extraUpdates = 2;
+                    Projectile.extraUpdates = 1;
                     
                     if (Projectile.ai[1] < SwingTimeMax)
                         Projectile.ai[1]++;
@@ -88,7 +97,21 @@ namespace WeaponSkill.Weapons.HuntingHorn.Skills
                             if (buffs.Count > 0)
                             {
                                 huntingHornGlobalItem.hornMelody.melodies.Clear();
-                                buffs.Dequeue().OnPlay(player, Projectile);
+                                if (!IsReplay)
+                                {
+                                    HuntingHornBuff huntingHornBuff = buffs.Dequeue();
+                                    huntingHornBuff.OnPlay(player, Projectile);
+                                    SaveBuff.Enqueue(huntingHornBuff);
+                                }
+                                else
+                                {
+                                    while(buffs.Count > 0)
+                                    {
+                                        HuntingHornBuff huntingHornBuff = buffs.Dequeue();
+                                        huntingHornBuff.OnPlay(player, Projectile);
+                                    }
+                                }
+                                SoundEngine.PlaySound(SoundID.Item139 with { Pitch = -0.3f, Volume = 0.3f }, player.position);
                                 Projectile.ai[2] = 1;
                             }
                             else
@@ -150,6 +173,21 @@ namespace WeaponSkill.Weapons.HuntingHorn.Skills
             }
             else 
                 melodyType = default;
+            if (IsPlay)
+                SaveBuff ??= new();
+        }
+        public override void OnSkillDeactivate()
+        {
+            base.OnSkillDeactivate();
+            if(IsPlay && SaveBuff.Count > 0 && !IsReplay)
+            {
+                HuntingHornGlobalItem huntingHornGlobalItem = HuntingHornProj.SpawnItem.GetGlobalItem<HuntingHornGlobalItem>();
+                Queue<HuntingHornBuff> buffs = huntingHornGlobalItem.huntingHornBuffs;
+                while (SaveBuff.Count > 0)
+                {
+                    buffs.Enqueue(SaveBuff.Dequeue());
+                }
+            }
         }
     }
 }

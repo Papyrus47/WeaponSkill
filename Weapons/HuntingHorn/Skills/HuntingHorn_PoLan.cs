@@ -42,11 +42,12 @@ namespace WeaponSkill.Weapons.HuntingHorn.Skills
                     {
                         TheUtility.ResetProjHit(Projectile);
                         Projectile.spriteDirection = -Projectile.spriteDirection;
+                        SoundEngine.PlaySound(SoundID.Item135 with { Pitch = -0.3f,Volume = 0.3f}, player.position);
                         for (int i = 0; i < 20; i++)
                         {
                             Dust dust = Dust.NewDustDirect(Projectile.Center + Projectile.velocity * 0.75f, 1, 1,DustID.FireworksRGB,0,0,100);
                             dust.noGravity = true;
-                            dust.velocity = Main.rand.NextVector2Unit() * HuntingHornProj.SwingLength * 0.01f;
+                            dust.velocity = Main.rand.NextVector2Unit() * HuntingHornProj.SwingLength * 0.03f;
                             dust.color = Color.SkyBlue with { A = 0} * 0.3f;
                         }
                     }

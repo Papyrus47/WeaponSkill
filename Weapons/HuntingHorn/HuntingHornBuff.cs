@@ -40,7 +40,7 @@ namespace WeaponSkill.Weapons.HuntingHorn
             {
                 if(t.IsSubclassOf(typeof(HuntingHornBuff)) && !t.IsAbstract)
                 {
-                    (Activator.CreateInstance(t, new List<HuntingHornMelody.MelodyType>() { HuntingHornMelody.MelodyType.Left }) as HuntingHornBuff).Load();
+                    (Activator.CreateInstance(t, new List<HuntingHornMelody.MelodyType>() { HuntingHornMelody.MelodyType.None }) as HuntingHornBuff).Load();
                 }
             }
         }

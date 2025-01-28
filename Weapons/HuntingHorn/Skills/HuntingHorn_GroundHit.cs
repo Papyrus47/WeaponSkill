@@ -83,7 +83,7 @@ namespace WeaponSkill.Weapons.HuntingHorn.Skills
         {
             base.OnSkillActive();
             StartVel = Vector2.UnitY;
-            SwingRot = MathHelper.Pi;
+            SwingRot = MathHelper.Pi + 0.9f;
             VelScale = new Vector2(1,0.4f);
             VisualRotation = 0;
             SwingDirectionChange = false;

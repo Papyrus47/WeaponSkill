@@ -25,6 +25,10 @@ namespace WeaponSkill.UI.HuntingHornUI
             Left.Percent = wS_Configs_UI.SpiritUI_Pos.X;
             Top.Percent = wS_Configs_UI.SpiritUI_Pos.Y;
             Recalculate();
+
+            Item item = Main.LocalPlayer.HeldItem;
+            if(item.TryGetGlobalItem<HuntingHornGlobalItem>(out var huntingHornGlobalItem))
+                huntingHornGlobalItem.hornMelody.Update();
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -40,7 +44,7 @@ namespace WeaponSkill.UI.HuntingHornUI
             #region 关于旋律的绘制
             Texture2D tex = ModAsset.HuntingHornUI.Value;
             Rectangle destinationRectangle = GetDimensions().ToRectangle();
-            huntingHornGlobalItem.hornMelody.Update();
+            //huntingHornGlobalItem.hornMelody.Update();
             spriteBatch.Draw(tex, destinationRectangle, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 0f);
             #region 绘制旋律
             var melodies = huntingHornGlobalItem.hornMelody.melodies.ToArray();
@@ -82,9 +86,36 @@ namespace WeaponSkill.UI.HuntingHornUI
                 destinationRectangle.X = (int)(GetDimensions().ToRectangle().X + GetDimensions().ToRectangle().Width * 1.5f);
             }
             #endregion
-            #region 绘制乐铺
-            huntingHornGlobalItem.hornMelody.DrawUI(spriteBatch,GetDimensions().Position()); // 传入左上角
+            #region 绘制乐谱
+            destinationRectangle = GetDimensions().ToRectangle();
+            destinationRectangle.Y += destinationRectangle.Height * 2; // 向下移动
+
+            huntingHornBuffs = huntingHornGlobalItem.hornMelody.DefHuntingHornBuff.Values.ToArray();
+            for (int i = 0; i < huntingHornGlobalItem.hornMelody.DefHuntingHornBuff.Count; i++)
+            {
+                HuntingHornBuff buff = huntingHornBuffs[i];
+                if (buff == null)
+                    continue;
+                HuntingHornMelody.MelodyType[] melodiesArray = buff.melodyTypes.ToArray();
+                destinationRectangle.X = (int)(GetDimensions().ToRectangle().X + GetDimensions().ToRectangle().Width * 0f);
+                for (int j = 0; j < buff.melodyTypes.Count; j++)
+                {
+                    tex = GetTex(melodiesArray, j);
+
+                    destinationRectangle.Width = (int)(tex.Width * scale);
+                    destinationRectangle.Height = (int)(tex.Height * scale);
+                    spriteBatch.Draw(tex, destinationRectangle, null, huntingHornGlobalItem.hornMelody.DrawColor(melodiesArray[j]), 0f, Vector2.Zero, SpriteEffects.None, 0f);
+                    destinationRectangle.X += (int)(destinationRectangle.Width * 2);
+                }
+
+                spriteBatch.DrawString(FontAssets.MouseText.Value, buff.Name, destinationRectangle.Left(), Color.White, 0f, new(0f, FontAssets.MouseText.Value.MeasureString(buff.Name).Y * 0.5f), scale * 2, SpriteEffects.None, 0f);
+                destinationRectangle.Y += (int)(destinationRectangle.Height * 1.5f);
+                
+            }
             #endregion
+                //#region 绘制乐铺
+                //huntingHornGlobalItem.hornMelody.DrawUI(spriteBatch,GetDimensions().Position()); // 传入左上角
+                //#endregion
         }
 
         public static Texture2D GetTex(HuntingHornMelody.MelodyType[] melodies, int i)

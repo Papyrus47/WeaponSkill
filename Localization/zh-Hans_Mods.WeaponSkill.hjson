@@ -20,6 +20,9 @@ Weapons: {
 			SelfPowerUp: 自我强化
 			HitSound: 打周波·响
 			AttackUp_Small: 攻击力提升[小]
+			AttackUp_Super: 攻击力提升[特大]
+			AttackUp_Middle: 攻击力提升[中]
+			AttackUp_Big: 攻击力提升[大]
 		}
 	}
 }
@@ -62,6 +65,7 @@ Projectiles: {
 	// EyeOfDarkProj.DisplayName: Eye Of Dark Proj
 	// HuntingHornProj.DisplayName: Hunting Horn Proj
 	KillerBeeProj.DisplayName: 杀手蜂
+	// MagicMelodyProj.DisplayName: Magic Melody Proj
 }
 
 Keybinds: {
