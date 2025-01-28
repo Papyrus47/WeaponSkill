@@ -880,6 +880,16 @@ Mods: {
 				DisplayName: Eye Of Dark
 				Tooltip: ""
 			}
+
+			TestHuntingHorn: {
+				DisplayName: Test Hunting Horn
+				Tooltip: 回复旋律[1]
+			}
+
+			KillerBee: {
+				DisplayName: Killer Bee
+				Tooltip: ""
+			}
 		}
 
 		DamageClasses: {

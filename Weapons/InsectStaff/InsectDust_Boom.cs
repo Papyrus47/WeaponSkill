@@ -37,7 +37,7 @@ namespace WeaponSkill.Weapons.InsectStaff
         public override void OnKill()
         {
             var proj = Projectile.NewProjectileDirect(NPC.GetSource_Death(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<TransparentProj>(), (int)NPC.ai[2] * 2, 0f,Main.myPlayer);
-            proj.Size = new Vector2(120);
+            proj.Resize(120, 120);
             for (int i = 0; i < 30; i++)
             {
                 Dust dust = Dust.NewDustDirect(NPC.position - NPC.Size, NPC.width * 2, NPC.height * 2, DustID.AncientLight, Main.rand.NextFloatDirection(), Main.rand.NextFloatDirection(), 0, Color.OrangeRed);

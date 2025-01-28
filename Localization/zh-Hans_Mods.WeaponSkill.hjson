@@ -11,6 +11,18 @@ Guns: {
 	MaxBullet: 弹夹最大容量:
 }
 
+Weapons: {
+	HuntingHorn: {
+		Buffs: {
+			HealthBuff_Small: 回复[小]
+			HealthBuff_Middle: 回复[中]
+			HealthBuff_Big: 回复[大]
+			SelfPowerUp: 自我强化
+			HitSound: 打周波·响
+		}
+	}
+}
+
 Projectiles: {
 	// BroadSwordProj.DisplayName: Broad Sword Proj
 	// ShortswordProj.DisplayName: Shortsword Proj
@@ -47,6 +59,8 @@ Projectiles: {
 	// InsectStaffProj.DisplayName: Insect Staff Proj
 	// TestInsectProj.DisplayName: Test Insect Proj
 	// EyeOfDarkProj.DisplayName: Eye Of Dark Proj
+	// HuntingHornProj.DisplayName: Hunting Horn Proj
+	KillerBeeProj.DisplayName: 杀手蜂
 }
 
 Keybinds: {
@@ -138,5 +152,30 @@ Buffs: {
 	PowerUp: {
 		DisplayName: 攻击守势
 		Description: 面板乘以1.15
+	}
+
+	SelfPowerUpBuff: {
+		DisplayName: 自我强化
+		Description: 全部强化
+	}
+
+	AttackUp_BigBuff: {
+		DisplayName: 攻击力提升[大]
+		Description: 增加15%攻击力
+	}
+
+	AttackUp_MiddleBuff: {
+		DisplayName: 攻击力提升[中]
+		Description: 增加10%攻击力
+	}
+
+	AttackUp_SmallBuff: {
+		DisplayName: 攻击力提升[小]
+		Description: 增加5%攻击力
+	}
+
+	AttackUp_SuperBuff: {
+		DisplayName: 攻击力提升[特大]
+		Description: 增加20%攻击力
 	}
 }

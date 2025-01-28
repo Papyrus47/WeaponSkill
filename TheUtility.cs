@@ -234,7 +234,7 @@ namespace WeaponSkill
         }
         public static string RegisterText(string key)
         {
-            return Language.GetOrRegister(key, () => "Null").Value;
+            return Language.GetOrRegister(key, () => key).Value;
         }
     }
 }

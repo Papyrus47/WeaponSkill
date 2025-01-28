@@ -39,7 +39,7 @@ namespace WeaponSkill.Items.InsectStaff.Insects
             if(Projectile.frameCounter++ > 6)
             {
                 Projectile.frameCounter = 0;
-                if(Projectile.frame++ >= 1)
+                if(Projectile.frame++ >= Main.projFrames[Type] - 1)
                 {
                     Projectile.frame = 0;
                 }

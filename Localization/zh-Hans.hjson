@@ -863,6 +863,16 @@ Mods: {
 				DisplayName: 暗黑眼
 				// Tooltip: ""
 			}
+
+			TestHuntingHorn: {
+				// DisplayName: Test Hunting Horn
+				// Tooltip: 回复旋律[1]
+			}
+
+			KillerBee: {
+				DisplayName: 杀手蜂
+				// Tooltip: ""
+			}
 		}
 
 		DamageClasses: {

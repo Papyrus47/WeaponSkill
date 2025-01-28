@@ -12,6 +12,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using WeaponSkill.Buffs;
+using WeaponSkill.Buffs.HuntingHornBuffs;
 using WeaponSkill.Command;
 using WeaponSkill.Items.DualBlades;
 using WeaponSkill.Weapons;
@@ -242,6 +243,11 @@ namespace WeaponSkill
             {
                 Player_BowSidingStep = false;
             }
+        }
+        public override void PostUpdateRunSpeeds()
+        {
+            if(Player.HasBuff<SelfPowerUpBuff>())
+                Player.accRunSpeed *= 1.3f;
         }
         public override void ModifyHurt(ref Player.HurtModifiers modifiers)
         {

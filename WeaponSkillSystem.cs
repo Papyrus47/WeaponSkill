@@ -12,6 +12,7 @@ using WeaponSkill.UI.ChargeBladeUI;
 using WeaponSkill.UI.CrossbowPartUI;
 using WeaponSkill.UI.DualBladesUI;
 using WeaponSkill.UI.GunBulletUI;
+using WeaponSkill.UI.HuntingHornUI;
 using WeaponSkill.UI.SlashAxeUI;
 using WeaponSkill.UI.SpiritUI;
 using WeaponSkill.UI.StaminaUI;
@@ -19,6 +20,7 @@ using WeaponSkill.UI.StarBreakerUI.SkillsTreeUI;
 using WeaponSkill.UI.StarBreakerUI.TalkUI;
 using WeaponSkill.Weapons.ChargeBlade;
 using WeaponSkill.Weapons.DualBlades;
+using WeaponSkill.Weapons.HuntingHorn;
 using WeaponSkill.Weapons.LongSword;
 using WeaponSkill.Weapons.SlashAxe;
 using WeaponSkill.Weapons.StarBreakerWeapon.DamageTypes;
@@ -40,6 +42,7 @@ namespace WeaponSkill
         public TalkUI talkUI;
         public GunBulletUI gunBulletUI;
         public SlashAxeUI slashAxeUI;
+        public HuntingHornUI huntingHornUI;
         public override void Load()
         {
             userInterfaces = new();
@@ -70,6 +73,9 @@ namespace WeaponSkill
             chargeBladeBottle = new ChargeBladeBottle();
             chargeBladeBottle.Initialize();
 
+            huntingHornUI = new();
+            huntingHornUI.Initialize();
+
             skillsTreeUI = new();
             skillsTreeUI.Initialize();
             UserInterface userInterface3 = new UserInterface();
@@ -99,6 +105,8 @@ namespace WeaponSkill
             On_NPC.HitModifiers.ToHitInfo += HitModifiers_ToHitInfo;
             On_Main.MouseText_DrawItemTooltip_GetLinesInfo += On_Main_MouseText_DrawItemTooltip_GetLinesInfo;
             Main.OnPostDraw += Main_OnPostDraw;
+
+            HuntingHornBuff.Load(Mod);
         }
 
         private void Main_OnPostDraw(GameTime obj)
@@ -190,7 +198,7 @@ namespace WeaponSkill
         }
         public void TryChangeTheUserInterfacesSetState(UserInterface userInterface)
         {
-            if (userInterface.CurrentState == bladesUI || userInterface.CurrentState == spiritUI || userInterface.CurrentState == chargeBladeBottle || userInterface.CurrentState == slashAxeUI)
+            if (userInterface.CurrentState == bladesUI || userInterface.CurrentState == spiritUI || userInterface.CurrentState == chargeBladeBottle || userInterface.CurrentState == slashAxeUI || userInterface.CurrentState == huntingHornUI)
             {
                 if (Main.LocalPlayer.HeldItem.TryGetGlobalItem<DualBladesGlobalItem>(out _))
                 {
@@ -207,6 +215,10 @@ namespace WeaponSkill
                 else if (Main.LocalPlayer.HeldItem.TryGetGlobalItem<SlashAxeGlobalItem>(out _))
                 {
                     userInterface.SetState(slashAxeUI);
+                }
+                else if (Main.LocalPlayer.HeldItem.TryGetGlobalItem<HuntingHornGlobalItem>(out _))
+                {
+                    userInterface.SetState(huntingHornUI);
                 }
             }
         }

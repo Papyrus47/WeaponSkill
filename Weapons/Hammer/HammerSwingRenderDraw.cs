@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WeaponSkill.Command;
 using WeaponSkill.Command.SwingHelpers;
+using WeaponSkill.Weapons.HuntingHorn;
 using WeaponSkill.Weapons.LongSword;
 
 namespace WeaponSkill.Weapons.Hammer
@@ -36,9 +37,18 @@ namespace WeaponSkill.Weapons.Hammer
             //swingHelper.DrawTrailing(WeaponSkill.SwingTex.Value, (_) => new(0.3f, 0.3f, 0.3f, 0f), null);
             for (int i = 0; i < HammerProj.DrawHammerSwingShader_Index.Count; i++)
             {
-                SwingHelper swingHelper = (Main.projectile[HammerProj.DrawHammerSwingShader_Index[i]].ModProjectile as HammerProj).SwingHelper;
-                //swingHelper.DrawTrailing(WeaponSkill.SwingTex.Value, (i) => GetDrawOffsetColor(swingHelper, i), null);
-                swingHelper.DrawTrailing(TextureAssets.Extra[193].Value, (i) => GetDrawOffsetColor(swingHelper, i), null);
+                if (Main.projectile[HammerProj.DrawHammerSwingShader_Index[i]].ModProjectile is HammerProj)
+                {
+                    SwingHelper swingHelper = (Main.projectile[HammerProj.DrawHammerSwingShader_Index[i]].ModProjectile as HammerProj).SwingHelper;
+                    //swingHelper.DrawTrailing(WeaponSkill.SwingTex.Value, (i) => GetDrawOffsetColor(swingHelper, i), null);
+                    swingHelper.DrawTrailing(TextureAssets.Extra[193].Value, (i) => GetDrawOffsetColor(swingHelper, i), null);
+                }
+                if(Main.projectile[HammerProj.DrawHammerSwingShader_Index[i]].ModProjectile is HuntingHornProj)
+                {
+                    SwingHelper swingHelper = (Main.projectile[HammerProj.DrawHammerSwingShader_Index[i]].ModProjectile as HuntingHornProj).SwingHelper;
+                    //swingHelper.DrawTrailing(WeaponSkill.SwingTex.Value, (i) => GetDrawOffsetColor(swingHelper, i), null);
+                    swingHelper.DrawTrailing(TextureAssets.Extra[193].Value, (i) => GetDrawOffsetColor(swingHelper, i), null);
+                }
             }
             //sb.Draw(Main.screenTargetSwap, Vector2.Zero, Color.White); // 原始图片
             sb.End();
@@ -77,7 +87,7 @@ namespace WeaponSkill.Weapons.Hammer
         public void ResetDrawData()
         {
             HammerProj.DrawHammerSwingShader_Index.Clear();
-            if (!Main.LocalPlayer.HeldItem.TryGetGlobalItem<HammerGlobalItem>(out _) && !CanUseHammerSwingRender.Contains(Main.LocalPlayer.HeldItem.type))
+            if (!(Main.LocalPlayer.HeldItem.TryGetGlobalItem<HammerGlobalItem>(out _) || Main.LocalPlayer.HeldItem.TryGetGlobalItem<HuntingHornGlobalItem>(out _)) && !CanUseHammerSwingRender.Contains(Main.LocalPlayer.HeldItem.type))
             {
                 Remove = true;
             }

@@ -9,6 +9,7 @@ using WeaponSkill.Weapons.StarBreakerWeapon.General.ElementDamage;
 using WeaponSkill.Weapons.StarBreakerWeapon.General;
 using WeaponSkill.Command.ResidueSwing;
 using WeaponSkill.Effects;
+using WeaponSkill.Weapons.HuntingHorn;
 
 namespace WeaponSkill
 {
@@ -72,6 +73,7 @@ namespace WeaponSkill
             SlashDamage.Load();
             HitDamage.Load();
             SpurtsDamage.Load();
+            Main.mapEnabled = true;
         }
         public static void Main_OnPostDraw(GameTime obj)
         {
