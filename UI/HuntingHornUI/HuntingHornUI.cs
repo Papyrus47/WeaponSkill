@@ -71,6 +71,14 @@ namespace WeaponSkill.UI.HuntingHornUI
                 if (buff == null)
                     continue;
                 HuntingHornMelody.MelodyType[] melodiesArray = buff.melodyTypes.ToArray();
+                //Rectangle drawInventoryBackRect = destinationRectangle;
+                //drawInventoryBackRect.X -= 10;
+                //drawInventoryBackRect.Y -= 5;
+                Vector2 vector2 = FontAssets.MouseText.Value.MeasureString(buff.Name);
+                //drawInventoryBackRect.Width += (int)(vector2.X * 2) + 10;
+                //drawInventoryBackRect.Height = (int)vector2.Y;
+
+                //spriteBatch.Draw(TextureAssets.InventoryBack.Value, drawInventoryBackRect, null, Color.White with {  A = 255 },0,Vector2.Zero,SpriteEffects.None,0f);
                 for (int j = 0; j < buff.melodyTypes.Count; j++)
                 {
                     tex = GetTex(melodiesArray, j);
@@ -81,8 +89,8 @@ namespace WeaponSkill.UI.HuntingHornUI
                     destinationRectangle.X += (int)(destinationRectangle.Width * 2);
                 }
 
-                spriteBatch.DrawString(FontAssets.MouseText.Value, buff.Name, destinationRectangle.Left(), Color.White, 0f,new(0f, FontAssets.MouseText.Value.MeasureString(buff.Name).Y * 0.5f),scale * 2,SpriteEffects.None,0f);
-                destinationRectangle.Y += (int)(destinationRectangle.Height * 1.5f);
+                spriteBatch.DrawString(FontAssets.MouseText.Value, buff.Name, destinationRectangle.Left(), Color.White, 0f,new(0f, vector2.Y * 0.25f), scale * 2, SpriteEffects.None,0f);
+                destinationRectangle.Y += (int)(vector2.Y * 1f);
                 destinationRectangle.X = (int)(GetDimensions().ToRectangle().X + GetDimensions().ToRectangle().Width * 1.5f);
             }
             #endregion
@@ -107,8 +115,8 @@ namespace WeaponSkill.UI.HuntingHornUI
                     spriteBatch.Draw(tex, destinationRectangle, null, huntingHornGlobalItem.hornMelody.DrawColor(melodiesArray[j]), 0f, Vector2.Zero, SpriteEffects.None, 0f);
                     destinationRectangle.X += (int)(destinationRectangle.Width * 2);
                 }
-
-                spriteBatch.DrawString(FontAssets.MouseText.Value, buff.Name, destinationRectangle.Left(), Color.White, 0f, new(0f, FontAssets.MouseText.Value.MeasureString(buff.Name).Y * 0.5f), scale * 2, SpriteEffects.None, 0f);
+                Vector2 vector2 = FontAssets.MouseText.Value.MeasureString(buff.Name);
+                spriteBatch.DrawString(FontAssets.MouseText.Value, buff.Name, destinationRectangle.Left(), Color.White, 0f, new(0f, vector2.Y * 0.5f), scale * 2, SpriteEffects.None, 0f);
                 destinationRectangle.Y += (int)(destinationRectangle.Height * 1.5f);
                 
             }

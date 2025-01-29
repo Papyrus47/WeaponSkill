@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria.Localization;
+using Terraria.ModLoader.Core;
+using Terraria.ModLoader;
 using Terraria.UI;
 using WeaponSkill.Command.ResidueSwing;
 using WeaponSkill.UI.ChangeAmmoUI;
@@ -26,6 +28,7 @@ using WeaponSkill.Weapons.SlashAxe;
 using WeaponSkill.Weapons.StarBreakerWeapon.DamageTypes;
 using WeaponSkill.Weapons.StarBreakerWeapon.General;
 using WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade;
+using WeaponSkill.Command;
 
 namespace WeaponSkill
 {
@@ -106,7 +109,17 @@ namespace WeaponSkill
             On_Main.MouseText_DrawItemTooltip_GetLinesInfo += On_Main_MouseText_DrawItemTooltip_GetLinesInfo;
             Main.OnPostDraw += Main_OnPostDraw;
 
-            HuntingHornBuff.Load(Mod);
+            //HuntingHornBuff.Load(Mod);
+            Type[] type = AssemblyManager.GetLoadableTypes(Mod.Code);
+            foreach (Type t in type)
+            {
+                //HuntingHornBuff.Load(t);
+                if (typeof(IMyLoader).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
+                {
+                    IMyLoader loader = (Activator.CreateInstance(t) as IMyLoader);
+                    loader.Load();
+                }
+            }
         }
 
         private void Main_OnPostDraw(GameTime obj)

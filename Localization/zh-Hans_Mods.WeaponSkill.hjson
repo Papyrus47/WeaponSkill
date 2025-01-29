@@ -24,6 +24,8 @@ Weapons: {
 			AttackUp_Middle: 攻击力提升[中]
 			AttackUp_Big: 攻击力提升[大]
 		}
+
+		Melodies.HealthMelody1: 回复旋律[1]
 	}
 }
 

@@ -219,11 +219,13 @@ namespace WeaponSkill.Weapons.HuntingHorn
         public bool PreSkillTimeOut()
         {
             //if (OldSkills.Count <= 1) return true;
-            //if (CurrentSkill is InsectStaff_SkyHeld)
+            //if (CurrentSkill is HuntingHorn_Swing)
             //{
-            //    CurrentSkill.OnSkillDeactivate();
-            //    held.OnSkillActive();
-            //    CurrentSkill = held;
+            //    CurrentSkill = OldSkills[0];
+            //    OldSkills[^1].OnSkillDeactivate();
+            //    //CurrentSkill;
+            //    OldSkills[0].OnSkillActive();
+
             //    return false;
             //}
             return true;

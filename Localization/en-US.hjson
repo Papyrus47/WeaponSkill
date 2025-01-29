@@ -882,13 +882,27 @@ Mods: {
 			}
 
 			TestHuntingHorn: {
-				DisplayName: Test Hunting Horn
-				Tooltip: 回复旋律[1]
+				DisplayName: Copper Hunting Horn
+				Tooltip: ""
 			}
 
 			KillerBee: {
 				DisplayName: Killer Bee
 				Tooltip: ""
+			}
+
+			HuntingHornBook: {
+				DisplayName: Hunting Horn Book
+				Tooltip:
+					'''
+					狩猎笛，一种可以吹各种旋律辅助自己与召唤物，并且造成法术伤害的武器
+					旋律在手持时候显示
+					<left>:挥打 <right>:挥打 <left>和<right>:挥打 任意攻击后{0}:响音攻击 {2}:锤打 {1}:演奏旋律
+					{1}+{1}:重奏旋律
+					<right>+<right>的上挥中途可以插入一个音符
+					后退+<left>/<right>:柄击
+					锤打命中后，将进行魔法演奏攻击被连接的怪物
+					'''
 			}
 		}
 

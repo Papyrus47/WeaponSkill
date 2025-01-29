@@ -24,6 +24,8 @@ Weapons: {
 			AttackUp_Middle: Attack Up Middle
 			AttackUp_Big: Attack Up Big
 		}
+
+		Melodies.HealthMelody1: HealthMelody[1]
 	}
 }
 

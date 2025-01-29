@@ -11,6 +11,10 @@ namespace WeaponSkill.Weapons.HuntingHorn.Buffs
     /// </summary>
     public class HitSound : HuntingHornBuff
     {
+        public HitSound()
+        {
+        }
+
         public HitSound(List<HuntingHornMelody.MelodyType> melodyTypes) : base(melodyTypes)
         {
         }

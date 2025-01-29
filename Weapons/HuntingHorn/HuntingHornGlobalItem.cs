@@ -25,18 +25,13 @@ namespace WeaponSkill.Weapons.HuntingHorn
             entity.noMelee = true;
             //Insect = new(ModContent.ItemType<TestInsect>());
         }
-        public override bool? UseItem(Item item, Player player)
+        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            //int i = Main.rand.Next(5);
-            //if(i == 0) 
-            //    hornMelody.melodies.Enqueue(HuntingHornMelody.MelodyType.Left);
-            //else if(i == 1)
-            //    hornMelody.melodies.Enqueue(HuntingHornMelody.MelodyType.Right);
-            //else if (i == 2)
-            //    hornMelody.melodies.Enqueue(HuntingHornMelody.MelodyType.LeftAndRight);
-            //else if (i == 3)
-            //    hornMelody.melodies.Enqueue(HuntingHornMelody.MelodyType.SP);
-            return base.UseItem(item, player);
+            int index = tooltips.FindIndex(x => x.Name == "ItemName");
+            if (index != -1)
+            {
+                tooltips.Insert(index + 1, new TooltipLine(Mod, "Melody", hornMelody.Tooltip));
+            }
         }
         public override void HoldItem(Item item, Player player)
         {

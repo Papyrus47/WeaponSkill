@@ -175,11 +175,11 @@ namespace WeaponSkill.Weapons.HuntingHorn.Skills
                 melodyType = default;
             if (IsPlay)
                 SaveBuff ??= new();
+            SaveBuff?.Clear();
         }
         public override void OnSkillDeactivate()
         {
-            base.OnSkillDeactivate();
-            if(IsPlay && SaveBuff.Count > 0 && !IsReplay)
+            if (IsPlay && SaveBuff.Count > 0 && !IsReplay && !SkillTimeOut)
             {
                 HuntingHornGlobalItem huntingHornGlobalItem = HuntingHornProj.SpawnItem.GetGlobalItem<HuntingHornGlobalItem>();
                 Queue<HuntingHornBuff> buffs = huntingHornGlobalItem.huntingHornBuffs;
@@ -187,7 +187,9 @@ namespace WeaponSkill.Weapons.HuntingHorn.Skills
                 {
                     buffs.Enqueue(SaveBuff.Dequeue());
                 }
+                SaveBuff.Clear();
             }
+            base.OnSkillDeactivate();
         }
     }
 }

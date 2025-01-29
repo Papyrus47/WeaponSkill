@@ -8,6 +8,10 @@ namespace WeaponSkill.Weapons.HuntingHorn.Buffs
 {
     public class HealthBuff_Small : HuntingHornBuff
     {
+        public HealthBuff_Small()
+        {
+        }
+
         public HealthBuff_Small(List<HuntingHornMelody.MelodyType> melodyTypes) : base(melodyTypes)
         {
         }
@@ -22,6 +26,10 @@ namespace WeaponSkill.Weapons.HuntingHorn.Buffs
     }
     public class HealthBuff_Middle : HuntingHornBuff
     {
+        public HealthBuff_Middle()
+        {
+        }
+
         public HealthBuff_Middle(List<HuntingHornMelody.MelodyType> melodyTypes) : base(melodyTypes)
         {
         }
@@ -36,6 +44,10 @@ namespace WeaponSkill.Weapons.HuntingHorn.Buffs
     }
     public class HealthBuff_Big : HuntingHornBuff
     {
+        public HealthBuff_Big()
+        {
+        }
+
         public HealthBuff_Big(List<HuntingHornMelody.MelodyType> melodyTypes) : base(melodyTypes)
         {
         }

@@ -9,6 +9,10 @@ namespace WeaponSkill.Weapons.HuntingHorn.Buffs
 {
     public class SelfPowerUp : HuntingHornBuff
     {
+        public SelfPowerUp()
+        {
+        }
+
         public SelfPowerUp(List<HuntingHornMelody.MelodyType> melodyTypes) : base(melodyTypes)
         {
         }

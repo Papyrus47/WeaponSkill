@@ -27,6 +27,11 @@ namespace WeaponSkill.Weapons.HuntingHorn.Buffs
         public AttackUp_Small(List<HuntingHornMelody.MelodyType> melodyTypes) : base(melodyTypes)
         {
         }
+
+        public AttackUp_Small()
+        {
+        }
+
         public override void OnPlay(Player player, Projectile projectile)
         {
             if(!player.HasBuff<AttackUp_SmallBuff>() && !player.HasBuff<AttackUp_MiddleBuff>())
@@ -85,6 +90,10 @@ namespace WeaponSkill.Weapons.HuntingHorn.Buffs
         {
         }
 
+        public AttackUp_Middle()
+        {
+        }
+
         public override void OnPlay(Player player, Projectile projectile)
         {
             if (!player.HasBuff<AttackUp_MiddleBuff>() && !player.HasBuff<AttackUp_BigBuff>())
@@ -121,6 +130,10 @@ namespace WeaponSkill.Weapons.HuntingHorn.Buffs
     }
     public class AttackUp_Big : HuntingHornBuff
     {
+        public AttackUp_Big()
+        {
+        }
+
         public AttackUp_Big(List<HuntingHornMelody.MelodyType> melodyTypes) : base(melodyTypes)
         {
         }

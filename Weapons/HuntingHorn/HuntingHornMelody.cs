@@ -1,4 +1,5 @@
 ﻿using Terraria.Localization;
+using WeaponSkill.Command;
 using WeaponSkill.Weapons.HuntingHorn.Buffs;
 
 namespace WeaponSkill.Weapons.HuntingHorn
@@ -6,7 +7,7 @@ namespace WeaponSkill.Weapons.HuntingHorn
     /// <summary>
     /// 狩猎笛的旋律
     /// </summary>
-    public abstract class HuntingHornMelody
+    public abstract class HuntingHornMelody : IMyLoader
     {
         public HuntingHornMelody()
         {
@@ -17,6 +18,7 @@ namespace WeaponSkill.Weapons.HuntingHorn
         }
         public bool IsRegister;
         public Queue<MelodyType> melodies = new(4);
+        public virtual string Tooltip => TheUtility.RegisterText("Mods." + GetType().Namespace + "." + GetType().Name);
         public Dictionary<string, HuntingHornBuff> DefHuntingHornBuff = new();
 
         /// <summary>
@@ -58,6 +60,10 @@ namespace WeaponSkill.Weapons.HuntingHorn
         {
             DefHuntingHornBuff.Add("SelfPowerUp", new SelfPowerUp([MelodyType.Left, MelodyType.Left]));
             DefHuntingHornBuff.Add("HitSound", new HitSound([MelodyType.SP, MelodyType.Left]));
+        }
+        public virtual void Load()
+        {
+            _ = Tooltip;
         }
         /// <summary>
         /// UI绘制的乐谱颜色
