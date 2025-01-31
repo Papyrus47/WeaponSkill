@@ -29,6 +29,8 @@ using WeaponSkill.Weapons.StarBreakerWeapon.DamageTypes;
 using WeaponSkill.Weapons.StarBreakerWeapon.General;
 using WeaponSkill.Weapons.StarBreakerWeapon.StarSpinBlade;
 using WeaponSkill.Command;
+using WeaponSkill.UI.GunLancesUI;
+using WeaponSkill.Weapons.GunLances;
 
 namespace WeaponSkill
 {
@@ -46,6 +48,7 @@ namespace WeaponSkill
         public GunBulletUI gunBulletUI;
         public SlashAxeUI slashAxeUI;
         public HuntingHornUI huntingHornUI;
+        public GunLancesUI gunLancesUI;
         public override void Load()
         {
             userInterfaces = new();
@@ -78,6 +81,9 @@ namespace WeaponSkill
 
             huntingHornUI = new();
             huntingHornUI.Initialize();
+
+            gunLancesUI = new();
+            gunLancesUI.Initialize();
 
             skillsTreeUI = new();
             skillsTreeUI.Initialize();
@@ -211,7 +217,7 @@ namespace WeaponSkill
         }
         public void TryChangeTheUserInterfacesSetState(UserInterface userInterface)
         {
-            if (userInterface.CurrentState == bladesUI || userInterface.CurrentState == spiritUI || userInterface.CurrentState == chargeBladeBottle || userInterface.CurrentState == slashAxeUI || userInterface.CurrentState == huntingHornUI)
+            if (userInterface.CurrentState == bladesUI || userInterface.CurrentState == spiritUI || userInterface.CurrentState == chargeBladeBottle || userInterface.CurrentState == slashAxeUI || userInterface.CurrentState == huntingHornUI || userInterface.CurrentState == gunLancesUI)
             {
                 if (Main.LocalPlayer.HeldItem.TryGetGlobalItem<DualBladesGlobalItem>(out _))
                 {
@@ -232,6 +238,10 @@ namespace WeaponSkill
                 else if (Main.LocalPlayer.HeldItem.TryGetGlobalItem<HuntingHornGlobalItem>(out _))
                 {
                     userInterface.SetState(huntingHornUI);
+                }
+                else if (Main.LocalPlayer.HeldItem.TryGetGlobalItem<GunLancesGlobalItem>(out _))
+                {
+                    userInterface.SetState(gunLancesUI);
                 }
             }
         }

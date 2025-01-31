@@ -29,7 +29,7 @@ namespace WeaponSkill.Items.ChargeBlade
             player.ApplyDamageToNPC(target,player.GetWeaponDamage(Item), 0f, player.direction, false);
             for (int i = 0; i < 15; i++)
             {
-                var fire = new Particles.Fire(25);
+                var fire = new Dusts.Particles.Fire(25);
                 fire.SetBasicInfo(null, null, Vector2.One.RotatedBy(i / 15f * MathHelper.TwoPi) * 3, target.Center);
                 fire.color = Color.Gold * 0.8f;
                 fire.ScaleVelocity = new Vector2(-0.04f);

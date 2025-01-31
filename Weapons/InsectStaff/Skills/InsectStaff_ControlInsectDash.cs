@@ -39,7 +39,11 @@ namespace WeaponSkill.Weapons.InsectStaff.Skills
                     player.velocity.Y = StartVel.Y * 20;
                     if (Projectile.ai[1]++ > PreSwingTimeMax || Projectile.numHits > 0)
                     {
-                        if(Projectile.numHits > 0)
+                        SoundEngine.PlaySound(
+                           SoundID.Item1.WithPitchOffset(0.3f),
+                           player.Center
+                        );
+                        if (Projectile.numHits > 0)
                         {
                             InsectStaffProj.SpawnItem.GetGlobalItem<InsectStaffGlobalItem>().StrongTime = 1800;
                         }

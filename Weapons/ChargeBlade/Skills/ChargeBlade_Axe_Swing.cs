@@ -137,7 +137,7 @@ namespace WeaponSkill.Weapons.ChargeBlade.Skills
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    var fire = new Particles.Fire(25);
+                    var fire = new Dusts.Particles.Fire(25);
                     fire.SetBasicInfo(null, null, (Projectile.velocity.RotatedBy(MathHelper.PiOver2 * SwingDirectionChange.ToDirectionInt()) * Main.rand.NextFloat(0.02f,0.05f)).RotatedByRandom(0.6), target.Center);
                     Main.ParticleSystem_World_BehindPlayers.Add(fire);
                 }

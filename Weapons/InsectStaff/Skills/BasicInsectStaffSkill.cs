@@ -2,6 +2,7 @@
 using Terraria.Graphics.Effects;
 using WeaponSkill.Command;
 using WeaponSkill.Command.SwingHelpers;
+using WeaponSkill.Effects;
 
 namespace WeaponSkill.Weapons.InsectStaff.Skills
 {

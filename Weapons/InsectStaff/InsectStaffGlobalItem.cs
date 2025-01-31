@@ -33,7 +33,7 @@ namespace WeaponSkill.Weapons.InsectStaff
         public override void UpdateInventory(Item item, Player player)
         {
             // 下面是选取虫子
-            if(Insect == null || Insect.IsAir || (Insect.ModItem is BasicInsect insect && insect.Owner == null))
+            if(Insect == null || Insect.IsAir || (Insect.ModItem is BasicInsect insect && insect.Owner == null) || !player.HasItem(Insect.type))
             {
                 Insect = null;
                 foreach (Item i in player.inventory)

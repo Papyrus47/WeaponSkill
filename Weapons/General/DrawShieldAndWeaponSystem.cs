@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WeaponSkill.Command;
 using WeaponSkill.Weapons.ChargeBlade;
+using WeaponSkill.Weapons.GunLances;
 using WeaponSkill.Weapons.Lances;
 
 namespace WeaponSkill.Weapons.General
@@ -55,6 +56,11 @@ namespace WeaponSkill.Weapons.General
                         Color color = Lighting.GetColor((lancesProj.Projectile.Center / 16).ToPoint());
                         lancesProj.CurrentSkill.PreDraw(Main.spriteBatch, ref color);
                     }
+                    else if (Main.projectile[DrawShieldAndWeapon[i]].ModProjectile is GunLancesProj gunLancesProj)
+                    {
+                        Color color = Lighting.GetColor((gunLancesProj.Projectile.Center / 16).ToPoint());
+                        gunLancesProj.CurrentSkill.PreDraw(Main.spriteBatch, ref color);
+                    }
                 }
             }
         }
@@ -76,6 +82,11 @@ namespace WeaponSkill.Weapons.General
                     else if (Main.projectile[DrawShieldAndWeapon[i]].ModProjectile is LancesProj lancesProj)
                     {
                         var shield = lancesProj.shield;
+                        shield.Draw(Main.spriteBatch, Lighting.GetColor((shield.Pos / 16).ToPoint()));
+                    }
+                    else if (Main.projectile[DrawShieldAndWeapon[i]].ModProjectile is GunLancesProj gunLancesProj)
+                    {
+                        var shield = gunLancesProj.shield;
                         shield.Draw(Main.spriteBatch, Lighting.GetColor((shield.Pos / 16).ToPoint()));
                     }
                     //if (Main.projectile[DrawChargeBlade[i]].ModProjectile is not ChargeBladeProj modProj) continue;

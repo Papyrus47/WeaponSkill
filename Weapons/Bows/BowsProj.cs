@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using WeaponSkill.Command;
-using WeaponSkill.Particles;
 using WeaponSkill.Weapons.Bows.Skills;
 
 namespace WeaponSkill.Weapons.Bows

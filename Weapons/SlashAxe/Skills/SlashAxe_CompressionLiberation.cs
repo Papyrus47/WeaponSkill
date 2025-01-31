@@ -50,6 +50,10 @@ namespace WeaponSkill.Weapons.SlashAxe.Skills
                     Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center,Main.rand.NextVector2Unit(), 1, 5, 2));
                     if (Projectile.ai[1]++ > PreSwingTimeMax) // 这里写压缩解放
                     {
+                        SoundEngine.PlaySound(
+                           SoundID.Item1.WithPitchOffset(-0.5f),
+                           player.Center
+                        );
                         Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Main.rand.NextVector2Unit(), 7, 5, 60));
                         #region 压缩解放爆炸
                         for (int i = 0; i < 10; i++)
@@ -84,6 +88,12 @@ namespace WeaponSkill.Weapons.SlashAxe.Skills
                     swingHelper.SwingAI(SlashAxeProj.SwingLength, player.direction, Time * SwingRot * SwingDirectionChange.ToDirectionInt());
                     if ((int)Projectile.ai[1] % 3 == 0)
                     {
+                        SoundEngine.PlaySound(
+                        SoundID.Item14.WithVolume(0.8f).WithPitchOffset(-0.2f) with
+                        {
+                            MaxInstances = 20
+                        }, // 更低沉
+                        player.Center);
                         for (int i = 0; i < 3; i++)
                         {
                             Dust dust = Dust.NewDustDirect(Projectile.Center + Projectile.velocity, 30, 30, DustID.FireworksRGB, 0, 0, 0, Color.OrangeRed);
@@ -94,7 +104,7 @@ namespace WeaponSkill.Weapons.SlashAxe.Skills
                         proj.Size = new Vector2(30);
                         for (int i = 0; i < 2; i++)
                         {
-                            var fire = new Particles.Fire(25);
+                            var fire = new Dusts.Particles.Fire(25);
                             fire.SetBasicInfo(null, null, (Projectile.velocity.RotatedBy(MathHelper.PiOver2) * Main.rand.NextFloat(0.02f, 0.05f)).RotatedByRandom(0.6), Projectile.Center + Projectile.velocity);
                             Main.ParticleSystem_World_BehindPlayers.Add(fire);
                         }

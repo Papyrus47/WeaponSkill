@@ -50,6 +50,10 @@ namespace WeaponSkill.Weapons.SlashAxe.Skills
                     swingHelper.SwingAI(SlashAxeProj.SwingLength, player.direction, 0);
                     if (Projectile.ai[1]++ > PreSwingTimeMax)
                     {
+                        SoundEngine.PlaySound(
+                           SoundID.Item1.WithPitchOffset(-0.5f),
+                           player.Center
+                        );
                         SlashAxeProj.SlashAxeGlobalItem.Slash += 10;
                         Projectile.ai[0]++;
                         Projectile.ai[1] = 0;

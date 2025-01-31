@@ -17,6 +17,7 @@ using WeaponSkill.Command;
 using WeaponSkill.Items.DualBlades;
 using WeaponSkill.Weapons;
 using WeaponSkill.Weapons.General;
+using WeaponSkill.Weapons.GunLances;
 using WeaponSkill.Weapons.Lances;
 using WeaponSkill.Weapons.LongSword;
 using WeaponSkill.Weapons.LongSword.Skills;
@@ -435,6 +436,19 @@ namespace WeaponSkill
                     if(HeldShield is LancesShield lancesShield)
                     {
                         if (lancesShield.DefSucceeded_GP) // GP成功
+                        {
+                            SoundEngine.PlaySound(SoundID.NPCHit4 with { Pitch = 0.4f }, Player.position);
+                            for (int i = 0; i < 15; i++)
+                            {
+                                Dust dust = Dust.NewDustDirect(Player.Center, 1, 1, DustID.BlueMoss);
+                                dust.velocity = Vector2.One.RotatedBy(i / 15f * MathHelper.TwoPi) * 1.5f;
+                            }
+                            Player.AddBuff(ModContent.BuffType<PowerUp>(), 600);
+                        }
+                    }
+                    else if(HeldShield is GunLancesShield gunLancesShield)
+                    {
+                        if (gunLancesShield.DefSucceeded_GP) // GP成功
                         {
                             SoundEngine.PlaySound(SoundID.NPCHit4 with { Pitch = 0.4f }, Player.position);
                             for (int i = 0; i < 15; i++)

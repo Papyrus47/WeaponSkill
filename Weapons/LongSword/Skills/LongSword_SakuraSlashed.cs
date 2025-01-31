@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WeaponSkill.Command;
-using WeaponSkill.Particles;
+using WeaponSkill.Dusts.Particles;
 using WeaponSkill.Weapons.General;
 
 namespace WeaponSkill.Weapons.LongSword.Skills

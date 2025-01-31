@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.Graphics.Renderers;
 
-namespace WeaponSkill.Particles
+namespace WeaponSkill.Dusts.Particles
 {
     public class Fire : ABasicParticle
     {
@@ -18,11 +18,11 @@ namespace WeaponSkill.Particles
         public Fire(int timeLeft)
         {
             TimeLeft = timeLeft;
-            this.color = Color.Lerp(Color.Firebrick,Color.Orange,Main.rand.NextFloat());
+            color = Color.Lerp(Color.Firebrick, Color.Orange, Main.rand.NextFloat());
         }
         public override void SetBasicInfo(Asset<Texture2D> textureAsset, Rectangle? frame, Vector2 initialVelocity, Vector2 initialLocalPosition)
         {
-            base.SetBasicInfo(ModContent.Request<Texture2D>(GetType().Namespace.Replace('.','/') + "/Fire"), frame, initialVelocity, initialLocalPosition);
+            base.SetBasicInfo(ModContent.Request<Texture2D>(GetType().Namespace.Replace('.', '/') + "/Fire"), frame, initialVelocity, initialLocalPosition);
             ScaleVelocity = new(-0.02f);
             Scale = new(0.6f, 1f);
         }

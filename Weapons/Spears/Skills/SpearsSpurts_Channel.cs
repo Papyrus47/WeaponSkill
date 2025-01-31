@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria.Graphics.CameraModifiers;
 using WeaponSkill.Command;
-using WeaponSkill.Particles;
 using Terraria.ID;
+using WeaponSkill.Dusts.Particles;
 
 namespace WeaponSkill.Weapons.Spears.Skills
 {

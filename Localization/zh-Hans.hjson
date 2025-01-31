@@ -887,6 +887,11 @@ Mods: {
 					锤打命中后，将进行魔法演奏攻击被连接的怪物
 					''' */
 			}
+
+			CopperGunLances: {
+				// DisplayName: Copper Gun Lances
+				// Tooltip: ""
+			}
 		}
 
 		DamageClasses: {

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Terraria.Graphics.Effects;
 using WeaponSkill.Effects;
 using WeaponSkill.Command;
-using WeaponSkill.Particles;
 using static WeaponSkill.Weapons.DualBlades.Skills.DualBladesSwing;
+using WeaponSkill.Dusts.Particles;
 
 namespace WeaponSkill.Weapons.ChargeBlade.Skills
 {

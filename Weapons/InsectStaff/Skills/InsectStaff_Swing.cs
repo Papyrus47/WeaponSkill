@@ -49,6 +49,10 @@ namespace WeaponSkill.Weapons.InsectStaff.Skills
                     swingHelper.SwingAI(InsectStaffProj.SwingLength, player.direction, 0);
                     if (Projectile.ai[1]++ > PreSwingTimeMax)
                     {
+                        SoundEngine.PlaySound(
+                           SoundID.Item1.WithPitchOffset(0.3f),
+                           player.Center
+                        );
                         Projectile.ai[0]++;
                         Projectile.ai[1] = 0;
                         Projectile.extraUpdates = 1;

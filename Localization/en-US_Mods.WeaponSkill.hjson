@@ -68,6 +68,9 @@ Projectiles: {
 	HuntingHornProj.DisplayName: Hunting Horn Proj
 	KillerBeeProj.DisplayName: Killer Bee Proj
 	MagicMelodyProj.DisplayName: Magic Melody Proj
+	GunLancesProj.DisplayName: Gun Lances Proj
+	GunLancesBoomProj.DisplayName: Gun Lances Boom Proj
+	GunLancesDetonateLonghang.DisplayName: Gun Lances Detonate Longhang
 }
 
 Keybinds: {

@@ -42,6 +42,7 @@ namespace WeaponSkill.Weapons.InsectStaff
             }
             TheUtility.SetProjFrameWithItem(Projectile, SpawnItem);
             Projectile.timeLeft = 2;
+            if (OldSkills.Count > 10) OldSkills.RemoveAt(1);
             CurrentSkill.AI();
             IBasicSkillProj basicSkillProj = this;
             basicSkillProj.SwitchSkill();

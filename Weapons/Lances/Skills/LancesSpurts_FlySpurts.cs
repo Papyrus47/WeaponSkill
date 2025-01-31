@@ -24,6 +24,7 @@ namespace WeaponSkill.Weapons.Lances.Skills
             {
                 swingHelper.Change(Vector2.UnitX, new Vector2(1f, 0f), 0);
                 player.ChangeDir((Main.MouseWorld.X - player.Center.X > 0).ToDirectionInt());
+                SoundEngine.PlaySound(SoundID.Item7.WithPitchOffset(0.5f));
             }
             if (Projectile.ai[0] < 20)
             {

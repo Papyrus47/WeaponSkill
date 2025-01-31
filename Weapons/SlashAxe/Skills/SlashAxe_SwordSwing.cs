@@ -51,6 +51,10 @@ namespace WeaponSkill.Weapons.SlashAxe.Skills
                     swingHelper.SwingAI(SlashAxeProj.SwingLength, player.direction, 0);
                     if (Projectile.ai[1]++ > PreSwingTimeMax)
                     {
+                        SoundEngine.PlaySound(
+                           SoundID.Item1.WithPitchOffset(-0.5f),
+                           player.Center
+                        );
                         SlashAxeProj.SlashAxeGlobalItem.Slash -= 50;
                         Projectile.ai[0]++;
                         Projectile.ai[1] = 0;
@@ -74,7 +78,7 @@ namespace WeaponSkill.Weapons.SlashAxe.Skills
                     {
                         for (int i = 0; i < 2; i++)
                         {
-                            var fire = new Particles.Fire(25);
+                            var fire = new Dusts.Particles.Fire(25);
                             fire.SetBasicInfo(null, null, (Projectile.velocity.RotatedBy(MathHelper.PiOver2) * Main.rand.NextFloat(0.02f, 0.05f)).RotatedByRandom(0.6), Projectile.Center + Projectile.velocity);
                             Main.ParticleSystem_World_BehindPlayers.Add(fire);
                         }
