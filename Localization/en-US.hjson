@@ -909,6 +909,11 @@ Mods: {
 				DisplayName: Copper Gun Lances
 				Tooltip: ""
 			}
+
+			GoldGreatSlashAxe: {
+				DisplayName: Gold Great Slash Axe
+				Tooltip: ""
+			}
 		}
 
 		DamageClasses: {

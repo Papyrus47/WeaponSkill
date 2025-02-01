@@ -49,7 +49,7 @@ namespace WeaponSkill.Weapons.SlashAxe.Skills
         {
             //swingHelper.Swing_Draw_ItemAndTrailling(lightColor, null, null);
             sb.End();
-            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 
             swingHelper.DrawSwingItem(lightColor);
             if (swingHelper.Parts.TryGetValue("Sword", out var sword))

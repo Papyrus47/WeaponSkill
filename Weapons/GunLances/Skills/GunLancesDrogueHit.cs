@@ -171,7 +171,7 @@ namespace WeaponSkill.Weapons.GunLances.Skills
         {
             base.OnSkillDeactivate();
             Projectile.ai[0] = 0;
-            GunLancesProj.GunLancesGlobalItem.DrogueHitTime = 1800;
+            GunLancesProj.GunLancesGlobalItem.DrogueHitTime = 600;
             #region 屏幕缩放shader取消调用
             if (Filters.Scene[WeaponSkill.ScreenScaleShader].IsActive())
                 Filters.Scene.Deactivate(WeaponSkill.ScreenScaleShader);

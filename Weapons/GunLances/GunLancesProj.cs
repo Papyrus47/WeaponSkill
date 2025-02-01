@@ -240,10 +240,13 @@ namespace WeaponSkill.Weapons.GunLances
             GunLancesCompletelyBurst gunLancesCompletelyBurst = new(this);
 
             GunLancesDrogueHit gunLancesDrogueHit = new(this);
+
+            GunLancesSuperCompletelyBurst gunLancesSuperCompletelyBurst = new(this);
             #endregion
             #region 技能连接
             gunLancesNoUse.AddSkill(gunLancesHeld);
 
+            gunLancesHeld.AddSkill(gunLancesSuperCompletelyBurst);
             gunLancesDef.AddSkill(gunLancesDrogueHit);
 
             gunLancesDef.AddSkill(gunLancesReset);

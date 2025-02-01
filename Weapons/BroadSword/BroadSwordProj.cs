@@ -174,10 +174,7 @@ namespace WeaponSkill.Weapons.BroadSword
                     if (Projectile.ai[1] == 0)
                     {
                         Player.fullRotation = 0;
-                        if ((int)Projectile.localAI[0] > 0) 
-                            Projectile.damage = Math.Abs(Projectile.damage) + Projectile.originalDamage;
-                        else 
-                            Projectile.damage = (int)(Projectile.damage * 1.5f);
+                        Projectile.damage = Projectile.originalDamage * 20 / Math.Max(1, ChangeLevel - 3);
                         SpawnItem.GetGlobalItem<BroadSwordGlobalItem>().ProjCanShoot = true;
                         TheUtility.Player_ItemCheck_Shoot(Player, SpawnItem, Projectile.damage);
                         ScreenChange.SetScreenScale = 0.7f;
